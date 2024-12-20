@@ -16,6 +16,7 @@ const express = require('express')
 // const {validateSession} = require('./middlewares/session') //TODO need some version of authentication
 const {connectToDatabase} = require('./helpers/connectDatabase')
 const cookieParser = require('cookie-parser')
+const adminRoutes = require("./routes/adminRoutes");
 
 // const session = require("express-session")
 //import cors to allow cross origin request
@@ -33,6 +34,7 @@ const HOST = process.env.HOST
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use("/api/admin", adminRoutes); // Mount admin routes
 
 
 // set server to listen and connect to local DB
