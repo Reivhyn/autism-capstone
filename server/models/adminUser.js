@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const parentUser = new mongoose.Schema({
+const adminUser = new mongoose.Schema({
     userName:{type: String, required: true, unique: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
