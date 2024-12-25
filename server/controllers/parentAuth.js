@@ -10,28 +10,32 @@ const parentUserSchema = require('../models/parentUserSchema')
 
 //HELPER IMPORTS
 //checks verifies incoming req.body
-const { deconstructParentUser } = require('../helpers/deconstructParentUser')
+const { deconstructUser } = require('../helpers/deconstructUser')
 
 //varifies the password chosen meets password requirements
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
 
+//checks other schema for existing email or username
+const { checkForExiting } = require('../helpers/checkForExisting')
+
 //GLOBALS
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-//register new user
+//register new parent user
 router.post('/register', async (req, res) => {
   try {
     console.log('register new parent user endpoint hit') //TODO REMOVE IN FINAL
 
-    deconstructParentUser(req.body)
+    deconstructUser('parent', req.body)
+
+    await checkForExiting('userName', req.body.userName)
+    await checkForExiting('email', req.body.email)
 
     //create new parentUser
     const newParentUser = new parentUserSchema(req.body)
-
-    console.log(newParentUser)
 
     validatePasswordCriteria(newParentUser.password)
 
@@ -41,17 +45,30 @@ router.post('/register', async (req, res) => {
     //hash user password
     newParentUser.password = bcrypt.hashSync(newParentUser.password, SALT)
 
-    console.log(newParentUser) //TODO REMOVE IN FINAL
-
     //save user
     await newParentUser.save()
 
-    //TODO SET UP WEB OR SESSION INFO
+    //generate token
+    const token = jwt.sign(
+      //payload
+      { id: newParentUser._id },
+      //token key
+      JWT_KEY,
+      //epiration
+      { expiresIn: '1 hour' }
+    )
 
-    return res.json({
-      message: 'new parent user created',
-      userName: newParentUser.userName,
-    })
+    return res
+      .status(200)
+      .cookie('authToken', token, {
+        maxAge: 1000 * 60 * 60,
+        sameSite: 'Strict',
+        secure: false,
+      })
+      .json({
+        message: 'new parent user created',
+        userName: newParentUser.userName,
+      })
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
@@ -59,12 +76,12 @@ router.post('/register', async (req, res) => {
   }
 })
 
-//log in user
+//log in parent user
 router.get('/login', async (req, res) => {
   try {
     console.log('log in parentUser endpoint hit')
 
-    deconstructParentUser(req.body, 'login')
+    deconstructUser('parent', req.body, 'login')
 
     //grab username and password
     const userEmail = req.body.email.toLowerCase()
@@ -72,8 +89,6 @@ router.get('/login', async (req, res) => {
 
     //find user
     const foundUser = await parentUserSchema.findOne({ email: userEmail })
-
-    console.log('found user', foundUser)
 
     //if not found throw error
     if (!foundUser) throw new Error('Invalid username or password')
@@ -87,12 +102,26 @@ router.get('/login', async (req, res) => {
     //if password mismatch throw error
     if (!passwordVerification) throw new Error('Invalid username or password')
 
-    //create token
-    //TODO create token
+    //generate token
+    const token = jwt.sign(
+      //payload
+      { id: foundUser._id },
+      //token key
+      JWT_KEY,
+      //epiration
+      { expiresIn: '1 hour' }
+    )
 
-    return res.status(200).json({
-      message: `${foundUser.userName} logged in`,
-    })
+    return res
+      .status(200)
+      .cookie('authToken', token, {
+        maxAge: 1000 * 60 * 60,
+        sameSite: 'Strict',
+        secure: false,
+      })
+      .json({
+        message: `${foundUser.userName} logged in`,
+      })
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,

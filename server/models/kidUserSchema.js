@@ -10,7 +10,7 @@ const KidUser = new mongoose.Schema({
         required: true,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/},
     password: {type: String, required: true},
-    parentUser: {type: String},
+    parentUser: {type: String, required: true},
     gamesAccess: {type: Array},
     chatAccess: {type: Array},
     learningAccess: {type: Array}
