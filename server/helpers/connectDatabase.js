@@ -1,6 +1,6 @@
-/* 
-  *this helper connects to the mongodb databasae
-*/
+/*
+ *this helper connects to the mongodb databasae
+ */
 
 require('dotenv').config()
 const { mongoose } = require('mongoose')
