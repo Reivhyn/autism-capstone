@@ -1,12 +1,7 @@
-/*
- * this is the controler to register and login parents
- */
-
 // IMPORTS
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const parentUserSchema = require('../models/parentUserSchema')
 
 //HELPER IMPORTS
 //checks verifies incoming req.body
@@ -16,42 +11,38 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
+const userSchema = require('../models/userSchema')
 
 //checks other schema for existing email or username
-const { checkForExiting } = require('../helpers/checkForExisting')
 
 //GLOBALS
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-//register new parent user
+//register new user
 router.post('/register', async (req, res) => {
   try {
-    console.log('register new parent user endpoint hit') //TODO REMOVE IN FINAL
+    console.log('register new user endpoint hit') //TODO REMOVE IN FINAL
 
-    deconstructUser('parent', req.body)
+    deconstructUser(req.body)
 
-    await checkForExiting('userName', req.body.userName)
-    await checkForExiting('email', req.body.email)
+    //create new user
+    const newUser = new userSchema(req.body)
 
-    //create new parentUser
-    const newParentUser = new parentUserSchema(req.body)
+    validatePasswordCriteria(newUser.password)
 
-    validatePasswordCriteria(newParentUser.password)
+    //hash user passprd
+    newUser.password = bcrypt.hashSync(newUser.password, SALT)
 
-    //email to lower case
-    newParentUser.email = newParentUser.email.toLowerCase()
-
-    //hash user password
-    newParentUser.password = bcrypt.hashSync(newParentUser.password, SALT)
+    console.log('newUser', newUser)
 
     //save user
-    await newParentUser.save()
+    await newUser.save()
 
     //generate token
     const token = jwt.sign(
       //payload
-      { id: newParentUser._id },
+      { id: newUser._id },
       //token key
       JWT_KEY,
       //epiration
@@ -66,8 +57,8 @@ router.post('/register', async (req, res) => {
         secure: false,
       })
       .json({
-        message: 'new parent user created',
-        userName: newParentUser.userName,
+        message: `new ${newUser.userType} user created`,
+        userName: newUser.userName,
       })
   } catch (error) {
     return res.status(500).json({
@@ -76,31 +67,31 @@ router.post('/register', async (req, res) => {
   }
 })
 
-//log in parent user
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    console.log('log in parentUser endpoint hit')
+    console.log('user login endpoint hit')
 
-    deconstructUser('parent', req.body, 'login')
+    deconstructUser(req.body, 'login')
 
-    //grab username and password
+    //grab email and password
     const userEmail = req.body.email.toLowerCase()
     const userPassword = req.body.password
 
-    //find user
-    const foundUser = await parentUserSchema.findOne({ email: userEmail })
+    //look for user
 
-    //if not found throw error
-    if (!foundUser) throw new Error('Invalid username or password')
+    const foundUser = await userSchema.findOne({ email: userEmail })
+
+    //if not found throw errror
+    if (!foundUser) throw new Error('invalid username or password 1')
 
     //verify password
-    const passwordVerification = await bcrypt.compare(
+    const passwordVerified = await bcrypt.compare(
       userPassword,
       foundUser.password
     )
 
-    //if password mismatch throw error
-    if (!passwordVerification) throw new Error('Invalid username or password')
+    //throw error if password invalid
+    if (!passwordVerified) throw new Error('invalid username or password')
 
     //generate token
     const token = jwt.sign(
@@ -120,7 +111,7 @@ router.get('/login', async (req, res) => {
         secure: false,
       })
       .json({
-        message: `${foundUser.userName} logged in`,
+        message: `Welcome ${foundUser.userName}`,
       })
   } catch (error) {
     return res.status(500).json({
