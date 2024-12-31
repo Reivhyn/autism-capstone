@@ -5,7 +5,7 @@ const User = new mongoose.Schema(
     //UNIVERSAL section of schema
     userType: { type: String, require: true }, // admin ,parent or kid
     userName: { type: String, required: true, unique: true },
-    userNameLower: {type: String, required: true}, // lowercase username for searching
+    userNameLower: {type: String}, // lowercase username for searching
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     dob: { type: Date, required: true },
@@ -29,5 +29,17 @@ const User = new mongoose.Schema(
   },
   { Timestamp: true }
 )
+
+// Middleware to set `userNameLower` before saving
+User.pre('save', function (next) {
+  if (this.isModified('userName')) {
+    this.userNameLower = this.userName.toLowerCase(); // Convert userName to lowercase
+
+    if(this.isModified('email')){
+      this.email = this.email.toLowerCase() // convert email to lower case
+    }
+  }
+  next();
+});
 
 module.exports = mongoose.model('user', User)
