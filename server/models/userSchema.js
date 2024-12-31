@@ -5,6 +5,7 @@ const User = new mongoose.Schema(
     //UNIVERSAL section of schema
     userType: { type: String, require: true }, // admin ,parent or kid
     userName: { type: String, required: true, unique: true },
+    userNameLower: {type: String, required: true}, // lowercase username for searching
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     dob: { type: Date, required: true },
