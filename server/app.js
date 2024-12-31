@@ -18,9 +18,8 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 
 //CONTROLER IMPORTS
-const parentAuthController = require('./controllers/parentAuth')
-const adminAuthControler = require('./controllers/adminAuth')
-const kidAuthControler = require('./controllers/kidAuth')
+const authController = require('./controllers/auth')
+
 
 // const session = require("express-session")
 //import cors to allow cross origin request
@@ -47,9 +46,8 @@ app.use(
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/parentAuth', parentAuthController)
-app.use('/adminAuth', adminAuthControler)
-app.use('/kidAuth', kidAuthControler)
+app.use('/auth', authController)
+
 
 // set server to listen and connect to local DB
 app.listen(PORT, HOST, () => {

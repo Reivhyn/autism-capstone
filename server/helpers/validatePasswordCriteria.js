@@ -66,4 +66,5 @@ a number and symbol (alowed symbols !@#$%^&*()_+-=[]{}|;:'",.<>?/~)\n
   }
 }
 
+validatePasswordCriteria("Letmein1!!")
 module.exports = { validatePasswordCriteria }
