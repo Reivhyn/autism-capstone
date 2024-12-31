@@ -21,6 +21,7 @@ const session = require('express-session')
 const parentAuthController = require('./controllers/parentAuth')
 const adminAuthControler = require('./controllers/adminAuth')
 const kidAuthControler = require('./controllers/kidAuth')
+const gamesController = require('./controllers/games')
 
 // const session = require("express-session")
 //import cors to allow cross origin request
@@ -50,6 +51,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/parentAuth', parentAuthController)
 app.use('/adminAuth', adminAuthControler)
 app.use('/kidAuth', kidAuthControler)
+app.use('/games', gamesController)
 
 // set server to listen and connect to local DB
 app.listen(PORT, HOST, () => {

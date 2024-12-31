@@ -14,6 +14,7 @@ const KidUser = new mongoose.Schema({
     gamesAccess: {type: Array},
     chatAccess: {type: Array},
     learningAccess: {type: Array}
+    
 },
 {Timestamp: true})
 

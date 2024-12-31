@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const adminUserSchema = require('../models/adminUserSchema')
 
-//HELPER IMPORTS
+//HELPER FUNCTIONS
 //checks verifies incoming req.body
 const { deconstructUser } = require('../helpers/deconstructUser')
 
