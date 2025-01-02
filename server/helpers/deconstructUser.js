@@ -5,68 +5,42 @@
     * no flag checks for all items
 */
 
-function deconstructParentUser(userObject, flag) {
-  const { userName, firstName, lastName, email, password } = userObject
+function deconstructUser(userObject, flag) {
+  const {
+    userType,
+    userName,
+    firstName,
+    lastName,
+    dob,
+    email,
+    password,
+    kids,
+    parentUser,
+    gamesAccess,
+    chatAccess,
+    learningAccess,
+  } = userObject
 
+  //flag for login in
   if (flag === 'login') {
     if (!email || !password)
-      throw new Error('To login provide email and password')
+      throw new Error('userName and password are needed to log in')
     return
   }
 
-  if (!userName || !firstName || !lastName || !email || !password) {
-    throw new Error(
-      'userName, firstName, lastName, email, and password required to create a new parentUser'
-    )
-  }
-}
-
-function deconstructAdminUser(userObject, flag) {
-  const { userName, firstName, lastName, email, password } = userObject
-
-  if (flag === 'login') {
-    if (!email || !password)
-      throw new Error('To login provide email and password')
-    return
-  }
-
-  if (!userName || !firstName || !lastName || !email || !password) {
-    throw new Error(
-      'userName, firstName, lastName, email, and password required to create a new adminUser'
-    )
-  }
-}
-
-function deconstructKidUser(userObject, flag) {
-  const { userName, firstName, lastName, email, password, dob, parentUser } =
-    userObject
-
+  //no flag used when creating a new user
   if (
+    !userType ||
     !userName ||
     !firstName ||
     !lastName ||
-    !email ||
-    !password ||
     !dob ||
-    !parentUser
+    !email ||
+    !password
   ) {
-    if (flag === 'login') {
-      if (!email || !password)
-        throw new Error('To login provide email and password')
-      return
-    }
-
     throw new Error(
-      'userName, firstName, lastName, email, dod, parrentUser and password required to create a new kidUser'
+      'userType, userName, firstName, lastName, dob, email and password are needed to create a new user '
     )
   }
-}
-
-function deconstructUser(userType, userObject, flag) {
-  if (userType === 'parent') deconstructParentUser(userObject, flag)
-
-  if (userType === 'admin') deconstructAdminUser(userObject, flag)
-
-  if (userType === 'kid') deconstructKidUser(userObject, flag)
 }
 module.exports = { deconstructUser }
