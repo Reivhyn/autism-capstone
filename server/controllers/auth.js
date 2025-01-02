@@ -78,8 +78,8 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
 
     // ! check this when corey post schema
-    const updatedEntery = await User.findByIdAndUpdate(id, {
-      userType: req.body.UserType ?? userType,
+    const updatedEntery = await userSchema.findByIdAndUpdate(id, {
+      userType: req.body.userType ?? userType,
       userName: req.body.userName ?? userName,
       firstName: req.body.firstName ?? firstName,
       lastName: req.body.lastName ?? lastName,
