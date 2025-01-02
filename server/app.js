@@ -19,6 +19,7 @@ const session = require('express-session')
 
 //CONTROLER IMPORTS
 const authController = require('./controllers/auth')
+const activitiesController = require('./controllers/activity')
 
 
 // const session = require("express-session")
@@ -47,6 +48,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/auth', authController)
+app.use('/activities', activitiesController)
 
 
 // set server to listen and connect to local DB
