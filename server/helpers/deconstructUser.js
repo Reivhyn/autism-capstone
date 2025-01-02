@@ -6,11 +6,41 @@
 */
 
 function deconstructUser(userObject, flag) {
-  const {userType, userName, firstName, lastName, dob, email, password, kids, parentUser, gamesAccess, chatAccess, learningAccess } = userObject
+  const {
+    userType,
+    userName,
+    firstName,
+    lastName,
+    dob,
+    email,
+    password,
+    kids,
+    parentUser,
+    gamesAccess,
+    chatAccess,
+    learningAccess,
+  } = userObject
 
-  if(!userType || !userName || !firstName || !lastName || !dob || !email || !password){
-    throw new Error("userType, userName, firstName, lastName, dob, email and password are needed to create a new user ");
+  //flag for login in
+  if (flag === 'login') {
+    if (!email || !password)
+      throw new Error('userName and password are needed to log in')
     return
+  }
+
+  //no flag used when creating a new user
+  if (
+    !userType ||
+    !userName ||
+    !firstName ||
+    !lastName ||
+    !dob ||
+    !email ||
+    !password
+  ) {
+    throw new Error(
+      'userType, userName, firstName, lastName, dob, email and password are needed to create a new user '
+    )
   }
 }
 module.exports = { deconstructUser }

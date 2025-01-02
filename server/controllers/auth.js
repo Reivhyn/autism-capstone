@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 //checks verifies incoming req.body
 const { deconstructUser } = require('../helpers/deconstructUser')
 
-//varifies the password chosen meets password requirements
+//verifies the password chosen meets password requirements
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
@@ -18,6 +18,40 @@ const userSchema = require('../models/userSchema')
 //GLOBALS
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
+
+
+// Delete User Function by userId
+async function deleteUser(userId) {
+  // Validate input
+  if (!userId) {
+    return { success: false, message: "Error: userId must be provided." };
+  }
+
+  try {
+    // Find the user(not sure if we need this but just in case)
+    const user = await User.findById(userId);
+    if (!user) {
+      return { success: false, message: "Error: User not found." };
+    }
+
+    // Handle dependent data 
+    if (user.userType === "parent" && user.kids.length > 0) {
+      console.log("Warning: Parent user has dependent kids. Handle this if needed.");
+    }
+
+    //  Delete the user
+    await (!user).findByIdAndDelete(userId);
+
+    //  Return success response
+    return { success: true, message: "User successfully deleted." };
+  } catch (error) {
+    
+    // Handle errors
+    console.error("Error deleting user:", error);
+    return { success: false, message: "Error: Unable to delete user." };
+  }
+}
+
 
 //register new user
 router.post('/register', async (req, res) => {
@@ -31,14 +65,10 @@ router.post('/register', async (req, res) => {
 
     validatePasswordCriteria(newUser.password)
 
-    //email to lowercase
-    newUser.email = newUser.email.toLowerCase()
-
-    //username to lowercase
-    newUser.userNameLower = newUser.userName.toLowerCase()
-
     //hash user passprd
     newUser.password = bcrypt.hashSync(newUser.password, SALT)
+
+    console.log('newUser', newUser)
 
     //save user
     await newUser.save()
@@ -52,8 +82,6 @@ router.post('/register', async (req, res) => {
       //epiration
       { expiresIn: '1 hour' }
     )
-
-    //TODO SET UP WEB OR SESSION INFO
 
     return res
       .status(200)
@@ -72,6 +100,15 @@ router.post('/register', async (req, res) => {
     })
   }
 })
+// Endpoint to find all users
+router.get('/findAllUsers', async (req, res) => {
+  try {
+      const users = await userSchema.find({});
+      res.json(users);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 router.put('/:id', async (req, res) => {
   try {
@@ -100,8 +137,76 @@ router.put('/:id', async (req, res) => {
     console.log(err)
     res.status(500).json({
       error: `${err}`,
-    })
-  }
+})
+}
 })
 
+// Endpoint to get specific users by ID
+router.post('/findSingleUser', async (req, res) => {
+  try {
+    console.log('find user endpoint hit')
+    console.log("req.body",req.body)
+      const user = await userSchema.findOne({userName:req.body.userName});
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+router.post('/login', async (req))
+
+router.post('/login', async (req, res) => {
+  try {
+    console.log('user login endpoint hit')
+
+    deconstructUser(req.body, 'login')
+
+    //grab email and password
+    const userEmail = req.body.email.toLowerCase()
+    const userPassword = req.body.password
+
+    //look for user
+
+    const foundUser = await userSchema.findOne({ email: userEmail })
+
+    //if not found throw errror
+    if (!foundUser) throw new Error('invalid username or password 1')
+
+    //verify password
+    const passwordVerified = await bcrypt.compare(
+      userPassword,
+      foundUser.password
+    )
+
+    //throw error if password invalid
+    if (!passwordVerified) throw new Error('invalid username or password')
+
+    //generate token
+    const token = jwt.sign(
+      //payload
+      { id: foundUser._id },
+      //token key
+      JWT_KEY,
+      //epiration
+      { expiresIn: '1 hour' }
+    )
+
+    return res
+      .status(200)
+      .cookie('authToken', token, {
+        maxAge: 1000 * 60 * 60,
+        sameSite: 'Strict',
+        secure: false,
+      })
+      .json({
+        message: `Welcome ${foundUser.userName}`,
+      })
+  } catch (error) {
+    return res.status(500).json({
+      message: `${error}`,
+    })}
+  };
 module.exports = router

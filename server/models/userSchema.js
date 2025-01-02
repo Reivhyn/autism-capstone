@@ -5,7 +5,7 @@ const User = new mongoose.Schema(
     //UNIVERSAL section of schema
     userType: { type: String, require: true }, // admin ,parent or kid
     userName: { type: String, required: true, unique: true },
-    userNameLower: {type: String, required: true}, // lowercase username for searching
+    userNameLower: { type: String }, // lowercase username for searching
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     dob: { type: Date, required: true },
@@ -23,11 +23,38 @@ const User = new mongoose.Schema(
 
     // KID section of schema
     parentUser: { type: String, required: true }, //if parent it value is parent otherwise it is the id of the parent user
-    gamesAccess: { type: Array }, //should list the id of available games
+    activitiesAccess: { type: Array },
+    /* 
+      contains the id of activities the user has access to
+      if it contains all then all gmaes and activities are available
+      if it  contains allLearning then all learning will be available
+      if it contains allGames then all games will be avalable
+    */
     chatAccess: { type: Array }, //should list the ids of available chat topics
-    learningAccess: { type: Array }, //should list the ids of available learning topics
+
+    //LOCKOUT section
+    failedAttempts: { type: Number, default: 0 },
+    lockedOut : {type: Boolean, default: false},
+    lockOutTime : {type: Date}
   },
   { Timestamp: true }
 )
+
+// Middleware to set `userNameLower` before saving
+User.pre('save', function (next) {
+  if (this.isModified('userName')) {
+    this.userNameLower = this.userName.toLowerCase() // Convert userName to lowercase
+
+    if (this.isModified('email')) {
+      this.email = this.email.toLowerCase() // convert email to lower case
+    }
+  }
+
+  if(this.failedAttempts === 4){
+    this.lockedOut = true
+    this.lockOutTime = Date.now
+  }
+  next()
+})
 
 module.exports = mongoose.model('user', User)
