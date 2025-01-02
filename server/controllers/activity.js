@@ -7,7 +7,7 @@ const activitySchema = require('../models/activitySchema')
 const userSchema = require('../models/userSchema')
 
 //HELPER FUNCTIONS
-const {deconstructActivity} = require('../helpers/deconstructActivity')
+const { deconstructActivity } = require('../helpers/deconstructActivity')
 const { filterResults } = require('../helpers/filterResults')
 const { conciseResults } = require('../helpers/conciseResults')
 
@@ -57,11 +57,15 @@ router.post('/getActivities', async (req, res) => {
       gamesAgeRangeSearchResults,
     ])
 
-    //? get allowed games for user
-    console.log('user', user)
+    // get allowed games for user
     let allowedGames = conciseGames.filter((activity) =>
       user.activitiesAccess.includes(activity._id)
     )
+
+    //if all or all games is part of the users array allow all games
+    if (['all', 'allGames'].some((el) => user.activitiesAccess.includes(el))) {
+      allowedGames = conciseGames
+    }
 
     //* learning activities section
 
@@ -101,24 +105,22 @@ router.post('/getActivities', async (req, res) => {
       user.activitiesAccess.includes(activity._id)
     )
 
+    //if all or all games is part of the users array allow all games
+    if (
+      ['all', 'allLearning'].some((el) => user.activitiesAccess.includes(el))
+    ) {
+      allowedLearning = conciseLearning
+    }
+
     return res.status(200).json({
       message: 'search results',
       searchTerm: searchTerm,
       allowedGames: allowedGames,
       allowedLearning: allowedLearning,
-      // conciseGames: conciseGames,
-      // conciseLearning: conciseLearning,
-
-      // games: {
-      //   gameTitleSearchResults: gameTitleSearchResults,
-      //   gameKeywordSearchResults: gameKeywordSearchResults,
-      //   gamesAgeRangeSearchResults: gamesAgeRangeSearchResults,
-      // },
-      // learningActivities: {
-      //   learningTitleSearchResults: learningTitleSearchResults,
-      //   learningKeywordSearchResults: learningKeywordSearchResults,
-      //   learningAgeRangeSearchResults: learningAgeRangeSearchResults,
-      // },
+      fullResults: {
+        conciseGames: conciseGames,
+        conciseLearning: conciseLearning,
+      },
     })
   } catch (error) {
     return res.status(500).json({
@@ -153,19 +155,23 @@ router.post('/addActivity', async (req, res) => {
 router.put('/updateActivity', async (req, res) => {
   try {
     console.log('update game endpoint hit')
-    
+
     deconstructActivity(req.body, 'update')
-    
+
     // get activity id
     const id = req.body.id
-    
+
     // find activity with id
     const foundActivity = await activitySchema.findById(id)
 
     // update activity with req.body
-    const updatedActivity = await activitySchema.findByIdAndUpdate(id, req.body, {
-      returnDocument: 'after',
-    })
+    const updatedActivity = await activitySchema.findByIdAndUpdate(
+      id,
+      req.body,
+      {
+        returnDocument: 'after',
+      }
+    )
 
     return res.status(200).json({
       message: 'activity updated',
