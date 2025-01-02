@@ -100,6 +100,30 @@ router.post('/register', async (req, res) => {
     })
   }
 })
+// Endpoint to find all users
+router.get('/findAllUsers', async (req, res) => {
+  try {
+      const users = await userSchema.find({});
+      res.json(users);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+// Endpoint to get specific users by ID
+router.post('/findSingleUser', async (req, res) => {
+  try {
+    console.log('find user endpoint hit')
+    console.log("req.body",req.body)
+      const user = await userSchema.findOne({userName:req.body.userName});
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 router.post('/login', async (req, res) => {
   try {
