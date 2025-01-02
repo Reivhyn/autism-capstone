@@ -19,39 +19,38 @@ const userSchema = require('../models/userSchema')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-
 // Delete User Function by userId
 async function deleteUser(userId) {
   // Validate input
   if (!userId) {
-    return { success: false, message: "Error: userId must be provided." };
+    return { success: false, message: 'Error: userId must be provided.' }
   }
 
   try {
     // Find the user(not sure if we need this but just in case)
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
     if (!user) {
-      return { success: false, message: "Error: User not found." };
+      return { success: false, message: 'Error: User not found.' }
     }
 
-    // Handle dependent data 
-    if (user.userType === "parent" && user.kids.length > 0) {
-      console.log("Warning: Parent user has dependent kids. Handle this if needed.");
+    // Handle dependent data
+    if (user.userType === 'parent' && user.kids.length > 0) {
+      console.log(
+        'Warning: Parent user has dependent kids. Handle this if needed.'
+      )
     }
 
     //  Delete the user
-    await (!user).findByIdAndDelete(userId);
+    await (!user).findByIdAndDelete(userId)
 
     //  Return success response
-    return { success: true, message: "User successfully deleted." };
+    return { success: true, message: 'User successfully deleted.' }
   } catch (error) {
-    
     // Handle errors
-    console.error("Error deleting user:", error);
-    return { success: false, message: "Error: Unable to delete user." };
+    console.error('Error deleting user:', error)
+    return { success: false, message: 'Error: Unable to delete user.' }
   }
 }
-
 
 //register new user
 router.post('/register', async (req, res) => {
@@ -103,13 +102,14 @@ router.post('/register', async (req, res) => {
 // Endpoint to find all users
 router.get('/findAllUsers', async (req, res) => {
   try {
-      const users = await userSchema.find({});
-      res.json(users);
+    const users = await userSchema.find({})
+    res.json(users)
   } catch (error) {
-      res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error })
   }
-});
+})
 
+// Update User
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params
@@ -125,9 +125,8 @@ router.put('/:id', async (req, res) => {
       password: req.body.password ?? password,
       kids: req.body.kids ?? kids,
       parentUser: req.body.parentUser ?? parentUser,
-      gamesAccess: req.body.gamesAccess ?? gamesAccess,
+      activitiesAccess: req.body.activitiesAccess ?? activitiesAccess,
       chatAccess: req.body.chatAccess ?? chatAccess,
-      learningAccess: req.body.learningAccess ?? learningAccess,
     })
     res.status(200).json({
       message: `Modified`,
@@ -137,32 +136,30 @@ router.put('/:id', async (req, res) => {
     console.log(err)
     res.status(500).json({
       error: `${err}`,
-})
-}
+    })
+  }
 })
 
 // Endpoint to get specific users by ID
 router.post('/findSingleUser', async (req, res) => {
   try {
     console.log('find user endpoint hit')
-    console.log("req.body",req.body)
-      const user = await userSchema.findOne({userName:req.body.userName});
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      res.json(user);
+    console.log('req.body', req.body)
+    const user = await userSchema.findOne({ userName: req.body.userName })
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    res.json(user)
   } catch (error) {
-      res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error })
   }
-});
-
-router.post('/login', async (req))
+})
 
 router.post('/login', async (req, res) => {
   try {
-    console.log('user login endpoint hit')
+    console.log('user login endpoint hit') //2
 
-    deconstructUser(req.body, 'login')
+    deconstructUser(req.body, 'login') //3
 
     //grab email and password
     const userEmail = req.body.email.toLowerCase()
@@ -170,10 +167,10 @@ router.post('/login', async (req, res) => {
 
     //look for user
 
-    const foundUser = await userSchema.findOne({ email: userEmail })
+    const foundUser = await userSchema.findOne({ email: userEmail }) //4
 
     //if not found throw errror
-    if (!foundUser) throw new Error('invalid username or password 1')
+    if (!foundUser) throw new Error('invalid username or password 1') //5
 
     //verify password
     const passwordVerified = await bcrypt.compare(
@@ -182,7 +179,7 @@ router.post('/login', async (req, res) => {
     )
 
     //throw error if password invalid
-    if (!passwordVerified) throw new Error('invalid username or password')
+    if (!passwordVerified) throw new Error('invalid username or password') //7
 
     //generate token
     const token = jwt.sign(
@@ -207,6 +204,7 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
-    })}
-  };
+    })
+  }
+})
 module.exports = router
