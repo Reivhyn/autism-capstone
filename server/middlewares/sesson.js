@@ -30,3 +30,5 @@ const validateSession = async (req, res, next) => {
     const payload = jwt.verify(userToken, JWT_KEY)
   } catch (error) {}
 }
+
+
