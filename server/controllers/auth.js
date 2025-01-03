@@ -20,38 +20,35 @@ const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
 
-// Delete User Function by userId
-async function deleteUser(userId) {
-  // Validate input
-  if (!userId) {
-    return { success: false, message: "Error: userId must be provided." };
-  }
-
+// Delete User
+router.delete('/delete-user', async (req, res) => {
   try {
-    // Find the user(not sure if we need this but just in case)
-    const user = await User.findById(userId);
-    if (!user) {
-      return { success: false, message: "Error: User not found." };
+    console.log('Delete user endpoint hit'); 
+
+    //  Extract userId from request body
+    const { userSchema } = req.body;
+    if (!userSchema) {
+      return res.status(400).json({ success: false, message: "Error: userId must be provided." });
     }
 
-    // Handle dependent data 
+  
+    //  Handle dependent data 
     if (user.userType === "parent" && user.kids.length > 0) {
       console.log("Warning: Parent user has dependent kids. Handle this if needed.");
     }
 
-    //  Delete the user
-    await (!user).findByIdAndDelete(userId);
+    // Delete the user
+    await User.deleteOne({ userName }); // Delete by userName
 
-    //  Return success response
-    return { success: true, message: "User successfully deleted." };
+   // Return success response
+    return res.status(200).json({ message: 'User successfully deleted' });
   } catch (error) {
-    
-    // Handle errors
     console.error("Error deleting user:", error);
-    return { success: false, message: "Error: Unable to delete user." };
-  }
-}
 
+    //  Handle server errors
+    return res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 //register new user
 router.post('/register', async (req, res) => {
