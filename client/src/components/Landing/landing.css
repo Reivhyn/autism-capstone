@@ -1,0 +1,37 @@
+.loginButton {
+  transform: translateX(25vw);
+}
+
+.frontPageSectionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  height: 13vh;
+  margin: 3vw;
+  background-color: rgb(2, 57, 240);
+}
+
+.frontPageSectionButton:hover {
+  cursor: pointer;
+  background-color: orangered;
+}
+
+/* responsive for 1024 */
+@media (min-width: 1024px) {
+  
+  
+  .mainPageButtons {
+    display: flex;
+    justify-content: center;
+    word-wrap: normal;
+  }
+
+  .frontPageSectionButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    height: 30vh;
+  }
+}
