@@ -19,6 +19,39 @@ const userSchema = require('../models/userSchema')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
+<<<<<<< HEAD
+
+// Delete User
+router.delete('/delete-user', async (req, res) => {
+  try {
+    console.log('Delete user endpoint hit'); 
+
+    //  Extract userId from request body
+    const { userSchema } = req.body;
+    if (!userSchema) {
+      return res.status(400).json({ success: false, message: "Error: userId must be provided." });
+    }
+
+  
+    //  Handle dependent data 
+    if (user.userType === "parent" && user.kids.length > 0) {
+      console.log("Warning: Parent user has dependent kids. Handle this if needed.");
+    }
+
+    // Delete the user
+    await User.deleteOne({ userName }); // Delete by userName
+
+   // Return success response
+    return res.status(200).json({ message: 'User successfully deleted' });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+
+    //  Handle server errors
+    return res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+=======
 // Delete User Function by userId
 async function deleteUser(userId) {
   // Validate input
@@ -52,6 +85,7 @@ async function deleteUser(userId) {
   }
 }
 
+>>>>>>> b30821bae0563862e6a68ae76f89c3a7a33cc7d2
 //register new user
 router.post('/register', async (req, res) => {
   try {
