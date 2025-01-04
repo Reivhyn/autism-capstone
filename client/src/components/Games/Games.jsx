@@ -8,26 +8,28 @@ import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
 import DropMenu from '../DropMenu/DropMenu'
 import ActivityTile from '../ActivityTile/ActivityTile'
+import SearchBar from '../SearchBar/SearchBar'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
+import {filterResults} from '../zzHelpers/helpers'
 
 // FETCH IMPORTS
-import {getActivities} from '../zzzFetches/fetches'
-
+import { getActivities } from '../zzzFetches/fetches'
 
 const Games = () => {
   //* USESTATE
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [tiles, setTiles] = useState('')
-  
+  const [searchTerm, setSearchTerm] = useState('')
+
   //object to hold list of games
   const [allGames, setAllGames] = useState('')
-  
+
   //* FUNCTIONS
   //fetches available activities for the user
   const fetchActivities = async () => {
@@ -37,27 +39,24 @@ const Games = () => {
   //handles logic for rendering activities for the user
   const displayGames = (gamesArray) => {
     return gamesArray.map((game, i) => {
-      return (
-        <ActivityTile key={`game${i}`} tileData={game} />
-      )
+      return <ActivityTile key={`game${i}`} tileData={game} />
     })
   }
-  
-  
+
   //* USEEFFECT
   // fetches avilable games from server when page is displayed
   useEffect(() => {
-    if (pageToDisplay === 'games'){
+    if (pageToDisplay === 'games') {
       fetchActivities()
     }
-  },[pageToDisplay])
+  }, [pageToDisplay])
 
   //!! <<<<DEBUG>>>>
   useEffect(() => {
-    if (pageToDisplay === 'games'){
+    if (pageToDisplay === 'games') {
       console.log('allgames', allGames)
     }
-    },[allGames])
+  }, [allGames])
   //!! <<<<END DEBUG>>>>
 
   //* RENDER
@@ -66,9 +65,17 @@ const Games = () => {
       <h1>GAMES PAGE</h1>
       <DropMenu />
       <Banner />
+
+      <SearchBar setSearchTerm={setSearchTerm}/>
+      
+      {/* grid for games */}
       <div className="activityGridWrap">
-      <div className="activityTiles">{allGames ? displayGames(allGames.allowedGames): 'Loading Games'}</div>
+        <div className="activityTiles">
+          {allGames ? displayGames(allGames.allowedGames) : 'Loading Games'}
+        </div>
       </div>
+
+
       <Footer />
     </>
   )

@@ -10,7 +10,7 @@ import Chat from './components/Chat/Chat'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext, activityContext } from './components/zContextHooks/contextHooks'
+import { ptdContext} from './components/zContextHooks/contextHooks'
 
 function App() {
   //* USESTATE
