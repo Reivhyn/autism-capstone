@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from '../zContextHooks/ptd'
+import { ptdContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers'
@@ -57,7 +57,7 @@ const Landing = () => {
         <div className="frontPageSectionButton">
           <button
             className="landingButtonText"
-            onClick={() => changePage(setPageToDisplay,'chat')}
+            onClick={() => changePage(setPageToDisplay, 'chat')}
           >
             Chat
           </button>

@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from 'react'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from '../zContextHooks/ptd'
+import { ptdContext } from '../zContextHooks/contextHooks.jsx'
 
 const Banner = () => {
   //* USESTATE
@@ -31,6 +31,8 @@ const Banner = () => {
     return 'Welcome to our site'
   }
 
+
+  //* RENDER
   return <h2>{pageToDisplay ? bannerText() : 'Welcome'}</h2>
 }
 

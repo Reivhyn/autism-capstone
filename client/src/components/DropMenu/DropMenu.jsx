@@ -4,7 +4,7 @@ import './dropMenu.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from '../zContextHooks/ptd'
+import {ptdContext} from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers'

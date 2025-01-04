@@ -8,7 +8,7 @@ import DropMenu from '../DropMenu/DropMenu'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from '../zContextHooks/ptd'
+import {ptdContext} from '../zContextHooks/contextHooks'
 
 const Chat = () => {
   return (
