@@ -99,6 +99,7 @@ router.post('/register', async (req, res) => {
     })
   }
 })
+
 // Endpoint to find all users
 router.get('/findAllUsers', async (req, res) => {
   try {
@@ -143,7 +144,7 @@ router.put('/:id', async (req, res) => {
 router.post('/findSingleUser', async (req, res) => {
   try {
     console.log('find user endpoint hit')
-    console.log('req.body', req.body)
+
     const user = await userSchema.findOne({ userName: req.body.userName })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
