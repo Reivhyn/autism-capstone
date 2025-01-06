@@ -19,38 +19,37 @@ const userSchema = require('../models/userSchema')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-// Delete User Function by userId
-async function deleteUser(userId) {
-  // Validate input
-  if (!userId) {
-    return { success: false, message: 'Error: userId must be provided.' }
-  }
-
+// Delete User
+router.delete('/delete-user', async (req, res) => {
   try {
-    // Find the user(not sure if we need this but just in case)
-    const user = await User.findById(userId)
-    if (!user) {
-      return { success: false, message: 'Error: User not found.' }
-    }
+    console.log('Delete user endpoint hit')
 
-    // Handle dependent data
-    if (user.userType === 'parent' && user.kids.length > 0) {
+    //  Extract userId from request body
+    deconstructUser(req.body, 'delete')
+
+    const id = req.body.id
+
+    //  Handle dependent data
+    if (userSchema.userType === 'parent' && user.kids.length > 0) {
       console.log(
         'Warning: Parent user has dependent kids. Handle this if needed.'
       )
     }
 
-    //  Delete the user
-    await (!user).findByIdAndDelete(userId)
+    // checks if user exist
+    if (!(await userSchema.findById(id))) throw new Error('no user found')
+    // Delete the user
+    await userSchema.findByIdAndDelete(id) // Delete by userName
 
-    //  Return success response
-    return { success: true, message: 'User successfully deleted.' }
+    // Return success response
+    return res.status(200).json({ message: 'User successfully deleted' })
   } catch (error) {
-    // Handle errors
     console.error('Error deleting user:', error)
-    return { success: false, message: 'Error: Unable to delete user.' }
+
+    //  Handle server errors
+    return res.status(500).json({ message: 'Server error', error })
   }
-}
+})
 
 //register new user
 router.post('/register', async (req, res) => {
@@ -110,26 +109,20 @@ router.get('/findAllUsers', async (req, res) => {
 })
 
 // Update User
-router.put('/:id', async (req, res) => {
+router.put('/updateUser', async (req, res) => {
   try {
-    const { id } = req.params
+    deconstructUser(req.body, 'update')
 
-    const updatedEntery = await userSchema.findByIdAndUpdate(id, {
-      userType: req.body.userType ?? userType,
-      userName: req.body.userName ?? userName,
-      firstName: req.body.firstName ?? firstName,
-      lastName: req.body.lastName ?? lastName,
-      dob: req.body.dob ?? dob,
-      email: req.body.email ?? email,
-      password: req.body.password ?? password,
-      kids: req.body.kids ?? kids,
-      parentUser: req.body.parentUser ?? parentUser,
-      activitiesAccess: req.body.activitiesAccess ?? activitiesAccess,
-      chatAccess: req.body.chatAccess ?? chatAccess,
+    const id = req.body.id
+    const foundEntry = await userSchema.findById(id)
+
+    const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
+      returnDocument: 'after',
     })
     res.status(200).json({
       message: `Modified`,
-      updatedEntery,
+      originalDocument: foundEntry,
+      updatedDocument: updatedEntry,
     })
   } catch (err) {
     console.log(err)

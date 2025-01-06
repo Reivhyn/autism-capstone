@@ -35,7 +35,7 @@ function deconstructActivity(gameObject, flag) {
     if (activityType !== 'game' && activityType !== 'learning')
       throw new Error("activityType must either 'learning' or 'game'")
 
-    if (!activityTitle) throw new Error('Provide a value for activitTitle ')
+    if (!activityTitle) throw new Error('Provide a value for activityTitle ')
 
     if (!description) throw new Error('Provide a value for desription')
 
