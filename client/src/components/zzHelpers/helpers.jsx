@@ -43,12 +43,6 @@ export function runSearch(arrayToSearch, searchTerm) {
 
     //use id as unique key
     combinedArray.forEach((el) => uniqueResults.set(el._id, el))
-  
-  const test = Array.from(uniqueResults.values())
-
-  console.log('test', test)
-
-  return uniqueResults
 
     //return values  from the map as an array
     return Array.from(uniqueResults.values())

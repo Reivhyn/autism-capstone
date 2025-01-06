@@ -6,8 +6,7 @@ import './App.css'
 import Login from './components/login/Login'
 import Register from './components/Register/Register'
 import Landing from './components/Landing/Landing'
-import Learning from './components/Learning/Learning'
-import Games from './components/Games/Games'
+import Activities from './components/Activities/Activities'
 import Chat from './components/Chat/Chat'
 
 //CONTEXT IMPORTS
@@ -60,19 +59,10 @@ function App() {
   }
 
   //diplay learning page
-  if (pageToDisplay === 'learning') {
+  if (pageToDisplay === 'games' ||pageToDisplay === 'learning') {
     return (
       <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-        <Learning />
-      </ptdContext.Provider>
-    )
-  }
-
-  //diplay games page
-  if (pageToDisplay === 'games') {
-    return (
-      <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-        <Games />
+        <Activities />
       </ptdContext.Provider>
     )
   }
