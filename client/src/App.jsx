@@ -3,6 +3,8 @@ import { useState, useContext, useEffect } from 'react'
 import './App.css'
 
 //COMPONENT IMPORTS
+import Login from './components/login/Login'
+import Register from './components/Register/Register'
 import Landing from './components/Landing/Landing'
 import Learning from './components/Learning/Learning'
 import Games from './components/Games/Games'
@@ -10,7 +12,7 @@ import Chat from './components/Chat/Chat'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext} from './components/zContextHooks/contextHooks'
+import { ptdContext } from './components/zContextHooks/contextHooks'
 
 function App() {
   //* USESTATE
@@ -22,6 +24,30 @@ function App() {
   //* FUNCTIONS
 
   //* PAGE RENDER
+
+
+  //dispay login gage
+  if (pageToDisplay === 'login') {
+    return (
+      <>
+        <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
+          <Login />
+        </ptdContext.Provider>
+      </>
+    )
+  }
+
+  //dispay register page
+  if (pageToDisplay === 'register') {
+    return (
+      <>
+        <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
+          <Register />
+        </ptdContext.Provider>
+      </>
+    )
+  }
+
   //display langing page
   if (pageToDisplay === 'landing') {
     return (

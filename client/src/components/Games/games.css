@@ -1,0 +1,9 @@
+/* responsive for monitors */
+@media (min-width: 1024px){
+  .gridContainer {
+    display: grid; /* Activate grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr)); /* Define columns */
+    gap: 3vw; /* Add spacing between grid items */
+    padding: 3vw; /* Optional: Add padding around the grid */
+  }  
+}

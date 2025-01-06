@@ -27,7 +27,7 @@ const SearchBar = ({ setSearchTerm }) => {
         <input
           type="button"
           value="Search"
-          onClick={setSearchTerm(inputValue)}
+          onClick={() => (setSearchTerm(inputValue))}
         />
       </form>
     </>

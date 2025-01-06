@@ -1,5 +1,5 @@
 /*
- * this component contains the landing page
+ * this component displays the landing page
  */
 
 /* eslint-disable no-unused-vars */
@@ -24,9 +24,12 @@ const Landing = () => {
 
   //* FUNCTIONS
 
+
+  //* RENDER
   return (
     <>
-      <button className="loginButton">Login</button>
+      <button className="loginButton" onClick={() => changePage(setPageToDisplay, 'login')} >Login</button>
+      <button className="loginButton" onClick={() => changePage(setPageToDisplay, 'register')} >Register</button>
 
       <h1 className="siteNameHeader">SITE NAME TBD</h1>
 

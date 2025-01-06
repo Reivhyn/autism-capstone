@@ -15,7 +15,7 @@ import SearchBar from '../SearchBar/SearchBar'
 import { ptdContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
-import {filterResults} from '../zzHelpers/helpers'
+import {runSearch} from '../zzHelpers/helpers'
 
 // FETCH IMPORTS
 import { getActivities } from '../zzzFetches/fetches'
@@ -24,19 +24,19 @@ const Games = () => {
   //* USESTATE
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
-  const [tiles, setTiles] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [displayResult, setDisplayResult] = useState('')
 
   //object to hold list of games
   const [allGames, setAllGames] = useState('')
 
   //* FUNCTIONS
-  //fetches available activities for the user
+  // fetches available activities for the user
   const fetchActivities = async () => {
     setAllGames(await getActivities('6775ffb83fecb4f3f4b6e22e')) //TODO REMOVE HARD CODE
   }
 
-  //handles logic for rendering activities for the user
+  // handles logic for rendering activities for the user
   const displayGames = (gamesArray) => {
     return gamesArray.map((game, i) => {
       return <ActivityTile key={`game${i}`} tileData={game} />
@@ -51,12 +51,30 @@ const Games = () => {
     }
   }, [pageToDisplay])
 
+  // displays allowed games for user from fetch
+  useEffect(() => {
+    if(pageToDisplay === 'games' && allGames){
+      if(!displayResult){
+        console.log('allGames.allowedGames', allGames.allowedGames)
+        setDisplayResult(displayGames(allGames.allowedGames))
+        return
+      }
+    }
+  },[allGames, searchTerm])
+
+  useEffect(() => {
+    if(pageToDisplay === 'games' && allGames){
+
+  setDisplayResult(runSearch(allGames.allowedGames, 'puzzle'))
+    }
+  },[searchTerm])
+
   //!! <<<<DEBUG>>>>
   useEffect(() => {
     if (pageToDisplay === 'games') {
-      console.log('allgames', allGames)
+      // console.log('allGames', allGames)
     }
-  }, [allGames])
+  }, [displayResult])
   //!! <<<<END DEBUG>>>>
 
   //* RENDER
@@ -70,8 +88,8 @@ const Games = () => {
       
       {/* grid for games */}
       <div className="activityGridWrap">
-        <div className="activityTiles">
-          {allGames ? displayGames(allGames.allowedGames) : 'Loading Games'}
+        <div className="activityTiles gridContainer">
+          {displayResult ? displayResult : 'Loading Games'}
         </div>
       </div>
 

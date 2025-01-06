@@ -8,5 +8,5 @@ import React, { createContext } from 'react'
 // pdt -> page to display 
 export const ptdContext = createContext('landing')
 
-// activy context 
-export const activityContext = createContext('activity')
+// userdata context 
+export const userDataContext = createContext('')

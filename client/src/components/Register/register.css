@@ -1,0 +1,11 @@
+.registerForm{
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  margin-bottom: 2vh;
+}
+
+.RegistrationNavButtonsWrap{
+  display: flex;
+  justify-content: space-between;
+}
