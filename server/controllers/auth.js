@@ -19,6 +19,7 @@ const userSchema = require('../models/userSchema')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
+
 // Delete User
 router.delete('/delete-user', async (req, res) => {
   try {
@@ -50,6 +51,18 @@ router.delete('/delete-user', async (req, res) => {
     return res.status(500).json({ message: 'Server error', error })
   }
 })
+    // Delete the user
+    await User.deleteOne({ userName }); // Delete by userName
+
+   // Return success response
+    return res.status(200).json({ message: 'User successfully deleted' });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+
+    //  Handle server errors
+    return res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 //register new user
 router.post('/register', async (req, res) => {
@@ -98,6 +111,7 @@ router.post('/register', async (req, res) => {
     })
   }
 })
+
 // Endpoint to find all users
 router.get('/findAllUsers', async (req, res) => {
   try {
@@ -136,7 +150,7 @@ router.put('/updateUser', async (req, res) => {
 router.post('/findSingleUser', async (req, res) => {
   try {
     console.log('find user endpoint hit')
-    console.log('req.body', req.body)
+
     const user = await userSchema.findOne({ userName: req.body.userName })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
