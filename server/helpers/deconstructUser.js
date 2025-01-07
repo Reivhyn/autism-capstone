@@ -7,6 +7,7 @@
 
 function deconstructUser(userObject, flag) {
   const {
+    id,
     userType,
     userName,
     firstName,
@@ -25,6 +26,16 @@ function deconstructUser(userObject, flag) {
   if (flag === 'login') {
     if (!userName || !password)
       throw new Error('userName and password are needed to log in')
+    return
+  }
+
+  if (flag == 'delete') {
+    if (!id) throw new Error('Give me an id dude')
+    return
+  }
+
+  if (flag == 'update') {
+    if (!id) throw new Error('Give me an update dude')
     return
   }
 

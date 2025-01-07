@@ -25,22 +25,21 @@ router.delete('/delete-user', async (req, res) => {
     console.log('Delete user endpoint hit')
 
     //  Extract userId from request body
-    const { userSchema } = req.body
-    if (!userSchema) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Error: userId must be provided.' })
-    }
+    deconstructUser(req.body, 'delete')
+
+    const id = req.body.id
 
     //  Handle dependent data
-    if (user.userType === 'parent' && user.kids.length > 0) {
+    if (userSchema.userType === 'parent' && user.kids.length > 0) {
       console.log(
         'Warning: Parent user has dependent kids. Handle this if needed.'
       )
     }
 
+    // checks if user exist
+    if (!(await userSchema.findById(id))) throw new Error('no user found')
     // Delete the user
-    await User.deleteOne({ userName }) // Delete by userName
+    await userSchema.findByIdAndDelete(id) // Delete by userName
 
     // Return success response
     return res.status(200).json({ message: 'User successfully deleted' })
@@ -111,26 +110,20 @@ router.get('/findAllUsers', async (req, res) => {
 })
 
 // Update User
-router.put('/:id', async (req, res) => {
+router.put('/updateUser', async (req, res) => {
   try {
-    const { id } = req.params
+    deconstructUser(req.body, 'update')
 
-    const updatedEntery = await userSchema.findByIdAndUpdate(id, {
-      userType: req.body.userType ?? userType,
-      userName: req.body.userName ?? userName,
-      firstName: req.body.firstName ?? firstName,
-      lastName: req.body.lastName ?? lastName,
-      dob: req.body.dob ?? dob,
-      email: req.body.email ?? email,
-      password: req.body.password ?? password,
-      kids: req.body.kids ?? kids,
-      parentUser: req.body.parentUser ?? parentUser,
-      activitiesAccess: req.body.activitiesAccess ?? activitiesAccess,
-      chatAccess: req.body.chatAccess ?? chatAccess,
+    const id = req.body.id
+    const foundEntry = await userSchema.findById(id)
+
+    const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
+      returnDocument: 'after',
     })
     res.status(200).json({
       message: `Modified`,
-      updatedEntery,
+      originalDocument: foundEntry,
+      updatedDocument: updatedEntry,
     })
   } catch (err) {
     console.log(err)

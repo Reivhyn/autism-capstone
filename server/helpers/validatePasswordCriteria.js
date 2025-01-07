@@ -54,7 +54,7 @@ function validatePasswordCriteria(password) {
       `The password does not meet the criteria
 it must be ${minLength} characters long,
 have an upper and lower case character
-a number and symbol (alowed symbols !@#$%^&*()_+-=[]{}|;:'",.<>?/~)\n
+a number and symbol (allowed symbols !@#$%^&*()_+-=[]{}|;:'",.<>?/~)\n
       ${lengthFail ? 'Your password does not meet length requirements\n' : ''}${
         upperCaseFail ? 'Your password does not have an uppercase letter\n' : ''
       }${
@@ -66,5 +66,4 @@ a number and symbol (alowed symbols !@#$%^&*()_+-=[]{}|;:'",.<>?/~)\n
   }
 }
 
-validatePasswordCriteria("Letmein1!!")
 module.exports = { validatePasswordCriteria }
