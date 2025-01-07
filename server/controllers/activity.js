@@ -22,7 +22,7 @@ router.post('/getActivities', async (req, res) => {
 
     // find requesting user
     const user = await userSchema.findById(userId)
-    const searchTerm = req.body.searchTerm
+    const searchTerm = '' //req.body.searchTerm
 
     //get all activities with one call
     const allActivities = await activitySchema.find({})
@@ -58,7 +58,7 @@ router.post('/getActivities', async (req, res) => {
     ])
 
     // get allowed games for user
-    let allowedGames = conciseGames.filter((activity) =>
+    let allowedGames = allGames.filter((activity) =>
       user.activitiesAccess.includes(activity._id)
     )
 
@@ -101,7 +101,7 @@ router.post('/getActivities', async (req, res) => {
     ])
 
     //? get allowed learning activities for user
-    let allowedLearning = conciseLearning.filter((activity) =>
+    let allowedLearning = allLearning.filter((activity) =>
       user.activitiesAccess.includes(activity._id)
     )
 

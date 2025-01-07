@@ -2,8 +2,45 @@
  * this file contains all the fetches used by the front end
  */
 
+//register fetch
+export async function register(userName, firstName, lastName, email, password) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        dob: '1900-1-1',
+        kids: [],
+        parentUser: 'none',
+        gamesAccess: ['all'],
+        learningAccess: ['all'],
+        chatAccess: ['all'],
+      }),
+
+      credentials: 'include',
+    })
+
+    const loginData = await res.json()
+
+    if (!res.ok) {
+      throw new Error(loginData.message || 'Registration Failed')
+    }
+
+    return loginData
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // log in fetch
-export async function logIn(userName, password){
+export async function logIn(userName, password) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/auth/login`, {
       method: 'POST',
@@ -12,7 +49,7 @@ export async function logIn(userName, password){
       },
       body: JSON.stringify({
         userName: userName,
-        password: password
+        password: password,
       }),
 
       credentials: 'include',

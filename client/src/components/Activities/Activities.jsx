@@ -89,14 +89,6 @@ const Activities = () => {
     }
   }, [searchTerm])
 
-  //!! <<<<DEBUG>>>>
-  useEffect(() => {
-    if (pageToDisplay === 'games') {
-      // console.log('allGames', allGames)
-    }
-  }, [displayResult])
-  //!! <<<<END DEBUG>>>>
-
   //* RENDER
   return (
     <>

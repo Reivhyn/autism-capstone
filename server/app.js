@@ -16,6 +16,7 @@ const express = require('express')
 const { connectToDatabase } = require('./helpers/connectDatabase')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const cors = require('cors')
 
 //CONTROLER IMPORTS
 const authController = require('./controllers/auth')
@@ -33,17 +34,9 @@ const HOST = process.env.HOST
 const SESSION_KEY = process.env.SESSION_KEY
 
 //MIDDLEWARES
-app.use(
-  session({
-    secret: SESSION_KEY,
-    resave: false, // Avoid resaving session data unless modified
-    saveUninitialized: true, // Save new sessions even if they're empty
-    cookie: { secure: false }, // Use secure: true if using HTTPS
-  })
-)
 
-// allow cross origin requests only from a specific origin
-// app.use(cors({ origin: 'http://127.0.0.1:5173', credentials: true})); //? we may need??
+// allow cross origin requests only from front end
+app.use(cors({ origin: 'http://127.0.0.1:5174', credentials: true}))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

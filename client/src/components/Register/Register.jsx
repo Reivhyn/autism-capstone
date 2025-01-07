@@ -24,11 +24,12 @@ const Register = () => {
       {/* registration form */}
       <h2>Register here</h2>
       <form action="" className="registerForm">
+        <input type="text" placeholder="Username" />
         <input type="text" placeholder="First Name" />
         <input type="text" placeholder="Last Name" />
         <input type="email" placeholder="Email" />
-        <input type="password" placeholder="password" />
-        <input type="password" placeholder="confirm password" />
+        <input type="password" placeholder="Password" />
+        <input type="password" placeholder="Confirm Password" />
         <input type="button" name="" value="Register" />
       </form>
 

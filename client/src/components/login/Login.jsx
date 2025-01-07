@@ -52,6 +52,9 @@ const Login = () => {
       </div>
 
       <div className="loginNavButtons">
+        <button onClick={(e) => changePage(setPageToDisplay, 'login')}>
+          Login
+        </button>
         <button onClick={(e) => changePage(setPageToDisplay, 'landing')}>
           Back
         </button>

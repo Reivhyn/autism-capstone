@@ -19,36 +19,38 @@ const userSchema = require('../models/userSchema')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-
 // Delete User
 router.delete('/delete-user', async (req, res) => {
   try {
-    console.log('Delete user endpoint hit'); 
+    console.log('Delete user endpoint hit')
 
     //  Extract userId from request body
-    const { userSchema } = req.body;
+    const { userSchema } = req.body
     if (!userSchema) {
-      return res.status(400).json({ success: false, message: "Error: userId must be provided." });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Error: userId must be provided.' })
     }
 
-  
-    //  Handle dependent data 
-    if (user.userType === "parent" && user.kids.length > 0) {
-      console.log("Warning: Parent user has dependent kids. Handle this if needed.");
+    //  Handle dependent data
+    if (user.userType === 'parent' && user.kids.length > 0) {
+      console.log(
+        'Warning: Parent user has dependent kids. Handle this if needed.'
+      )
     }
 
     // Delete the user
-    await User.deleteOne({ userName }); // Delete by userName
+    await User.deleteOne({ userName }) // Delete by userName
 
-   // Return success response
-    return res.status(200).json({ message: 'User successfully deleted' });
+    // Return success response
+    return res.status(200).json({ message: 'User successfully deleted' })
   } catch (error) {
-    console.error("Error deleting user:", error);
+    console.error('Error deleting user:', error)
 
     //  Handle server errors
-    return res.status(500).json({ message: 'Server error', error });
+    return res.status(500).json({ message: 'Server error', error })
   }
-});
+})
 
 //register new user
 router.post('/register', async (req, res) => {
@@ -155,20 +157,21 @@ router.post('/findSingleUser', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    console.log('user login endpoint hit') //2
+    console.log('user login endpoint hit')
 
-    deconstructUser(req.body, 'login') //3
+    deconstructUser(req.body, 'login')
 
-    //grab email and password
-    const userEmail = req.body.email.toLowerCase()
+    //grab userName and password
+    const userName = req.body.userName
     const userPassword = req.body.password
 
-    //look for user
-
-    const foundUser = await userSchema.findOne({ email: userEmail }) //4
+    //look for user. case insensitive
+    const foundUser = await userSchema.findOne({
+      userName: { $regex: userName, $options: 'i' },
+    }) //4
 
     //if not found throw errror
-    if (!foundUser) throw new Error('invalid username or password 1') //5
+    if (!foundUser) throw new Error('invalid username or password 1')
 
     //verify password
     const passwordVerified = await bcrypt.compare(
@@ -177,7 +180,7 @@ router.post('/login', async (req, res) => {
     )
 
     //throw error if password invalid
-    if (!passwordVerified) throw new Error('invalid username or password') //7
+    if (!passwordVerified) throw new Error('invalid username or password')
 
     //generate token
     const token = jwt.sign(

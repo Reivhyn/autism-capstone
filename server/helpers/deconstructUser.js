@@ -23,7 +23,7 @@ function deconstructUser(userObject, flag) {
 
   //flag for login in
   if (flag === 'login') {
-    if (!email || !password)
+    if (!userName || !password)
       throw new Error('userName and password are needed to log in')
     return
   }
