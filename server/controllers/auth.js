@@ -202,7 +202,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Transporter for nodemailer
+/*// Transporter for email services
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -210,6 +210,62 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
+*/
+
+//Transporter for multiple email services
+function createTransporter(service) {
+  let config;
+
+  switch (service) {
+    case 'gmail':
+      config = {
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS,
+        },
+      };
+      break;
+
+    case 'yahoo':
+      config = {
+        service: 'yahoo',
+        auth: {
+          user: process.env.YAHOO_USER,
+          pass: process.env.YAHOO_PASS,
+        },
+      };
+      break;
+
+    case 'hotmail':
+      config = {
+        service: 'hotmail',
+        auth: {
+          user: process.env.HOTMAIL_USER,
+          pass: process.env.HOTMAIL_PASS,
+        },
+      };
+      break;
+
+    case 'custom':
+      config = {
+        host: process.env.CUSTOM_SMTP_HOST,
+        port: process.env.CUSTOM_SMTP_PORT,
+        secure: process.env.CUSTOM_SMTP_SECURE === 'true', // Convert string to boolean
+        auth: {
+          user: process.env.CUSTOM_SMTP_USER,
+          pass: process.env.CUSTOM_SMTP_PASS,
+        },
+      };
+      break;
+
+    default:
+      throw new Error('Unsupported email service');
+  }
+
+  return nodemailer.createTransport(config);
+}
+
 
 // Password recovery endpoint
 router.post('/recoverPass', async (req, res) => {
@@ -225,7 +281,8 @@ router.post('/recoverPass', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const token = jwt.sign({ id: user._id }, JWT_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, 
+                  JWT_KEY, { expiresIn: '1h' });
 
     const recoveryLink = `${CLIENT_URL}/reset-password/${token}`;
 
@@ -247,6 +304,32 @@ router.post('/recoverPass', async (req, res) => {
   }
 });
 
+// Password reset endpoint
+router.post('/resetPass', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
 
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: 'Token and new password are required' });
+    }
+
+    const decoded = jwt.verify(token, JWT_KEY);
+
+    const user = await userSchema.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+// New Password added
+    validatePasswordCriteria(newPassword);
+
+    user.password = bcrypt.hashSync(newPassword, SALT);
+    await user.save();
+
+// Success or error after trying reset.
+    res.status(200).json({ message: 'Password reset successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 module.exports = router
