@@ -212,8 +212,9 @@ const transporter = nodemailer.createTransport({
 });
 
 // Password recovery endpoint
-router.post('/recover', async (req, res) => {
-  try {
+router.post('/recoverPass', async (req, res) => {
+  try { console.log("endpoint hit")
+    
     const { email } = req.body;
     if (!email) {
       return res.status(400).json({ message: 'Email is required' });
@@ -241,34 +242,6 @@ router.post('/recover', async (req, res) => {
 
 // Success or error after password recov. request
     res.status(200).json({ message: 'Password recovery email sent' });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
-  }
-});
-
-// Password reset endpoint
-router.post('/reset-password', async (req, res) => {
-  try {
-    const { token, newPassword } = req.body;
-
-    if (!token || !newPassword) {
-      return res.status(400).json({ message: 'Token and new password are required' });
-    }
-
-    const decoded = jwt.verify(token, JWT_KEY);
-
-    const user = await userSchema.findById(decoded.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-// New Password added
-    validatePasswordCriteria(newPassword);
-
-    user.password = bcrypt.hashSync(newPassword, SALT);
-    await user.save();
-
-// Success or error after trying reset.
-    res.status(200).json({ message: 'Password reset successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
