@@ -3,7 +3,7 @@
  */
 
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './register.css'
 
 //CONTEXT IMPORTS
