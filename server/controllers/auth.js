@@ -3,6 +3,9 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+//SCHEMA IMPORT
+const userSchema = require('../models/userSchema')
+
 //HELPER IMPORTS
 //checks verifies incoming req.body
 const { deconstructUser } = require('../helpers/deconstructUser')
@@ -11,7 +14,6 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
-const userSchema = require('../models/userSchema')
 
 //checks other schema for existing email or username
 
@@ -71,6 +73,8 @@ router.post('/register', async (req, res) => {
     //save user
     await newUser.save()
 
+    
+
     //generate token
     const token = jwt.sign(
       //payload
@@ -90,7 +94,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userName: newUser.userName,
+        userInfo: newUser
       })
   } catch (error) {
     return res.status(500).json({
@@ -194,6 +198,7 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
+        userInfo: foundUser
       })
   } catch (error) {
     return res.status(500).json({
