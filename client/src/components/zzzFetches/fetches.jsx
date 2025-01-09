@@ -3,7 +3,14 @@
  */
 
 //register fetch
-export async function register(userName, firstName, lastName, email, password) {
+export async function register(
+  userName,
+  firstName,
+  lastName,
+  email,
+  password,
+  dob
+) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
@@ -16,7 +23,7 @@ export async function register(userName, firstName, lastName, email, password) {
         lastName: lastName,
         email: email,
         password: password,
-        dob: '1900-1-1',
+        dob: dob,
         kids: [],
         parentUser: 'none',
         gamesAccess: ['all'],
