@@ -24,14 +24,23 @@ const Register = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [dob, setdob] = useState('')
+  const dob = '1900-1-1'
+  const userType = 'parent'
   // const [confirmPwd, setConfirmPwd] = useState('')
 
   //* FUNCTIONS
   const registerUser = async (evt) => {
     evt.preventDefault()
     setUserData(
-      await register(userName, firstName, lastName, email, password, dob)
+      await register(
+        userName,
+        firstName,
+        lastName,
+        email,
+        password,
+        dob,
+        userType
+      )
     )
   }
 
@@ -67,14 +76,14 @@ const Register = () => {
             setLastName(e.target.value)
           }}
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Date of Brith"
           value={dob}
           onChange={(e) => {
             setdob(e.target.value)
           }}
-        />
+        /> */}
         <input
           type="email"
           placeholder="Email"

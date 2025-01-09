@@ -46,7 +46,7 @@ function App() {
   if (pageToDisplay === 'register') {
     return (
       <>
-        <userDataContext.Provider>
+        <userDataContext.Provider value={[userData, setUserData]}>
           <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
             <Register />
           </ptdContext.Provider>
