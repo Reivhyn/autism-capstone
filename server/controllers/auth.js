@@ -96,7 +96,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userInfo: newUser
+        newUser,
       })
   } catch (error) {
     return res.status(500).json({
@@ -127,7 +127,7 @@ router.put('/updateUser', async (req, res) => {
     const password = req.body.password
 
     //if password exist hash new password
-    if (password){
+    if (password) {
       req.body.password = bcrypt.hashSync(password, SALT)
     }
 
@@ -208,7 +208,7 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
-        userInfo: foundUser
+        userInfo: foundUser,
       })
   } catch (error) {
     return res.status(500).json({

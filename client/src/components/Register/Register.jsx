@@ -26,7 +26,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const dob = '1900-1-1'
   const userType = 'parent'
-  // const [confirmPwd, setConfirmPwd] = useState('')
+  const [confirmPwd, setConfirmPwd] = useState('')
 
   //* FUNCTIONS
   const registerUser = async (evt) => {
@@ -103,9 +103,13 @@ const Register = () => {
         <input
           type="password"
           placeholder="Confirm Password"
-          // onChange={(e) => {
-          //   setConfirmPwd(e.target.value)
-          // }}
+          onChange={(e) => {
+            setConfirmPwd(e.target.value)
+            if (password != confirmPwd) {
+              alert('Passwords do not match!')
+              return
+            }
+          }}
         />
         <button onClick={(evt) => registerUser(evt)}>Register</button>
       </form>
