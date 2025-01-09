@@ -19,7 +19,7 @@ const Login = () => {
   const [userData, setUserData] = useContext(userDataContext)
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
-  
+
   //* FUNCTIONS
   const loginUser = async () => {
     setUserData(await logIn(userName, password))

@@ -8,15 +8,34 @@ import './register.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from '../zContextHooks/contextHooks'
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers'
+import { register } from '../zzzFetches/fetches'
 
 const Register = () => {
   //* USESTATE
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [userData, setUserData] = useContext(userDataContext)
+  const [userName, setUserName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [dob, setdob] = useState('')
+  // const [confirmPwd, setConfirmPwd] = useState('')
+
+  //* FUNCTIONS
+  const registerUser = async (evt) => {
+    evt.preventDefault()
+    setUserData(
+      await register(userName, firstName, lastName, email, password, dob)
+    )
+  }
+
+  const handleConfirmedPwd = async (evt) => {}
 
   //* RENDER
   return (
@@ -24,13 +43,62 @@ const Register = () => {
       {/* registration form */}
       <h2>Register here</h2>
       <form action="" className="registerForm">
-        <input type="text" placeholder="Username" />
-        <input type="text" placeholder="First Name" />
-        <input type="text" placeholder="Last Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Confirm Password" />
-        <input type="button" name="" value="Register" />
+        <input
+          type="text"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => {
+            setUserName(e.target.value)
+          }}
+        />
+        <input
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => {
+            setFirstName(e.target.value)
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => {
+            setLastName(e.target.value)
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Date of Brith"
+          value={dob}
+          onChange={(e) => {
+            setdob(e.target.value)
+          }}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value)
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          // onChange={(e) => {
+          //   setConfirmPwd(e.target.value)
+          // }}
+        />
+        <button onClick={(evt) => registerUser(evt)}>Register</button>
       </form>
 
       {/* nav buttons */}

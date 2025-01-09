@@ -36,6 +36,7 @@ export async function register(
 
     const loginData = await res.json()
 
+    console.log(loginData)
     if (!res.ok) {
       throw new Error(loginData.message || 'Registration Failed')
     }

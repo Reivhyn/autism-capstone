@@ -11,19 +11,20 @@ import Chat from './components/Chat/Chat'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext } from './components/zContextHooks/contextHooks'
+import {
+  ptdContext,
+  userDataContext,
+} from './components/zContextHooks/contextHooks'
 
 function App() {
   //* USESTATE
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useState('landing')
-
   //* HOOKS
 
   //* FUNCTIONS
 
   //* PAGE RENDER
-
 
   //dispay login gage
   if (pageToDisplay === 'login') {
@@ -59,7 +60,7 @@ function App() {
   }
 
   //diplay learning page
-  if (pageToDisplay === 'games' ||pageToDisplay === 'learning') {
+  if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
     return (
       <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
         <Activities />
