@@ -6,6 +6,7 @@
 import React, { useContext } from 'react'
 import './landing.css'
 
+
 //COMPONENT IMPORTS
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
