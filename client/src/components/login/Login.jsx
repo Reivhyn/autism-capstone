@@ -25,6 +25,16 @@ const Login = () => {
     setUserData(await logIn(userName, password))
   }
 
+  //* USEEFFECTS
+
+  //!!<<<DEBUG>>>
+  useEffect(() => {
+    if (pageToDisplay === 'login') {
+      console.log('userData', userData)
+    }
+  }, [userData])
+  //!!<<<END DEBUG>>>
+
   //* RENDER
   return (
     <>
@@ -52,8 +62,8 @@ const Login = () => {
       </div>
 
       <div className="loginNavButtons">
-        <button onClick={(e) => changePage(setPageToDisplay, 'login')}>
-          Login
+        <button onClick={(e) => changePage(setPageToDisplay, 'register')}>
+          Register
         </button>
         <button onClick={(e) => changePage(setPageToDisplay, 'landing')}>
           Back
@@ -64,3 +74,5 @@ const Login = () => {
 }
 
 export default Login
+
+

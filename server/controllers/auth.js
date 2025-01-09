@@ -2,7 +2,10 @@
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
+
+//SCHEMA IMPORT
+const userSchema = require('../models/userSchema')
 
 //HELPER IMPORTS
 //checks verifies incoming req.body
@@ -12,7 +15,6 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
-const userSchema = require('../models/userSchema')
 
 //checks other schema for existing email or username
 
@@ -57,6 +59,9 @@ router.post('/register', async (req, res) => {
   try {
     console.log('register new user endpoint hit') //TODO REMOVE IN FINAL
 
+    // // ! check this
+    // const confirmPwd = req.body.confirmedPwd
+
     deconstructUser(req.body)
 
     //create new user
@@ -91,7 +96,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userName: newUser.userName,
+        userInfo: newUser
       })
   } catch (error) {
     return res.status(500).json({
@@ -117,6 +122,14 @@ router.put('/updateUser', async (req, res) => {
 
     const id = req.body.id
     const foundEntry = await userSchema.findById(id)
+
+    //get password
+    const password = req.body.password
+
+    //if password exist hash new password
+    if (password){
+      req.body.password = bcrypt.hashSync(password, SALT)
+    }
 
     const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
       returnDocument: 'after',
@@ -195,13 +208,14 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
+        userInfo: foundUser
       })
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
     })
   }
-});
+})
 
 /*// Transporter for email services
 const transporter = nodemailer.createTransport({
@@ -215,7 +229,7 @@ const transporter = nodemailer.createTransport({
 
 //Transporter for multiple email services
 function createTransporter(service) {
-  let config;
+  let config
 
   switch (service) {
     case 'gmail':
@@ -225,8 +239,8 @@ function createTransporter(service) {
           user: process.env.GMAIL_USER,
           pass: process.env.GMAIL_PASS,
         },
-      };
-      break;
+      }
+      break
 
     case 'yahoo':
       config = {
@@ -235,8 +249,8 @@ function createTransporter(service) {
           user: process.env.YAHOO_USER,
           pass: process.env.YAHOO_PASS,
         },
-      };
-      break;
+      }
+      break
 
     case 'hotmail':
       config = {
@@ -245,8 +259,8 @@ function createTransporter(service) {
           user: process.env.HOTMAIL_USER,
           pass: process.env.HOTMAIL_PASS,
         },
-      };
-      break;
+      }
+      break
 
     case 'custom':
       config = {
@@ -257,80 +271,81 @@ function createTransporter(service) {
           user: process.env.CUSTOM_SMTP_USER,
           pass: process.env.CUSTOM_SMTP_PASS,
         },
-      };
-      break;
+      }
+      break
 
     default:
-      throw new Error('Unsupported email service');
+      throw new Error('Unsupported email service')
   }
 
-  return nodemailer.createTransport(config);
+  return nodemailer.createTransport(config)
 }
-
 
 // Password recovery endpoint
 router.post('/recoverPass', async (req, res) => {
-  try { console.log("endpoint hit")
-    
-    const { email } = req.body;
+  try {
+    console.log('endpoint hit')
+
+    const { email } = req.body
     if (!email) {
-      return res.status(400).json({ message: 'Email is required' });
+      return res.status(400).json({ message: 'Email is required' })
     }
 
-    const user = await userSchema.findOne({ email: email.toLowerCase() });
+    const user = await userSchema.findOne({ email: email.toLowerCase() })
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' })
     }
 
-    const token = jwt.sign({ id: user._id }, 
-                  JWT_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, JWT_KEY, { expiresIn: '1h' })
 
-    const recoveryLink = `${CLIENT_URL}/reset-password/${token}`;
+    const recoveryLink = `${CLIENT_URL}/reset-password/${token}`
 
-//Data that will be sent to user email  
+    //Data that will be sent to user email
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: user.email,
       subject: 'Password Recovery',
       text: `Click the link to reset your password: ${recoveryLink}`,
       html: `<p>Click the link to reset your password:</p><a href="${recoveryLink}">${recoveryLink}</a>`,
-    };
-//Sends recovery email
-    await transporter.sendMail(mailOptions);
+    }
+    //Sends recovery email
+    await transporter.sendMail(mailOptions)
 
-// Success or error after password recov. request
-    res.status(200).json({ message: 'Password recovery email sent' });
+    // Success or error after password recov. request
+    res.status(200).json({ message: 'Password recovery email sent' })
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error })
   }
-});
+})
 
 // Password reset endpoint
 router.post('/resetPass', async (req, res) => {
   try {
-    const { token, newPassword } = req.body;
+    const { token, newPassword } = req.body
 
     if (!token || !newPassword) {
-      return res.status(400).json({ message: 'Token and new password are required' });
+      return res
+        .status(400)
+        .json({ message: 'Token and new password are required' })
     }
 
-    const decoded = jwt.verify(token, JWT_KEY);
+    const decoded = jwt.verify(token, JWT_KEY)
 
-    const user = await userSchema.findById(decoded.id);
+    const user = await userSchema.findById(decoded.id)
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' })
     }
-// New Password added
-    validatePasswordCriteria(newPassword);
+    // New Password added
+    validatePasswordCriteria(newPassword)
 
-    user.password = bcrypt.hashSync(newPassword, SALT);
-    await user.save();
+    user.password = bcrypt.hashSync(newPassword, SALT)
+    await user.save()
 
-// Success or error after trying reset.
-    res.status(200).json({ message: 'Password reset successfully' });
+    // Success or error after trying reset.
+    res.status(200).json({ message: 'Password reset successfully' })
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Server error', error })
   }
-});
+})
 
 module.exports = router
