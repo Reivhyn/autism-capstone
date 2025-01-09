@@ -3,7 +3,14 @@
  */
 
 //register fetch
-export async function register(userName, firstName, lastName, email, password) {
+export async function register(
+  userName,
+  firstName,
+  lastName,
+  email,
+  password,
+  dob
+) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
@@ -16,7 +23,7 @@ export async function register(userName, firstName, lastName, email, password) {
         lastName: lastName,
         email: email,
         password: password,
-        dob: '1900-1-1',
+        dob: dob,
         kids: [],
         parentUser: 'none',
         gamesAccess: ['all'],
@@ -89,6 +96,35 @@ export async function getActivities(userId) {
     }
 
     return activities
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getAllUsers(userType) {}
+
+// get kids of logged in user
+export async function findKidsOfParent(userId) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+
+      credentials: 'include',
+    })
+
+    const kidsOfParent = await res.json()
+
+    if (!res.ok) {
+      throw new Error(kidsOfParent.message || 'Get kids of user fetch failed')
+    }
+
+    return kidsOfParent
   } catch (error) {
     console.log(error)
   }

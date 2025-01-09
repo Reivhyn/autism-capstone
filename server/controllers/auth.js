@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer');
 
+//SCHEMA IMPORT
+const userSchema = require('../models/userSchema')
+
 //HELPER IMPORTS
 //checks verifies incoming req.body
 const { deconstructUser } = require('../helpers/deconstructUser')
@@ -12,7 +15,6 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
-const userSchema = require('../models/userSchema')
 
 //checks other schema for existing email or username
 
@@ -91,7 +93,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userName: newUser.userName,
+        userInfo: newUser
       })
   } catch (error) {
     return res.status(500).json({
@@ -117,6 +119,14 @@ router.put('/updateUser', async (req, res) => {
 
     const id = req.body.id
     const foundEntry = await userSchema.findById(id)
+
+    //get password
+    const password = req.body.password
+
+    //if password exist hash new password
+    if (password){
+      req.body.password = bcrypt.hashSync(password, SALT)
+    }
 
     const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
       returnDocument: 'after',
@@ -195,6 +205,7 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
+        userInfo: foundUser
       })
   } catch (error) {
     return res.status(500).json({

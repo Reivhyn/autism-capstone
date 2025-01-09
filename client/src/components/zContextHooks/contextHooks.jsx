@@ -3,7 +3,7 @@
   * this context provides the page to display information to all the components
 */
 
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 
 // pdt -> page to display 
 export const ptdContext = createContext('landing')

@@ -20,7 +20,9 @@ const cors = require('cors')
 
 //CONTROLER IMPORTS
 const authController = require('./controllers/auth')
+const userController = require('./controllers/user')
 const activitiesController = require('./controllers/activity')
+const geminiController = require('./controllers/gemini')
 
 
 // const session = require("express-session")
@@ -41,7 +43,9 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/auth', authController)
+app.use('/users', userController)
 app.use('/activities', activitiesController)
+app.use('/chat', geminiController)
 
 
 // set server to listen and connect to local DB
