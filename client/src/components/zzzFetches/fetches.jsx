@@ -100,3 +100,32 @@ export async function getActivities(userId) {
     console.log(error)
   }
 }
+
+export async function getAllUsers(userType) {}
+
+// get kids of logged in user
+export async function findKidsOfParent(userId) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+
+      credentials: 'include',
+    })
+
+    const kidsOfParent = await res.json()
+
+    if (!res.ok) {
+      throw new Error(kidsOfParent.message || 'Get kids of user fetch failed')
+    }
+
+    return kidsOfParent
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './activities.css'
 
 //COMPONENT IMPORTS
+import SiteTitle from '../SiteTitle/SiteTitle'
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
 import DropMenu from '../DropMenu/DropMenu'
@@ -24,9 +25,12 @@ const Activities = () => {
   //* USESTATE
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  
+  //search term used for search
   const [searchTerm, setSearchTerm] = useState('')
+  
+  //variable used to render results in return
   const [displayResult, setDisplayResult] = useState('')
-  const [lastPage, setLastPage] = useState('')
 
   //object to hold list of games
   const [allActivities, setAllActivities] = useState('')
@@ -55,8 +59,6 @@ const Activities = () => {
   // displays allowed games if pageToDisplay is set to games
   useEffect(() => {
     if (pageToDisplay === 'games' && allActivities) {
-      setLastPage('games')
-
       setDisplayResult(displayGames(allActivities.allowedGames))
       return
     }
@@ -92,6 +94,7 @@ const Activities = () => {
   //* RENDER
   return (
     <>
+      <SiteTitle />
       <h1>
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </h1>

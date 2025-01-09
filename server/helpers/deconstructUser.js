@@ -29,13 +29,8 @@ function deconstructUser(userObject, flag) {
     return
   }
 
-  if (flag == 'delete') {
-    if (!id) throw new Error('Give me an id dude')
-    return
-  }
-
-  if (flag == 'update') {
-    if (!id) throw new Error('Give me an update dude')
+  if (flag === 'delete', 'update', 'findKidsOfParent') {
+    if (!id) throw new Error(`id required to perform ${flag} function`)
     return
   }
 
