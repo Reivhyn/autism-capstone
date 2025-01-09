@@ -2,19 +2,18 @@
  * this sets password criteria the min lenght is 10 characters and it must contain upper & lower case number and symbol
  */
 
-//GLOBALS
-
-//determins the min lenght allowed
-const minLength = 10
-
-//keeps track of wether meeting the criteria has failed
-let lengthFail = false
-let upperCaseFail = false
-let lowerCaseFail = false
-let symbolFail = false
-let numberFail = false
-
 function validatePasswordCriteria(password) {
+  //GLOBALS
+
+  //determins the min lenght allowed
+  const minLength = 10
+
+  //keeps track of wether meeting the criteria has failed
+  let lengthFail = false
+  let upperCaseFail = false
+  let lowerCaseFail = false
+  let symbolFail = false
+  let numberFail = false
   // Regular expressions to check for the presence of uppercase, lowercase, number, and allowed symbols
   const upperCase = /[A-Z]/
   const lowerCase = /[a-z]/
