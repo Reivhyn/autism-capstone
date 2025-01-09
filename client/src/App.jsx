@@ -20,7 +20,7 @@ function App() {
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useState('landing')
 
-  const [userInfo, setUserInfo] = useContext(userDataContext)
+  const [userData, setUserData] = useState('')
   //* HOOKS
 
   //* FUNCTIONS
@@ -31,7 +31,7 @@ function App() {
   if (pageToDisplay === 'login') {
     return (
       <>
-        <userDataContext.Provider value={[userInfo, setUserInfo]}>
+        <userDataContext.Provider value={[userData, setUserData]}>
           <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
             <Login />
           </ptdContext.Provider>
@@ -57,7 +57,7 @@ function App() {
   if (pageToDisplay === 'landing') {
     return (
       <>
-        <userDataContext.Provider value={userInfo}>
+        <userDataContext.Provider value={userData}>
           <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
             <Landing />
           </ptdContext.Provider>
@@ -70,7 +70,7 @@ function App() {
   if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
     return (
       <>
-        <userDataContext.Provider value={userInfo}>
+        <userDataContext.Provider value={userData}>
           <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
             <Activities />
           </ptdContext.Provider>
@@ -82,7 +82,7 @@ function App() {
   //display chat page
   if (pageToDisplay === 'chat') {
     return (
-      <userDataContext.Provider value={userInfo}>
+      <userDataContext.Provider value={userData}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
           <Chat />
         </ptdContext.Provider>
@@ -93,7 +93,7 @@ function App() {
   //display admin or parent portal
   if (pageToDisplay === 'admin' || pageToDisplay === 'parent') {
     return (
-      <userDataContext.Provider value={userInfo}>
+      <userDataContext.Provider value={userData}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
           <Portal />
         </ptdContext.Provider>
