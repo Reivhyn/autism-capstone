@@ -73,8 +73,6 @@ router.post('/register', async (req, res) => {
     //save user
     await newUser.save()
 
-    
-
     //generate token
     const token = jwt.sign(
       //payload
@@ -120,6 +118,14 @@ router.put('/updateUser', async (req, res) => {
 
     const id = req.body.id
     const foundEntry = await userSchema.findById(id)
+
+    //get password
+    const password = req.body.password
+
+    //if password exist hash new password
+    if (password){
+      req.body.password = bcrypt.hashSync(password, SALT)
+    }
 
     const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
       returnDocument: 'after',
