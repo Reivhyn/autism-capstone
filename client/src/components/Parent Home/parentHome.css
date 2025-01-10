@@ -1,0 +1,32 @@
+.parentHome {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.parentOptions {
+    margin-top: 20px;
+}
+
+.parentButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.parentButton:hover {
+    background-color: #45a049;
+}
+
+.parentInfo {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #0c0b0b;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
