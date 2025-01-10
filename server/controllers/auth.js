@@ -96,7 +96,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        newUser,
+        ...newUser._doc,
       })
   } catch (error) {
     return res.status(500).json({
