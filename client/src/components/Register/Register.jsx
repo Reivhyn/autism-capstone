@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './register.css'
 
 //CONTEXT IMPORTS
@@ -55,31 +55,41 @@ const Register = () => {
   const validateInputs = async (evt) => {
     const newErrors = {}
 
-    if (password != confirmPwd) {
-      newErrors.confirmPwd = 'Passwords do not match.'
-      return
-    }
-
     if (!userName.trim()) newErrors.userName = 'Username is required.'
     if (!firstName.trim()) newErrors.firstName = 'First name is required.'
     if (!lastName.trim()) newErrors.lastName = 'Last name is required.'
-    console.log('this hits')
-    if (!email.includes('@')) newErrors.firstName = 'Invalid email address.'
+    if (!email.includes('@')) newErrors.email = 'Invalid email address.'
 
-    if (validatePasswordCriteria(password))
+    // ! put this back in after you figure out how to do paragraphs
+    if (!validatePasswordCriteria(password)) {
       newErrors.password =
-        'The password does not meet the requirements. It must be at least: 10 characters, have an upper and lower case character, a number and a symbol)'
+        'The password does not\n meet the requirements. It must be at least: 10\n characters,\n have an upper and lower case character,\n a number and a symbol'
+    }
+    // console.log('hello')
+    if (password !== confirmPwd) {
+      newErrors.confirmPwd = 'Passwords do not match.'
+      console.log(password, confirmPwd)
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length == 0 // return whether the form is valid
   }
+
+  //* USEEFFECT
+  useEffect(() => {
+    if (confirmPwd.length > 0) {
+      validateInputs()
+      console.log(confirmPwd, password)
+      console.log('fuck this')
+    }
+  }, [confirmPwd])
 
   //* RENDER
   return (
     <div>
       {/* registration form */}
       <h2>Register here</h2>
-      <form action="" className="registerForm">
+      <form action="" className="registerForm" autoComplete="on">
         <input
           type="text"
           placeholder="Username"
@@ -138,10 +148,11 @@ const Register = () => {
           placeholder="Confirm Password"
           onChange={(e) => {
             setConfirmPwd(e.target.value)
-            validateInputs()
           }}
         />
-        {errors.confirmedPwd && <p className="error">{errors.confirmedPwd}</p>}
+        {errors.confirmPwd && confirmPwd && (
+          <p className="error">{errors.confirmPwd}</p>
+        )}
         <button onClick={(evt) => registerUser(evt)}>Register</button>
       </form>
 
