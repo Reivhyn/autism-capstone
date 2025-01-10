@@ -18,7 +18,7 @@ const Landing = () => {
 
   return (
     <div className="landing">
-      <h1 className="siteNameHeader">Welcome to the Site!</h1>
+      <h1 className="siteNameHeader">Website Name </h1>
 
       <Banner />
 

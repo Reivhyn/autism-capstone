@@ -10,7 +10,7 @@
 
 .parentButton {
     background-color: #4caf50;
-    color: white;
+    color: black,bold;
     border: none;
     padding: 10px 20px;
     margin: 10px;
