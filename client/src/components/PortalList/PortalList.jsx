@@ -1,79 +1,101 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import './portalList.css'
 
-const PortalList = (itemsToList, listType) => {
+
+const PortalList = ({ itemsToList, listType }) => {
   //* USESTATE
   const [listTitle, setListTitle] = useState('')
+  const [displayList, setDisplayList] = useState('')
 
   //* FUNCTIONS
-  const displayList = (itemsToList, listType) => {
-    if(listType === 'user'){
+  const setUpList = () => {
+    console.log('itemsToList', itemsToList.allUsers)
+    console.log('listTypeite', listType)
+
+    if (listType === 'user') {
+      setDisplayList(
+        itemsToList.allUsers.map((item, i) => {
+          return <li key={`item${i}`}>{item.userName}</li>
+        })
+      )
+    }
+
+    if (listType === 'kids') {
+      setDisplayList(
+        itemsToList.map((item, i) => {
+          return <li key={`item${i}`}>{i}</li>
+        })
+      )
+    }
+
+    if (listType === 'games') {
+      setDisplayList(
+        itemsToList.allGames.map((item, i) => {
+          return <li key={`item${i}`}>{item.activityTitle}</li>
+        })
+      )
+    }
+
+    if (listType === 'learning') {
+      setDisplayList(
+        itemsToList.allLearning.map((item, i) => {
+          return <li key={`item${i}`}>{item.activityTitle}</li>
+        })
+      )
+    }
+
+    if (listType === 'chat') {
       return itemsToList.map((item, i) => {
         return <li key={`item${i}`}>{i}</li>
       })
     }
-    
-    if(listType === 'kids'){
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
+
+    if (listType === 'reporting') {
+      setDisplayList(
+        itemsToList.map((item, i) => {
+          return <li key={`item${i}`}>{i}</li>
+        })
+      )
     }
-    
-    if(listType === 'games'){
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
-    }
-    
-    if(listType === 'learning'){
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
-    }
-    
-    if(listType === 'chat'){
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
-    }
-    
-    if(listType === 'reporting'){
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
-    }
-    
   }
 
-  const assignListTitle = (listType) => {
-    if(listType === 'user'){
+  const assignListTitle = () => {
+    console.log('listType', listType)
+    if (listType === 'user') {
       setListTitle('User')
     }
-    if(listType === 'kids'){
+    if (listType === 'kids') {
       setListTitle('Children')
     }
-    if(listType === 'games'){
-      setListTitle('games')
+    if (listType === 'games') {
+      setListTitle('Games')
     }
-    if(listType === 'learning'){
+    if (listType === 'learning') {
       setListTitle('Learning Activities')
     }
-    if(listType === 'chat'){
+    if (listType === 'chat') {
       setListTitle('Chat Topics')
     }
-    if(listType === 'reporting'){
+    if (listType === 'reporting') {
       setListTitle('Reporting')
     }
   }
 
   //* USESTATE
-
+  //run functions
+  useState(() => {
+    setUpList()
+    assignListTitle()
+  }, [itemsToList])
 
   //* RENDER
   return (
     <>
       <div className="portalListWrap">
         <div className="portalTitle"></div>
-        <ul></ul>
+        <div>{listTitle ? listTitle : 'failed to load list title'}</div>
+        <ul className='portalList'>{displayList ? displayList : 'failed to load list'}</ul>
         <button>Add</button>
       </div>
     </>

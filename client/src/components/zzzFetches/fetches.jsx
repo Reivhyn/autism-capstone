@@ -68,13 +68,15 @@ export async function logIn(userName, password) {
       throw new Error(loginData.message || 'Login Failed')
     }
 
+    console.log('loginData', loginData)
+
     return loginData
   } catch (error) {
     console.log(error)
   }
 }
 
-// get all activities
+// get all activities for user
 export async function getActivities(userId) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/activities/getActivities`, {
@@ -91,6 +93,8 @@ export async function getActivities(userId) {
 
     const activities = await res.json()
 
+    console.log('activites', activities)
+
     if (!res.ok) {
       throw new Error(activities.message || 'Get activities failed')
     }
@@ -101,10 +105,35 @@ export async function getActivities(userId) {
   }
 }
 
-export async function getAllUsers(userType) {}
+//get all users for admin
+export async function getAllUsers() {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/getAllUsers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+      }),
+
+      credentials: 'include',
+    })
+
+    const allUsers = await res.json()
+
+    if (!res.ok) {
+      throw new Error(allUsers.message || 'Get all users fetch failed')
+    }
+
+    console.log('allUsers', allUsers)
+    return allUsers
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // get kids of logged in user
-export async function findKidsOfParent(userId) {
+export async function findKidsOfParent(userData) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
       method: 'POST',
@@ -112,7 +141,7 @@ export async function findKidsOfParent(userId) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: userId,
+        userData
       }),
 
       credentials: 'include',

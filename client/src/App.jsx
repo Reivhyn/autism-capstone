@@ -9,11 +9,14 @@ import Landing from './components/Landing/Landing'
 import Activities from './components/Activities/Activities'
 import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
-
+import LogoutButton from './components/LogoutButton/LogoutButton'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext, userDataContext } from './components/zContextHooks/contextHooks'
+import {
+  ptdContext,
+  userDataContext,
+} from './components/zContextHooks/contextHooks'
 
 function App() {
   //* USESTATE
@@ -24,82 +27,62 @@ function App() {
   //* HOOKS
 
   //* FUNCTIONS
-
-  //* PAGE RENDER
-
-  //dispay login gage
-  if (pageToDisplay === 'login') {
-    return (
-      <>
-        <userDataContext.Provider value={[userData, setUserData]}>
-          <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-            <Login />
-          </ptdContext.Provider>
-        </userDataContext.Provider>
-      </>
-    )
+  // controls logic for which page is rendered
+  const renderPage = () => {
+    switch (pageToDisplay) {
+      case 'login':
+        return <Login />
+      case 'register':
+        return <Register />
+      case 'landing':
+        return <Landing />
+      case 'games':
+      case 'learning':
+        return <Activities />
+      case 'chat':
+        return <Chat />
+      case 'admin':
+      case 'parent':
+        return <Portal />
+      default:
+        return <Landing /> // Fallback to a default page
+    }
   }
 
-  //dispay register page
-  if (pageToDisplay === 'register') {
-    return (
-      <>
-        <userDataContext.Provider>
-          <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-            <Register />
-          </ptdContext.Provider>
-        </userDataContext.Provider>
-      </>
-    )
-  }
+  //* USEEFFECT
+  //try to session data on pageload
+  useEffect(() => {
+    const savedUserData = sessionStorage.getItem('userData')
+    try {
+      savedUserData === undefined ? '' : setUserData(JSON.parse(savedUserData)) // Default to an empty string if no value is saved
+    } catch (error) {
+      console.log('parse session storage failed', error)
+    }
+  }, [])
 
-  //display langing page
-  if (pageToDisplay === 'landing') {
-    return (
-      <>
-        <userDataContext.Provider value={userData}>
-          <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-            <Landing />
-          </ptdContext.Provider>
-        </userDataContext.Provider>
-      </>
-    )
-  }
+  //if userdata exist and user is admin or parent redirect to their portal
+  useEffect(() => {
+    if (userData) {
+      if (userData.userType === 'admin') setPageToDisplay('admin')
+      if (userData.userType === 'parent') setPageToDisplay('parent')
+    }
+  }, [userData])
 
-  //diplay learning page
-  if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
-    return (
-      <>
-        <userDataContext.Provider value={userData}>
-          <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-            <Activities />
-          </ptdContext.Provider>
-        </userDataContext.Provider>
-      </>
-    )
-  }
+  // save local data to session sorage
+  useEffect(() => {
+    if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
+  }, [userData])
 
-  //display chat page
-  if (pageToDisplay === 'chat') {
-    return (
-      <userDataContext.Provider value={userData}>
+
+  //* RENDER
+  return (
+      <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <Chat />
+          {userData ? <LogoutButton /> : ''}
+          {renderPage()}
         </ptdContext.Provider>
       </userDataContext.Provider>
-    )
-  }
-
-  //display admin or parent portal
-  if (pageToDisplay === 'admin' || pageToDisplay === 'parent') {
-    return (
-      <userDataContext.Provider value={userData}>
-        <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <Portal />
-        </ptdContext.Provider>
-      </userDataContext.Provider>
-    )
-  }
+  )
 }
 
 export default App

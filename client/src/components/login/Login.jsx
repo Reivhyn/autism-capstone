@@ -4,7 +4,7 @@ import './login.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
+import { ptdContext, userDataContext, userIdContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers'
@@ -27,15 +27,31 @@ const Login = () => {
 
   //* USEEFFECTS
 
-  //!!<<<DEBUG>>>
+  // show appropriate home page after log in
   useEffect(() => {
-    if (pageToDisplay === 'login') {
-      console.log('userData', userData)
+    if (userData) {
+      setTimeout(() => {
+        if (userData.userType === 'admin') {
+          
+          setPageToDisplay('admin')
+          return
+        }
+        if (userData.userType === 'parent') {
+          setPageToDisplay('parent')
+          return
+        }
+        if (userData.userType === 'kid') {
+          setPageToDisplay('landing')
+          return
+        }
+      },500)
     }
   }, [userData])
-  //!!<<<END DEBUG>>>
 
   //* RENDER
+  if (userData) {
+    return <>Welcome {`${userData.userName}`}</>
+  }
   return (
     <>
       <div className="loginForm">
@@ -62,10 +78,10 @@ const Login = () => {
       </div>
 
       <div className="loginNavButtons">
-        <button onClick={(e) => changePage(setPageToDisplay, 'register')}>
+        <button onClick={() => changePage(setPageToDisplay, 'register')}>
           Register
         </button>
-        <button onClick={(e) => changePage(setPageToDisplay, 'landing')}>
+        <button onClick={() => changePage(setPageToDisplay, 'landing')}>
           Back
         </button>
       </div>
@@ -74,5 +90,3 @@ const Login = () => {
 }
 
 export default Login
-
-

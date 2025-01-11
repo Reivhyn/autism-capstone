@@ -24,7 +24,7 @@ function validatePasswordCriteria(password) {
   const symbol = /[!@#$%^&*()_+\-=\[\]{}|;:'",.<>?/~`]/
 
   // Check if password is at least 10 characters long
-  if (password.length < minLength) {
+  if (password.length <= minLength) {
     lengthFail = true
   }
 

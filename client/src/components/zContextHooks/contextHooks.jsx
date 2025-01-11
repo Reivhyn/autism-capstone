@@ -10,3 +10,6 @@ export const ptdContext = createContext('landing')
 
 // userdata context 
 export const userDataContext = createContext('')
+
+//user id context
+export const userIdContext = createContext('')

@@ -3,11 +3,15 @@
  */
 //IMPORTS
 const userSchema = require('../models/userSchema')
+const jwt = require('jsonwebtoken')
+const JWT_KEY = process.env.JWT_KEY
 
 //HELPERS
 
 const validateSession = async (req, res, next) => {
   try {
+    console.log('req.body', req.body)
+
     //check if endpoint accepts HTTP request
     if (req.method === 'OPTIONS') next()
 
@@ -21,13 +25,13 @@ const validateSession = async (req, res, next) => {
     const payload = jwt.verify(userToken, JWT_KEY)
 
     //find user matching the token
-    const foundUser = await findUser(payload.id)
+    const foundUser = await userSchema.findById(payload.id)
 
     //if the user does not exist but token hasnt expired
     if (!foundUser) throw new Error('Forbidden')
 
     // add user info to request
-    req.body.sessionInfo = foundUser
+    req.body = {...req.body,...foundUser._doc}
 
     // continue to next function
     next()
@@ -37,5 +41,7 @@ const validateSession = async (req, res, next) => {
   })
   }
 }
+
+module.exports = {validateSession}
 
 

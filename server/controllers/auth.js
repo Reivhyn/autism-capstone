@@ -93,7 +93,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userInfo: newUser
+        ...newUser._doc
       })
   } catch (error) {
     return res.status(500).json({
@@ -200,12 +200,13 @@ router.post('/login', async (req, res) => {
       .status(200)
       .cookie('authToken', token, {
         maxAge: 1000 * 60 * 60,
-        sameSite: 'Strict',
+        httpOnly: true,
+        sameSite: 'lax',
         secure: false,
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
-        userInfo: foundUser
+        ...foundUser._doc
       })
   } catch (error) {
     return res.status(500).json({
