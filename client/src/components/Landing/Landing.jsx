@@ -11,13 +11,23 @@ import Banner from '../Banner/Banner';
 import Footer from '../Footer/Footer';
 
 // CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
+
+// HELPER IPORTS
+import { changePage } from '../zzHelpers/helpers';
 
 const Landing = () => {
-  const [, setPageToDisplay] = useContext(ptdContext);
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
+  const [userData, setUserData] = useContext(userDataContext)
 
   return (
+    
     <div className="landing">
+      <div className='loginButtons'>
+        <button onClick={() =>setPageToDisplay('login')}>Login</button>
+        <button onClick={() =>setPageToDisplay('register')}>Register</button>
+      </div>
+
       <h1 className="siteNameHeader">Website Name </h1>
 
       <Banner />
