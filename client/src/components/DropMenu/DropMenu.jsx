@@ -1,57 +1,60 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext } from 'react'
-import './dropMenu.css'
 
-//CONTEXT IMPORTS
-// pdt -> page to display
-import {ptdContext} from '../zContextHooks/contextHooks'
-
-//HELPER IMPORTS
-import { changePage } from '../zzHelpers/helpers'
+import { useContext, useState } from 'react';
+import { Menu, MenuItem, Button } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu'; // Importing the icon
+import { ptdContext } from '../zContextHooks/contextHooks';
 
 const DropMenu = () => {
-  //* USESTATE
-  //determins which page to display
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [, setPageToDisplay] = useContext(ptdContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (page) => {
+    setPageToDisplay(page);
+    handleClose();
+  };
 
   return (
     <div className="dropMenu">
-      <div>Site Navigation</div>
-      <div className="dropContent">
-        {/* button to go home */}
-        <div
-          className="dropMenuButton"
-          onClick={() => changePage(setPageToDisplay, 'landing')}
-        >
-          {pageToDisplay !== 'landing' ? 'Home' : ''}
-        </div>
-
-        {/* button to fo to learning activities */}
-        <div
-          className="dropMenuButton"
-          onClick={() => changePage(setPageToDisplay, 'learning')}
-        >
-          {pageToDisplay !== 'learning' ? 'Learning Activities' : ''}
-        </div>
-
-        {/* button to go to games */}
-        <div
-          className="dropMenuButton"
-          onClick={() => changePage(setPageToDisplay, 'games')}
-        >
-          {pageToDisplay !== 'games' ? 'Games' : ''}
-        </div>
-
-        {/* button to go to chat */}
-        <div
-          className="dropMenuButton"
-          onClick={() => changePage(setPageToDisplay, 'chat')}
-        >
-          {pageToDisplay !== 'chat' ? 'Chat' : ''}
-        </div>
-      </div>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        startIcon={<MenuIcon />} // Adds the icon before the text
+        sx={{
+          backgroundColor: '#007bff', // Blue color
+          color: 'white',
+          '&:hover': {
+            backgroundColor: '#0056b3', // Darker blue on hover
+          },
+          padding: '10px 20px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+        }}
+      >
+        Site Navigation
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={() => handleMenuItemClick('landing')}>Home</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('games')}>Games</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('learning')}>Learning Activities</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('chat')}>Chat</MenuItem>
+      </Menu>
     </div>
-  )
-}
+  );
+};
 
-export default DropMenu
+export default DropMenu;

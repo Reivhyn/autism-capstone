@@ -5,7 +5,6 @@ import './chat.css'
 //COMPONENT IMPORTS
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
-import DropMenu from '../DropMenu/DropMenu'
 import SiteTitle from '../SiteTitle/SiteTitle'
 
 //CONTEXT IMPORTS
@@ -55,7 +54,6 @@ const Chat = () => {
     <>
       <SiteTitle />
       <h1>CHAT PAGE</h1>
-      <DropMenu />
       <p>{geminiStream}</p>
       <form action="">
       <textarea name="" id="" value={prompt} onChange={(e)=> {setPrompt(e.target.value)}}></textarea>

@@ -17,7 +17,7 @@ const Banner = () => {
   //* FUNCTIONS
   const bannerText = () => {
     if (pageToDisplay === 'landing') {
-      return 'Welcome to our site'
+      return 'Welcome To Our Site'
     }
     if (pageToDisplay === 'learning') {
       return 'Welcome to the learning page! Select an activity'
