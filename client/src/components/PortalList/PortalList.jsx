@@ -23,8 +23,8 @@ const PortalList = ({ itemsToList, listType }) => {
 
     if (listType === 'kids') {
       setDisplayList(
-        itemsToList.map((item, i) => {
-          return <li key={`item${i}`}>{i}</li>
+        itemsToList.foundKidsOfParent.map((item, i) => {
+          return <li key={`item${i}`}>{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
         })
       )
     }

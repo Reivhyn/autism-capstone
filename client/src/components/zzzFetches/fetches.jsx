@@ -141,7 +141,7 @@ export async function findKidsOfParent(userData) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userData
+        id: userData._id
       }),
 
       credentials: 'include',

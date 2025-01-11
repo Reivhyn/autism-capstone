@@ -34,17 +34,16 @@ const Portal = () => {
   const [allUsers, setAllUsers] = useState('')
 
   //* FUNCTIONS
-  const getParentData = async () => {
-    if (pageToDisplay === 'parent') {
-      setKidsOfParent(await findKidsOfParent())
-      const act = await getActivities()
-      setAllActivities(act)
-      console.log('act', act)
-    }
-  }
   const getAdminData = async () => {
     if (pageToDisplay === 'admin') {
       setAllUsers(await getAllUsers(userData))
+      setAllActivities(await getActivities())
+    }
+  }
+  
+  const getParentData = async () => {
+    if (pageToDisplay === 'parent') {
+      setKidsOfParent(await findKidsOfParent(userData))
       setAllActivities(await getActivities())
     }
   }
@@ -58,22 +57,60 @@ const Portal = () => {
     }
   }, [pageToDisplay])
 
+  //get parent data when page is displayed
   useEffect(() => {
-    if (pageToDisplay === 'admin') {
-      console.log('USERS', allUsers)
+    if (pageToDisplay === 'parent') {
+      getParentData()
     }
-  }, [allUsers])
+  }, [pageToDisplay])
 
   //* RENDER
+  // render admin portal
   if (pageToDisplay === 'admin') {
     return (
       <>
         <SiteTitle />
+        <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
 
         <div className="portalListWrapper">
           {/* all users list */}
           {allUsers ? (
             <PortalList itemsToList={allUsers} listType={'user'} />
+          ) : (
+            'Fetching Data'
+          )}
+
+          {/* all games list */}
+          {allActivities ? (
+            <PortalList itemsToList={allActivities} listType={'games'} />
+          ) : (
+            'Fetching Data'
+          )}
+
+          {/* all learning list */}
+          {allActivities ? (
+            <PortalList itemsToList={allActivities} listType={'learning'} />
+          ) : (
+            'Fetching Data'
+          )}
+        </div>
+
+        <Footer />
+      </>
+    )
+  }
+
+  //render parent portal
+  if (pageToDisplay === 'parent') {
+    return (
+      <>
+        <SiteTitle />
+        <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
+
+        <div className="portalListWrapper">
+          {/* all users list */}
+          {kidsOfParent ? (
+            <PortalList itemsToList={kidsOfParent} listType={'kids'} />
           ) : (
             'Fetching Data'
           )}
