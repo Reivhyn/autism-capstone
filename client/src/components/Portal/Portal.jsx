@@ -14,7 +14,7 @@ import LogoutButton from '../LogoutButton/LogoutButton'
 import {
   ptdContext,
   userDataContext,
-  userIdContext,
+  KidsOfParentContext,
 } from '../zContextHooks/contextHooks'
 
 // FETCH IMPORTS
@@ -30,7 +30,7 @@ const Portal = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
   const [allActivities, setAllActivities] = useState('')
-  const [kidsOfParent, setKidsOfParent] = useState('')
+  const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
   const [allUsers, setAllUsers] = useState('')
 
   //* FUNCTIONS
@@ -40,9 +40,10 @@ const Portal = () => {
       setAllActivities(await getActivities())
     }
   }
-  
+
   const getParentData = async () => {
     if (pageToDisplay === 'parent') {
+      console.log('get parent data triggered in portal.jsx');
       setKidsOfParent(await findKidsOfParent(userData))
       setAllActivities(await getActivities())
     }
@@ -72,6 +73,7 @@ const Portal = () => {
         <SiteTitle />
         <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
 
+        
         <div className="portalListWrapper">
           {/* all users list */}
           {allUsers ? (

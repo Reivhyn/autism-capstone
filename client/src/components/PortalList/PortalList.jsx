@@ -1,18 +1,21 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './portalList.css'
 
+//CONTEXT IMPORTS
+// pdt -> page to display
+import { ptdContext, KidsOfParentContext, editTargetContext } from '../zContextHooks/contextHooks'
 
 const PortalList = ({ itemsToList, listType }) => {
   //* USESTATE
   const [listTitle, setListTitle] = useState('')
   const [displayList, setDisplayList] = useState('')
+  const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [editTarget, setEditTarget] = useContext(editTargetContext)
 
   //* FUNCTIONS
   const setUpList = () => {
-    console.log('itemsToList', itemsToList.allUsers)
-    console.log('listTypeite', listType)
-
     if (listType === 'user') {
       setDisplayList(
         itemsToList.allUsers.map((item, i) => {
@@ -21,10 +24,19 @@ const PortalList = ({ itemsToList, listType }) => {
       )
     }
 
+    // displau children list. clicking on item switches to edit page
     if (listType === 'kids') {
       setDisplayList(
         itemsToList.foundKidsOfParent.map((item, i) => {
-          return <li key={`item${i}`}>{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
+          return (
+            <li
+              onClick={() => {
+                setEditTarget(item)
+                setPageToDisplay('edit')
+              }}
+              key={`item${i}`}
+            >{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
+          )
         })
       )
     }
@@ -61,7 +73,6 @@ const PortalList = ({ itemsToList, listType }) => {
   }
 
   const assignListTitle = () => {
-    console.log('listType', listType)
     if (listType === 'user') {
       setListTitle('User')
     }
@@ -95,7 +106,9 @@ const PortalList = ({ itemsToList, listType }) => {
       <div className="portalListWrap">
         <div className="portalTitle"></div>
         <div>{listTitle ? listTitle : 'failed to load list title'}</div>
-        <ul className='portalList'>{displayList ? displayList : 'failed to load list'}</ul>
+        <ul className="portalList">
+          {displayList ? displayList : 'failed to load list'}
+        </ul>
         <button>Add</button>
       </div>
     </>

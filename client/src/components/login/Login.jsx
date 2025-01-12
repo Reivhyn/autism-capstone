@@ -4,7 +4,7 @@ import './login.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext, userDataContext, userIdContext } from '../zContextHooks/contextHooks'
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers'

@@ -69,8 +69,6 @@ router.post('/register', async (req, res) => {
     //hash user passprd
     newUser.password = bcrypt.hashSync(newUser.password, SALT)
 
-    console.log('newUser', newUser)
-
     //save user
     await newUser.save()
 
@@ -115,6 +113,11 @@ router.get('/findAllUsers', async (req, res) => {
 // Update User
 router.put('/updateUser', async (req, res) => {
   try {
+    console.log('Update user endpoint hit');
+
+    console.log('req.body in updateuser endpoint', req.body)
+    
+
     deconstructUser(req.body, 'update')
 
     const id = req.body.id

@@ -68,8 +68,6 @@ export async function logIn(userName, password) {
       throw new Error(loginData.message || 'Login Failed')
     }
 
-    console.log('loginData', loginData)
-
     return loginData
   } catch (error) {
     console.log(error)
@@ -92,8 +90,6 @@ export async function getActivities(userId) {
     })
 
     const activities = await res.json()
-
-    console.log('activites', activities)
 
     if (!res.ok) {
       throw new Error(activities.message || 'Get activities failed')
@@ -134,6 +130,67 @@ export async function getAllUsers() {
 
 // get kids of logged in user
 export async function findKidsOfParent(userData) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: userData._id
+      }),
+
+      credentials: 'include',
+    })
+
+    const kidsOfParent = await res.json()
+
+    if (!res.ok) {
+      throw new Error(kidsOfParent.message || 'Get kids of user fetch failed')
+    }
+
+    return kidsOfParent
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// fetch to delete user
+export async function editUser(id, firstName, lastName, dob, userName, disabled,) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...(id && {id: id}),
+        ...(firstName && {firstName: firstName}),
+        ...(lastName && {lastName: lastName}),
+        ...(dob && {dob: dob}),
+        ...(userName && {userName: userName}),
+        ...(disabled && {disabled: disabled}),
+      }),
+
+      credentials: 'include',
+    })
+
+    const editedUser = await res.json()
+    console.log('editedUser', editedUser)
+    
+
+    if (!res.ok) {
+      throw new Error(editedUser.message || 'edit user fetch failed')
+    }
+
+    return editedUser
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// fetch to delete user user
+export async function deleteUser(id) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
       method: 'POST',

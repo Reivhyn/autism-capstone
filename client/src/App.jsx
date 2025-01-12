@@ -11,11 +11,14 @@ import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import ParentHome from './components/Parent Home/parentHome'
+import EditUser from './components/EditUser/EditUser.jsx'
 
 // CONTEXT IMPORTS
 import {
   ptdContext,
   userDataContext,
+  KidsOfParentContext,
+  editTargetContext,
 } from './components/zContextHooks/contextHooks'
 
 // MATERIAL-UI IMPORTS
@@ -32,6 +35,8 @@ function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
   // State for user data
   const [userData, setUserData] = useState('')
+  const [kidsOfParent, setKidsOfParent] = useState('')
+  const [editTarget, setEditTarget] = useState('')
 
   //* FUNCTIONS
 
@@ -49,7 +54,6 @@ function App() {
   //if userdata exist and user is admin or parent redirect to their portal
   useEffect(() => {
     if (userData) {
-      console.log('userData', userData)
       if (userData.userType === 'admin') setPageToDisplay('admin')
       if (userData.userType === 'parent') setPageToDisplay('parent')
     }
@@ -67,21 +71,28 @@ function App() {
       <CssBaseline /> {/* To ensure consistent styling across all browsers */}
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          {userData ? <LogoutButton /> : ''}
-          {/* Global DropMenu */}
-          <DropMenu />
+          <KidsOfParentContext.Provider value={[kidsOfParent, setKidsOfParent]}>
+            <editTargetContext.Provider value={[editTarget, setEditTarget]}>
+              {userData ? <LogoutButton /> : ''}
+              {/* Global DropMenu */}
+              <DropMenu />
 
-          {/* Page Rendering */}
-          {pageToDisplay === 'login' && <Login />}
-          {pageToDisplay === 'register' && <Register />}
-          {pageToDisplay === 'landing' && <Landing />}
-          {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
-            <Activities />
-          )}
-          {pageToDisplay === 'chat' && <Chat />}
-          {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
-            <Portal />
-          )}
+              {/* Page Rendering */}
+              {pageToDisplay === 'login' && <Login />}
+              {pageToDisplay === 'register' && <Register />}
+              {pageToDisplay === 'landing' && <Landing />}
+              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
+                <Activities />
+              )}
+              {pageToDisplay === 'chat' && <Chat />}
+              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                <Portal />
+              )}
+              {(pageToDisplay === 'edit' || pageToDisplay === 'addUser') && (
+                <EditUser />
+              )}
+            </editTargetContext.Provider>
+          </KidsOfParentContext.Provider>
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>

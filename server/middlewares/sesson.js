@@ -10,8 +10,6 @@ const JWT_KEY = process.env.JWT_KEY
 
 const validateSession = async (req, res, next) => {
   try {
-    console.log('req.body', req.body)
-
     //check if endpoint accepts HTTP request
     if (req.method === 'OPTIONS') next()
 

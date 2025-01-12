@@ -14,7 +14,6 @@ router.post('/findKidsOfParent', async (req, res) => {
     const id = req.body.id
 
     const foundKidsOfParent = await userSchema.find({parentUser: id})
-    console.log('foundKidsOfParent', foundKidsOfParent)
     
     return res.status(200).json({foundKidsOfParent})
   } catch (error) {

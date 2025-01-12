@@ -1,3 +1,8 @@
 .portalList{
   list-style-type: none;
 }
+
+.portalList:hover{
+  cursor: pointer;
+}
+
