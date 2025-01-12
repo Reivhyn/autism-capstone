@@ -4,7 +4,7 @@
 
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react'
-import './landing.css'
+import './landing.css';
 
 //COMPONENT IMPORTS
 import Banner from '../Banner/Banner'

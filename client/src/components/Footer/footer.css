@@ -1,0 +1,35 @@
+footer {
+    background-color: #81b14f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+    margin-top: 50px;
+    position: relative;
+    width: 100%;  /* Ensure the footer spans the entire width */
+    height: auto;  /* Adjust based on content height */
+    box-sizing: border-box; /* Ensure padding is included in the width/height calculation */
+    display: flexbox;
+}
+
+
+/* Style for larger screens */
+@media (min-width: 768px) {
+    footer {
+        font-size: 1.25rem;
+        padding: 30px;
+    }
+}
+
+/* Style for very small screens */
+@media (max-width: 480px) {
+    footer {
+        font-size: 0.875rem;
+        padding: 15px;
+        display: flex;  /* Enable flexbox */
+        justify-content: center;  /* Horizontally center the content */
+        align-items: center;  /* Vertically center the content */
+        height: auto;  /* Ensure the footer height is adjusted based on content */
+        margin-top: 2;  /* Remove any extra margin at the top if unnecessary */
+    }
+}

@@ -13,7 +13,7 @@ const SearchBar = ({ setSearchTerm }) => {
   //* RENDER
   return (
     <>
-      <form action="">
+    <div className='search-container'>
         
         {/* input field */}
         <input
@@ -22,14 +22,16 @@ const SearchBar = ({ setSearchTerm }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-
         {/* button to search */}
         <input
           type="button"
           value="Search"
           onClick={() => (setSearchTerm(inputValue))}
         />
-      </form>
+    </div>
+    
+
+        
     </>
   )
 }

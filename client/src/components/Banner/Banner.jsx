@@ -9,6 +9,8 @@ import React, { useContext, useEffect } from 'react'
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks.jsx'
 
+
+
 const Banner = () => {
   //* USESTATE
   //determins which page to display
@@ -17,10 +19,10 @@ const Banner = () => {
   //* FUNCTIONS
   const bannerText = () => {
     if (pageToDisplay === 'landing') {
-      return 'Welcome to our site'
+      return 'Lets Have Some Fun!!!'
     }
     if (pageToDisplay === 'learning') {
-      return 'Welcome to the learning page! Select an activity'
+      return 'Welcome to the Learning Page! Select an activity'
     }
     if (pageToDisplay === 'games') {
       return 'Welcome to the games page! Select a game'
@@ -33,7 +35,7 @@ const Banner = () => {
 
 
   //* RENDER
-  return <h2>{pageToDisplay ? bannerText() : 'Welcome'}</h2>
+  return <h2 className="banner">{pageToDisplay ? bannerText() : 'Let'}</h2>
 }
 
 export default Banner
