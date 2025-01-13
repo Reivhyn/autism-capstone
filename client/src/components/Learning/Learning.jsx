@@ -14,10 +14,6 @@ const Learning = () => {
     <>
       <body>
         <h1>LEARNING PAGE</h1>
-          <div className='banner-container'>
-            <Banner />  
-          </div>
-
           <div className='dropsearch-container'>
             <DropMenu />
             <SearchBar />

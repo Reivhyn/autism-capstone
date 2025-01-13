@@ -7,3 +7,17 @@
     padding: 3vw; /* Optional: Add padding around the grid */
   }  
 }
+
+.dropsearch-container {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem; 
+  margin: 1rem 0; 
+}
+
+
+.footer-container {
+  background-color: aqua;
+}

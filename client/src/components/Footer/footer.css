@@ -1,4 +1,4 @@
-footer {
+.footer {
     background-color: #81b14f;
     color: white;
     text-align: center;
@@ -15,7 +15,7 @@ footer {
 
 /* Style for larger screens */
 @media (min-width: 768px) {
-    footer {
+    .footer {
         font-size: 1.25rem;
         padding: 30px;
     }
@@ -23,7 +23,7 @@ footer {
 
 /* Style for very small screens */
 @media (max-width: 480px) {
-    footer {
+    .footer {
         font-size: 0.875rem;
         padding: 15px;
         display: flex;  /* Enable flexbox */
