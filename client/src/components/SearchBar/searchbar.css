@@ -1,8 +1,34 @@
-.searchBar {
-    width: 100%; /* Adjust as needed */
-    max-width: 300px; /* Optional: Limit maximum width */
-    padding: 0.5rem;
-    border: 1px solid #ccc; /* Add a border for styling */
-    border-radius: 4px; /* Optional: Rounded corners */
-    font-size: 1rem;
-}
+/* Styling for the form */
+.search-bar-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  /* Custom styles for the search field */
+  .custom-search-field {
+    width: 300px; /* Adjust width */
+    background-color: white; /* Make background stand out */
+    border-radius: 25px; /* Rounded corners */
+  }
+  
+  
+  .custom-search-field .MuiOutlinedInput-root:hover {
+    border-color: #004ba0; /* Darker blue on hover */
+  }
+  
+  .custom-search-field .MuiOutlinedInput-root.Mui-focused {
+    border-color: #42a5f5; /* Lighter blue on focus */
+    box-shadow: 0 0 5px rgba(66, 165, 245, 0.8); /* Add glow effect */
+  }
+  
+  /* Style for the search icon */
+  .custom-search-field .MuiIconButton-root {
+    color: #1976d2; /* Icon color */
+  }
+  
+  .custom-search-field .MuiIconButton-root:hover {
+    color: #004ba0; /* Darker icon color on hover */
+  }
+  

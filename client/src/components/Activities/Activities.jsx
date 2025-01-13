@@ -95,10 +95,14 @@ const Activities = () => {
       <h1>
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </h1>
-      <Banner />
+        <div className='banner-container'>
+          <Banner />
+        </div>
       <div className='dropsearch-container'>
         <DropMenu />
-        <SearchBar setSearchTerm={setSearchTerm} />
+          <div className='searchbar-container'>
+            <SearchBar setSearchTerm={setSearchTerm} />
+        </div>
       </div>
 
       {/* grid for games */}

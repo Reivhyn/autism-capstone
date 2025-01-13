@@ -8,6 +8,9 @@
   }  
 }
 
+.body {
+  background-color: #283618;
+}
 .dropsearch-container {
   display: flex;
   flex-direction: row; 
@@ -17,7 +20,27 @@
   margin: 1rem 0; 
 }
 
+/* Responsiveness for dropMenu & searchBar */
+@media (max-width: 768px) {
+  .dropsearch-container {
+    flex-direction: column; /* Stacks items on smaller screens */
+    gap: 0.5rem;
+  }
+}
+.searchbar-container {
+    width: 100%; /* Adjust as needed */
+    max-width: 300px; /* Optional: Limit maximum width */
+    padding: 0.5rem;
+    font-size: 1rem;
+}
 
-.footer-container {
-  background-color: aqua;
+.banner-container{
+  text-align: center;
+    background-color: #007BFF;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
 }
