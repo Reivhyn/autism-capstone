@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * this file contains all the fetches used by the front end
  */
@@ -198,7 +199,7 @@ export async function deleteUser(id) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: userData._id
+        id: id
       }),
 
       credentials: 'include',
