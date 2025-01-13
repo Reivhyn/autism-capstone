@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
 import './activities.css'
 
@@ -7,7 +5,6 @@ import './activities.css'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
-import DropMenu from '../DropMenu/DropMenu'
 import ActivityTile from '../ActivityTile/ActivityTile'
 import SearchBar from '../SearchBar/SearchBar'
 
@@ -98,7 +95,6 @@ const Activities = () => {
       <h1>
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </h1>
-      <DropMenu />
       <Banner />
 
       <SearchBar setSearchTerm={setSearchTerm} />
