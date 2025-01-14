@@ -5,7 +5,11 @@ import './portalList.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
-import { ptdContext, KidsOfParentContext, editTargetContext } from '../zContextHooks/contextHooks'
+import {
+  ptdContext,
+  KidsOfParentContext,
+  editTargetContext,
+} from '../zContextHooks/contextHooks'
 
 const PortalList = ({ itemsToList, listType }) => {
   //* USESTATE
@@ -33,7 +37,7 @@ const PortalList = ({ itemsToList, listType }) => {
             <li
               onClick={() => {
                 setEditTarget(item)
-                setPageToDisplay('edit')
+                setPageToDisplay('editUser')
               }}
               key={`item${i}`}
             >{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
@@ -94,6 +98,30 @@ const PortalList = ({ itemsToList, listType }) => {
     }
   }
 
+    //handles changing the page when the add button is pressed
+    const handleClick = () => {
+      if (listType === 'user') {
+        setPageToDisplay('addUser')
+        return
+      }
+      if (listType === 'kids') {
+        setPageToDisplay('addKid')
+        return
+      }
+      if (listType === 'games') {
+        setPageToDisplay('addGame')
+        return
+      }
+      if (listType === 'learning') {
+        setPageToDisplay('addLearning')
+        return
+      }
+      if (listType === 'chat') {
+        setPageToDisplay('addChat')
+        return
+      }
+    }
+
   //* USESTATE
   //run functions
   useState(() => {
@@ -110,7 +138,9 @@ const PortalList = ({ itemsToList, listType }) => {
         <ul className="portalList">
           {displayList ? displayList : 'failed to load list'}
         </ul>
-        <button>Add</button>
+
+        {/* //TODO onclick call function to handl click */}
+        {listType !== 'reporting' ? <button onClick={() => handleClick()}>Add</button> : ''}
       </div>
     </>
   )

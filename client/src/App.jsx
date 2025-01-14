@@ -88,9 +88,10 @@ function App() {
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
                 <Portal />
               )}
-              {(pageToDisplay === 'edit' || pageToDisplay === 'addUser') && (
-                <EditUser />
-              )}
+              {(pageToDisplay === 'editUser' ||
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'editKid' ||
+                pageToDisplay === 'addKid') && <EditUser />}
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>
