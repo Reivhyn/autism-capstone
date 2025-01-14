@@ -5,7 +5,7 @@
 //GLOBALS
 
 //determins the min lenght allowed
-const minLength = 10
+const minLength = 9
 
 //keeps track of wether meeting the criteria has failed
 let lengthFail = false
@@ -24,7 +24,7 @@ function validatePasswordCriteria(password) {
   const symbol = /[!@#$%^&*()_+\-=\[\]{}|;:'",.<>?/~`]/
 
   // Check if password is at least 10 characters long
-  if (password.length < minLength) {
+  if (password.length <= minLength) {
     lengthFail = true
   }
 

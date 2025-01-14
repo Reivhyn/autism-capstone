@@ -29,7 +29,7 @@ function deconstructUser(userObject, flag) {
     return
   }
 
-  if (flag === 'delete', 'update', 'findKidsOfParent') {
+  if (flag === 'delete' || flag === 'update' || flag === 'findKidsOfParent') {
     if (!id) throw new Error(`id required to perform ${flag} function`)
     return
   }

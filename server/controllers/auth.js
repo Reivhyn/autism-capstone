@@ -72,8 +72,6 @@ router.post('/register', async (req, res) => {
     //hash user passprd
     newUser.password = bcrypt.hashSync(newUser.password, SALT)
 
-    console.log('newUser', newUser)
-
     //save user
     await newUser.save()
 
@@ -96,7 +94,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        userInfo: newUser
+        ...newUser._doc
       })
   } catch (error) {
     return res.status(500).json({
@@ -118,6 +116,11 @@ router.get('/findAllUsers', async (req, res) => {
 // Update User
 router.put('/updateUser', async (req, res) => {
   try {
+    console.log('Update user endpoint hit');
+
+    console.log('req.body in updateuser endpoint', req.body)
+    
+
     deconstructUser(req.body, 'update')
 
     const id = req.body.id
@@ -203,12 +206,13 @@ router.post('/login', async (req, res) => {
       .status(200)
       .cookie('authToken', token, {
         maxAge: 1000 * 60 * 60,
-        sameSite: 'Strict',
+        httpOnly: true,
+        sameSite: 'lax',
         secure: false,
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
-        userInfo: foundUser
+        ...foundUser._doc
       })
   } catch (error) {
     return res.status(500).json({

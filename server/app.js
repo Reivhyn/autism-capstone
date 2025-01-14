@@ -17,6 +17,7 @@ const { connectToDatabase } = require('./helpers/connectDatabase')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const cors = require('cors')
+const {validateSession} = require('./middlewares/sesson')
 
 //CONTROLER IMPORTS
 const authController = require('./controllers/auth')
@@ -43,9 +44,9 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/auth', authController)
-app.use('/users', userController)
-app.use('/activities', activitiesController)
-app.use('/chat', geminiController)
+app.use('/users', validateSession, userController)
+app.use('/activities', validateSession, activitiesController)
+app.use('/chat', validateSession, geminiController)
 
 
 // set server to listen and connect to local DB

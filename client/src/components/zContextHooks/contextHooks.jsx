@@ -10,3 +10,10 @@ export const ptdContext = createContext('landing')
 
 // userdata context 
 export const userDataContext = createContext('')
+
+//user id context
+export const KidsOfParentContext = createContext('')
+
+//creates an object to target for editing users
+export const editTargetContext = createContext('')
+

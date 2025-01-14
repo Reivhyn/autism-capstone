@@ -1,0 +1,16 @@
+.formWrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.dualListOuterWrap{
+  margin-top: 3vh;
+}
+
+.selectedWraper{
+  display: flex;
+  flex-direction: column;
+}
+.dualListWrapper{
+  display: flex;
+}
