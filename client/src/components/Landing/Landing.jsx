@@ -53,14 +53,6 @@ const Landing = () => {
         >
           Chat
         </button>
-
-        {/* New Parent Home Button */}
-        <button
-          className="landingButtonText"
-          onClick={() => setPageToDisplay('parent')}
-        >
-          Parent Home
-        </button>
       </div>
 
       <Footer />

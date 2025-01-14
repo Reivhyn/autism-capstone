@@ -8,8 +8,10 @@ import Footer from '../Footer/Footer'
 import ActivityTile from '../ActivityTile/ActivityTile'
 import SearchBar from '../SearchBar/SearchBar'
 
+//Material-UI Imports
+import { Container, Typography, Grid } from '@mui/material'
+
 //CONTEXT IMPORTS
-// pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
 
 //HELPER IMPORTS
@@ -19,95 +21,78 @@ import { runSearch } from '../zzHelpers/helpers'
 import { getActivities } from '../zzzFetches/fetches'
 
 const Activities = () => {
-  //* USESTATE
-  //determins which page to display
+  // USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
-  
-  //search term used for search
   const [searchTerm, setSearchTerm] = useState('')
-  
-  //variable used to render results in return
   const [displayResult, setDisplayResult] = useState('')
-
-  //object to hold list of games
   const [allActivities, setAllActivities] = useState('')
 
-  //* FUNCTIONS
-  // fetches available activities for the user
+  // FUNCTIONS
   const fetchActivities = async () => {
-    setAllActivities(await getActivities('6775ffb83fecb4f3f4b6e22e')) //TODO REMOVE HARD CODE
+    setAllActivities(await getActivities('6775ffb83fecb4f3f4b6e22e')) // TODO REMOVE HARD CODE
   }
 
-  // handles logic for rendering activities for the user
   const displayGames = (activityArray) => {
     return activityArray.map((activity, i) => {
       return <ActivityTile key={`game${i}`} tileData={activity} />
     })
   }
 
-  //* USEEFFECT
-  // fetches avilable games from server when page is displayed
+  // USEEFFECTS
   useEffect(() => {
     if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
       fetchActivities()
     }
   }, [pageToDisplay])
 
-  // displays allowed games if pageToDisplay is set to games
   useEffect(() => {
     if (pageToDisplay === 'games' && allActivities) {
       setDisplayResult(displayGames(allActivities.allowedGames))
-      return
     }
   }, [allActivities])
 
-  // displays allowed learning activities if pageToDisplay is set to learning
   useEffect(() => {
     if (pageToDisplay === 'learning' && allActivities) {
       setDisplayResult(displayGames(allActivities.allowedLearning))
     }
   }, [allActivities])
 
-  // logic to run the search
   useEffect(() => {
-    //logig to run search on games
     if (pageToDisplay === 'games' && allActivities) {
-      if (pageToDisplay === 'games') {
-        const searchResults = runSearch(allActivities.allowedGames, searchTerm)
-        setDisplayResult(displayGames(searchResults))
-      }
+      const searchResults = runSearch(allActivities.allowedGames, searchTerm)
+      setDisplayResult(displayGames(searchResults))
+    }
 
-      // logic to run search on learning activities
-      if (pageToDisplay === 'learning') {
-        const searchResults = runSearch(
-          allActivities.allowedLearning,
-          searchTerm
-        )
-        setDisplayResult(displayGames(searchResults))
-      }
+    if (pageToDisplay === 'learning' && allActivities) {
+      const searchResults = runSearch(allActivities.allowedLearning, searchTerm)
+      setDisplayResult(displayGames(searchResults))
     }
   }, [searchTerm])
 
-  //* RENDER
+  // RENDER
   return (
-    <>
+    <Container maxWidth="lg" style={{ padding: '20px', backgroundColor: '#121212', color: '#FFFFFF' }}>
       <SiteTitle />
-      <h1>
+      
+      <Typography variant="h4" gutterBottom style={{ marginBottom: '20px' }}>
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
-      </h1>
+      </Typography>
+
       <Banner />
 
       <SearchBar setSearchTerm={setSearchTerm} />
 
-      {/* grid for games */}
-      <div className="activityGridWrap">
-        <div className="activityTiles gridContainer">
-          {displayResult ? displayResult : 'Loading Activities'}
-        </div>
-      </div>
+      {/* grid for activities */}
+      <Grid container spacing={3} style={{ marginTop: '20px' }}>
+        {displayResult ? (
+          displayResult
+        ) : (
+          <Typography variant="body1">Loading Activities...</Typography>
+        )}
+      </Grid>
 
       <Footer />
-    </>
+    </Container>
   )
 }
 

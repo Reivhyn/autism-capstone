@@ -7,61 +7,72 @@ import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
 import SiteTitle from '../SiteTitle/SiteTitle'
 
+//Material-UI Imports
+import { Container, Typography, TextField, Button } from '@mui/material'
+
 //CONTEXT IMPORTS
-// pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
-import { use } from 'react'
 
 const Chat = () => {
-  //* USESTATE
-  //determins which page to display
+  // USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [geminiStream, setGeminiStream] = useState('')
   const [prompt, setPrompt] = useState('')
-  
-  //* FUNCTION
+
+  // FUNCTION
   const handleClick = async () => {
-    geminiStream
+    // Place your async logic here
+    console.log(prompt)
   }
 
-  //* USEEFFECT
+  // USEEFFECT
   useEffect(() => {
     const geminiStream = new EventSource('http://127.0.0.1:4000/chat/gemini')
 
-    EventSource.onmessage = (event) => {
-      // close connection when stream is complete
+    geminiStream.onmessage = (event) => {
       if (event.data === '[DONE]'){
-        EventSource.close(); 
+        geminiStream.close();
       }
-
-      // append incoming data to existing data
       setGeminiStream((prev) => prev + event.data)
 
-      EventSource.onerror = (error) => {
-        console.log('error occoured', error) //TODO make so i can display to user
-        EventSource.close()
+      geminiStream.onerror = (error) => {
+        console.log('Error occurred', error)
+        geminiStream.close()
       }
       return () => {
-        // cleanup
-        EventSource.close() 
+        geminiStream.close() 
       }
-
     }
   },[])
-  
-  //* RENDER
+
+  // RENDER
   return (
-    <>
+    <Container maxWidth="md" style={{ padding: '20px', backgroundColor: '#121212', color: '#FFFFFF' }}>
       <SiteTitle />
-      <h1>CHAT PAGE</h1>
-      <p>{geminiStream}</p>
-      <form action="">
-      <textarea name="" id="" value={prompt} onChange={(e)=> {setPrompt(e.target.value)}}></textarea>
-      <button onClick={() => handleClick()}>Ask Gemini</button>
+      <Typography variant="h4" gutterBottom style={{ marginBottom: '20px' }}>
+        CHAT PAGE
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        {geminiStream}
+      </Typography>
+      <form>
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Type your message here"
+          variant="outlined"
+          style={{ marginBottom: '10px' }}
+        />
+        <Button variant="contained" color="primary" onClick={() => handleClick()}>
+          Ask Gemini
+        </Button>
       </form>
       <Banner />
       <Footer />
-    </>
+    </Container>
   )
 }
 
