@@ -9,7 +9,6 @@ const userSchema = require('../models/userSchema')
 //HELPER FUNCTIONS
 const { deconstructActivity } = require('../helpers/deconstructActivity')
 const { filterResults } = require('../helpers/filterResults')
-const { conciseResults } = require('../helpers/conciseResults')
 
 //get all games a kidUser has access to
 router.post('/getActivities', async (req, res) => {
@@ -22,40 +21,27 @@ router.post('/getActivities', async (req, res) => {
 
     // find requesting user
     const user = await userSchema.findById(userId)
-    const searchTerm = '' //req.body.searchTerm
 
     //get all activities with one call
     const allActivities = await activitySchema.find({})
 
-    //TODO REMOVE code for id's
-    const activityIds = []
-
-    allActivities.forEach((el) => activityIds.push(el._id))
-
-    //* games section has all logic for game search results
+    //* get all games and activitoes
 
     //all games
-    let allGames = filterResults(allActivities, searchTerm, 'game')
+    let allGames = filterResults(allActivities, 'game')
 
-    // get all games matching title
-    let gameTitleSearchResults = filterResults(allGames, searchTerm, 'title')
+    //get all activites
+    let allLearning = filterResults(allActivities, 'learning')
 
-    // get all games matching keyword
-    let gameKeywordSearchResults = filterResults(
-      allGames,
-      searchTerm,
-      'keyWord'
-    )
+    if (!userId) {
+      return res.status(200).json({
+        message: `all games for no specified`,
+        allGames: allGames,
+        allLearning: allLearning,
+      })
+    }
 
-    // get all games matching age range
-    let gamesAgeRangeSearchResults = filterResults(allGames, searchTerm, 'age')
-
-    //merges all the different results and removes duplicates
-    let conciseGames = conciseResults([
-      gameTitleSearchResults,
-      gameKeywordSearchResults,
-      gamesAgeRangeSearchResults,
-    ])
+    //* filter out allowed games and allowed learning activites
 
     // get allowed games for user
     let allowedGames = allGames.filter((activity) =>
@@ -64,43 +50,10 @@ router.post('/getActivities', async (req, res) => {
 
     //if all or all games is part of the users array allow all games
     if (['all', 'allGames'].some((el) => user.activitiesAccess.includes(el))) {
-      allowedGames = conciseGames
+      allowedGames = allGames
     }
 
-    //* learning activities section
-
-    //get all activites
-    let allLearning = filterResults(allActivities, searchTerm, 'learning')
-
-    // get all learning activities matching title
-    let learningTitleSearchResults = filterResults(
-      allLearning,
-      searchTerm,
-      'title'
-    )
-
-    // get all learning activities matching keyword
-    let learningKeywordSearchResults = filterResults(
-      allLearning,
-      searchTerm,
-      'keyWord'
-    )
-
-    // get all activities matching age range
-    let learningAgeRangeSearchResults = filterResults(
-      allLearning,
-      searchTerm,
-      'age'
-    )
-
-    //merges all the different results and removes duplicates
-    let conciseLearning = conciseResults([
-      learningTitleSearchResults,
-      learningKeywordSearchResults,
-      learningAgeRangeSearchResults,
-    ])
-
-    //? get allowed learning activities for user
+    // get allowed learning activities for user
     let allowedLearning = allLearning.filter((activity) =>
       user.activitiesAccess.includes(activity._id)
     )
@@ -109,17 +62,16 @@ router.post('/getActivities', async (req, res) => {
     if (
       ['all', 'allLearning'].some((el) => user.activitiesAccess.includes(el))
     ) {
-      allowedLearning = conciseLearning
+      allowedLearning = allLearning
     }
 
     return res.status(200).json({
-      message: 'search results',
-      searchTerm: searchTerm,
+      message: `results for ${user} `,
       allowedGames: allowedGames,
       allowedLearning: allowedLearning,
       fullResults: {
-        conciseGames: conciseGames,
-        conciseLearning: conciseLearning,
+        allGames: allGames,
+        allLearning: allLearning,
       },
     })
   } catch (error) {

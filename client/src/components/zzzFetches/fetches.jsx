@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * this file contains all the fetches used by the front end
  */
@@ -79,7 +80,7 @@ export async function logIn(userName, password) {
   }
 }
 
-// get all activities
+// get all activities for user
 export async function getActivities(userId) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/activities/getActivities`, {
@@ -106,10 +107,35 @@ export async function getActivities(userId) {
   }
 }
 
-export async function getAllUsers(userType) {}
+//get all users for admin
+export async function getAllUsers() {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/getAllUsers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+      }),
+
+      credentials: 'include',
+    })
+
+    const allUsers = await res.json()
+
+    if (!res.ok) {
+      throw new Error(allUsers.message || 'Get all users fetch failed')
+    }
+
+    console.log('allUsers', allUsers)
+    return allUsers
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // get kids of logged in user
-export async function findKidsOfParent(userId) {
+export async function findKidsOfParent(userData) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
       method: 'POST',
@@ -117,7 +143,68 @@ export async function findKidsOfParent(userId) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: userId,
+        id: userData._id
+      }),
+
+      credentials: 'include',
+    })
+
+    const kidsOfParent = await res.json()
+
+    if (!res.ok) {
+      throw new Error(kidsOfParent.message || 'Get kids of user fetch failed')
+    }
+
+    return kidsOfParent
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// fetch to delete user
+export async function editUser(id, firstName, lastName, dob, userName, disabled,) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...(id && {id: id}),
+        ...(firstName && {firstName: firstName}),
+        ...(lastName && {lastName: lastName}),
+        ...(dob && {dob: dob}),
+        ...(userName && {userName: userName}),
+        ...(disabled && {disabled: disabled}),
+      }),
+
+      credentials: 'include',
+    })
+
+    const editedUser = await res.json()
+    console.log('editedUser', editedUser)
+    
+
+    if (!res.ok) {
+      throw new Error(editedUser.message || 'edit user fetch failed')
+    }
+
+    return editedUser
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// fetch to delete user user
+export async function deleteUser(id) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id
       }),
 
       credentials: 'include',

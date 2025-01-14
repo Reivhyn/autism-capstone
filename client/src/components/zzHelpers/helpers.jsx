@@ -50,7 +50,7 @@ export function validatePasswordCriteria(password) {
   //GLOBALS
 
   //determins the min lenght allowed
-  const minLength = 10
+  const minLength = 9
 
   //keeps track of wether meeting the criteria has failed
   let lengthFail = false

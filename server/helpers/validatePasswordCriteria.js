@@ -6,7 +6,7 @@ function validatePasswordCriteria(password) {
   //GLOBALS
 
   //determins the min lenght allowed
-  const minLength = 10
+  const minLength = 9
 
   //keeps track of wether meeting the criteria has failed
   let lengthFail = false
@@ -23,7 +23,7 @@ function validatePasswordCriteria(password) {
   const symbol = /[!@#$%^&*()_+\-=\[\]{}|;:'",.<>?/~`]/
 
   // Check if password is at least 10 characters long
-  if (password.length < minLength) {
+  if (password.length <= minLength) {
     lengthFail = true
   }
 
@@ -49,19 +49,23 @@ function validatePasswordCriteria(password) {
     numberFail ||
     symbolFail
   ) {
-        throw new Error(
-          `The password does not meet the criteria
+    throw new Error(
+      `The password does not meet the criteria
     it must be ${minLength} characters long,
     have an upper and lower case character
     a number and symbol (allowed symbols !@#$%^&*()_+-=[]{}|;:'",.<>?/~)\n
-          ${lengthFail ? 'Your password does not meet length requirements\n' : ''}${
-            upperCaseFail ? 'Your password does not have an uppercase letter\n' : ''
+          ${
+            lengthFail
+              ? 'Your password does not meet length requirements\n'
+              : ''
           }${
-            lowerCaseFail ? 'Your password does not have a lower case letter\n' : ''
-          }${numberFail ? 'Your password does not have a number\n' : ''}${
-            symbolFail ? 'Your password does not have an allowed symbol\n' : ''
-          }`.trim()
-        )
+        upperCaseFail ? 'Your password does not have an uppercase letter\n' : ''
+      }${
+        lowerCaseFail ? 'Your password does not have a lower case letter\n' : ''
+      }${numberFail ? 'Your password does not have a number\n' : ''}${
+        symbolFail ? 'Your password does not have an allowed symbol\n' : ''
+      }`.trim()
+    )
   }
 }
 

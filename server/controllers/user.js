@@ -14,22 +14,27 @@ router.post('/findKidsOfParent', async (req, res) => {
     const id = req.body.id
 
     const foundKidsOfParent = await userSchema.find({parentUser: id})
-    console.log('foundKidsOfParent', foundKidsOfParent)
-
-    // const foundParent = await userSchema.findById(id)
-    // console.log('foundParent', foundParent)
-
-    // // grab array of kids ids from parent document
-    // const userKidsIdArray = foundParent.kids
-    // console.log('userKidsIdArray', userKidsIdArray)
-
-    // // create list of kids documetns from list of id's
-    // const kidUsersArray = []
-    // userKidsIdArray.map(async (kid) => kidUsersArray.push(await userSchema.findById(kid)))
-
-    // console.log('kidUserArray', kidUsersArray)
     
     return res.status(200).json({foundKidsOfParent})
+  } catch (error) {
+    return res.status(500).json({
+      message: `${error}`,
+    })
+  }
+})
+
+router.post('/getAllUsers', async (req, res) =>{
+
+  try {
+    console.log('getAllUsers endpoint hit');
+    
+    // verify user is an admin
+    if(req.body.userType !== 'admin') throw new Error("Request Denied");
+    
+    const allUsers = await userSchema.find({})
+
+    return res.status(200).json({allUsers})
+    
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
