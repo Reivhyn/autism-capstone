@@ -34,6 +34,7 @@ function App() {
           {/* Global DropMenu */}
           <DropMenu />
 
+<<<<<<< HEAD
           {/* Page Rendering */}
           {pageToDisplay === 'login' && <Login />}
           {pageToDisplay === 'register' && <Register />}
@@ -42,6 +43,25 @@ function App() {
           {pageToDisplay === 'chat' && <Chat />}
           {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && <Portal />}
           {pageToDisplay === 'parent' && <ParentHome />}
+=======
+              {/* Page Rendering */}
+              {pageToDisplay === 'login' && <Login />}
+              {pageToDisplay === 'register' && <Register />}
+              {pageToDisplay === 'landing' && <Landing />}
+              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
+                <Activities />
+              )}
+              {pageToDisplay === 'chat' && <Chat />}
+              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                <Portal />
+              )}
+              {(pageToDisplay === 'editUser' ||
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'editKid' ||
+                pageToDisplay === 'addKid') && <EditUser />}
+            </editTargetContext.Provider>
+          </KidsOfParentContext.Provider>
+>>>>>>> c0fdc960347eec33f7a93c6761fd516b4a0f0515
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>
