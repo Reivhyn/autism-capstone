@@ -1,61 +1,69 @@
-/*
- * this component displays the landing page
- */
-
-
 import { useContext } from 'react';
 import './Landing.css';
 
-// COMPONENT IMPORTS
-import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
-
 // CONTEXT IMPORTS
-import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
+import { ptdContext } from '../zContextHooks/contextHooks';
 
-// HELPER IPORTS
-import { changePage } from '../zzHelpers/helpers';
+// ICON IMPORTS
+import SchoolIcon from '@mui/icons-material/School';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const Landing = () => {
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [userData, setUserData] = useContext(userDataContext)
+  const [, setPageToDisplay] = useContext(ptdContext);
 
   return (
-    
     <div className="landing">
-      <div className='loginButtons'>
-        <button onClick={() =>setPageToDisplay('login')}>Login</button>
-        <button onClick={() =>setPageToDisplay('register')}>Register</button>
+      {/* Top-right Login and Register Buttons */}
+      <div className="topRightButtons">
+        <button
+          className="topRightButton"
+          onClick={() => setPageToDisplay('login')}
+        >
+          Login
+        </button>
+        <button
+          className="topRightButton"
+          onClick={() => setPageToDisplay('register')}
+        >
+          Register
+        </button>
       </div>
 
-      <h1 className="siteNameHeader">Website Name </h1>
+      {/* Site Header */}
+      <h1 className="siteNameHeader">Welcome to the Site!</h1>
 
-      <Banner />
-
+      {/* Main Page Buttons */}
       <div className="mainPageButtons">
         <button
-          className="landingButtonText"
+          className="cardButton"
           onClick={() => setPageToDisplay('learning')}
         >
+          <SchoolIcon style={{ marginRight: '10px' }} />
           Learning Activities
         </button>
 
         <button
-          className="landingButtonText"
+          className="cardButton"
           onClick={() => setPageToDisplay('games')}
         >
+          <SportsEsportsIcon style={{ marginRight: '10px' }} />
           Games
         </button>
 
         <button
-          className="landingButtonText"
+          className="cardButton"
           onClick={() => setPageToDisplay('chat')}
         >
+          <ChatIcon style={{ marginRight: '10px' }} />
           Chat
         </button>
       </div>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="footer">
+        <p>&copy; 2025 Your Site Name. All rights reserved.</p>
+      </footer>
     </div>
   );
 };

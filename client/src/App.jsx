@@ -9,10 +9,15 @@ import Activities from './components/Activities/Activities';
 import Chat from './components/Chat/Chat';
 import Portal from './components/Portal/Portal';
 import DropMenu from './components/DropMenu/DropMenu';
-
+import EditUser from './components/EditUser/EditUser'; // Ensure this is a valid import
 
 // CONTEXT IMPORTS
-import { ptdContext, userDataContext } from './components/zContextHooks/contextHooks';
+import {
+  ptdContext,
+  userDataContext,
+  editTargetContext,
+  KidsOfParentContext, // Import all required contexts
+} from './components/zContextHooks/contextHooks';
 
 // MATERIAL-UI IMPORTS
 import { ThemeProvider } from '@mui/material/styles';
@@ -31,9 +36,10 @@ function App() {
       <CssBaseline /> {/* To ensure consistent styling across all browsers */}
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          {/* Global DropMenu */}
-          <DropMenu />
-
+          <editTargetContext.Provider value={{}}>
+            <KidsOfParentContext.Provider value={{}}>
+              {/* Global DropMenu */}
+              <DropMenu />
 
               {/* Page Rendering */}
               {pageToDisplay === 'login' && <Login />}
@@ -50,9 +56,8 @@ function App() {
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
-            </editTargetContext.Provider>
-          </KidsOfParentContext.Provider>
-          c0fdc960347eec33f7a93c6761fd516b4a0f0515
+            </KidsOfParentContext.Provider>
+          </editTargetContext.Provider>
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>

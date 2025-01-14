@@ -17,27 +17,32 @@
   background-color: orangered;
 }
 
-/* responsive for monitors */
-@media (min-width: 1024px) {
-  
-  
-  .mainPageButtons {
-    display: flex;
-    justify-content: center;
-    word-wrap: normal;
-  }
-
-  .frontPageSectionButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20vw;
-    height: 30vh;
-  }
+.cardButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background-color: #007BFF; /* Blue color */
+  color: white; /* Text color */
+  border: none;
+  border-radius: 10px; /* Rounded corners */
+  width: 25vw; /* Card width */
+  height: 15vh; /* Card height */
+  margin: 10px; /* Space between buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow */
+  text-align: center;
 }
+
+.cardButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+  cursor: pointer;
+}
+
 .landingButtonText {
-  background-color: #007BFF;  /* Blue color */
-  color: white;  /* Text color */
+  background-color: #007BFF; /* Blue color */
+  color: white; /* Text color */
   border: none;
   padding: 10px 20px;
   margin: 5px;
@@ -48,6 +53,52 @@
 }
 
 .landingButtonText:hover {
-  background-color: #0056b3;  /* Darker blue on hover */
-  transform: scale(1.05);  /* Slight scaling for interaction feedback */
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scaling for interaction feedback */
+}
+/* smaller screens*/
+@media (min-width: 1024px) {
+  .mainPageButtons {
+    display: flex;
+    justify-content: center;
+    word-wrap: normal;
+  }
+
+  .cardButton {
+    width: 20vw; /* Adjust width for larger screens */
+    height: 20vh; /* Adjust height for larger screens */
+  }
+}
+
+/* Styles for the Login and Register buttons */
+.topRightButtons {
+  position: absolute;
+  top: 20px; /* Adjust position from the top */
+  right: 20px; /* Adjust position from the right */
+  display: flex;
+  gap: 10px; /* Space between the buttons */
+}
+
+.topRightButton {
+  background-color:rgb(34, 255, 108); /* Orange color */
+  color: white; /* Text color */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.topRightButton:hover {
+  background-color:rgb(7, 170, 102); 
+  transform: scale(1.1); /* Slight zoom effect */
+}
+/* smaller screens */
+@media (max-width: 768px) {
+  .topRightButtons {
+    top: 10px;
+    right: 10px;
+  }
 }
