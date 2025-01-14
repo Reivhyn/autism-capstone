@@ -48,6 +48,7 @@ const DropMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        
         <MenuItem onClick={() => handleMenuItemClick('landing')}>Home</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('games')}>Games</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('learning')}>Learning Activities</MenuItem>
