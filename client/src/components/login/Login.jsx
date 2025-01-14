@@ -188,22 +188,7 @@ const Login = () => {
             </Button>
           </Box>
         </Box>
-        <Divider>or</Divider>
-        {/* Social Buttons */}
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={() => alert('Sign in with Google')}
-        >
-          Sign in with Google
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={() => alert('Sign in with Facebook')}
-        >
-          Sign in with Facebook
-        </Button>
+        
       </Card>
     </Box>
   );
