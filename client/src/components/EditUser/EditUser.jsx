@@ -118,7 +118,12 @@ const EditUser = () => {
   //* USEEFFECT
   //get all activites when page is loaded
   useEffect(() => {
-    if (pageToDisplay === 'edit' || pageToDisplay === 'add user')
+    if (
+      pageToDisplay === 'editUser' ||
+      pageToDisplay === 'addUser' ||
+      pageToDisplay === 'editKid' ||
+      pageToDisplay === 'addKid'
+    )
       fetchAllActivities()
   }, [pageToDisplay])
 
@@ -147,11 +152,10 @@ const EditUser = () => {
   return (
     <>
       <div>
-        {pageToDisplay === 'edit'
+        {pageToDisplay === 'editUser' || pageToDisplay === 'edit kid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
           : 'Add New Child'}
       </div>
-
       {/* form for editing user properties */}
       <div className="formWrapper">
         <form action="">
@@ -217,7 +221,6 @@ const EditUser = () => {
           </div>
         </form>
       </div>
-
       {/* edit access games the user has access to */}
       <div className="dualListOuterWrap">
         {/* dual listbox title */}
@@ -238,7 +241,6 @@ const EditUser = () => {
           </div>
         </div>
       </div>
-
       {/* edit access learning the user has access to */}
       <div className="dualListOuterWrap">
         {/* dual listbox title */}
@@ -259,11 +261,9 @@ const EditUser = () => {
           </div>
         </div>
       </div>
-
       <div className="editGamesWrapper">
         <div className="dualListTitle">Chat Topics</div>
       </div>
-
       <div className="saveCancelButtons">
         {/* Save button */}
         <button onClick={() => callEditUser()}>Save</button>
