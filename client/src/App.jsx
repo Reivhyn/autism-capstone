@@ -10,7 +10,6 @@ import Activities from './components/Activities/Activities'
 import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
-import ParentHome from './components/Parent Home/parentHome'
 import EditUser from './components/EditUser/EditUser.jsx'
 
 // CONTEXT IMPORTS

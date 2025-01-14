@@ -8,6 +8,7 @@ import './editUser.css'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import Footer from '../Footer/Footer'
 import LogoutButton from '../LogoutButton/LogoutButton'
+import DualList from '../DualList/DualList'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
@@ -90,6 +91,8 @@ const EditUser = () => {
       })
     )
   }
+
+  //functions to handle add to selected list
 
   //make saves onece save button is pressed
   const callEditUser = () => {
@@ -221,6 +224,13 @@ const EditUser = () => {
           </div>
         </form>
       </div>
+
+      {allActivities ? (
+        <DualList dataToList={allActivities} listType='games' />
+      ) : (
+        'fetching data'
+      )}
+
       {/* edit access games the user has access to */}
       <div className="dualListOuterWrap">
         {/* dual listbox title */}
