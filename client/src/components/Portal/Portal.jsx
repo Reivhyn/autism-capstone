@@ -88,11 +88,17 @@ const Portal = () => {
           ''
         )}
 
+        {/* if pagetodisplay is parent show kids of parent list
+        first ternary function checks to see if page is parrent and if needed
+        data is present to display the list
+        the second ternary function determins weather to retrun nothing if the pagetodisplay is NOT parent or return fetching data */}
         {/* if user is parent display parents children */}
-        {kidsOfParent ? (
+        {kidsOfParent && pageToDisplay === 'parent' ? (
           <PortalList itemsToList={kidsOfParent} listType={'kids'} />
+        ) : pageToDisplay === 'parent' ? (
+          'fetching data'
         ) : (
-          'Fetching Data'
+          ''
         )}
 
         {/* all games list */}
