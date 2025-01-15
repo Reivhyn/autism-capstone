@@ -1,0 +1,12 @@
+.bannerText {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); /* Rainbow gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* Ensures text is filled by the gradient */
+    text-fill-color: transparent;
+    text-align: center;
+    margin: 20px 0;
+  }

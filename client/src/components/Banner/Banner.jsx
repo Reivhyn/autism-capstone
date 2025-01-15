@@ -1,5 +1,5 @@
 /*
- * this component contains the banner displayed on each page
+ * This component contains the banner displayed on each page
  */
 
 /* eslint-disable no-unused-vars */
@@ -8,10 +8,12 @@ import React, { useContext, useEffect } from 'react'
 //CONTEXT IMPORTS
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks.jsx'
+// Import CSS
+import './Banner.css';
 
 const Banner = () => {
   //* USESTATE
-  //determins which page to display
+  //determines which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
 
   //* FUNCTIONS
@@ -31,9 +33,10 @@ const Banner = () => {
     return 'Welcome to our site'
   }
 
-
   //* RENDER
-  return <h2>{pageToDisplay ? bannerText() : 'Welcome'}</h2>
+  return (
+    <h2 className="bannerText">{pageToDisplay ? bannerText() : 'Welcome'}</h2>
+  )
 }
 
 export default Banner

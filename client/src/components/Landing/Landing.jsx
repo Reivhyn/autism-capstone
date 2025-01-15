@@ -35,35 +35,40 @@ const Landing = () => {
       {/* Site Header */}
       <h1 className="siteNameHeader">Welcome to the Site!</h1>
       <div className="mainPageCards">
-      
-      {/* Learning Activities Card */}
-  <div
-    className="card learningCard"
-    onClick={() => setPageToDisplay('learning')}
-  >
-    <SchoolIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
-    Learning Activities
-  </div>
+        {/* Learning Activities Card */}
+        <div
+          className="card learningCard"
+          onClick={() => setPageToDisplay('learning')}
+        >
+          <div className="cardIcon">
+            <SchoolIcon style={{ fontSize: '3rem' }} />
+          </div>
+          <div className="cardText">Learning Activities</div>
+        </div>
 
-  {/* Games Card */}
-  <div
-    className="card gamesCard"
-    onClick={() => setPageToDisplay('games')}
-  >
-    <SportsEsportsIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
-    Games
-  </div>
+        {/* Games Card */}
+        <div
+          className="card gamesCard"
+          onClick={() => setPageToDisplay('games')}
+        >
+          <div className="cardIcon">
+            <SportsEsportsIcon style={{ fontSize: '3rem' }} />
+          </div>
+          <div className="cardText">Games</div>
+        </div>
 
-  {/* Chat Card */}
-  <div
-    className="card chatCard"
-    onClick={() => setPageToDisplay('chat')}
-  >
-    <ChatIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
-    Chat
-  </div>
-</div>
-      
+        {/* Chat Card */}
+        <div
+          className="card chatCard"
+          onClick={() => setPageToDisplay('chat')}
+        >
+          <div className="cardIcon">
+            <ChatIcon style={{ fontSize: '3rem' }} />
+          </div>
+          <div className="cardText">Chat</div>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="footer">
         <p>&copy; 2025 Your Site Name. All rights reserved.</p>

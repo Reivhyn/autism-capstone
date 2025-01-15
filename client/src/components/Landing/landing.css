@@ -1,77 +1,77 @@
 /* ---------------------------------------- */
-/* General Button Styles                    */
-/* ---------------------------------------- */
-
-.loginButton {
-  transform: translateX(25vw);
-}
-
-.landingButtonText {
-  background-color: #007BFF; /* Blue color */
-  color: white; /* Text color */
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.landingButtonText:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: scale(1.05); /* Slight scaling for interaction feedback */
-}
-
-/* ---------------------------------------- */
 /* Card Styles                              */
 /* ---------------------------------------- */
 
 .cardButton {
   display: flex;
+  flex-direction: column; /* Ensures icon is above text */
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   background-color: #007BFF; /* Default Blue */
-  color: white; /* Text color */
+  color: black; /* Changed text color to black */
   border: none;
   border-radius: 10px; /* Rounded corners */
-  width: 25vw; /* Card width */
-  height: 15vh; /* Card height */
+  width: 10vw; /* Card width */
+  height: 200px; /* Consistent height */
   margin: 10px; /* Space between buttons */
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow */
   text-align: center;
 }
 
-.cardButton:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: translateY(-5px); /* Slight lift on hover */
-  cursor: pointer;
+.cardIcon {
+  display: flex;
+  justify-content: center; /* Center icons horizontally */
+  align-items: center; /* Center icons vertically */
+  margin-bottom: 10px; /* Space between icon and text */
+  width: 80px; /* Adjusted size for consistency */
+  height: 80px; /* Adjusted size for consistency */
 }
 
-.learningCard {
-  background-color:rgb(0, 255, 128); /* Blue for Learning Activities */
-  border-radius: 20px; /* Rounded corners */
+.cardText {
+  text-align: center;
+  font-size: 1.2rem;
 }
+
+/* ---------------------------------------- */
+/* Card Styles for Each Type                */
+/* ---------------------------------------- */
+
+.learningCard {
+  background-color: rgb(0, 255, 128); /* Blue for Learning Activities */
+  border-radius: 20px; /* Rounded corners */
+  color: black; /* Changed text color to black */
+  width: 25vw; /* Consistent card width */
+  height: 200px; /* Consistent height */
+}
+
 .learningCard:hover {
-  background-color:rgb(25, 155, 230); 
+  background-color: rgb(25, 155, 230); 
 }
 
 .gamesCard {
   background-color: rgb(49, 209, 17);  
   border-radius: 20px; /* Rounded corners */
+  color: black; /* Changed text color to black */
+  width: 25vw; /* Consistent card width */
+  height: 200px; /* Consistent height */
 }
 
 .gamesCard:hover {
   background-color: rgb(199, 230, 25); 
 }
+
 .chatCard {
-  background-color:rgb(130, 34, 255); 
+  background-color: rgb(130, 34, 255); 
   border-radius: 20px; /* Rounded corners */
+  color: black; /* Changed text color to black */
+  width: 25vw; /* Consistent card width */
+  height: 200px; /* Consistent height */
 }
+
 .chatCard:hover {
-  background-color:rgb(25, 155, 230); 
+  background-color: rgb(25, 155, 230); 
 }
 
 /* ---------------------------------------- */
@@ -83,12 +83,12 @@
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   gap: 20px; /* Space between cards */
-  flex-wrap: nowrap; /* Keep cards on the same row */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
   margin-top: 20px;
 }
 
 /* ---------------------------------------- */
-/* Login and Register Button Styles         */
+/* Top-right Buttons                        */
 /* ---------------------------------------- */
 
 .topRightButtons {
@@ -101,7 +101,7 @@
 
 .topRightButton {
   background-color: rgb(34, 255, 108); /* Green */
-  color: white; /* Text color */
+  color: black; /* Changed text color to black */
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
@@ -115,6 +115,7 @@
   background-color: rgb(7, 170, 102);
   transform: scale(1.1); /* Slight zoom effect */
 }
+
 .siteNameHeader {
   font-size: 3rem;
   font-weight: bold;
@@ -128,6 +129,7 @@
   margin-top: 20px;
   padding: 20px 0;
 }
+
 /* ---------------------------------------- */
 /* Responsive Styles                        */
 /* ---------------------------------------- */
@@ -140,7 +142,7 @@
 
   .cardButton {
     width: 80vw; /* Make cards full-width on smaller screens */
-    height: auto; /* Adjust height to fit content */
+    height: 150px; /* Adjust height to fit content */
   }
 
   .topRightButtons {
