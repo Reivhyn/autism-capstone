@@ -35,6 +35,7 @@ const Landing = () => {
       {/* Site Header */}
       <h1 className="siteNameHeader">Welcome to the Site!</h1>
       <div className="mainPageCards">
+        
         {/* Learning Activities Card */}
         <div
           className="card learningCard"

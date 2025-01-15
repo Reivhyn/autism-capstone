@@ -33,45 +33,65 @@
   text-align: center;
   font-size: 1.2rem;
 }
-
 /* ---------------------------------------- */
-/* Card Styles for Each Type                */
+/* Card Styles for Each Type with Gradients */
 /* ---------------------------------------- */
 
 .learningCard {
-  background-color: rgb(0, 255, 128); /* Blue for Learning Activities */
+  background: linear-gradient(135deg, #1de9b6,rgb(10, 78, 122)); /* Green to Blue gradient */
   border-radius: 20px; /* Rounded corners */
-  color: black; /* Changed text color to black */
+  color: black; /* Text color */
   width: 25vw; /* Consistent card width */
   height: 200px; /* Consistent height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .learningCard:hover {
-  background-color: rgb(25, 155, 230); 
+  background: linear-gradient(135deg, #0dbf8a,rgb(3, 44, 70)); /* Darker gradient on hover */
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
 .gamesCard {
-  background-color: rgb(49, 209, 17);  
-  border-radius: 20px; /* Rounded corners */
-  color: black; /* Changed text color to black */
-  width: 25vw; /* Consistent card width */
-  height: 200px; /* Consistent height */
+  background: linear-gradient(135deg, #31d111, #c7e619); /* Lime Green to Yellow gradient */
+  border-radius: 20px;
+  color: black;
+  width: 25vw;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .gamesCard:hover {
-  background-color: rgb(199, 230, 25); 
+  background: linear-gradient(135deg, #28a80e, #a8c21a); /* Darker gradient on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .chatCard {
-  background-color: rgb(130, 34, 255); 
-  border-radius: 20px; /* Rounded corners */
-  color: black; /* Changed text color to black */
-  width: 25vw; /* Consistent card width */
-  height: 200px; /* Consistent height */
+  background: linear-gradient(135deg, #8222ff,rgb(14, 5, 153)); /* Purple gradient */
+  border-radius: 20px;
+  color: black;
+  width: 25vw;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .chatCard:hover {
-  background-color: rgb(25, 155, 230); 
+  background: linear-gradient(135deg, #651bcc,rgb(3, 19, 156)); /* Darker gradient on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* ---------------------------------------- */
@@ -79,13 +99,14 @@
 /* ---------------------------------------- */
 
 .mainPageCards {
-  display: flex; /* Flexbox layout */
-  justify-content: center; /* Center items horizontally */
-  align-items: center; /* Center items vertically */
-  gap: 20px; /* Space between cards */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
+
 
 /* ---------------------------------------- */
 /* Top-right Buttons                        */
@@ -100,20 +121,22 @@
 }
 
 .topRightButton {
-  background-color: rgb(34, 255, 108); /* Green */
-  color: black; /* Changed text color to black */
+  background: linear-gradient(90deg, #1de9b6, rgb(7, 70, 77)); /* Modern gradient */
+  color: black;
   padding: 10px 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px; /* More modern rounded edges */
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease, -webkit-transform 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .topRightButton:hover {
-  background-color: rgb(7, 170, 102);
+  background: linear-gradient(90deg, rgb(15, 99, 78), #1de9ff); /* Gradient on hover */
   transform: scale(1.1); /* Slight zoom effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
 }
 
 .siteNameHeader {
