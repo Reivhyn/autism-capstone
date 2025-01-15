@@ -4,9 +4,10 @@ import './activities.css'
 //COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle'
 import Banner from '../Banner/Banner'
-import Footer from '../Footer/Footer'
-import ActivityTile from '../ActivityTile/ActivityTile'
+import DropMenu from '../DropMenu/DropMenu'
 import SearchBar from '../SearchBar/SearchBar'
+import ActivityTile from '../ActivityTile/ActivityTile'
+import Footer from '../Footer/Footer'
 
 //Material-UI Imports
 import { Container, Typography, Grid } from '@mui/material'
@@ -79,8 +80,14 @@ const Activities = () => {
       </Typography>
 
       <Banner />
-
-      <SearchBar setSearchTerm={setSearchTerm} />
+      
+      <div className='dropsearch-container'>
+        <DropMenu />
+          <div className='searchbar-container'>
+            <SearchBar setSearchTerm={setSearchTerm} />
+        </div>
+      </div>
+      
 
       {/* grid for activities */}
       <Grid container spacing={3} style={{ marginTop: '20px' }}>
