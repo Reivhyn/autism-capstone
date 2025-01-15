@@ -9,6 +9,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import ChatIcon from '@mui/icons-material/Chat';
 
+import Footer from '../Footer/Footer'
+
 const Landing = () => {
   const [, setPageToDisplay] = useContext(ptdContext);
 
