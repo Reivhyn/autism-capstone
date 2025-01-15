@@ -8,25 +8,25 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
-  background-color: #007BFF; /* Default Blue */
-  color: black; /* Changed text color to black */
+  background-color: #007BFF; 
+  color: black; 
   border: none;
   border-radius: 10px; /* Rounded corners */
-  width: 10vw; /* Card width */
+  width: 10vw;
   height: 200px; /* Consistent height */
-  margin: 10px; /* Space between buttons */
+  margin: 10px; 
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
   text-align: center;
 }
 
 .cardIcon {
   display: flex;
-  justify-content: center; /* Center icons horizontally */
-  align-items: center; /* Center icons vertically */
-  margin-bottom: 10px; /* Space between icon and text */
-  width: 80px; /* Adjusted size for consistency */
-  height: 80px; /* Adjusted size for consistency */
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 10px; 
+  width: 80px; 
+  height: 80px; 
 }
 
 .cardText {
@@ -38,11 +38,11 @@
 /* ---------------------------------------- */
 
 .learningCard {
-  background: linear-gradient(135deg, #1de9b6,rgb(10, 78, 122)); /* Green to Blue gradient */
-  border-radius: 20px; /* Rounded corners */
-  color: black; /* Text color */
-  width: 25vw; /* Consistent card width */
-  height: 200px; /* Consistent height */
+  background: linear-gradient(135deg, #1de9b6,rgb(10, 78, 122)); 
+  border-radius: 20px; 
+  color: black; 
+  width: 25vw; 
+  height: 200px; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,13 +51,13 @@
 }
 
 .learningCard:hover {
-  background: linear-gradient(135deg, #0dbf8a,rgb(3, 44, 70)); /* Darker gradient on hover */
-  transform: translateY(-5px); /* Lift on hover */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  background: linear-gradient(135deg, #0dbf8a,rgb(3, 44, 70)); 
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .gamesCard {
-  background: linear-gradient(135deg, #31d111, #c7e619); /* Lime Green to Yellow gradient */
+  background: linear-gradient(135deg, #31d111, #c7e619); 
   border-radius: 20px;
   color: black;
   width: 25vw;
@@ -70,13 +70,13 @@
 }
 
 .gamesCard:hover {
-  background: linear-gradient(135deg, #28a80e, #a8c21a); /* Darker gradient on hover */
+  background: linear-gradient(135deg, #28a80e, #a8c21a); 
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .chatCard {
-  background: linear-gradient(135deg, #8222ff,rgb(14, 5, 153)); /* Purple gradient */
+  background: linear-gradient(135deg, #8222ff,rgb(14, 5, 153));
   border-radius: 20px;
   color: black;
   width: 25vw;
@@ -115,22 +115,22 @@
 .topRightButtons {
   position: absolute;
   top: 20px; /* Adjust position from the top */
-  right: 20px; /* Adjust position from the right */
+  right: 20px; 
   display: flex;
-  gap: 10px; /* Space between the buttons */
+  gap: 10px; 
 }
 
 .topRightButton {
-  background: linear-gradient(90deg, #1de9b6, rgb(7, 70, 77)); /* Modern gradient */
+  background: linear-gradient(90deg, #1de9b6, rgb(7, 70, 77)); 
   color: black;
   padding: 10px 15px;
   border: none;
-  border-radius: 25px; /* More modern rounded edges */
+  border-radius: 25px; 
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s ease, -webkit-transform 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .topRightButton:hover {
@@ -146,7 +146,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent; /* Ensures that text is filled by gradient */
+  color: transparent; 
   text-fill-color: transparent;
   text-align: center;
   margin-top: 20px;
@@ -160,7 +160,7 @@
 @media (max-width: 768px) {
   .mainPageCards {
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 10px; /* Reduce spacing between items */
+    gap: 10px;
   }
 
   .cardButton {
