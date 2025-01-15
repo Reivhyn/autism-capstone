@@ -1,0 +1,51 @@
+/* General styles for the search bar */
+.search-bar-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+  /* Styling the search field */
+.custom-search-field {
+    width: 100%;
+    max-width: 350px; /* Adjust based on your layout */
+    box-sizing: border-box;
+}
+
+  /* Input field inside TextField */
+.custom-search-field .MuiOutlinedInput-root {
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+  /* Search button */
+.custom-search-field .MuiIconButton-root {
+    color: #555; /* Default icon color */
+    transition: color 0.3s ease;
+  }
+  
+  .custom-search-field .MuiIconButton-root:hover {
+    color: #000; /* Change color on hover */
+  }
+  
+  /* Responsiveness: Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .custom-search-field {
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .custom-search-field {
+      max-width: 100%;
+    }
+  
+    .search-bar-form {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  

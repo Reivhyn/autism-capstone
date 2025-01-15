@@ -7,3 +7,27 @@
     padding: 3vw; /* Optional: Add padding around the grid */
   }  
 }
+
+.dropsearch-container {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem; 
+  margin: 1rem 0; 
+}
+
+.searchbar-container {
+    width: 100%; 
+    max-width: 300px; 
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+/* Responsiveness for dropMenu & searchBar */
+@media (max-width: 768px) {
+  .dropsearch-container {
+    flex-direction: column; /* Stacks items on smaller screens */
+    gap: 0.5rem;
+  }
+}
