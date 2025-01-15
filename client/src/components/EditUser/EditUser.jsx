@@ -105,7 +105,7 @@ const EditUser = () => {
     if (editSaved === true) {
       setTimeout(() => {
         setPageToDisplay('parent')
-      }, 1500)
+      }, 5500)
     }
   }, [editSaved])
 
