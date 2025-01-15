@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
 import './dualList.css'
 
@@ -10,83 +11,193 @@ import {
   editTargetContext,
 } from '../zContextHooks/contextHooks'
 
-const DualList = ({dataToList, listType}) => {
+const DualList = ({
+  dataToList,
+  listType,
+  gamesAccess,
+  setGamesAccess,
+  learningAccess,
+  setLearningAccess,
+}) => {
   //* USESTATES
   const [editTarget, setEditTarget] = useContext(editTargetContext)
+  const [dualListTitle, setDualListTitle] = useState('')
 
   //set vars for available and selected options
-  const [avilableOptions, setAvailableOptions] = useState('')
+  const [availableOptions, setAvailableOptions] = useState('')
   const [selectedOptions, setSelectedOptions] = useState('')
+  const [renderAvailable, setRenderAvailable] = useState('')
+  const [renderSelected, setRenderSelected] = useState('')
 
   //* FUNCTIONS
   //function to initilise dual list
-  const initilizeAvailableActivities = () => {
-    //initilize games
+  const initilizeDualList = () => {
     if (listType === 'games') {
-      setAvailableOptions(
-        dataToList.allGames.map((game, i) => {
-          return <li key={`availabelGame${i}`}>{game.activityTitle}</li>
-        })
-      )
+      //initilize available games
+      const array = [] //throw away array to use 
+      dataToList.allGames.map(option => {
+        if (!editTarget.activitiesAccess.includes(option._id)) {
+          array.push(option)
+        }
+      })
+      setAvailableOptions(array)
 
-      setSelectedOptions(
-        dataToList.allGames.map((game, i) => {
-          if (editTarget.activitiesAccess.includes(game._id))
-            return <li key={`selectedGame${i}`}>{game.activityTitle}</li>
-        })
-      )
+      //initialize selected games
+      const arr = []
+      dataToList.allGames.map((option) => {
+        if (editTarget.activitiesAccess.includes(option._id)) {//! sometimes crash here
+          arr.push(option)
+        }
+        setSelectedOptions(arr)
+      })
     }
 
-    //initilize learning
     if (listType === 'learning') {
-      setAvailableOptions(
-        dataToList.allLearning.map((learning, i) => {
-          return <li key={`availabellearning${i}`}>{learning.activityTitle}</li>
+      //initilize available learning activities
+      const array = [] //throw away array to use 
+      dataToList.allLearning.map(option => {
+        if (!editTarget.activitiesAccess.includes(option._id)) {
+          array.push(option)
+        }
+      })
+      setAvailableOptions(array)
+
+      //initialize selected learning activities
+      const arr = []
+      dataToList.allLearning.map((option) => {
+        if (editTarget.activitiesAccess.includes(option._id)) {
+          arr.push(option)
+        }
+        setSelectedOptions(arr)
+      })
+    }
+  }
+
+  //render the list
+  const renderList = () => {
+    if (listType === 'games' || listType === 'learning') {
+      //render available list
+      setRenderAvailable(
+        availableOptions.map((option, i) => {
+          return (
+            <li
+              onClick={() => handleAdd(option)}
+              key={
+                listType === 'games'
+                  ? `availabelGame${i}`
+                  : `availableLearning${i}`
+              }
+            >
+              {option.activityTitle}
+            </li>
+          )
         })
       )
 
-      setSelectedOptions(
-        dataToList.allLearning.map((learning, i) => {
-          if (editTarget.activitiesAccess.includes(learning._id))
-            return (
-              <li key={`selectedLearning${i}`}>{learning.activityTitle}</li>
-            )
+      //render selected list
+      setRenderSelected(
+        selectedOptions.map((option, i) => {
+          return (
+            <li
+              onClick={() => handleRemove(option)}
+              key={
+                listType === 'games'
+                  ? `selectedGame${i}`
+                  : `selectedLearning${i}`
+              }
+            >
+              {option.activityTitle}
+            </li>
+          )
         })
       )
     }
   }
 
-  //* USEEFFECT
+  // sets title of the dual list
+  const setTitle = () => {
+    if (listType === 'games') {
+      setDualListTitle('Games')
+      return
+    }
+    if (listType === 'learning') {
+      setDualListTitle('Learning Activities')
+      return
+    }
+  }
 
-    //initilize available activites after data retrived
-    useEffect(() => {
-      if (dataToList) {
-        console.log('listType', listType)
-        console.log('dataToList', dataToList)
-        initilizeAvailableActivities()
-      }
-    }, [dataToList])
-  
+  // handle adding item to selected
+  const handleAdd = (option) => {
+    setAvailableOptions(availableOptions.filter((item) => option !== item))
+    setSelectedOptions([...selectedOptions, option])
+  }
+
+  //handle removing item from selected
+  const handleRemove = (option) => {
+    setSelectedOptions(selectedOptions.filter((item) => option !== item))
+    setAvailableOptions([...availableOptions, option])
+  }
+
+  // add all options to selected list
+  const handleAddAll = () => {
+    setSelectedOptions([...selectedOptions, ...availableOptions])
+    setAvailableOptions([])
+  }
+
+  //remove all options from selcted list
+  const handleRemoveAll = () => {
+    setAvailableOptions([...availableOptions, ...selectedOptions])
+    setSelectedOptions([])
+  }
+
+  //update access list returned to edit user
+  const updateAccessList = () => {
+      const arr = []
+      selectedOptions.map(option => arr.push(option._id))
+      
+      if (listType === 'games') setGamesAccess(arr)
+
+      if(listType === 'learning') setLearningAccess(arr)
+    
+  }
+
+  //* USEEFFECT
+  //initilize list
+  useEffect(() => {
+    setTitle()
+    initilizeDualList()
+  }, [])
+
+  //render list after initilization and update access list returned tp edit user
+  useEffect(() => {
+    if (availableOptions && selectedOptions) {
+      renderList()
+
+      updateAccessList()
+    }
+  }, [availableOptions, selectedOptions])
+
   return (
     <>
-    DUALLIST COMPONENT
       {/* edit access games the user has access to */}
       <div className="dualListOuterWrap">
         {/* dual listbox title */}
-        <div className="dualListTitle">Games</div>
+        <div className="dualListTitle">{dualListTitle}</div>
 
         {/* wraps left and right side of list */}
         <div className="dualListWrapper">
           {/* available side of dual list */}
           <div className="availableWraper">
             <div className="available">Available</div>
-            <ul>{avilableOptions ? avilableOptions : 'Fetching data'}</ul>
+            <ul>{renderAvailable ? renderAvailable : 'Fetching data'}</ul>
+            <button onClick={() => handleAddAll()}>Add All</button>
           </div>
 
           {/* selected side of dual list */}
           <div className="selectedWraper">
             <div className="selected">Selected</div>
-            <ul>{selectedOptions ? selectedOptions : 'Fetching data'}</ul>
+            <ul>{renderSelected ? renderSelected : 'Fetching data'}</ul>
+            <button onClick={() => handleRemoveAll()}>Remove All</button>
           </div>
         </div>
       </div>

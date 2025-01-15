@@ -47,52 +47,17 @@ const EditUser = () => {
   const [editDeleteKid, setEditDeleteKid] = useState('')
 
   //useStates pertaining to games dual list
-  //games
-  const [avilableGames, setAvailableGames] = useState('')
-  const [selectedGames, setSelectedGames] = useState('')
+  const [gamesAccess, setGamesAccess] = useState('')
+  const [learingAccess, setlearningAccess] = useState('')
 
-  //Learning
-  const [avilableLearning, setAvailableLearning] = useState('')
-  const [selectedLearning, setSelectedLearning] = useState('')
+  //combines the two access arrays to be passed when save button is pressed
+  const [activitiesAccess, setActivitiesAccess] = useState('')
 
   //* FUNCTIONS
   //function to retreve all user
   const fetchAllActivities = async () => {
     setAllActivities(await getActivities())
   }
-
-  //function to initilise dual list
-  const initilizeAvailableActivities = () => {
-    //initilize games
-    setAvailableGames(
-      allActivities.allGames.map((game, i) => {
-        return <li key={`availabelGame${i}`}>{game.activityTitle}</li>
-      })
-    )
-
-    setSelectedGames(
-      allActivities.allGames.map((game, i) => {
-        if (editTarget.activitiesAccess.includes(game._id))
-          return <li key={`selectedGame${i}`}>{game.activityTitle}</li>
-      })
-    )
-
-    //initilize learning
-    setAvailableLearning(
-      allActivities.allLearning.map((learning, i) => {
-        return <li key={`availabellearning${i}`}>{learning.activityTitle}</li>
-      })
-    )
-
-    setSelectedLearning(
-      allActivities.allLearning.map((learning, i) => {
-        if (editTarget.activitiesAccess.includes(learning._id))
-          return <li key={`selectedLearning${i}`}>{learning.activityTitle}</li>
-      })
-    )
-  }
-
-  //functions to handle add to selected list
 
   //make saves onece save button is pressed
   const callEditUser = () => {
@@ -113,7 +78,7 @@ const EditUser = () => {
       editDateOfBirth,
       editUserName,
       editDisableLogin,
-      editDeleteKid
+      activitiesAccess
     )
     setEditSaved(true)
   }
@@ -130,12 +95,10 @@ const EditUser = () => {
       fetchAllActivities()
   }, [pageToDisplay])
 
-  //initilize available activites after data retrived
+  //update learning access when its updated on the dual list
   useEffect(() => {
-    if (allActivities) {
-      initilizeAvailableActivities()
-    }
-  }, [allActivities])
+    setActivitiesAccess([...gamesAccess, ...learingAccess])
+  }, [gamesAccess, learingAccess])
 
   //change page back to portal after saves made
   useEffect(() => {
@@ -225,55 +188,30 @@ const EditUser = () => {
         </form>
       </div>
 
+      {/* games duallist */}
       {allActivities ? (
-        <DualList dataToList={allActivities} listType='games' />
+        <DualList
+          dataToList={allActivities}
+          listType="games"
+          gamesAccess={gamesAccess}
+          setGamesAccess={setGamesAccess}
+        />
       ) : (
         'fetching data'
       )}
 
-      {/* edit access games the user has access to */}
-      <div className="dualListOuterWrap">
-        {/* dual listbox title */}
-        <div className="dualListTitle">Games</div>
+      {/* learning duallist */}
+      {allActivities ? (
+        <DualList
+          dataToList={allActivities}
+          listType="learning"
+          learingAccess={learingAccess}
+          setLearningAccess={setlearningAccess}
+        />
+      ) : (
+        'fetching data'
+      )}
 
-        {/* wraps left and right side of list */}
-        <div className="dualListWrapper">
-          {/* available side of dual list */}
-          <div className="availableWraper">
-            <div className="available">Available</div>
-            <ul>{avilableGames ? avilableGames : 'Fetching data'}</ul>
-          </div>
-
-          {/* selected side of dual list */}
-          <div className="selectedWraper">
-            <div className="selected">Selected</div>
-            <ul>{selectedGames ? selectedGames : 'Fetching data'}</ul>
-          </div>
-        </div>
-      </div>
-      {/* edit access learning the user has access to */}
-      <div className="dualListOuterWrap">
-        {/* dual listbox title */}
-        <div className="dualListTitle">Learning Activites</div>
-
-        {/* wraps left and right side of list */}
-        <div className="dualListWrapper">
-          {/* available side of dual list */}
-          <div className="availableWraper">
-            <div className="available">Available</div>
-            <ul>{avilableLearning ? avilableLearning : 'Fetching data'}</ul>
-          </div>
-
-          {/* selected side of dual list */}
-          <div className="selectedWraper">
-            <div className="selected">Selected</div>
-            <ul>{selectedLearning ? selectedLearning : 'Fetching data'}</ul>
-          </div>
-        </div>
-      </div>
-      <div className="editGamesWrapper">
-        <div className="dualListTitle">Chat Topics</div>
-      </div>
       <div className="saveCancelButtons">
         {/* Save button */}
         <button onClick={() => callEditUser()}>Save</button>
@@ -286,35 +224,3 @@ const EditUser = () => {
 }
 
 export default EditUser
-
-/* 
-
-  const handleAdd = (item) => {
-    setAvailableItems(availableItems.filter((i) => i !== item));
-    setSelectedItems([...selectedItems, item]);
-  };
-
-  const handleRemove = (item) => {
-    setSelectedItems(selectedItems.filter((i) => i !== item));
-    setAvailableItems([...availableItems, item]);
-  };
-
-        Add/Remove Buttons 
-       <div className="button-container">
-       <button
-         className="action-button"
-         onClick={() => setSelectedItems([...selectedItems, ...availableItems])}
-         disabled={availableItems.length === 0}
-       >
-         Add All →
-       </button>
-       <button
-         className="action-button"
-         onClick={() => setAvailableItems([...availableItems, ...selectedItems])}
-         disabled={selectedItems.length === 0}
-       >
-         ← Remove All
-       </button>
-     </div>
-
-*/

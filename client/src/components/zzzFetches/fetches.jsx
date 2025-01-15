@@ -157,7 +157,7 @@ export async function findKidsOfParent(userData) {
 }
 
 // fetch to delete user
-export async function editUser(id, firstName, lastName, dob, userName, disabled,) {
+export async function editUser(id, firstName, lastName, dob, userName, disabled, activitiesAccess) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
       method: 'PUT',
@@ -171,6 +171,7 @@ export async function editUser(id, firstName, lastName, dob, userName, disabled,
         ...(dob && {dob: dob}),
         ...(userName && {userName: userName}),
         ...(disabled && {disabled: disabled}),
+        ...(activitiesAccess && {activitiesAccess})
       }),
 
       credentials: 'include',
