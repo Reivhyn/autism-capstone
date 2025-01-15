@@ -1,43 +1,9 @@
+/* ---------------------------------------- */
+/* General Button Styles                    */
+/* ---------------------------------------- */
+
 .loginButton {
   transform: translateX(25vw);
-}
-
-.frontPageSectionButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  height: 13vh;
-  margin: 3vw;
-  background-color: rgb(2, 57, 240);
-}
-
-.frontPageSectionButton:hover {
-  cursor: pointer;
-  background-color: orangered;
-}
-
-.cardButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  background-color: #007BFF; /* Blue color */
-  color: white; /* Text color */
-  border: none;
-  border-radius: 10px; /* Rounded corners */
-  width: 25vw; /* Card width */
-  height: 15vh; /* Card height */
-  margin: 10px; /* Space between buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow */
-  text-align: center;
-}
-
-.cardButton:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: translateY(-5px); /* Slight lift on hover */
-  cursor: pointer;
 }
 
 .landingButtonText {
@@ -56,21 +22,75 @@
   background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slight scaling for interaction feedback */
 }
-/* smaller screens*/
-@media (min-width: 1024px) {
-  .mainPageButtons {
-    display: flex;
-    justify-content: center;
-    word-wrap: normal;
-  }
 
-  .cardButton {
-    width: 20vw; /* Adjust width for larger screens */
-    height: 20vh; /* Adjust height for larger screens */
-  }
+/* ---------------------------------------- */
+/* Card Styles                              */
+/* ---------------------------------------- */
+
+.cardButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background-color: #007BFF; /* Default Blue */
+  color: white; /* Text color */
+  border: none;
+  border-radius: 10px; /* Rounded corners */
+  width: 25vw; /* Card width */
+  height: 15vh; /* Card height */
+  margin: 10px; /* Space between buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Card-like shadow */
+  text-align: center;
 }
 
-/* Styles for the Login and Register buttons */
+.cardButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+  cursor: pointer;
+}
+
+.learningCard {
+  background-color:rgb(0, 255, 128); /* Blue for Learning Activities */
+  border-radius: 20px; /* Rounded corners */
+}
+.learningCard:hover {
+  background-color:rgb(25, 155, 230); 
+}
+
+.gamesCard {
+  background-color: rgb(49, 209, 17);  
+  border-radius: 20px; /* Rounded corners */
+}
+
+.gamesCard:hover {
+  background-color: rgb(199, 230, 25); 
+}
+.chatCard {
+  background-color:rgb(130, 34, 255); 
+  border-radius: 20px; /* Rounded corners */
+}
+.chatCard:hover {
+  background-color:rgb(25, 155, 230); 
+}
+
+/* ---------------------------------------- */
+/* Flexbox Layout for Cards                 */
+/* ---------------------------------------- */
+
+.mainPageCards {
+  display: flex; /* Flexbox layout */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  gap: 20px; /* Space between cards */
+  flex-wrap: nowrap; /* Keep cards on the same row */
+  margin-top: 20px;
+}
+
+/* ---------------------------------------- */
+/* Login and Register Button Styles         */
+/* ---------------------------------------- */
+
 .topRightButtons {
   position: absolute;
   top: 20px; /* Adjust position from the top */
@@ -80,7 +100,7 @@
 }
 
 .topRightButton {
-  background-color:rgb(34, 255, 108); /* Orange color */
+  background-color: rgb(34, 255, 108); /* Green */
   color: white; /* Text color */
   padding: 10px 15px;
   border: none;
@@ -92,11 +112,37 @@
 }
 
 .topRightButton:hover {
-  background-color:rgb(7, 170, 102); 
+  background-color: rgb(7, 170, 102);
   transform: scale(1.1); /* Slight zoom effect */
 }
-/* smaller screens */
+.siteNameHeader {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); /* Rainbow gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent; /* Ensures that text is filled by gradient */
+  text-fill-color: transparent;
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+/* ---------------------------------------- */
+/* Responsive Styles                        */
+/* ---------------------------------------- */
+
 @media (max-width: 768px) {
+  .mainPageCards {
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px; /* Reduce spacing between items */
+  }
+
+  .cardButton {
+    width: 80vw; /* Make cards full-width on smaller screens */
+    height: auto; /* Adjust height to fit content */
+  }
+
   .topRightButtons {
     top: 10px;
     right: 10px;

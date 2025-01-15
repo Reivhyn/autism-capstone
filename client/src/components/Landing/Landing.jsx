@@ -34,34 +34,36 @@ const Landing = () => {
 
       {/* Site Header */}
       <h1 className="siteNameHeader">Welcome to the Site!</h1>
+      <div className="mainPageCards">
+      
+      {/* Learning Activities Card */}
+  <div
+    className="card learningCard"
+    onClick={() => setPageToDisplay('learning')}
+  >
+    <SchoolIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
+    Learning Activities
+  </div>
 
-      {/* Main Page Buttons */}
-      <div className="mainPageButtons">
-        <button
-          className="cardButton"
-          onClick={() => setPageToDisplay('learning')}
-        >
-          <SchoolIcon style={{ marginRight: '10px' }} />
-          Learning Activities
-        </button>
+  {/* Games Card */}
+  <div
+    className="card gamesCard"
+    onClick={() => setPageToDisplay('games')}
+  >
+    <SportsEsportsIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
+    Games
+  </div>
 
-        <button
-          className="cardButton"
-          onClick={() => setPageToDisplay('games')}
-        >
-          <SportsEsportsIcon style={{ marginRight: '10px' }} />
-          Games
-        </button>
-
-        <button
-          className="cardButton"
-          onClick={() => setPageToDisplay('chat')}
-        >
-          <ChatIcon style={{ marginRight: '10px' }} />
-          Chat
-        </button>
-      </div>
-
+  {/* Chat Card */}
+  <div
+    className="card chatCard"
+    onClick={() => setPageToDisplay('chat')}
+  >
+    <ChatIcon style={{ fontSize: '3rem', marginBottom: '10px' }} />
+    Chat
+  </div>
+</div>
+      
       {/* Footer */}
       <footer className="footer">
         <p>&copy; 2025 Your Site Name. All rights reserved.</p>
