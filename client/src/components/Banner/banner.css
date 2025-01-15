@@ -9,4 +9,12 @@
     text-fill-color: transparent;
     text-align: center;
     margin: 20px 0;
-  }
+
+    /* Background behind text*/
+  background-color: rgba(255, 255, 255, 0.8); 
+  padding: 10px 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(92, 110, 189, 0.2); 
+  display: inline-block; /* Adjust width to fit content */
+}
+
