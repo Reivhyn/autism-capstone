@@ -85,6 +85,16 @@ router.post('/register', async (req, res) => {
       { expiresIn: '1 hour' }
     )
 
+    //if this is called in the portal on the front end do not issue token
+    if (req.body.portalReg) {
+      return res
+        .status(200)
+        .json({
+          message: `new ${newUser.userType} user created`,
+          ...newUser._doc,
+        })
+    }
+
     return res
       .status(200)
       .cookie('authToken', token, {
@@ -94,7 +104,7 @@ router.post('/register', async (req, res) => {
       })
       .json({
         message: `new ${newUser.userType} user created`,
-        ...newUser._doc
+        ...newUser._doc,
       })
   } catch (error) {
     return res.status(500).json({
@@ -116,10 +126,7 @@ router.get('/findAllUsers', async (req, res) => {
 // Update User
 router.put('/updateUser', async (req, res) => {
   try {
-    console.log('Update user endpoint hit');
-
-    console.log('req.body in updateuser endpoint', req.body)
-    
+    console.log('Update user endpoint hit')
 
     deconstructUser(req.body, 'update')
 
@@ -130,7 +137,7 @@ router.put('/updateUser', async (req, res) => {
     const password = req.body.password
 
     //if password exist hash new password
-    if (password){
+    if (password) {
       req.body.password = bcrypt.hashSync(password, SALT)
     }
 
@@ -212,7 +219,7 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
-        ...foundUser._doc
+        ...foundUser._doc,
       })
   } catch (error) {
     return res.status(500).json({

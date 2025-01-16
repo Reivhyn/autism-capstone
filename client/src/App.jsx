@@ -10,7 +10,6 @@ import Activities from './components/Activities/Activities'
 import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
-import ParentHome from './components/Parent Home/parentHome'
 import EditUser from './components/EditUser/EditUser.jsx'
 
 // CONTEXT IMPORTS
@@ -88,9 +87,10 @@ function App() {
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
                 <Portal />
               )}
-              {(pageToDisplay === 'edit' || pageToDisplay === 'addUser') && (
-                <EditUser />
-              )}
+              {(pageToDisplay === 'editUser' ||
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'editKid' ||
+                pageToDisplay === 'addKid') && <EditUser />}
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>
