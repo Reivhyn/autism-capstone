@@ -85,6 +85,14 @@ router.post('/register', async (req, res) => {
       { expiresIn: '1 hour' }
     )
 
+    //if this is called in the portal on the front end do not issue token
+    if (req.body.portalReg) {
+      return res.status(200).json({
+        message: `new ${newUser.userType} user created`,
+        ...newUser._doc,
+      })
+    }
+
     return res
       .status(200)
       .cookie('authToken', token, {
