@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,6 +30,9 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     maxWidth: '450px',
   },
+  backgroundColor: 'rgba(2,0,36,1)',
+  background: 'radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+  color: 'white', // Default text color inside card
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
@@ -112,7 +114,7 @@ const Register = () => {
         <Typography
           component="h1"
           variant="h4"
-          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'white' }}
         >
           Register
         </Typography>
@@ -123,7 +125,7 @@ const Register = () => {
         >
           {/* Full Name Field */}
           <FormControl>
-            <FormLabel htmlFor="name">Full name</FormLabel>
+            <FormLabel htmlFor="name" sx={{ color: 'white' }}>Full name</FormLabel>
             <TextField
               autoComplete="name"
               name="name"
@@ -135,12 +137,20 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               error={nameError}
               helperText={nameErrorMessage}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'white' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                },
+                input: { color: 'white' }, 
+              }}
             />
           </FormControl>
 
           {/* Email Field */}
           <FormControl>
-            <FormLabel htmlFor="email">Email</FormLabel>
+            <FormLabel htmlFor="email" sx={{ color: 'white' }}>Email</FormLabel>
             <TextField
               required
               fullWidth
@@ -152,12 +162,20 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               error={emailError}
               helperText={emailErrorMessage}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'white' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                },
+                input: { color: 'white' }, 
+              }}
             />
           </FormControl>
 
           {/* Password Field */}
           <FormControl>
-            <FormLabel htmlFor="password">Password</FormLabel>
+            <FormLabel htmlFor="password" sx={{ color: 'white' }}>Password</FormLabel>
             <TextField
               required
               fullWidth
@@ -170,22 +188,30 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
               helperText={passwordErrorMessage}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'white' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                },
+                input: { color: 'white' }, 
+              }}
             />
           </FormControl>
 
-        
-          <Button type="submit" fullWidth variant="contained">
+          <Button type="submit" fullWidth variant="contained" sx={{ color: 'black', backgroundColor: 'white', '&:hover': { backgroundColor: 'gray' } }}>
             Sign Up
           </Button>
         </Box>
-        <Divider>or</Divider>
+        <Divider sx={{ margin: '10px 0' }}>or</Divider>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Typography sx={{ textAlign: 'center' }}>
+          <Typography sx={{ textAlign: 'center', color: 'white' }}>
             Already have an account?{' '}
             <Link
               component="button"
               onClick={() => setPageToDisplay('login')}
               variant="body2"
+              sx={{ color: 'white' }}
             >
               Log in
             </Link>

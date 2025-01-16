@@ -142,7 +142,7 @@
 .siteNameHeader {
   font-size: 3rem;
   font-weight: bold;
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); /* Rainbow gradient */
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); /* New gradient */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -152,7 +152,6 @@
   margin-top: 20px;
   padding: 20px 0;
 }
-
 /* ---------------------------------------- */
 /* Responsive Styles                        */
 /* ---------------------------------------- */

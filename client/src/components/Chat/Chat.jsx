@@ -6,6 +6,7 @@ import './chat.css';
 import Banner from '../Banner/Banner';
 import Footer from '../Footer/Footer';
 import SiteTitle from '../SiteTitle/SiteTitle';
+import DropMenu from "../DropMenu/DropMenu";
 
 // Material-UI Imports
 import { Container, Typography, TextField, Button } from '@mui/material';

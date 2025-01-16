@@ -8,15 +8,15 @@ import Landing from './components/Landing/Landing';
 import Activities from './components/Activities/Activities';
 import Chat from './components/Chat/Chat';
 import Portal from './components/Portal/Portal';
+import EditUser from './components/EditUser/EditUser';
 import DropMenu from './components/DropMenu/DropMenu';
-import EditUser from './components/EditUser/EditUser'; // Ensure this is a valid import
 
 // CONTEXT IMPORTS
 import {
   ptdContext,
   userDataContext,
   editTargetContext,
-  KidsOfParentContext, // Import all required contexts
+  KidsOfParentContext,
 } from './components/zContextHooks/contextHooks';
 
 // MATERIAL-UI IMPORTS
@@ -26,20 +26,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import darkTheme from './Theme/theme.jsx';
 
 function App() {
-  // State for page to display
   const [pageToDisplay, setPageToDisplay] = useState('landing');
-  // State for user data
   const [userData, setUserData] = useState('');
 
   return (
-    <ThemeProvider theme={darkTheme}> {/* Wrap everything inside ThemeProvider */}
-      <CssBaseline /> {/* To ensure consistent styling across all browsers */}
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
           <editTargetContext.Provider value={{}}>
             <KidsOfParentContext.Provider value={{}}>
-              {/* Global DropMenu */}
-              <DropMenu />
+              {/* Conditionally Render DropMenu */}
+              {['games', 'learning', 'chat'].includes(pageToDisplay) && (
+                <DropMenu />
+              )}
 
               {/* Page Rendering */}
               {pageToDisplay === 'login' && <Login />}

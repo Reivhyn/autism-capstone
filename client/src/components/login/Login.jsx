@@ -1,17 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react'; 
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import './login.css';
-import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
-import { logIn } from '../zzzFetches/fetches';
+import { ptdContext } from '../zContextHooks/contextHooks';
+import './login.css'; // Include custom styles if needed
 
+// Custom Card styling
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -20,26 +23,35 @@ const Card = styled(MuiCard)(({ theme }) => ({
   padding: theme.spacing(4),
   gap: theme.spacing(2),
   margin: 'auto',
+  boxShadow:
+    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
   [theme.breakpoints.up('sm')]: {
     maxWidth: '450px',
   },
-  backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#121212',
-  color: 'white',
-  boxShadow: 'none',
-  border: '1px solid #333',
+  backgroundColor: 'rgba(2,0,36,1)',
+  background: 'radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+  color: 'white', // Default text color inside card
+}));
+
+const LoginContainer = styled(Stack)(({ theme }) => ({
+  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  minHeight: '100%',
+  padding: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    padding: theme.spacing(4),
+  },
 }));
 
 const Login = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [userData, setUserData] = useContext(userDataContext);
 
+  // State for form validation and input
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [loginError, setLoginError] = useState('');
 
   const validateInputs = () => {
     let isValid = true;
@@ -65,124 +77,109 @@ const Login = () => {
     return isValid;
   };
 
-  const loginUser = async () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     if (validateInputs()) {
-      console.log('Attempting login with:', { email, password });
-      const user = await logIn(email, password);
-      console.log('Login response:', user);
-      if (user) {
-        setUserData(user);
-        setLoginError('');
-      } else {
-        setLoginError('Invalid email or password.');
-      }
+      console.log({
+        email,
+        password,
+      });
+
+      // You can handle the API call for login here
+      alert('Login Successful!');
+      setPageToDisplay('home'); // Navigate to home after successful login
     }
   };
 
-  useEffect(() => {
-    if (userData) {
-      console.log('Logged in user data:', userData);
-      setTimeout(() => {
-        if (userData.userType === 'admin') {
-          setPageToDisplay('admin');
-        } else if (userData.userType === 'parent') {
-          setPageToDisplay('parent');
-        } else if (userData.userType === 'kid') {
-          setPageToDisplay('landing');
-        }
-      }, 500);
-    }
-  }, [userData]);
-
   return (
-    <Box
-      component="div"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '100vh',
-        padding: '16px',
-        backgroundColor: '#121212',
-        color: 'white',
-      }}
-    >
+    <LoginContainer direction="column" justifyContent="space-between">
       <CssBaseline />
       <Card variant="outlined">
-        <Typography component="h1" variant="h4">
+        <Typography
+          component="h1"
+          variant="h4"
+          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'white' }}
+        >
           Login
         </Typography>
         <Box
           component="form"
-          noValidate
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            gap: 2,
-          }}
+          onSubmit={handleSubmit}
+          sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         >
-          <TextField
-            error={emailError}
-            helperText={emailErrorMessage}
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            variant="outlined"
-            label="Email"
-          />
-          <TextField
-            error={passwordError}
-            helperText={passwordErrorMessage}
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            variant="outlined"
-            label="Password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            onClick={loginUser}
-          >
+          {/* Email Field */}
+          <FormControl>
+            <FormLabel htmlFor="email" sx={{ color: 'white' }}>Email</FormLabel>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              placeholder="your@email.com"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+              helperText={emailErrorMessage}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'white' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                },
+                input: { color: 'white' }, 
+              }}
+            />
+          </FormControl>
+
+          {/* Password Field */}
+          <FormControl>
+            <FormLabel htmlFor="password" sx={{ color: 'white' }}>Password</FormLabel>
+            <TextField
+              required
+              fullWidth
+              name="password"
+              placeholder="••••••"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
+              helperText={passwordErrorMessage}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'white' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                },
+                input: { color: 'white' }, 
+              }}
+            />
+          </FormControl>
+
+          <Button type="submit" fullWidth variant="contained" sx={{ color: 'black', backgroundColor: 'white', '&:hover': { backgroundColor: 'gray' } }}>
             Login
           </Button>
-          {loginError && (
-            <Typography color="error" sx={{ marginTop: 2 }}>
-              {loginError}
-            </Typography>
-          )}
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: 2,
-            }}
-          >
-            <Button variant="text" onClick={() => setPageToDisplay('register')}>
+        </Box>
+        <Divider sx={{ margin: '10px 0' }}>or</Divider>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Typography sx={{ textAlign: 'center', color: 'white' }}>
+            Don't have an account?{' '}
+            <Link
+              component="button"
+              onClick={() => setPageToDisplay('register')}
+              variant="body2"
+              sx={{ color: 'white' }}
+            >
               Register
-            </Button>
-            <Button variant="text" onClick={() => setPageToDisplay('landing')}>
-              Back
-            </Button>
-          </Box>
+            </Link>
+          </Typography>
         </Box>
       </Card>
-    </Box>
+    </LoginContainer>
   );
 };
 
-export default Login;     
+export default Login;
