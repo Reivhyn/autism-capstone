@@ -1,4 +1,11 @@
 .formWrapper{
   display: flex;
   flex-direction: column;
+  margin-bottom: 5vh;
+}
+
+.userTypeCheckBoxWrap{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1vh;
 }

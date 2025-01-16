@@ -123,7 +123,7 @@ const PortalList = ({ itemsToList, listType }) => {
     }
 
   //* USESTATE
-  //run functions
+  //initilize dual list
   useState(() => {
     setUpList()
     assignListTitle()

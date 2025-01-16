@@ -5,7 +5,6 @@ const User = new mongoose.Schema(
     //UNIVERSAL section of schema
     userType: { type: String, require: true }, // admin ,parent or kid
     userName: { type: String, required: true, unique: true },
-    userNameLower: { type: String }, // lowercase username for searching
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     dob: { type: Date, required: true },
@@ -22,8 +21,11 @@ const User = new mongoose.Schema(
     kids: { type: Array },
 
     // KID section of schema
-    parentUser: { type: String, required: true }, //if parent it value is parent otherwise it is the id of the parent user
+    parentUser: { type: String}, //if parent it value is parent otherwise it is the id of the parent user
     activitiesAccess: { type: Array },
+    
+    // if the kid is disable they should not be able to log in
+    disabled: {type: Boolean},
     /* 
       contains the id of activities the user has access to
       if it contains all then all gmaes and activities are available

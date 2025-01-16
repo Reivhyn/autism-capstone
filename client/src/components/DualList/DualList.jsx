@@ -24,6 +24,7 @@ const DualList = ({
   const [dualListTitle, setDualListTitle] = useState('')
 
   //set vars for available and selected options
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [availableOptions, setAvailableOptions] = useState('')
   const [selectedOptions, setSelectedOptions] = useState('')
   const [renderAvailable, setRenderAvailable] = useState('')
@@ -33,9 +34,16 @@ const DualList = ({
   //function to initilise dual list
   const initilizeDualList = () => {
     if (listType === 'games') {
+      //if adding a new user do not check for exiting user selctions
+      if (pageToDisplay === 'addKid') {
+        setAvailableOptions(dataToList.allGames)
+        setSelectedOptions([])
+        return
+      }
+
       //initilize available games
-      const array = [] //throw away array to use 
-      dataToList.allGames.map(option => {
+      const array = [] //throw away array to use
+      dataToList.allGames.map((option) => {
         if (!editTarget.activitiesAccess.includes(option._id)) {
           array.push(option)
         }
@@ -45,7 +53,8 @@ const DualList = ({
       //initialize selected games
       const arr = []
       dataToList.allGames.map((option) => {
-        if (editTarget.activitiesAccess.includes(option._id)) {//! sometimes crash here
+        if (editTarget.activitiesAccess.includes(option._id)) {
+          //! sometimes crash here
           arr.push(option)
         }
         setSelectedOptions(arr)
@@ -53,9 +62,16 @@ const DualList = ({
     }
 
     if (listType === 'learning') {
+      //if adding a new user do not check for exiting user selctions
+      if (pageToDisplay === 'addKid') {
+        setAvailableOptions(dataToList.allLearning)
+        setSelectedOptions([])
+        return
+      }
+
       //initilize available learning activities
-      const array = [] //throw away array to use 
-      dataToList.allLearning.map(option => {
+      const array = [] //throw away array to use
+      dataToList.allLearning.map((option) => {
         if (!editTarget.activitiesAccess.includes(option._id)) {
           array.push(option)
         }
@@ -152,13 +168,12 @@ const DualList = ({
 
   //update access list returned to edit user
   const updateAccessList = () => {
-      const arr = []
-      selectedOptions.map(option => arr.push(option._id))
-      
-      if (listType === 'games') setGamesAccess(arr)
+    const arr = []
+    selectedOptions.map((option) => arr.push(option._id))
 
-      if(listType === 'learning') setLearningAccess(arr)
-    
+    if (listType === 'games') setGamesAccess(arr)
+
+    if (listType === 'learning') setLearningAccess(arr)
   }
 
   //* USEEFFECT
