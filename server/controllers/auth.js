@@ -59,6 +59,9 @@ router.post('/register', async (req, res) => {
   try {
     console.log('register new user endpoint hit') //TODO REMOVE IN FINAL
 
+    // // ! check this
+    // const confirmPwd = req.body.confirmedPwd
+
     deconstructUser(req.body)
 
     //create new user
@@ -84,12 +87,10 @@ router.post('/register', async (req, res) => {
 
     //if this is called in the portal on the front end do not issue token
     if (req.body.portalReg) {
-      return res
-        .status(200)
-        .json({
-          message: `new ${newUser.userType} user created`,
-          ...newUser._doc,
-        })
+      return res.status(200).json({
+        message: `new ${newUser.userType} user created`,
+        ...newUser._doc,
+      })
     }
 
     return res
@@ -124,6 +125,8 @@ router.get('/findAllUsers', async (req, res) => {
 router.put('/updateUser', async (req, res) => {
   try {
     console.log('Update user endpoint hit')
+
+    console.log('req.body in updateuser endpoint', req.body)
 
     deconstructUser(req.body, 'update')
 
