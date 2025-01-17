@@ -131,6 +131,11 @@ const EditUser = () => {
     callEditUser()
   }
 
+  // handle cancel button
+  const hangleCancelButton = () => {
+    setPageToDisplay(userData.userType)
+  }
+
   //* USEEFFECT
   //get all activites when page is loaded
   useEffect(() => {
@@ -152,7 +157,7 @@ const EditUser = () => {
   useEffect(() => {
     if (editSaved === true) {
       setTimeout(() => {
-        setPageToDisplay('parent')
+        setPageToDisplay(userData.userType)
       }, 1500)
     }
   }, [editSaved])
@@ -166,9 +171,10 @@ const EditUser = () => {
   return (
     <>
       <div>
-        {pageToDisplay === 'editUser' || pageToDisplay === 'edit kid'
+        {/* show weather adding new user or editing user */}
+        {pageToDisplay === 'editUser' || pageToDisplay === 'editkid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-          : 'Add New Child'}
+          : userData.userType === 'admin' ? 'Add New User' :'Add New Child'}
       </div>
       {/* form for editing user properties */}
       <div className="formWrapper">
@@ -257,7 +263,7 @@ const EditUser = () => {
             />
           </div>
 
-          {/* do not show delte user button when adding user */}
+          {/* do not show delete user button when adding user */}
           {pageToDisplay === 'editkid' || pageToDisplay === 'editUser' ? (
             <div>
               Delete {`${editTarget.firstName} ${editTarget.lastName}`}
@@ -286,7 +292,7 @@ const EditUser = () => {
               <input
                 type="checkbox"
                 checked={checkedBox === 'kid' || pageToDisplay === 'addKid'}
-                onChange={() => handleCheck(1)}
+                onChange={() => handleCheck('kid')}
               />
             </div>
 
@@ -298,7 +304,7 @@ const EditUser = () => {
                 <input
                   type="checkbox"
                   checked={checkedBox === 'parent'}
-                  onChange={() => handleCheck(2)}
+                  onChange={() => handleCheck('parent')}
                 />
               </div>
             ) : (
@@ -313,7 +319,7 @@ const EditUser = () => {
                 <input
                   type="checkbox"
                   checked={checkedBox === 'admin'}
-                  onChange={() => handleCheck(3)}
+                  onChange={() => handleCheck('admin')}
                 />
               </div>
             ) : (
@@ -325,8 +331,11 @@ const EditUser = () => {
         ''
       )}
 
+      {/* only show dual list if editing or adding kid */}
+
       {/* games duallist */}
-      {allActivities ? (
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
         <DualList
           dataToList={allActivities}
           listType="games"
@@ -334,19 +343,21 @@ const EditUser = () => {
           setGamesAccess={setGamesAccess}
         />
       ) : (
-        'fetching data'
+        pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
       )}
 
       {/* learning duallist */}
-      {allActivities ? (
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
         <DualList
           dataToList={allActivities}
           listType="learning"
           learingAccess={learingAccess}
           setLearningAccess={setlearningAccess}
         />
-      ) : (
-        'fetching data'
+      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
       )}
 
       <div className="saveCancelButtons">
@@ -354,7 +365,7 @@ const EditUser = () => {
         <button onClick={() => handleSave()}>Save</button>
 
         {/* cancel button */}
-        <button onClick={() => setPageToDisplay('parent')}>Cancel</button>
+        <button onClick={() => hangleCancelButton()}>Cancel</button>
       </div>
     </>
   )

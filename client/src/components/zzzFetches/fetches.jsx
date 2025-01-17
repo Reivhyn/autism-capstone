@@ -182,7 +182,7 @@ export async function editUser(
         ...(password && { password }),
         ...(disabled && { disabled }),
         ...(activitiesAccess && { activitiesAccess }),
-        ...(email && {email})
+        ...(email && { email }),
       }),
 
       credentials: 'include',
@@ -254,8 +254,9 @@ export async function addNewUser(
         ...(dob && { dob }),
         ...(email && { email }),
         ...(password && { password }),
-        ...(activitiesAccess && { activitiesAccess: activitiesAccess }),
-        ...(parentUser && { parentUser }),
+        ...(activitiesAccess &&
+          userType === 'kid' && { activitiesAccess: activitiesAccess }),
+        ...(parentUser && userType === 'kid' && { parentUser }),
         ...(disabled && { disabled }),
         portalReg: true,
       }),
