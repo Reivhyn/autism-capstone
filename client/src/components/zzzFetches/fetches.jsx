@@ -187,7 +187,7 @@ export async function editUser(
         ...(password && { password }),
         ...(disabled && { disabled }),
         ...(activitiesAccess && { activitiesAccess }),
-        ...(email && {email})
+        ...(email && { email }),
       }),
 
       credentials: 'include',
@@ -276,6 +276,56 @@ export async function addNewUser(
     }
 
     return addedUser
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Fetch to add an activity
+export async function addNewActivity(
+  activityType,
+  activityTitle,
+  description,
+  url,
+  imageURL,
+  imagebuffer,
+  imageType,
+  category,
+  educational,
+  searchKeywords
+) {
+  try {
+    console.log('add activity fetch hit')
+    const res = await fetch('http://127.0.0.1:4000//activities/addActivity', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...(activityType && { activityType }),
+        ...(activityTitle && { activityTitle }),
+        ...(description && { description }),
+        ...(url && { url }),
+        ...(imageURL && { imageURL }),
+        ...(imagebuffer && { imagebuffer }),
+        ...(imageType && { imageType }),
+        ...(category && { category }),
+        ...(educational && { educational }),
+        ...(searchKeywords && { searchKeywords }),
+        portalReg: true,
+      }),
+
+      credentials: 'include',
+    })
+
+    const addedActivity = await res.json()
+    console.log('added activity', addedActivity)
+
+    if (!res.ok) {
+      throw new Error(addedActivity.message || 'add activity fetch failed')
+    }
+
+    return addedActivity
   } catch (error) {
     console.log(error)
   }
