@@ -8,6 +8,7 @@ import './editUser.css'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import Footer from '../Footer/Footer'
 import LogoutButton from '../LogoutButton/LogoutButton'
+import DualList from '../DualList/DualList'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
@@ -25,7 +26,10 @@ import {
   getAllUsers,
   editUser,
   deleteUser,
+  addNewUser,
 } from '../zzzFetches/fetches'
+import { use } from 'react'
+import { Email } from '@mui/icons-material'
 
 const EditUser = () => {
   //* USESTATE
@@ -42,17 +46,22 @@ const EditUser = () => {
   const [editLastName, setEditLastName] = useState('')
   const [editDateOfBirth, setEditDateOfBirth] = useState('')
   const [editUserName, setEditUserName] = useState('')
+  const [editEmail, setEditEmail] = useState('')
+  const [editPassword, setEditPassword] = useState('')
   const [editDisableLogin, setEditDisableLogin] = useState('')
-  const [editDeleteKid, setEditDeleteKid] = useState('')
+  const [editDeleteUser, setEditDeleteUser] = useState('')
+  const [userType, setUserType] = useState('kid')
+  const [parentUser, setParentUser] = useState('')
 
   //useStates pertaining to games dual list
-  //games
-  const [avilableGames, setAvailableGames] = useState('')
-  const [selectedGames, setSelectedGames] = useState('')
+  const [gamesAccess, setGamesAccess] = useState('')
+  const [learingAccess, setlearningAccess] = useState('')
 
-  //Learning
-  const [avilableLearning, setAvailableLearning] = useState('')
-  const [selectedLearning, setSelectedLearning] = useState('')
+  //combines the two access arrays to be passed when save button is pressed
+  const [activitiesAccess, setActivitiesAccess] = useState('')
+
+  //handles the usertype ckeckbox values
+  const [checkedBox, setCheckedBox] = useState('kid')
 
   //* FUNCTIONS
   //function to retreve all user
@@ -60,47 +69,17 @@ const EditUser = () => {
     setAllActivities(await getActivities())
   }
 
-  //function to initilise dual list
-  const initilizeAvailableActivities = () => {
-    //initilize games
-    setAvailableGames(
-      allActivities.allGames.map((game, i) => {
-        return <li key={`availabelGame${i}`}>{game.activityTitle}</li>
-      })
-    )
-
-    setSelectedGames(
-      allActivities.allGames.map((game, i) => {
-        if (editTarget.activitiesAccess.includes(game._id))
-          return <li key={`selectedGame${i}`}>{game.activityTitle}</li>
-      })
-    )
-
-    //initilize learning
-    setAvailableLearning(
-      allActivities.allLearning.map((learning, i) => {
-        return <li key={`availabellearning${i}`}>{learning.activityTitle}</li>
-      })
-    )
-
-    setSelectedLearning(
-      allActivities.allLearning.map((learning, i) => {
-        if (editTarget.activitiesAccess.includes(learning._id))
-          return <li key={`selectedLearning${i}`}>{learning.activityTitle}</li>
-      })
-    )
+  //hanle setting userType
+  const handleCheck = (value) => {
+    setCheckedBox(value)
+    setUserType(value)
   }
 
-  //make saves onece save button is pressed
+  //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     console.log('trigger') //TODO FIGURE OUT WHY ITS NOT UPDATING ON PORTAL
 
     //delete user user if checkbox is selected
-    if (editDeleteKid === true) {
-      deleteUser(editTarget._id)
-      setEditSaved(true)
-      return
-    }
 
     //edit changes if delete user is not selected
     editUser(
@@ -109,10 +88,52 @@ const EditUser = () => {
       editLastName,
       editDateOfBirth,
       editUserName,
+      editPassword,
       editDisableLogin,
-      editDeleteKid
+      activitiesAccess,
+      editEmail
     )
     setEditSaved(true)
+  }
+
+  // creates new user when save button is pressed
+  const callCreateNewUser = () => {
+    addNewUser(
+      editFirstName,
+      editLastName,
+      editDateOfBirth,
+      editUserName,
+      editPassword,
+      editDisableLogin,
+      activitiesAccess,
+      editEmail,
+      userType,
+      userData._id
+    )
+
+    setEditSaved(true)
+  }
+
+  const handleSave = () => {
+    //delete user if selected
+    if (editDeleteUser === true) {
+      deleteUser(editTarget._id)
+      setEditSaved(true)
+      return
+    }
+
+    //add user if new user is being created
+    if (pageToDisplay === 'addUser' || pageToDisplay === 'addKid') {
+      callCreateNewUser()
+      return
+    }
+    //else edit user
+    callEditUser()
+  }
+
+  // handle cancel button
+  const hangleCancelButton = () => {
+    setPageToDisplay(userData.userType)
   }
 
   //* USEEFFECT
@@ -127,18 +148,16 @@ const EditUser = () => {
       fetchAllActivities()
   }, [pageToDisplay])
 
-  //initilize available activites after data retrived
+  //update learning access when its updated on the dual list
   useEffect(() => {
-    if (allActivities) {
-      initilizeAvailableActivities()
-    }
-  }, [allActivities])
+    setActivitiesAccess([...gamesAccess, ...learingAccess])
+  }, [gamesAccess, learingAccess])
 
   //change page back to portal after saves made
   useEffect(() => {
     if (editSaved === true) {
       setTimeout(() => {
-        setPageToDisplay('parent')
+        setPageToDisplay(userData.userType)
       }, 1500)
     }
   }, [editSaved])
@@ -152,13 +171,15 @@ const EditUser = () => {
   return (
     <>
       <div>
-        {pageToDisplay === 'editUser' || pageToDisplay === 'edit kid'
+        {/* show weather adding new user or editing user */}
+        {pageToDisplay === 'editUser' || pageToDisplay === 'editkid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-          : 'Add New Child'}
+          : userData.userType === 'admin' ? 'Add New User' :'Add New Child'}
       </div>
       {/* form for editing user properties */}
       <div className="formWrapper">
         <form action="">
+          {/* firstName field */}
           <div>
             First Name
             <input
@@ -169,6 +190,8 @@ const EditUser = () => {
               }}
             />
           </div>
+
+          {/* laastName field */}
           <div>
             Last Name
             <input
@@ -179,16 +202,20 @@ const EditUser = () => {
               }}
             />
           </div>
+
+          {/* DOB field */}
           <div>
             Date of Birth
             <input
-              type="text"
+              type="date"
               value={editDateOfBirth}
               onChange={(e) => {
                 setEditDateOfBirth(e.target.value)
               }}
             />
           </div>
+
+          {/* userName field */}
           <div>
             UserName
             <input
@@ -199,6 +226,32 @@ const EditUser = () => {
               }}
             />
           </div>
+
+          {/* email field */}
+          <div>
+            Email
+            <input
+              type="email"
+              value={editEmail}
+              onChange={(e) => {
+                setEditEmail(e.target.value)
+              }}
+            />
+          </div>
+
+          {/* passwprd field */}
+          <div>
+            Password
+            <input
+              type="password"
+              value={editPassword}
+              onChange={(e) => {
+                setEditPassword(e.target.value)
+              }}
+            />
+          </div>
+
+          {/* disble log in checkbox */}
           <div>
             Disable Login
             <input
@@ -209,102 +262,113 @@ const EditUser = () => {
               }}
             />
           </div>
-          <div>
-            Delete Child
-            <input
-              type="checkbox"
-              checked={editDeleteKid}
-              onChange={(e) => {
-                setEditDeleteKid(e.target.checked)
-              }}
-            />
-          </div>
+
+          {/* do not show delete user button when adding user */}
+          {pageToDisplay === 'editkid' || pageToDisplay === 'editUser' ? (
+            <div>
+              Delete {`${editTarget.firstName} ${editTarget.lastName}`}
+              <input
+                type="checkbox"
+                checked={editDeleteUser}
+                onChange={(e) => {
+                  setEditDeleteUser(e.target.checked)
+                }}
+              />
+            </div>
+          ) : (
+            ''
+          )}
         </form>
       </div>
-      {/* edit access games the user has access to */}
-      <div className="dualListOuterWrap">
-        {/* dual listbox title */}
-        <div className="dualListTitle">Games</div>
 
-        {/* wraps left and right side of list */}
-        <div className="dualListWrapper">
-          {/* available side of dual list */}
-          <div className="availableWraper">
-            <div className="available">Available</div>
-            <ul>{avilableGames ? avilableGames : 'Fetching data'}</ul>
-          </div>
+      {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
+        <>
+          <div>User Type</div>
 
-          {/* selected side of dual list */}
-          <div className="selectedWraper">
-            <div className="selected">Selected</div>
-            <ul>{selectedGames ? selectedGames : 'Fetching data'}</ul>
-          </div>
-        </div>
-      </div>
-      {/* edit access learning the user has access to */}
-      <div className="dualListOuterWrap">
-        {/* dual listbox title */}
-        <div className="dualListTitle">Learning Activites</div>
+          <div className="userTypeCheckBoxWrap">
+            {/* child checkbox */}
+            <div className="buttonAndTitleWrap">
+              <div>Child</div>
+              <input
+                type="checkbox"
+                checked={checkedBox === 'kid' || pageToDisplay === 'addKid'}
+                onChange={() => handleCheck('kid')}
+              />
+            </div>
 
-        {/* wraps left and right side of list */}
-        <div className="dualListWrapper">
-          {/* available side of dual list */}
-          <div className="availableWraper">
-            <div className="available">Available</div>
-            <ul>{avilableLearning ? avilableLearning : 'Fetching data'}</ul>
-          </div>
+            {/* display parent checkbox if page to display is admin */}
+            {/* parent checkbox */}
+            {pageToDisplay === 'addUser' ? (
+              <div className="buttonAndTitleWrap">
+                <div>Parent</div>
+                <input
+                  type="checkbox"
+                  checked={checkedBox === 'parent'}
+                  onChange={() => handleCheck('parent')}
+                />
+              </div>
+            ) : (
+              ''
+            )}
 
-          {/* selected side of dual list */}
-          <div className="selectedWraper">
-            <div className="selected">Selected</div>
-            <ul>{selectedLearning ? selectedLearning : 'Fetching data'}</ul>
+            {/* display admin checkbox if page to display is admin */}
+            {/* admin checkbox */}
+            {pageToDisplay === 'addUser' ? (
+              <div className="buttonAndTitleWrap">
+                <div>Admin</div>
+                <input
+                  type="checkbox"
+                  checked={checkedBox === 'admin'}
+                  onChange={() => handleCheck('admin')}
+                />
+              </div>
+            ) : (
+              ''
+            )}
           </div>
-        </div>
-      </div>
-      <div className="editGamesWrapper">
-        <div className="dualListTitle">Chat Topics</div>
-      </div>
+        </>
+      ) : (
+        ''
+      )}
+
+      {/* only show dual list if editing or adding kid */}
+
+      {/* games duallist */}
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+        <DualList
+          dataToList={allActivities}
+          listType="games"
+          gamesAccess={gamesAccess}
+          setGamesAccess={setGamesAccess}
+        />
+      ) : (
+        pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
+      )}
+
+      {/* learning duallist */}
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
+        <DualList
+          dataToList={allActivities}
+          listType="learning"
+          learingAccess={learingAccess}
+          setLearningAccess={setlearningAccess}
+        />
+      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
+      )}
+
       <div className="saveCancelButtons">
         {/* Save button */}
-        <button onClick={() => callEditUser()}>Save</button>
+        <button onClick={() => handleSave()}>Save</button>
 
         {/* cancel button */}
-        <button onClick={() => setPageToDisplay('parent')}>Cancel</button>
+        <button onClick={() => hangleCancelButton()}>Cancel</button>
       </div>
     </>
   )
 }
 
 export default EditUser
-
-/* 
-
-  const handleAdd = (item) => {
-    setAvailableItems(availableItems.filter((i) => i !== item));
-    setSelectedItems([...selectedItems, item]);
-  };
-
-  const handleRemove = (item) => {
-    setSelectedItems(selectedItems.filter((i) => i !== item));
-    setAvailableItems([...availableItems, item]);
-  };
-
-        Add/Remove Buttons 
-       <div className="button-container">
-       <button
-         className="action-button"
-         onClick={() => setSelectedItems([...selectedItems, ...availableItems])}
-         disabled={availableItems.length === 0}
-       >
-         Add All →
-       </button>
-       <button
-         className="action-button"
-         onClick={() => setAvailableItems([...availableItems, ...selectedItems])}
-         disabled={selectedItems.length === 0}
-       >
-         ← Remove All
-       </button>
-     </div>
-
-*/

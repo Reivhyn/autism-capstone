@@ -23,8 +23,20 @@ const PortalList = ({ itemsToList, listType }) => {
   const setUpList = () => {
     if (listType === 'user') {
       setDisplayList(
-        itemsToList.allUsers.map((item, i) => {
-          return <li key={`item${i}`}>{item.userName}</li>
+        itemsToList.allUsers.map((item) => {
+          return (
+            <li
+              onClick={() => {
+                setEditTarget(item)
+                item.userType === 'kid'
+                  ? setPageToDisplay('editKid')
+                  : setPageToDisplay('editUser')
+              }}
+              key={`item${item._id}`}
+            >
+              {`${item.firstName} ${item.lastName} (${item.userName})`}
+            </li>
+          )
         })
       )
     }
@@ -32,14 +44,14 @@ const PortalList = ({ itemsToList, listType }) => {
     // displau children list. clicking on item switches to edit page
     if (listType === 'kids') {
       setDisplayList(
-        itemsToList.foundKidsOfParent.map((item, i) => {
+        itemsToList.foundKidsOfParent.map((item) => {
           return (
             <li
               onClick={() => {
                 setEditTarget(item)
-                setPageToDisplay('editUser')
+                setPageToDisplay('editKid')
               }}
-              key={`item${i}`}
+              key={`item${item._id}`}
             >{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
           )
         })
@@ -79,7 +91,7 @@ const PortalList = ({ itemsToList, listType }) => {
 
   const assignListTitle = () => {
     if (listType === 'user') {
-      setListTitle('User')
+      setListTitle('Users')
     }
     if (listType === 'kids') {
       setListTitle('Children')
@@ -98,32 +110,32 @@ const PortalList = ({ itemsToList, listType }) => {
     }
   }
 
-    //handles changing the page when the add button is pressed
-    const handleClick = () => {
-      if (listType === 'user') {
-        setPageToDisplay('addUser')
-        return
-      }
-      if (listType === 'kids') {
-        setPageToDisplay('addKid')
-        return
-      }
-      if (listType === 'games') {
-        setPageToDisplay('addGame')
-        return
-      }
-      if (listType === 'learning') {
-        setPageToDisplay('addLearning')
-        return
-      }
-      if (listType === 'chat') {
-        setPageToDisplay('addChat')
-        return
-      }
+  //handles changing the page when the add button is pressed
+  const handleClick = () => {
+    if (listType === 'user') {
+      setPageToDisplay('addUser')
+      return
     }
+    if (listType === 'kids') {
+      setPageToDisplay('addKid')
+      return
+    }
+    if (listType === 'games') {
+      setPageToDisplay('addGame')
+      return
+    }
+    if (listType === 'learning') {
+      setPageToDisplay('addLearning')
+      return
+    }
+    if (listType === 'chat') {
+      setPageToDisplay('addChat')
+      return
+    }
+  }
 
   //* USESTATE
-  //run functions
+  //initilize dual list
   useState(() => {
     setUpList()
     assignListTitle()
@@ -140,7 +152,11 @@ const PortalList = ({ itemsToList, listType }) => {
         </ul>
 
         {/* //TODO onclick call function to handl click */}
-        {listType !== 'reporting' ? <button onClick={() => handleClick()}>Add</button> : ''}
+        {listType !== 'reporting' ? (
+          <button onClick={() => handleClick()}>Add</button>
+        ) : (
+          ''
+        )}
       </div>
     </>
   )

@@ -10,9 +10,12 @@ export async function register(
   lastName,
   email,
   password,
-  dob
+  dob,
+  userType
 ) {
   try {
+    console.log(userName, firstName, lastName, email, password, dob, userType)
+
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
       headers: {
@@ -25,6 +28,7 @@ export async function register(
         email: email,
         password: password,
         dob: dob,
+        userType: userType,
         kids: [],
         parentUser: 'none',
         gamesAccess: ['all'],
@@ -37,6 +41,7 @@ export async function register(
 
     const loginData = await res.json()
 
+    console.log(loginData)
     if (!res.ok) {
       throw new Error(loginData.message || 'Registration Failed')
     }
@@ -110,8 +115,7 @@ export async function getAllUsers() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-      }),
+      body: JSON.stringify({}),
 
       credentials: 'include',
     })
@@ -138,7 +142,7 @@ export async function findKidsOfParent(userData) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: userData._id
+        id: userData._id,
       }),
 
       credentials: 'include',
@@ -156,8 +160,18 @@ export async function findKidsOfParent(userData) {
   }
 }
 
-// fetch to delete user
-export async function editUser(id, firstName, lastName, dob, userName, disabled,) {
+// fetch to update user
+export async function editUser(
+  id,
+  firstName,
+  lastName,
+  dob,
+  userName,
+  password,
+  disabled,
+  activitiesAccess,
+  email
+) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
       method: 'PUT',
@@ -165,20 +179,21 @@ export async function editUser(id, firstName, lastName, dob, userName, disabled,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...(id && {id: id}),
-        ...(firstName && {firstName: firstName}),
-        ...(lastName && {lastName: lastName}),
-        ...(dob && {dob: dob}),
-        ...(userName && {userName: userName}),
-        ...(disabled && {disabled: disabled}),
+        ...(id && { id }),
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
+        ...(dob && { dob }),
+        ...(userName && { userName }),
+        ...(password && { password }),
+        ...(disabled && { disabled }),
+        ...(activitiesAccess && { activitiesAccess }),
+        ...(email && { email }),
       }),
 
       credentials: 'include',
     })
 
     const editedUser = await res.json()
-    console.log('editedUser', editedUser)
-    
 
     if (!res.ok) {
       throw new Error(editedUser.message || 'edit user fetch failed')
@@ -193,25 +208,75 @@ export async function editUser(id, firstName, lastName, dob, userName, disabled,
 // fetch to delete user user
 export async function deleteUser(id) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/users/findKidsOfParent`, {
-      method: 'POST',
+    const res = await fetch(`http://127.0.0.1:4000/auth/delete-user`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: id
+        id: id,
       }),
 
       credentials: 'include',
     })
 
-    const kidsOfParent = await res.json()
+    const deletedUser = await res.json()
 
     if (!res.ok) {
-      throw new Error(kidsOfParent.message || 'Get kids of user fetch failed')
+      throw new Error(deletedUser.message || 'Get kids of user fetch failed')
     }
 
-    return kidsOfParent
+    return deletedUser
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// fetch to update user
+export async function addNewUser(
+  firstName,
+  lastName,
+  dob,
+  userName,
+  password,
+  disabled,
+  activitiesAccess,
+  email,
+  userType,
+  parentUser
+) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...(userType && { userType }),
+        ...(userName && { userName }),
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
+        ...(dob && { dob }),
+        ...(email && { email }),
+        ...(password && { password }),
+        ...(activitiesAccess &&
+          userType === 'kid' && { activitiesAccess: activitiesAccess }),
+        ...(parentUser && userType === 'kid' && { parentUser }),
+        ...(disabled && { disabled }),
+        portalReg: true,
+      }),
+
+      credentials: 'include',
+    })
+
+    const addedUser = await res.json()
+    console.log('addedUser', addedUser)
+
+    if (!res.ok) {
+      throw new Error(addedUser.message || 'edit user fetch failed')
+    }
+
+    return addedUser
   } catch (error) {
     console.log(error)
   }
