@@ -28,9 +28,9 @@ router.get('/getAllChatTopics', async (req, res) => {
   try {
     console.log('getAllChatTipics endpoint hit')
 
-    const allTopics = await chatTopicSchema.find({})
+    const allChatTopics = await chatTopicSchema.find({})
 
-    return res.status(200).json({ allTopics })
+    return res.status(200).json({ allChatTopics })
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
@@ -71,7 +71,7 @@ router.post('/updateChatTopic', async (req, res) => {
 
 router.delete('/deleteTopic', async (req, res) => {
   try {
-    console.log('deleteTopic endpoint hit');
+    console.log('deleteTopic endpoint hit')
 
     deconstructChatTopic(req.body, 'delete')
 
@@ -81,7 +81,7 @@ router.delete('/deleteTopic', async (req, res) => {
     const foundTopic = await chatTopicSchema.findById(id)
 
     //throw error if topic not found
-    if(!foundTopic) throw new Error("this chat topic does not exist");
+    if (!foundTopic) throw new Error('this chat topic does not exist')
 
     // delete if found
     await chatTopicSchema.findByIdAndDelete(id)
@@ -89,8 +89,6 @@ router.delete('/deleteTopic', async (req, res) => {
     return res.status(200).json({
       message: `Chat topic deleted : ${foundTopic.topicTitle} `,
     })
-    
-    
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,

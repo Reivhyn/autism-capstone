@@ -23,6 +23,7 @@ const {validateSession} = require('./middlewares/sesson')
 const authController = require('./controllers/auth')
 const userController = require('./controllers/user')
 const activitiesController = require('./controllers/activity')
+const chatTopicsController = require('./controllers/chatTopics')
 const geminiController = require('./controllers/gemini')
 
 
@@ -47,6 +48,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/auth', authController)
 app.use('/users', validateSession, userController)
 app.use('/activities', validateSession, activitiesController)
+app.use('/chatTopics', validateSession, chatTopicsController)
 app.use('/chat', validateSession, geminiController)
 
 

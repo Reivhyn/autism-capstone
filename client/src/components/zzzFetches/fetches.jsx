@@ -281,3 +281,28 @@ export async function addNewUser(
     console.log(error)
   }
 }
+
+//get all chatTipics
+export async function getAllChatTopics() {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/getAllChatTopics`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+
+    const allChatTopics = await res.json()
+
+    console.log('allChatTopics', allChatTopics)
+
+    if (!res.ok) {
+      throw new Error(allChatTopics.message || 'Get all chat topics failed')
+    }
+
+    return allChatTopics
+  } catch (error) {
+    console.log(error)
+  }
+}

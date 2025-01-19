@@ -22,6 +22,7 @@ import {
   getActivities,
   findKidsOfParent,
   getAllUsers,
+  getAllChatTopics
 } from '../zzzFetches/fetches'
 
 const Portal = () => {
@@ -32,12 +33,14 @@ const Portal = () => {
   const [allActivities, setAllActivities] = useState('')
   const [kidsOfParent, setKidsOfParent] = useState('')
   const [allUsers, setAllUsers] = useState('')
+  const [allChatTopics, setAllChatTopics] = useState('')
 
   //* FUNCTIONS
   const getAdminData = async () => {
     if (pageToDisplay === 'admin') {
       setAllUsers(await getAllUsers(userData))
       setAllActivities(await getActivities())
+      setAllChatTopics(await getAllChatTopics())
     }
   }
 
@@ -46,6 +49,7 @@ const Portal = () => {
       console.log('get parent data triggered in portal.jsx')
       setKidsOfParent(await findKidsOfParent(userData))
       setAllActivities(await getActivities())
+      setAllChatTopics(await getAllChatTopics())
     }
   }
 
@@ -111,6 +115,13 @@ const Portal = () => {
         {/* all learning list */}
         {allActivities ? (
           <PortalList itemsToList={allActivities} listType={'learning'} />
+        ) : (
+          'Fetching Data'
+        )}
+
+        {/* all chatTopics list */}
+        {allChatTopics ? (
+          <PortalList itemsToList={allChatTopics} listType={'chatTopics'} />
         ) : (
           'Fetching Data'
         )}
