@@ -173,7 +173,7 @@ export async function editUser(
   email
 ) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
+    const res = await fetch(`http://127.0.0.1:4000/user/updateUser`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ export async function editUser(
 // fetch to delete user user
 export async function deleteUser(id) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/auth/delete-user`, {
+    const res = await fetch(`http://127.0.0.1:4000/user/delete-user`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

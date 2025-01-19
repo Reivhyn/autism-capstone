@@ -12,6 +12,7 @@ import SiteTitle from '../SiteTitle/SiteTitle'
 import { ptdContext } from '../zContextHooks/contextHooks'
 import { use } from 'react'
 import { FaSleigh } from 'react-icons/fa'
+import { SiRender } from 'react-icons/si'
 
 const Chat = () => {
   //* USESTATE
@@ -23,7 +24,7 @@ const Chat = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [displayLog, setDisplayLog] = useState([])
 
-  //* FUNCTION
+  //* FETCH
   const callGemini = async (e) => {
     try {
       e.preventDefault()
@@ -85,19 +86,34 @@ const Chat = () => {
     }
   }
 
+  //* FUNCTIONS
+  const RenderLog = () => {
+    if (history) {
+      setDisplayLog(
+        history.map(
+          (log, i) => {
+            return (
+              <div
+                key={`log${i}`}
+                className={i % 2 === 0 ? 'chatRes' : 'userRes'}
+              >
+                {log.parts[0].text}
+              </div>
+            )
+          },
+          [history]
+        )
+      )
+    }
+  }
+
+  //* USEEFFECT
   useEffect(() => {
     if (history) {
       console.log('history', history)
+      RenderLog()
     }
   }, [history])
-
-  const RenderLog = () => {
-    if (history) {
-      setDisplayLog(history.map((log, i) => {
-        return <div key={`log${i}`}>{log.parts}</div>
-      }))
-    }
-  }
 
   //* RENDER
   return (
@@ -105,8 +121,8 @@ const Chat = () => {
       <SiteTitle />
       <h1>CHAT PAGE</h1>
       <div className="chatHistoryWrapper">
-        <pre className="history">{displayLog ? displayLog : ''}</pre>
-        <pre className="currentResponce">{geminiStream}</pre>
+        <div className="history">{displayLog ? displayLog : ''}</div>
+        <div className="currentResponce">{geminiStream}</div>
       </div>
       <form action="">
         <textarea
