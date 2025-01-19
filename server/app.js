@@ -36,6 +36,7 @@ const PORT = process.env.PORT
 const HOST = process.env.HOST
 const SESSION_KEY = process.env.SESSION_KEY
 
+
 //MIDDLEWARES
 
 // allow cross origin requests only from front end
