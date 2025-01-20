@@ -35,9 +35,6 @@ const DropMenu = () => {
             background: 'linear-gradient(90deg, #004d40, #1de9b6)',
           },
           padding: '10px 20px',
-          fontWeight: 'bold',
-          borderRadius: '8px',
-          textTransform: 'none',
         }}
       >
         Site Navigation
@@ -49,12 +46,10 @@ const DropMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleMenuItemClick('landing')}>Home</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('games')}>Games</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('learning')}>
-          Learning Activities
-        </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('chat')}>Chat</MenuItem>
+    <MenuItem onClick={() => handleMenuItemClick('landing')}>Home</MenuItem> 
+    <MenuItem onClick={() => handleMenuItemClick('learning')}>Learning Activities</MenuItem>
+    <MenuItem onClick={() => handleMenuItemClick('games')}>Games</MenuItem>
+    <MenuItem onClick={() => handleMenuItemClick('chat')}>Chat</MenuItem>
       </Menu>
     </div>
   );

@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './activities.css';
 
 // COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Banner from '../Banner/Banner';
-import DropMenu from "../DropMenu/DropMenu";
 import SearchBar from '../SearchBar/SearchBar';
 import ActivityTile from '../ActivityTile/ActivityTile';
 import Footer from '../Footer/Footer';
@@ -22,24 +21,29 @@ import { runSearch } from '../zzHelpers/helpers';
 import { getActivities } from '../zzzFetches/fetches';
 
 const Activities = () => {
-  // USESTATE
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
+  const [pageToDisplay,] = useContext(ptdContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const [displayResult, setDisplayResult] = useState('');
-  const [allActivities, setAllActivities] = useState('');
+  const [displayResult, setDisplayResult] = useState(null);
+  const [allActivities, setAllActivities] = useState(null);
 
-  // FUNCTIONS
   const fetchActivities = async () => {
-    setAllActivities(await getActivities('6775ffb83fecb4f3f4b6e22e')); // TODO REMOVE HARD CODE
+    try {
+      const activities = await getActivities('6775ffb83fecb4f3f4b6e22e'); // Replace with dynamic ID if possible
+      setAllActivities(activities);
+    } catch (error) {
+      console.error('Failed to fetch activities:', error);
+    }
   };
 
   const displayGames = (activityArray) => {
-    return activityArray.map((activity, i) => {
-      return <ActivityTile key={`game${i}`} tileData={activity} />;
-    });
+    if (!activityArray || activityArray.length === 0) {
+      return <Typography variant="body1">No activities available.</Typography>;
+    }
+    return activityArray.map((activity, i) => (
+      <ActivityTile key={`game${i}`} tileData={activity} />
+    ));
   };
 
-  // USEEFFECTS
   useEffect(() => {
     if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
       fetchActivities();
@@ -49,55 +53,45 @@ const Activities = () => {
   useEffect(() => {
     if (pageToDisplay === 'games' && allActivities) {
       setDisplayResult(displayGames(allActivities.allowedGames));
-    }
-  }, [allActivities]);
-
-  useEffect(() => {
-    if (pageToDisplay === 'learning' && allActivities) {
+    } else if (pageToDisplay === 'learning' && allActivities) {
       setDisplayResult(displayGames(allActivities.allowedLearning));
     }
-  }, [allActivities]);
+  }, [pageToDisplay, allActivities]);
 
   useEffect(() => {
-    if (pageToDisplay === 'games' && allActivities) {
-      const searchResults = runSearch(allActivities.allowedGames, searchTerm);
-      setDisplayResult(displayGames(searchResults));
-    }
+    if (allActivities) {
+      const targetArray =
+        pageToDisplay === 'games'
+          ? allActivities.allowedGames
+          : allActivities.allowedLearning;
 
-    if (pageToDisplay === 'learning' && allActivities) {
-      const searchResults = runSearch(allActivities.allowedLearning, searchTerm);
-      setDisplayResult(displayGames(searchResults));
+      if (targetArray) {
+        const searchResults = runSearch(targetArray, searchTerm);
+        setDisplayResult(displayGames(searchResults));
+      }
     }
-  }, [searchTerm]);
+  }, [allActivities, searchTerm, pageToDisplay]);
 
-  // RENDER
   return (
-    <Container maxWidth="lg" style={{ padding: '20px', backgroundColor: '#121212', color: '#FFFFFF' }}>
+    <Container
+      maxWidth="lg"
+      style={{ padding: '20px', backgroundColor: '#121212', color: '#FFFFFF' }}
+    >
       <SiteTitle />
-
       <Typography variant="h4" gutterBottom style={{ marginBottom: '20px' }}>
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </Typography>
-
       <Banner />
-
-      {/* Place DropMenu in desired location */}
-      <div className="dropsearch-container">
-        <DropMenu />
+      <div className="dropSearch-container">
         <div className="searchbar-container">
           <SearchBar setSearchTerm={setSearchTerm} />
         </div>
       </div>
-
-      {/* Grid for activities */}
       <Grid container spacing={3} style={{ marginTop: '20px' }}>
-        {displayResult ? (
-          displayResult
-        ) : (
+        {displayResult || (
           <Typography variant="body1">Loading Activities...</Typography>
         )}
       </Grid>
-
       <Footer />
     </Container>
   );

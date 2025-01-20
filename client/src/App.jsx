@@ -37,25 +37,17 @@ function App() {
           <editTargetContext.Provider value={{}}>
             <KidsOfParentContext.Provider value={{}}>
               {/* Conditionally Render DropMenu */}
-              {['games', 'learning', 'chat'].includes(pageToDisplay) && (
-                <DropMenu />
-              )}
+              {(['learning', 'games', 'chat'].includes(pageToDisplay)) && <DropMenu />}
 
               {/* Page Rendering */}
               {pageToDisplay === 'login' && <Login />}
               {pageToDisplay === 'register' && <Register />}
               {pageToDisplay === 'landing' && <Landing />}
-              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
-                <Activities />
-              )}
+              {pageToDisplay === 'home' && <Landing />}
+              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && <Activities />}
               {pageToDisplay === 'chat' && <Chat />}
-              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
-                <Portal />
-              )}
-              {(pageToDisplay === 'editUser' ||
-                pageToDisplay === 'addUser' ||
-                pageToDisplay === 'editKid' ||
-                pageToDisplay === 'addKid') && <EditUser />}
+              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && <Portal />}
+              {(pageToDisplay === 'editUser' || pageToDisplay === 'addUser' || pageToDisplay === 'editKid' || pageToDisplay === 'addKid') && <EditUser />}
             </KidsOfParentContext.Provider>
           </editTargetContext.Provider>
         </ptdContext.Provider>
