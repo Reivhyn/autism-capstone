@@ -11,6 +11,7 @@ import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
+import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -63,6 +64,7 @@ function App() {
     if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
   }, [userData])
 
+  //* RENDERING
   return (
     <ThemeProvider theme={darkTheme}>
       {' '}
@@ -76,21 +78,38 @@ function App() {
               {/* Global DropMenu */}
               <DropMenu />
 
-              {/* Page Rendering */}
+              {/*//*  Page Rendering */}
+              {/* login page */}
               {pageToDisplay === 'login' && <Login />}
+              
+              {/* registration gage */}
               {pageToDisplay === 'register' && <Register />}
+              
+              {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}
+              
+              {/* games and lerning  pages */}
               {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
                 <Activities />
               )}
+              
+              {/* chat page */}
               {pageToDisplay === 'chat' && <Chat />}
+              
+              {/* admin and parent portal pages */}
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
                 <Portal />
               )}
+              
+              {/* edit user page */}
               {(pageToDisplay === 'editUser' ||
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
+
+                {/* edit chat topic page */}
+                {pageToDisplay === 'editChatTopic' && <EditChatTopic /> }
+
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>

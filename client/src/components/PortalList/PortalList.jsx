@@ -74,13 +74,22 @@ const PortalList = ({ itemsToList, listType }) => {
       )
     }
 
-    if (listType === 'chatTopics') {
-      setDisplayList(
-        itemsToList.allChatTopics.map((item, i) => {
-          return <li key={item._id}>{item.topicTitle}</li>
-        })
-      )
-    }
+        // display chatTopics list. clicking on item switches to edit page
+        if (listType === 'chatTopics') {
+          setDisplayList(
+            itemsToList.allChatTopics.map((item) => {
+              return (
+                <li
+                  onClick={() => {
+                    setEditTarget(item)
+                    setPageToDisplay('editChatTopic')
+                  }}
+                  key={item._id}
+                >{item.topicTitle}</li>
+              )
+            })
+          )
+        }
 
     if (listType === 'reporting') {
       setDisplayList(

@@ -263,15 +263,16 @@ const EditUser = () => {
             />
           </div>
 
-          {/* do not show delete user button when adding user */}
-          {pageToDisplay === 'editkid' || pageToDisplay === 'editUser' ? (
+          {/* do not show delete user button when adding user 
+          or for logged in user */}
+          {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') && userData._id !== editTarget._id ? (
             <div>
               Delete {`${editTarget.firstName} ${editTarget.lastName}`}
               <input
                 type="checkbox"
                 checked={editDeleteUser}
-                onChange={(e) => {
-                  setEditDeleteUser(e.target.checked)
+                onChange={() => {
+                  setEditDeleteUser(!editDeleteUser)
                 }}
               />
             </div>

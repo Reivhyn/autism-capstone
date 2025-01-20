@@ -14,8 +14,6 @@ export async function register(
   userType
 ) {
   try {
-    console.log(userName, firstName, lastName, email, password, dob, userType)
-
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
       headers: {
@@ -41,7 +39,6 @@ export async function register(
 
     const loginData = await res.json()
 
-    console.log(loginData)
     if (!res.ok) {
       throw new Error(loginData.message || 'Registration Failed')
     }
@@ -126,7 +123,6 @@ export async function getAllUsers() {
       throw new Error(allUsers.message || 'Get all users fetch failed')
     }
 
-    console.log('allUsers', allUsers)
     return allUsers
   } catch (error) {
     console.log(error)
@@ -270,7 +266,6 @@ export async function addNewUser(
     })
 
     const addedUser = await res.json()
-    console.log('addedUser', addedUser)
 
     if (!res.ok) {
       throw new Error(addedUser.message || 'edit user fetch failed')
@@ -295,13 +290,39 @@ export async function getAllChatTopics() {
 
     const allChatTopics = await res.json()
 
-    console.log('allChatTopics', allChatTopics)
-
     if (!res.ok) {
       throw new Error(allChatTopics.message || 'Get all chat topics failed')
     }
 
     return allChatTopics
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//edit chat topic
+export async function editChatTopic(id, topicTitle, description, ageRange) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/updateChatTopic`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },body: JSON.stringify({
+        ...(id && {id}),
+        ...(topicTitle && {topicTitle}),
+        ...(description && {description}),
+        ...(ageRange && {ageRange})
+      }),
+      credentials: 'include',
+    })
+
+    const editedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(editedTopic.message || 'Edit chat topics failed')
+    }
+
+    return editedTopic
   } catch (error) {
     console.log(error)
   }
