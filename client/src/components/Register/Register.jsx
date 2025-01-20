@@ -1,12 +1,8 @@
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -32,7 +28,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   },
   backgroundColor: 'rgba(2,0,36,1)',
   background: 'radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
-  color: 'white', // Default text color inside card
+  color: 'black',
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
@@ -48,44 +44,63 @@ const Register = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
 
   // State for form validation and input
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [usernameError, setUsernameError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const validateInputs = () => {
     let isValid = true;
 
+    if (!username) {
+      setUsernameError(true);
+      isValid = false;
+    } else {
+      setUsernameError(false);
+    }
+
+    if (!firstName) {
+      setFirstNameError(true);
+      isValid = false;
+    } else {
+      setFirstNameError(false);
+    }
+
+    if (!lastName) {
+      setLastNameError(true);
+      isValid = false;
+    } else {
+      setLastNameError(false);
+    }
+
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
       isValid = false;
     } else {
       setEmailError(false);
-      setEmailErrorMessage('');
     }
 
     if (!password || password.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
       isValid = false;
     } else {
       setPasswordError(false);
-      setPasswordErrorMessage('');
     }
 
-    if (!name || name.length < 1) {
-      setNameError(true);
-      setNameErrorMessage('Full name is required.');
+    if (password !== confirmPassword) {
+      setConfirmPasswordError(true);
       isValid = false;
     } else {
-      setNameError(false);
-      setNameErrorMessage('');
+      setConfirmPasswordError(false);
     }
 
     return isValid;
@@ -96,12 +111,13 @@ const Register = () => {
 
     if (validateInputs()) {
       console.log({
-        name,
+        username,
+        firstName,
+        lastName,
         email,
         password,
       });
 
-      // You can handle the API call for registration here
       alert('Registration Successful!');
       setPageToDisplay('login'); // Navigate to login after successful registration
     }
@@ -114,7 +130,7 @@ const Register = () => {
         <Typography
           component="h1"
           variant="h4"
-          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'white' }}
+          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'black' }}
         >
           Register
         </Typography>
@@ -123,81 +139,79 @@ const Register = () => {
           onSubmit={handleSubmit}
           sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         >
-          {/* Full Name Field */}
-          <FormControl>
-            <FormLabel htmlFor="name" sx={{ color: 'white' }}>Full name</FormLabel>
-            <TextField
-              autoComplete="name"
-              name="name"
-              required
-              fullWidth
-              id="name"
-              placeholder="Jon Snow"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              error={nameError}
-              helperText={nameErrorMessage}
-              sx={{ 
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
-                  '&:hover fieldset': { borderColor: 'white' }, 
-                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
-                },
-                input: { color: 'white' }, 
-              }}
-            />
-          </FormControl>
+          {/* Username Field */}
+          <TextField
+            required
+            fullWidth
+            id="username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={usernameError}
+            helperText={usernameError && 'Username is required.'}
+          />
+
+          {/* First Name Field */}
+          <TextField
+            required
+            fullWidth
+            id="firstName"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            error={firstNameError}
+            helperText={firstNameError && 'First name is required.'}
+          />
+
+          {/* Last Name Field */}
+          <TextField
+            required
+            fullWidth
+            id="lastName"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            error={lastNameError}
+            helperText={lastNameError && 'Last name is required.'}
+          />
 
           {/* Email Field */}
-          <FormControl>
-            <FormLabel htmlFor="email" sx={{ color: 'white' }}>Email</FormLabel>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              placeholder="your@email.com"
-              name="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={emailError}
-              helperText={emailErrorMessage}
-              sx={{ 
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
-                  '&:hover fieldset': { borderColor: 'white' }, 
-                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
-                },
-                input: { color: 'white' }, 
-              }}
-            />
-          </FormControl>
+          <TextField
+            required
+            fullWidth
+            id="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={emailError}
+            helperText={emailError && 'Please enter a valid email address.'}
+          />
 
           {/* Password Field */}
-          <FormControl>
-            <FormLabel htmlFor="password" sx={{ color: 'white' }}>Password</FormLabel>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              placeholder="••••••"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={passwordError}
-              helperText={passwordErrorMessage}
-              sx={{ 
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
-                  '&:hover fieldset': { borderColor: 'white' }, 
-                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
-                },
-                input: { color: 'white' }, 
-              }}
-            />
-          </FormControl>
+          <TextField
+            required
+            fullWidth
+            id="password"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={passwordError}
+            helperText={passwordError && 'Password must be at least 6 characters.'}
+          />
+
+          {/* Confirm Password Field */}
+          <TextField
+            required
+            fullWidth
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={confirmPasswordError}
+            helperText={confirmPasswordError && 'Passwords must match.'}
+          />
 
           <Button type="submit" fullWidth variant="contained" sx={{ color: 'black', backgroundColor: 'white', '&:hover': { backgroundColor: 'gray' } }}>
             Sign Up
@@ -205,13 +219,13 @@ const Register = () => {
         </Box>
         <Divider sx={{ margin: '10px 0' }}>or</Divider>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Typography sx={{ textAlign: 'center', color: 'white' }}>
+          <Typography sx={{ textAlign: 'center', color: 'black' }}>
             Already have an account?{' '}
             <Link
               component="button"
               onClick={() => setPageToDisplay('login')}
               variant="body2"
-              sx={{ color: 'white' }}
+              sx={{ color: 'black' }}
             >
               Log in
             </Link>

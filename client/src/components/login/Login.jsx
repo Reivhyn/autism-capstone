@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import { ptdContext } from '../zContextHooks/contextHooks';
-import './login.css'; // Include custom styles if needed
+import './login.css';
 
 // Custom Card styling
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -30,7 +30,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   },
   backgroundColor: 'rgba(2,0,36,1)',
   background: 'radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
-  color: 'white', // Default text color inside card
+  color: 'black',
 }));
 
 const LoginContainer = styled(Stack)(({ theme }) => ({
@@ -46,23 +46,23 @@ const Login = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
 
   // State for form validation and input
-  const [email, setEmail] = useState('');
+  const [userID, setUserID] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [userIDError, setUserIDError] = useState(false);
+  const [userIDErrorMessage, setUserIDErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   const validateInputs = () => {
     let isValid = true;
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+    if (!userID || userID.trim() === '') {
+      setUserIDError(true);
+      setUserIDErrorMessage('UserID cannot be empty.');
       isValid = false;
     } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
+      setUserIDError(false);
+      setUserIDErrorMessage('');
     }
 
     if (!password || password.length < 6) {
@@ -82,7 +82,7 @@ const Login = () => {
 
     if (validateInputs()) {
       console.log({
-        email,
+        userID,
         password,
       });
 
@@ -99,7 +99,7 @@ const Login = () => {
         <Typography
           component="h1"
           variant="h4"
-          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'white' }}
+          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', color: 'black' }}
         >
           Login
         </Typography>
@@ -108,25 +108,24 @@ const Login = () => {
           onSubmit={handleSubmit}
           sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         >
-          {/* Email Field */}
+          {/* UserID Field */}
           <FormControl>
-            <FormLabel htmlFor="email" sx={{ color: 'white' }}>Email</FormLabel>
+            <FormLabel htmlFor="userID" sx={{ color: 'white' }}>UserID</FormLabel>
             <TextField
               required
               fullWidth
-              id="email"
-              placeholder="your@email.com"
-              name="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={emailError}
-              helperText={emailErrorMessage}
+              id="userID"
+              placeholder="Enter your UserID"
+              name="userID"
+              value={userID}
+              onChange={(e) => setUserID(e.target.value)}
+              error={userIDError}
+              helperText={userIDErrorMessage}
               sx={{ 
                 '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
-                  '&:hover fieldset': { borderColor: 'white' }, 
-                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                  '& fieldset': { borderColor: 'black', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'black' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'black' }, 
                 },
                 input: { color: 'white' }, 
               }}
@@ -135,7 +134,7 @@ const Login = () => {
 
           {/* Password Field */}
           <FormControl>
-            <FormLabel htmlFor="password" sx={{ color: 'white' }}>Password</FormLabel>
+            <FormLabel htmlFor="password" sx={{ color: 'black' }}>Password</FormLabel>
             <TextField
               required
               fullWidth
@@ -143,18 +142,17 @@ const Login = () => {
               placeholder="••••••"
               type="password"
               id="password"
-              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
               helperText={passwordErrorMessage}
               sx={{ 
                 '& .MuiOutlinedInput-root': {
-                  '& fieldset': { borderColor: 'white', border: '1px solid' }, 
-                  '&:hover fieldset': { borderColor: 'white' }, 
-                  '&.Mui-focused fieldset': { borderColor: 'white' }, 
+                  '& fieldset': { borderColor: 'black', border: '1px solid' }, 
+                  '&:hover fieldset': { borderColor: 'black' }, 
+                  '&.Mui-focused fieldset': { borderColor: 'black' }, 
                 },
-                input: { color: 'white' }, 
+                input: { color: 'black' }, 
               }}
             />
           </FormControl>
@@ -165,13 +163,13 @@ const Login = () => {
         </Box>
         <Divider sx={{ margin: '10px 0' }}>or</Divider>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Typography sx={{ textAlign: 'center', color: 'white' }}>
+          <Typography sx={{ textAlign: 'center', color: 'black' }}>
             Don't have an account?{' '}
             <Link
               component="button"
               onClick={() => setPageToDisplay('register')}
               variant="body2"
-              sx={{ color: 'white' }}
+              sx={{ color: 'black' }}
             >
               Register
             </Link>
