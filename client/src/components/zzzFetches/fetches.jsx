@@ -280,13 +280,16 @@ export async function addNewUser(
 //get all chatTipics
 export async function getAllChatTopics() {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/chatTopics/getAllChatTopics`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    })
+    const res = await fetch(
+      `http://127.0.0.1:4000/chatTopics/getAllChatTopics`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }
+    )
 
     const allChatTopics = await res.json()
 
@@ -303,15 +306,46 @@ export async function getAllChatTopics() {
 //edit chat topic
 export async function editChatTopic(id, topicTitle, description, ageRange) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/chatTopics/updateChatTopic`, {
-      method: 'GET',
+    const res = await fetch(
+      `http://127.0.0.1:4000/chatTopics/updateChatTopic`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...(id && { id }),
+          ...(topicTitle && { topicTitle }),
+          ...(description && { description }),
+          ...(ageRange && { ageRange }),
+        }),
+        credentials: 'include',
+      }
+    )
+
+    const editedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(editedTopic.message || 'Edit chat topics failed')
+    }
+
+    return editedTopic
+  } catch (error) {
+    console.log(error)
+  }
+}
+//edit chat topic
+export async function addChatTopic(topicTitle, description, ageRange) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/creatChatTopic`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },body: JSON.stringify({
-        ...(id && {id}),
-        ...(topicTitle && {topicTitle}),
-        ...(description && {description}),
-        ...(ageRange && {ageRange})
+      },
+      body: JSON.stringify({
+        topicTitle: topicTitle,
+        description: description,
+        ageRange: ageRange,
       }),
       credentials: 'include',
     })
@@ -323,6 +357,32 @@ export async function editChatTopic(id, topicTitle, description, ageRange) {
     }
 
     return editedTopic
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//delete chat topic
+export async function deleteChatTopic(id) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/deleteTopic`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+      credentials: 'include',
+    })
+
+    const deletedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(deletedTopic.message || 'Delete chat topics failed')
+    }
+
+    return deletedTopic
   } catch (error) {
     console.log(error)
   }

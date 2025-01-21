@@ -41,7 +41,7 @@ function App() {
   //* FUNCTIONS
 
   //* USESTATES
-  //try to session data on pageload
+  //try to get session data on pageload
   useEffect(() => {
     const savedUserData = sessionStorage.getItem('userData')
     try {
@@ -81,35 +81,35 @@ function App() {
               {/*//*  Page Rendering */}
               {/* login page */}
               {pageToDisplay === 'login' && <Login />}
-              
+
               {/* registration gage */}
               {pageToDisplay === 'register' && <Register />}
-              
+
               {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}
-              
+
               {/* games and lerning  pages */}
               {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
                 <Activities />
               )}
-              
+
               {/* chat page */}
               {pageToDisplay === 'chat' && <Chat />}
-              
+
               {/* admin and parent portal pages */}
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
                 <Portal />
               )}
-              
+
               {/* edit user page */}
               {(pageToDisplay === 'editUser' ||
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
 
-                {/* edit chat topic page */}
-                {pageToDisplay === 'editChatTopic' && <EditChatTopic /> }
-
+              {/* edit chat topic page */}
+              {(pageToDisplay === 'editChatTopic' ||
+                pageToDisplay === 'addChatTopic') && <EditChatTopic />}
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>
