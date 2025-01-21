@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
 import './EditActivity.css'
 
@@ -35,6 +38,18 @@ const EditActivity = () => {
   const [category, setCategory] = useState('')
   const [educational, setEducational] = useState('')
   const [searchKeywords, setSearchKeywords] = useState('')
+
+  // usestates for editing activity
+  const [editActivityType, seteditActivityType] = useState('')
+  const [editActivityTitle, seteditActivityTitle] = useState('')
+  const [editDescription, seteditDescription] = useState('')
+  const [editurl, setediturl] = useState('')
+  const [editImageURL, seteditImageURL] = useState('')
+  const [editImagebuffer, seteditImagebuffer] = useState('')
+  const [editImageType, seteditImageType] = useState('')
+  const [editCategory, seteditCategory] = useState('')
+  const [editEducational, seteditEducational] = useState('')
+  const [editSearchKeywords, seteditSearchKeywords] = useState('')
 
   //* FUNCTIONS
   const handlePageDisplay = async () => {}
