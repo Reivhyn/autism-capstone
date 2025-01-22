@@ -1,27 +1,19 @@
 const router = require('express').Router()
 const nodemailer = require('nodemailer')
+const bcrypt = require('bcryptjs')
 
 const { deconstructUser } = require('../helpers/deconstructUser');
 
 //SCHEMA IMPORT
 const userSchema = require('../models/userSchema')
 
-// Endpoint to find all users
-router.get('/findAllUsers', async (req, res) => {
-  try {
-    const users = await userSchema.find({})
-    res.json(users)
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error })
-  }
-})
+//GLOBALS
+const SALT = Number(process.env.SALT)
 
 // Update User
 router.put('/updateUser', async (req, res) => {
   try {
     console.log('Update user endpoint hit')
-
-    console.log('req.body in update user endpoint', req.body)
 
     deconstructUser(req.body, 'update')
 
@@ -36,7 +28,10 @@ router.put('/updateUser', async (req, res) => {
       req.body.password = bcrypt.hashSync(password, SALT)
     }
 
-    const updatedEntry = await userSchema.findByIdAndUpdate(id, req.body, {
+    //remove id from req.body
+    const {_id, ...updateValues} = req.body
+
+    const updatedEntry = await userSchema.findByIdAndUpdate(id, updateValues, {
       returnDocument: 'after',
     })
     res.status(200).json({
@@ -93,7 +88,7 @@ router.post('/getAllUsers', async (req, res) =>{
     console.log('getAllUsers endpoint hit');
     
     // verify user is an admin
-    if(req.body.userType !== 'admin') throw new Error("Request Denied");
+    if(req.body.userInfo.userType !== 'admin') throw new Error("Request Denied");
     
     const allUsers = await userSchema.find({})
 

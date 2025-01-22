@@ -143,6 +143,7 @@ const EditUser = () => {
   //* USEEFFECT
   //get all data when page is loaded
   useEffect(() => {
+    console.log('pageToDisplay', pageToDisplay)
     if (
       pageToDisplay === 'editUser' ||
       pageToDisplay === 'addUser' ||
@@ -176,7 +177,7 @@ const EditUser = () => {
     <>
       <div>
         {/* show weather adding new user or editing user */}
-        {pageToDisplay === 'editUser' || pageToDisplay === 'editkid'
+        {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
           : userData.userType === 'admin' ? 'Add New User' :'Add New Child'}
       </div>
@@ -366,7 +367,7 @@ const EditUser = () => {
       )}
 
 
-      {/* chat topics duallist */}
+      chat topics duallist
       {allChatTopics &&
       (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
         <DualList

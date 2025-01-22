@@ -29,7 +29,7 @@ const validateSession = async (req, res, next) => {
     if (!foundUser) throw new Error('Forbidden')
 
     // add user info to request
-    req.body = { ...req.body, ...foundUser._doc }
+    req.body.userInfo = {...foundUser._doc }
 
     // continue to next function
     next()
