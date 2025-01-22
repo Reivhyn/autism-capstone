@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 
 // COMPONENT IMPORTS
+<<<<<<< HEAD
 import Login from './components/login/Login';
 import Register from './components/Register/Register';
 import Landing from './components/Landing/Landing';
@@ -10,6 +11,17 @@ import Chat from './components/Chat/Chat';
 import Portal from './components/Portal/Portal';
 import EditUser from './components/EditUser/EditUser';
 import DropMenu from './components/DropMenu/dropMenu.jsx';// Import DropMenu
+=======
+import Login from './components/login/Login'
+import Register from './components/Register/Register'
+import Landing from './components/Landing/Landing'
+import Activities from './components/Activities/Activities'
+import Chat from './components/Chat/Chat'
+import Portal from './components/Portal/Portal'
+import DropMenu from './components/DropMenu/DropMenu'
+import EditUser from './components/EditUser/EditUser.jsx'
+import EditActivity from './components/EditActivity/EditActivity.jsx'
+>>>>>>> activities
 
 // CONTEXT IMPORTS
 import {
@@ -48,6 +60,7 @@ function App() {
               {pageToDisplay === 'chat' && <Chat />}
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && <Portal />}
               {(pageToDisplay === 'editUser' || pageToDisplay === 'addUser' || pageToDisplay === 'editKid' || pageToDisplay === 'addKid') && <EditUser />}
+              {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
             </KidsOfParentContext.Provider>
           </editTargetContext.Provider>
         </ptdContext.Provider>

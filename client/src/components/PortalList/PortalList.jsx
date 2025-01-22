@@ -109,11 +109,11 @@ const PortalList = ({ itemsToList, listType }) => {
         return
       }
       if (listType === 'games') {
-        setPageToDisplay('addGame')
+        setPageToDisplay('editActivity')
         return
       }
       if (listType === 'learning') {
-        setPageToDisplay('addLearning')
+        setPageToDisplay('editActivity')
         return
       }
       if (listType === 'chat') {
@@ -123,7 +123,7 @@ const PortalList = ({ itemsToList, listType }) => {
     }
 
   //* USESTATE
-  //run functions
+  //initilize dual list
   useState(() => {
     setUpList()
     assignListTitle()

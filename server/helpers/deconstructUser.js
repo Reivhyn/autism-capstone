@@ -34,19 +34,28 @@ function deconstructUser(userObject, flag) {
     return
   }
 
+  if (!userType) throw new Error('usertype not on')
+  if (!userName) throw new Error('username not on')
+  if (!firstName) throw new Error('first name not on')
+  if (!lastName) throw new Error('last name not on')
+  if (!dob) throw new Error('dob not on')
+  if (!email) throw new Error('email usertype not on')
+  if (!password) throw new Error('pwd not on')
+
   //no flag used when creating a new user
-  if (
-    !userType ||
-    !userName ||
-    !firstName ||
-    !lastName ||
-    !dob ||
-    !email ||
-    !password
-  ) {
-    throw new Error(
-      'userType, userName, firstName, lastName, dob, email and password are needed to create a new user '
-    )
-  }
+  // if (
+
+  //   !userType ||
+  //   !userName ||
+  //   !firstName ||
+  //   !lastName ||
+  //   !dob ||
+  //   !email ||
+  //   !password
+  // ) {
+  //   throw new Error(
+  //     'userType, userName, firstName, lastName, dob, email and password are needed to create a new user '
+  //   )
+  // }
 }
 module.exports = { deconstructUser }

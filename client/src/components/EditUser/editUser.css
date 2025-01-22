@@ -1,16 +1,11 @@
 .formWrapper{
   display: flex;
   flex-direction: column;
+  margin-bottom: 5vh;
 }
 
-.dualListOuterWrap{
-  margin-top: 3vh;
-}
-
-.selectedWraper{
+.userTypeCheckBoxWrap{
   display: flex;
-  flex-direction: column;
-}
-.dualListWrapper{
-  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1vh;
 }

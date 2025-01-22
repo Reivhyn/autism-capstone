@@ -43,7 +43,7 @@ const Portal = () => {
 
   const getParentData = async () => {
     if (pageToDisplay === 'parent') {
-      console.log('get parent data triggered in portal.jsx');
+      console.log('get parent data triggered in portal.jsx')
       setKidsOfParent(await findKidsOfParent(userData))
       setAllActivities(await getActivities())
     }
@@ -67,40 +67,58 @@ const Portal = () => {
 
   //* RENDER
   // render admin portal
-  if (pageToDisplay === 'admin') {
-    return (
-      <>
-        <SiteTitle />
-        <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
 
-        
-        <div className="portalListWrapper">
-          {/* all users list */}
-          {allUsers ? (
-            <PortalList itemsToList={allUsers} listType={'user'} />
-          ) : (
-            'Fetching Data'
-          )}
+  return (
+    <>
+      <SiteTitle />
+      <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
 
-          {/* all games list */}
-          {allActivities ? (
-            <PortalList itemsToList={allActivities} listType={'games'} />
-          ) : (
-            'Fetching Data'
-          )}
+      <div className="portalListWrapper">
+        {/* if pageToDisplay is admin show all users list
+        first ternary function checks to see if page is admin and if needed
+        data is present to display the list
+        the second ternary function determins weather to retrun nothing if the 
+        page to display is NOT admin or return feching data if it is admin
+        */}
+        {allUsers && pageToDisplay === 'admin' ? (
+          <PortalList itemsToList={allUsers} listType={'user'} />
+        ) : pageToDisplay === 'admin' ? (
+          'fetching data'
+        ) : (
+          ''
+        )}
 
-          {/* all learning list */}
-          {allActivities ? (
-            <PortalList itemsToList={allActivities} listType={'learning'} />
-          ) : (
-            'Fetching Data'
-          )}
-        </div>
+        {/* if pagetodisplay is parent show kids of parent list
+        first ternary function checks to see if page is parrent and if needed
+        data is present to display the list
+        the second ternary function determins weather to retrun nothing if the pagetodisplay is NOT parent or return fetching data */}
+        {/* if user is parent display parents children */}
+        {kidsOfParent && pageToDisplay === 'parent' ? (
+          <PortalList itemsToList={kidsOfParent} listType={'kids'} />
+        ) : pageToDisplay === 'parent' ? (
+          'fetching data'
+        ) : (
+          ''
+        )}
 
-        <Footer />
-      </>
-    )
-  }
+        {/* all games list */}
+        {allActivities ? (
+          <PortalList itemsToList={allActivities} listType={'games'} />
+        ) : (
+          'Fetching Data'
+        )}
+
+        {/* all learning list */}
+        {allActivities ? (
+          <PortalList itemsToList={allActivities} listType={'learning'} />
+        ) : (
+          'Fetching Data'
+        )}
+      </div>
+
+      <Footer />
+    </>
+  )
 
   //render parent portal
   if (pageToDisplay === 'parent') {
