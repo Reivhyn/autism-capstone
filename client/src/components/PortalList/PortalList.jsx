@@ -74,24 +74,6 @@ const PortalList = ({ itemsToList, listType }) => {
       )
     }
 
-<<<<<<< HEAD
-        // display chatTopics list. clicking on item switches to edit page
-        if (listType === 'chatTopics') {
-          setDisplayList(
-            itemsToList.allChatTopics.map((item) => {
-              return (
-                <li
-                  onClick={() => {
-                    setEditTarget(item)
-                    setPageToDisplay('editChatTopic')
-                  }}
-                  key={item._id}
-                >{item.topicTitle}</li>
-              )
-            })
-          )
-        }
-=======
     // display chatTopics list. clicking on item switches to edit page
     if (listType === 'chatTopics') {
       setDisplayList(
@@ -110,7 +92,6 @@ const PortalList = ({ itemsToList, listType }) => {
         })
       )
     }
->>>>>>> a0e948406780d962fdcab8b7b790632e6f74c0dd
 
     if (listType === 'reporting') {
       setDisplayList(
@@ -168,17 +149,10 @@ const PortalList = ({ itemsToList, listType }) => {
 
   //* USEEFFECT
   //initilize dual list
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   setUpList()
-  //   assignListTitle()
-  // }, [itemsToList])
-=======
   useEffect(() => {
     setUpList()
     assignListTitle()
   }, [itemsToList])
->>>>>>> a0e948406780d962fdcab8b7b790632e6f74c0dd
 
   //* RENDER
   return (
