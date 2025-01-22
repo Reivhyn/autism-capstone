@@ -7,7 +7,7 @@ import './portalList.css'
 // pdt -> page to display
 import {
   ptdContext,
-  KidsOfParentContext,
+  // KidsOfParentContext,
   editTargetContext,
 } from '../zContextHooks/contextHooks'
 
@@ -15,10 +15,10 @@ const PortalList = ({ itemsToList, listType }) => {
   //* USESTATE
   const [listTitle, setListTitle] = useState('')
   const [displayList, setDisplayList] = useState('')
-  const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
+  // const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
-
+  
   //* FUNCTIONS
   const setUpList = () => {
     if (listType === 'user') {
@@ -147,10 +147,10 @@ const PortalList = ({ itemsToList, listType }) => {
 
   //* USEEFFECT
   //initilize dual list
-  useEffect(() => {
-    setUpList()
-    assignListTitle()
-  }, [itemsToList])
+  // useEffect(() => {
+  //   setUpList()
+  //   assignListTitle()
+  // }, [itemsToList])
 
   //* RENDER
   return (
