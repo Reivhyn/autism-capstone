@@ -11,6 +11,7 @@ import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
 import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
+import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -71,12 +72,15 @@ function App() {
                 <DropMenu />
               )}
 
+              {/* render logout button once logged in */}
+              {userData ? <LogoutButton /> : ''}
+
               {/*//*  Page Rendering */}
               {/* login page */}
-              {pageToDisplay === 'login' && <Login />}
+              {pageToDisplay === 'login' && !userData && <Login />}
 
               {/* registration gage */}
-              {pageToDisplay === 'register' && <Register />}
+              {pageToDisplay === 'register' && !userData && <Register />}
 
               {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}
