@@ -11,6 +11,7 @@ import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
+import EditActivity from './components/EditActivity/EditActivity.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -91,6 +92,7 @@ function App() {
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
+                {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>
