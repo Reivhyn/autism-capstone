@@ -169,7 +169,7 @@ export async function editUser(
   email
 ) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/user/updateUser`, {
+    const res = await fetch(`http://127.0.0.1:4000/users/updateUser`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

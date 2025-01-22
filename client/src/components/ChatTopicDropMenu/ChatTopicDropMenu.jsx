@@ -20,8 +20,10 @@ const ChatTopicDropMenu = () => {
     const allTopics = (await getAllChatTopics())
     const arr = []
     allTopics.array.forEach(topic => {
-      if(userData.chatAccess.includes(topic._id))
+      if(userData.chatAccess.includes(topic._id)){
         arr.push(topic)
+      }
+      setAllowedTopics(arr)
     });
   }
   

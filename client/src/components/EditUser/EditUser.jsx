@@ -27,6 +27,7 @@ import {
   editUser,
   deleteUser,
   addNewUser,
+  getAllChatTopics
 } from '../zzzFetches/fetches'
 import { use } from 'react'
 import { Email } from '@mui/icons-material'
@@ -55,7 +56,9 @@ const EditUser = () => {
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
-  const [learingAccess, setlearningAccess] = useState('')
+  const [learingAccess, setLearningAccess] = useState('')
+  const [allChatTopics, setAllChatTopics] = useState('')
+  const [chatAccess, setChatAccess] = useState('')
 
   //combines the two access arrays to be passed when save button is pressed
   const [activitiesAccess, setActivitiesAccess] = useState('')
@@ -64,9 +67,10 @@ const EditUser = () => {
   const [checkedBox, setCheckedBox] = useState('kid')
 
   //* FUNCTIONS
-  //function to retreve all user
-  const fetchAllActivities = async () => {
+  //function to retreve all activities
+  const fetchAllData = async () => {
     setAllActivities(await getActivities())
+    setAllChatTopics(await getAllChatTopics())
   }
 
   //hanle setting userType
@@ -137,7 +141,7 @@ const EditUser = () => {
   }
 
   //* USEEFFECT
-  //get all activites when page is loaded
+  //get all data when page is loaded
   useEffect(() => {
     if (
       pageToDisplay === 'editUser' ||
@@ -145,7 +149,7 @@ const EditUser = () => {
       pageToDisplay === 'editKid' ||
       pageToDisplay === 'addKid'
     )
-      fetchAllActivities()
+      fetchAllData()
   }, [pageToDisplay])
 
   //update learning access when its updated on the dual list
@@ -355,7 +359,21 @@ const EditUser = () => {
           dataToList={allActivities}
           listType="learning"
           learingAccess={learingAccess}
-          setLearningAccess={setlearningAccess}
+          setLearningAccess={setLearningAccess}
+        />
+      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
+      )}
+
+
+      {/* chat topics duallist */}
+      {allChatTopics &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
+        <DualList
+          dataToList={allChatTopics}
+          listType="chatTopic"
+          chatAccess={chatAccess}
+          setChatAccess={setChatAccess}
         />
       ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
         'fetching data' : ''
