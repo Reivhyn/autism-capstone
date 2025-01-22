@@ -5,7 +5,7 @@
     * no flag checks for all items
 */
 
-function deconstructActivity(gameObject, flag) {
+function deconstructActivity(activityObject, flag) {
   const {
     id,
     activityType,
@@ -19,7 +19,7 @@ function deconstructActivity(gameObject, flag) {
     educational,
     searchKeywords,
     ageRange,
-  } = gameObject
+  } = activityObject
 
   if (flag === 'update') {
     if (!id) throw new Error('Provide id of the activity do be updated')

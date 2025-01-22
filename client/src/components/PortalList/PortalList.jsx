@@ -32,7 +32,7 @@ const PortalList = ({ itemsToList, listType }) => {
                   ? setPageToDisplay('editKid')
                   : setPageToDisplay('editUser')
               }}
-              key={`item${item._id}`}
+              key={item._id}
             >
               {`${item.firstName} ${item.lastName} (${item.userName})`}
             </li>
@@ -51,7 +51,7 @@ const PortalList = ({ itemsToList, listType }) => {
                 setEditTarget(item)
                 setPageToDisplay('editKid')
               }}
-              key={`item${item._id}`}
+              key={item._id}
             >{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
           )
         })
@@ -61,7 +61,7 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'games') {
       setDisplayList(
         itemsToList.allGames.map((item, i) => {
-          return <li key={`item${i}`}>{item.activityTitle}</li>
+          return <li key={item._id}>{item.activityTitle}</li>
         })
       )
     }
@@ -69,21 +69,34 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => {
-          return <li key={`item${i}`}>{item.activityTitle}</li>
+          return <li key={item._id}>{item.activityTitle}</li>
         })
       )
     }
 
-    if (listType === 'chat') {
-      return itemsToList.map((item, i) => {
-        return <li key={`item${i}`}>{i}</li>
-      })
+    // display chatTopics list. clicking on item switches to edit page
+    if (listType === 'chatTopics') {
+      setDisplayList(
+        itemsToList.allChatTopics.map((item) => {
+          return (
+            <li
+              onClick={() => {
+                setEditTarget(item)
+                setPageToDisplay('editChatTopic')
+              }}
+              key={item._id}
+            >
+              {item.topicTitle}
+            </li>
+          )
+        })
+      )
     }
 
     if (listType === 'reporting') {
       setDisplayList(
         itemsToList.map((item, i) => {
-          return <li key={`item${i}`}>{i}</li>
+          return <li key={item._id}>{i}</li>
         })
       )
     }
@@ -102,7 +115,7 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setListTitle('Learning Activities')
     }
-    if (listType === 'chat') {
+    if (listType === 'chatTopics') {
       setListTitle('Chat Topics')
     }
     if (listType === 'reporting') {
@@ -128,8 +141,8 @@ const PortalList = ({ itemsToList, listType }) => {
       setPageToDisplay('addLearning')
       return
     }
-    if (listType === 'chat') {
-      setPageToDisplay('addChat')
+    if (listType === 'chatTopics') {
+      setPageToDisplay('addChatTopic')
       return
     }
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './App.css'
 
 // COMPONENT IMPORTS
@@ -10,6 +10,7 @@ import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
+import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -28,38 +29,82 @@ import darkTheme from './Theme/theme.jsx'
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
   const [userData, setUserData] = useState('')
+  const [kidsOfParent, setKidsOfParent] = useState('')
+  const [editTarget, setEditTarget] = useState('')
 
+  //* FUNCTIONS
+
+  //* USESTATES
+  //try to get session data on pageload
+  useEffect(() => {
+    const savedUserData = sessionStorage.getItem('userData')
+    try {
+      savedUserData === undefined ? '' : setUserData(JSON.parse(savedUserData)) // Default to an empty string if no value is saved
+    } catch (error) {
+      console.log('parse session storage failed', error)
+    }
+  }, [])
+
+  //if userdata exist and user is admin or parent redirect to their portal
+  useEffect(() => {
+    if (userData) {
+      if (userData.userType === 'admin') setPageToDisplay('admin')
+      if (userData.userType === 'parent') setPageToDisplay('parent')
+    }
+  }, [userData])
+
+  // save local data to session sorage
+  useEffect(() => {
+    if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
+  }, [userData])
+
+  //* RENDERING
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <editTargetContext.Provider value={{}}>
-            <KidsOfParentContext.Provider value={{}}>
+          <KidsOfParentContext.Provider value={{ KidsOfParentContext }}>
+            <editTargetContext.Provider value={{ editTargetContext }}>
               {/* Conditionally Render DropMenu */}
               {['learning', 'games', 'chat'].includes(pageToDisplay) && (
                 <DropMenu />
               )}
 
-              {/* Page Rendering */}
-              {}
+              {/*//*  Page Rendering */}
+              {/* login page */}
               {pageToDisplay === 'login' && <Login />}
+
+              {/* registration gage */}
               {pageToDisplay === 'register' && <Register />}
+
+              {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}
-              {pageToDisplay === 'home' && <Landing />}
+
+              {/* games and lerning  pages */}
               {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
                 <Activities />
               )}
+
+              {/* chat page */}
               {pageToDisplay === 'chat' && <Chat />}
+
+              {/* admin and parent portal pages */}
               {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
                 <Portal />
               )}
+
+              {/* edit user page */}
               {(pageToDisplay === 'editUser' ||
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
-            </KidsOfParentContext.Provider>
-          </editTargetContext.Provider>
+
+              {/* edit chat topic page */}
+              {(pageToDisplay === 'editChatTopic' ||
+                pageToDisplay === 'addChatTopic') && <EditChatTopic />}
+            </editTargetContext.Provider>
+          </KidsOfParentContext.Provider>
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>

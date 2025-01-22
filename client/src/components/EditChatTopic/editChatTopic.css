@@ -1,0 +1,8 @@
+.editTopicFieldsWrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteTopicWrap{
+  display: flex;
+}
