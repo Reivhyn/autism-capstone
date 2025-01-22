@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import './Landing.css';
 
 // CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
 
 // ICON IMPORTS
 import SchoolIcon from '@mui/icons-material/School';
@@ -12,6 +12,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 const Landing = () => {
   const [, setPageToDisplay] = useContext(ptdContext);
+  const [userData, setUserData] = useContext(userDataContext)
 
   return (
     <div className="landing">

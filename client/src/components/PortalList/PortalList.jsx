@@ -136,7 +136,7 @@ const PortalList = ({ itemsToList, listType }) => {
 
   //* USESTATE
   //initilize dual list
-  useState(() => {
+  useEffect(() => {
     setUpList()
     assignListTitle()
   }, [itemsToList])

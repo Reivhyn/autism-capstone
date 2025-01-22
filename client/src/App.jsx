@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 
 // COMPONENT IMPORTS
 import Login from './components/login/Login'
@@ -17,17 +17,17 @@ import {
   userDataContext,
   editTargetContext,
   KidsOfParentContext,
-} from './components/zContextHooks/contextHooks';
+} from './components/zContextHooks/contextHooks'
 
 // MATERIAL-UI IMPORTS
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
-import darkTheme from './Theme/theme.jsx';
+import darkTheme from './Theme/theme.jsx'
 
 function App() {
-  const [pageToDisplay, setPageToDisplay] = useState('landing');
-  const [userData, setUserData] = useState('');
+  const [pageToDisplay, setPageToDisplay] = useState('landing')
+  const [userData, setUserData] = useState('')
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -37,23 +37,33 @@ function App() {
           <editTargetContext.Provider value={{}}>
             <KidsOfParentContext.Provider value={{}}>
               {/* Conditionally Render DropMenu */}
-              {(['learning', 'games', 'chat'].includes(pageToDisplay)) && <DropMenu />}
+              {['learning', 'games', 'chat'].includes(pageToDisplay) && (
+                <DropMenu />
+              )}
 
               {/* Page Rendering */}
+              {}
               {pageToDisplay === 'login' && <Login />}
               {pageToDisplay === 'register' && <Register />}
               {pageToDisplay === 'landing' && <Landing />}
               {pageToDisplay === 'home' && <Landing />}
-              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && <Activities />}
+              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
+                <Activities />
+              )}
               {pageToDisplay === 'chat' && <Chat />}
-              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && <Portal />}
-              {(pageToDisplay === 'editUser' || pageToDisplay === 'addUser' || pageToDisplay === 'editKid' || pageToDisplay === 'addKid') && <EditUser />}
+              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                <Portal />
+              )}
+              {(pageToDisplay === 'editUser' ||
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'editKid' ||
+                pageToDisplay === 'addKid') && <EditUser />}
             </KidsOfParentContext.Provider>
           </editTargetContext.Provider>
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App
