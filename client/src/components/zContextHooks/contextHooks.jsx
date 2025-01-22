@@ -16,4 +16,3 @@ export const KidsOfParentContext = createContext('')
 
 //creates an object to target for editing users
 export const editTargetContext = createContext('')
-

@@ -43,7 +43,6 @@ const Portal = () => {
 
   const getParentData = async () => {
     if (pageToDisplay === 'parent') {
-      console.log('get parent data triggered in portal.jsx')
       setKidsOfParent(await findKidsOfParent(userData))
       setAllActivities(await getActivities())
     }

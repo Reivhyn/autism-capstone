@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useContext, useState, useEffect } from 'react';
 import {
   Box,
@@ -21,7 +23,7 @@ import { logIn } from '../zzzFetches/fetches';
 
 const Login = () => {
   //* USESTATE
-  const [, setPageToDisplay] = useContext(ptdContext); // Page control
+    const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)  
   const [userData, setUserData] = useContext(userDataContext); // User data context
   const [userName, setUserName] = useState(''); // Username input
   const [password, setPassword] = useState(''); // Password input
