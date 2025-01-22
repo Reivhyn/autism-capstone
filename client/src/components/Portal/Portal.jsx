@@ -120,40 +120,6 @@ const Portal = () => {
     </>
   )
 
-  //render parent portal
-  if (pageToDisplay === 'parent') {
-    return (
-      <>
-        <SiteTitle />
-        <h2>{`${pageToDisplay.toUpperCase()} PORTAL`}</h2>
-
-        <div className="portalListWrapper">
-          {/* all users list */}
-          {kidsOfParent ? (
-            <PortalList itemsToList={kidsOfParent} listType={'kids'} />
-          ) : (
-            'Fetching Data'
-          )}
-
-          {/* all games list */}
-          {allActivities ? (
-            <PortalList itemsToList={allActivities} listType={'games'} />
-          ) : (
-            'Fetching Data'
-          )}
-
-          {/* all learning list */}
-          {allActivities ? (
-            <PortalList itemsToList={allActivities} listType={'learning'} />
-          ) : (
-            'Fetching Data'
-          )}
-        </div>
-
-        <Footer />
-      </>
-    )
-  }
 }
 
 export default Portal

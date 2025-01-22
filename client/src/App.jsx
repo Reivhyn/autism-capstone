@@ -2,16 +2,6 @@ import { useState } from 'react';
 import './App.css';
 
 // COMPONENT IMPORTS
-<<<<<<< HEAD
-import Login from './components/login/Login';
-import Register from './components/Register/Register';
-import Landing from './components/Landing/Landing';
-import Activities from './components/Activities/Activities';
-import Chat from './components/Chat/Chat';
-import Portal from './components/Portal/Portal';
-import EditUser from './components/EditUser/EditUser';
-import DropMenu from './components/DropMenu/dropMenu.jsx';// Import DropMenu
-=======
 import Login from './components/login/Login'
 import Register from './components/Register/Register'
 import Landing from './components/Landing/Landing'
@@ -21,7 +11,6 @@ import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
 import EditActivity from './components/EditActivity/EditActivity.jsx'
->>>>>>> activities
 
 // CONTEXT IMPORTS
 import {
