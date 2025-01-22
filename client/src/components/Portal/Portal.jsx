@@ -30,7 +30,7 @@ const Portal = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
   const [allActivities, setAllActivities] = useState('')
-  const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
+  const [kidsOfParent, setKidsOfParent] = useState('')
   const [allUsers, setAllUsers] = useState('')
 
   //* FUNCTIONS
