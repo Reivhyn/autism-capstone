@@ -1,15 +1,11 @@
-import  { useContext, useEffect, useState } from 'react';
-import './chat.css';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from 'react'
+import './chat.css'
 
-// COMPONENT IMPORTS
-import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
-import SiteTitle from '../SiteTitle/SiteTitle';
-
-
-// Material-UI Imports
-import { Container, Typography, TextField, Button } from '@mui/material';
-
+//COMPONENT IMPORTS
+import Banner from '../Banner/Banner'
+import Footer from '../Footer/Footer'
+import SiteTitle from '../SiteTitle/SiteTitle'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
@@ -111,7 +107,7 @@ const Chat = () => {
     }
   }
 
-  // USEEFFECT
+  //* USEEFFECT
   useEffect(() => {
     if (history) {
       console.log('history', history)
@@ -142,23 +138,9 @@ const Chat = () => {
         </button>
       </form>
       <Banner />
-      <SiteTitle />
-      <Typography variant="h4">Chat</Typography>
-      <Typography variant="body1" gutterBottom>
-        {geminiStream}
-      </Typography>
-      <TextField
-        label="Enter your prompt"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        fullWidth
-      />
-      <Button onClick={handleClick} variant="contained" color="primary">
-        Submit
-      </Button>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

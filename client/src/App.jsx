@@ -64,8 +64,8 @@ function App() {
       <CssBaseline />
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <KidsOfParentContext.Provider value={{ KidsOfParentContext }}>
-            <editTargetContext.Provider value={{ editTargetContext }}>
+          <KidsOfParentContext.Provider value={[kidsOfParent, setKidsOfParent]}>
+            <editTargetContext.Provider value={[editTarget, setEditTarget]}>
               {/* Conditionally Render DropMenu */}
               {['learning', 'games', 'chat'].includes(pageToDisplay) && (
                 <DropMenu />
