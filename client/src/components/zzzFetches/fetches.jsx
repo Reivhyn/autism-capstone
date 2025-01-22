@@ -166,7 +166,8 @@ export async function editUser(
   password,
   disabled,
   activitiesAccess,
-  email
+  email,
+  chatAccess
 ) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/users/updateUser`, {
@@ -184,6 +185,7 @@ export async function editUser(
         ...(disabled && { disabled }),
         ...(activitiesAccess && { activitiesAccess }),
         ...(email && { email }),
+        ...(chatAccess && { chatAccess }),
       }),
 
       credentials: 'include',

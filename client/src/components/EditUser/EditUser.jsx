@@ -81,8 +81,6 @@ const EditUser = () => {
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    console.log('trigger') //TODO FIGURE OUT WHY ITS NOT UPDATING ON PORTAL
-
     //delete user user if checkbox is selected
 
     //edit changes if delete user is not selected
@@ -95,7 +93,8 @@ const EditUser = () => {
       editPassword,
       editDisableLogin,
       activitiesAccess,
-      editEmail
+      editEmail,
+      chatAccess
     )
     setEditSaved(true)
   }
@@ -143,7 +142,6 @@ const EditUser = () => {
   //* USEEFFECT
   //get all data when page is loaded
   useEffect(() => {
-    console.log('pageToDisplay', pageToDisplay)
     if (
       pageToDisplay === 'editUser' ||
       pageToDisplay === 'addUser' ||
@@ -367,12 +365,12 @@ const EditUser = () => {
       )}
 
 
-      chat topics duallist
+      {/* chat topics duallist */}
       {allChatTopics &&
       (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
         <DualList
           dataToList={allChatTopics}
-          listType="chatTopic"
+          listType="chatTopics"
           chatAccess={chatAccess}
           setChatAccess={setChatAccess}
         />

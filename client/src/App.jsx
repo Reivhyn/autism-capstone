@@ -26,6 +26,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import darkTheme from './Theme/theme.jsx'
+import { LogoutOutlined } from '@mui/icons-material'
 
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
@@ -73,7 +74,7 @@ function App() {
               )}
 
               {/* render logout button once logged in */}
-              {userData ? <LogoutButton /> : ''}
+              {userData ? <LogoutButton /> : ''  }
 
               {/*//*  Page Rendering */}
               {/* login page */}
