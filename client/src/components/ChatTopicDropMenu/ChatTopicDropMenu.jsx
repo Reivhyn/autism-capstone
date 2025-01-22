@@ -1,0 +1,93 @@
+/* eslint-disable no-unused-vars */
+import { useState, useContext, useEffect } from 'react'
+import './chatTopicDropMenu.css'
+
+// FETCH IMPORTS
+import { getAllChatTopics } from '../zzzFetches/fetches'
+import { userDataContext } from '../zContextHooks/contextHooks'
+
+//CONTEXT IMPORTS
+// pdt -> page to display
+import { ptdContext } from '../zContextHooks/contextHooks'
+
+const ChatTopicDropMenu = ({currentTopic, setCurrentTopic
+}) => {
+  //* USESTATE
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [userData, setUserData] = useContext(userDataContext)
+  const [allowedTopics, setAllowedTopics] = useState('')
+  const [displayList, setdisplayList] = useState('')
+
+  //* FUNCTIONS
+  //get all topics then get allowed topics
+  const getTopics = async () => {
+    const arr = []
+    const allTopics = await getAllChatTopics()
+    allTopics.allChatTopics.forEach((topic) => {
+      if (userData.chatAccess.includes(topic._id)) {
+        arr.push(topic)
+      }
+    })
+    setAllowedTopics(arr)
+  }
+
+  //render drop menu items
+  const renderList = () => {
+    setdisplayList(
+      allowedTopics.map((topic) => {
+        return (
+          <div className="chatTopicItem" key={topic._id}
+           onClick={() => setCurrentTopic(topic)} >
+            {topic.topicTitle}
+          </div>
+        )
+      })
+    )
+  }
+
+  //* USEEFFECT
+  //get topics on component load
+  useEffect(() => {
+    if (pageToDisplay === 'chat') {
+      getTopics()
+    }
+  }, [pageToDisplay])
+
+  //render list
+  useEffect(() => {
+    if (allowedTopics) {
+      renderList()
+    }
+  }, [allowedTopics])
+
+  useEffect(() => {
+    console.log('displayList', displayList)
+  })
+
+  //* RENDER
+  return (
+    <div className="dropMenu">
+      <div>Choose A Topic</div>
+      <div className="dropContent">
+        {/* button to go home */}
+        {displayList ? displayList : ''}
+      </div>
+    </div>
+  )
+}
+
+//   return (
+//     <>
+//     <div className="chatDrop">
+//       <button className='chatDropButton' >Chat Topics</button>
+
+//       {/* chat drop content */}
+//       <div className="chatDropItems">
+//       {chatDropRender? chatDropRender : ''}
+//       </div>
+//     </div>
+//     </>
+//   )
+// }
+
+export default ChatTopicDropMenu

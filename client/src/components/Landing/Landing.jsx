@@ -1,40 +1,43 @@
-import { useContext } from 'react';
-import './Landing.css';
+import { useContext } from 'react'
+import './Landing.css'
 
 // CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
 
 // ICON IMPORTS
-import SchoolIcon from '@mui/icons-material/School';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import ChatIcon from '@mui/icons-material/Chat';
-
+import SchoolIcon from '@mui/icons-material/School'
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
+import ChatIcon from '@mui/icons-material/Chat'
 
 const Landing = () => {
-  const [, setPageToDisplay] = useContext(ptdContext);
+  const [, setPageToDisplay] = useContext(ptdContext)
+  const [userData, setUserData] = useContext(userDataContext)
 
   return (
     <div className="landing">
       {/* Top-right Login and Register Buttons */}
-      <div className="topRightButtons">
-        <button
-          className="topRightButton"
-          onClick={() => setPageToDisplay('login')}
-        >
-          Login
-        </button>
-        <button
-          className="topRightButton"
-          onClick={() => setPageToDisplay('register')}
-        >
-          Register
-        </button>
-      </div>
+      {!userData ? (
+        <div className="topRightButtons">
+          <button
+            className="topRightButton"
+            onClick={() => setPageToDisplay('login')}
+          >
+            Login
+          </button>
+          <button
+            className="topRightButton"
+            onClick={() => setPageToDisplay('register')}
+          >
+            Register
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
 
       {/* Site Header */}
       <h1 className="siteNameHeader">Welcome to the Site!</h1>
       <div className="mainPageCards">
-        
         {/* Learning Activities Card */}
         <div
           className="card learningCard"
@@ -58,10 +61,7 @@ const Landing = () => {
         </div>
 
         {/* Chat Card */}
-        <div
-          className="card chatCard"
-          onClick={() => setPageToDisplay('chat')}
-        >
+        <div className="card chatCard" onClick={() => setPageToDisplay('chat')}>
           <div className="cardIcon">
             <ChatIcon style={{ fontSize: '3rem' }} />
           </div>
@@ -74,7 +74,7 @@ const Landing = () => {
         <p>&copy; 2025 Your Site Name. All rights reserved.</p>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

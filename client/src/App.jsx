@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './App.css';
+import React, { useContext, useEffect, useState } from 'react'
+import './App.css'
 
 // COMPONENT IMPORTS
 import Login from './components/login/Login'
@@ -11,6 +11,8 @@ import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
 import EditActivity from './components/EditActivity/EditActivity.jsx'
+import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
+import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -18,44 +20,104 @@ import {
   userDataContext,
   editTargetContext,
   KidsOfParentContext,
-} from './components/zContextHooks/contextHooks';
+} from './components/zContextHooks/contextHooks'
 
 // MATERIAL-UI IMPORTS
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
-import darkTheme from './Theme/theme.jsx';
+import darkTheme from './Theme/theme.jsx'
+import { LogoutOutlined } from '@mui/icons-material'
 
 function App() {
-  const [pageToDisplay, setPageToDisplay] = useState('landing');
-  const [userData, setUserData] = useState('');
+  const [pageToDisplay, setPageToDisplay] = useState('landing')
+  const [userData, setUserData] = useState('')
+  const [kidsOfParent, setKidsOfParent] = useState('')
+  const [editTarget, setEditTarget] = useState('')
 
+  //* FUNCTIONS
+
+  //* USESTATES
+  //try to get session data on pageload
+  useEffect(() => {
+    const savedUserData = sessionStorage.getItem('userData')
+    try {
+      savedUserData === undefined ? '' : setUserData(JSON.parse(savedUserData)) // Default to an empty string if no value is saved
+    } catch (error) {
+      console.log('parse session storage failed', error)
+    }
+  }, [])
+
+  //if userdata exist and user is admin or parent redirect to their portal
+  useEffect(() => {
+    if (userData) {
+      if (userData.userType === 'admin') setPageToDisplay('admin')
+      if (userData.userType === 'parent') setPageToDisplay('parent')
+    }
+  }, [userData])
+
+  // save local data to session sorage
+  useEffect(() => {
+    if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
+  }, [userData])
+
+  //* RENDERING
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <userDataContext.Provider value={[userData, setUserData]}>
         <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <editTargetContext.Provider value={{}}>
-            <KidsOfParentContext.Provider value={{}}>
+          <KidsOfParentContext.Provider value={[kidsOfParent, setKidsOfParent]}>
+            <editTargetContext.Provider value={[editTarget, setEditTarget]}>
               {/* Conditionally Render DropMenu */}
-              {(['learning', 'games', 'chat'].includes(pageToDisplay)) && <DropMenu />}
+              {['learning', 'games', 'chat'].includes(pageToDisplay) && (
+                <DropMenu />
+              )}
 
-              {/* Page Rendering */}
+              {/* render logout button once logged in */}
+              {userData ? <LogoutButton /> : ''}
+
+              {/*//*  Page Rendering */}
+              {/* login page */}
               {pageToDisplay === 'login' && <Login />}
+
+              {/* registration gage */}
               {pageToDisplay === 'register' && <Register />}
+
+              {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}
-              {pageToDisplay === 'home' && <Landing />}
-              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && <Activities />}
+
+              {/* games and lerning  pages */}
+              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
+                <Activities />
+              )}
+
+              {/* chat page */}
               {pageToDisplay === 'chat' && <Chat />}
-              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && <Portal />}
-              {(pageToDisplay === 'editUser' || pageToDisplay === 'addUser' || pageToDisplay === 'editKid' || pageToDisplay === 'addKid') && <EditUser />}
+
+              {/* admin and parent portal pages */}
+              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                <Portal />
+              )}
+
+              {/* edit user page */}
+              {(pageToDisplay === 'editUser' ||
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'editKid' ||
+                pageToDisplay === 'addKid') && <EditUser />}
+
+              {/* edit chat topic page */}
+              {(pageToDisplay === 'editChatTopic' ||
+                pageToDisplay === 'addChatTopic') && <EditChatTopic />}
+
+              {/* edit activity page */}
               {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
-            </KidsOfParentContext.Provider>
-          </editTargetContext.Provider>
+            </editTargetContext.Provider>
+          </KidsOfParentContext.Provider>
         </ptdContext.Provider>
       </userDataContext.Provider>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

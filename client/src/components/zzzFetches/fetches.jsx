@@ -14,8 +14,6 @@ export async function register(
   userType
 ) {
   try {
-    console.log(userName, firstName, lastName, email, password, dob, userType)
-
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
       headers: {
@@ -41,7 +39,6 @@ export async function register(
 
     const loginData = await res.json()
 
-    console.log(loginData)
     if (!res.ok) {
       throw new Error(loginData.message || 'Registration Failed')
     }
@@ -126,7 +123,6 @@ export async function getAllUsers() {
       throw new Error(allUsers.message || 'Get all users fetch failed')
     }
 
-    console.log('allUsers', allUsers)
     return allUsers
   } catch (error) {
     console.log(error)
@@ -170,10 +166,11 @@ export async function editUser(
   password,
   disabled,
   activitiesAccess,
-  email
+  email,
+  chatAccess
 ) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/auth/updateUser`, {
+    const res = await fetch(`http://127.0.0.1:4000/users/updateUser`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -188,6 +185,7 @@ export async function editUser(
         ...(disabled && { disabled }),
         ...(activitiesAccess && { activitiesAccess }),
         ...(email && { email }),
+        ...(chatAccess && { chatAccess }),
       }),
 
       credentials: 'include',
@@ -208,7 +206,7 @@ export async function editUser(
 // fetch to delete user user
 export async function deleteUser(id) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/auth/delete-user`, {
+    const res = await fetch(`http://127.0.0.1:4000/user/delete-user`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -259,8 +257,9 @@ export async function addNewUser(
         ...(dob && { dob }),
         ...(email && { email }),
         ...(password && { password }),
-        ...(activitiesAccess && { activitiesAccess: activitiesAccess }),
-        ...(parentUser && { parentUser }),
+        ...(activitiesAccess &&
+          userType === 'kid' && { activitiesAccess: activitiesAccess }),
+        ...(parentUser && userType === 'kid' && { parentUser }),
         ...(disabled && { disabled }),
         portalReg: true,
       }),
@@ -269,7 +268,6 @@ export async function addNewUser(
     })
 
     const addedUser = await res.json()
-    console.log('addedUser', addedUser)
 
     if (!res.ok) {
       throw new Error(addedUser.message || 'edit user fetch failed')
@@ -326,6 +324,116 @@ export async function addNewActivity(
     }
 
     return addedActivity
+  } catch (error) {
+    console.log(error)
+  }
+}
+//get all chatTipics
+export async function getAllChatTopics() {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:4000/chatTopics/getAllChatTopics`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }
+    )
+
+    const allChatTopics = await res.json()
+
+    if (!res.ok) {
+      throw new Error(allChatTopics.message || 'Get all chat topics failed')
+    }
+
+    return allChatTopics
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//edit chat topic
+export async function editChatTopic(id, topicTitle, description, ageRange) {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:4000/chatTopics/updateChatTopic`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...(id && { id }),
+          ...(topicTitle && { topicTitle }),
+          ...(description && { description }),
+          ...(ageRange && { ageRange }),
+        }),
+        credentials: 'include',
+      }
+    )
+
+    const editedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(editedTopic.message || 'Edit chat topics failed')
+    }
+
+    return editedTopic
+  } catch (error) {
+    console.log(error)
+  }
+}
+//edit chat topic
+export async function addChatTopic(topicTitle, description, ageRange) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/creatChatTopic`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        topicTitle: topicTitle,
+        description: description,
+        ageRange: ageRange,
+      }),
+      credentials: 'include',
+    })
+
+    const editedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(editedTopic.message || 'Edit chat topics failed')
+    }
+
+    return editedTopic
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//delete chat topic
+export async function deleteChatTopic(id) {
+  try {
+    const res = await fetch(`http://127.0.0.1:4000/chatTopics/deleteTopic`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+      credentials: 'include',
+    })
+
+    const deletedTopic = await res.json()
+
+    if (!res.ok) {
+      throw new Error(deletedTopic.message || 'Delete chat topics failed')
+    }
+
+    return deletedTopic
   } catch (error) {
     console.log(error)
   }

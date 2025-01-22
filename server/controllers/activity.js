@@ -147,18 +147,17 @@ router.delete('/deleteActivity', async (req, res) => {
 
     // get id and delete type from body
     const id = req.body.id
-    const deleteType = req.body.deleteType // should be 'game' or 'learning activity'
 
     //find activity by id
     const activityFound = await activitySchema.findById(id)
 
     //throw error activity not found
-    if (!activityFound) throw new Error(`this ${deleteType} does not exist`)
+    if (!activityFound) throw new Error(`this activity does not exist`)
 
     await activitySchema.findByIdAndDelete(id)
 
     return res.status(200).json({
-      message: `Game deleted : ${activityFound.activityTitle} `,
+      message: `Activity deleted : ${activityFound.activityTitle} `,
     })
   } catch (error) {
     return res.status(500).json({

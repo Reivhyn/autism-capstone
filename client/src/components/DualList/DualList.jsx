@@ -6,18 +6,15 @@ import './dualList.css'
 // pdt -> page to display
 import {
   ptdContext,
-  userDataContext,
-  KidsOfParentContext,
   editTargetContext,
 } from '../zContextHooks/contextHooks'
 
 const DualList = ({
   dataToList,
   listType,
-  gamesAccess,
   setGamesAccess,
-  learningAccess,
   setLearningAccess,
+  setChatAccess,
 }) => {
   //* USESTATES
   const [editTarget, setEditTarget] = useContext(editTargetContext)
@@ -54,7 +51,6 @@ const DualList = ({
       const arr = []
       dataToList.allGames.map((option) => {
         if (editTarget.activitiesAccess.includes(option._id)) {
-          //! sometimes crash here
           arr.push(option)
         }
         setSelectedOptions(arr)
@@ -87,21 +83,49 @@ const DualList = ({
         setSelectedOptions(arr)
       })
     }
+
+    if (listType === 'chatTopics') {
+      //if adding a new user do not check for exiting user selctions
+      if (pageToDisplay === 'addKid') {
+        setAvailableOptions(dataToList.allChatTopics)
+        setSelectedOptions([])
+        return
+      }
+
+      //initilize available learning activities
+      const array = [] //throw away array to use
+      dataToList.allChatTopics.map((option) => {
+        if (!editTarget.chatAccess.includes(option._id)) {
+          array.push(option)
+        }
+      })
+      setAvailableOptions(array)
+
+      //initialize selected learning activities
+      const arr = []
+      dataToList.allChatTopics.map((option) => {
+        if (editTarget.chatAccess.includes(option._id)) {
+          arr.push(option)
+        }
+        setSelectedOptions(arr)
+      })
+    }
   }
 
   //render the list
   const renderList = () => {
+    //render activities list
     if (listType === 'games' || listType === 'learning') {
       //render available list
       setRenderAvailable(
-        availableOptions.map((option, i) => {
+        availableOptions.map((option) => {
           return (
             <li
               onClick={() => handleAdd(option)}
               key={
                 listType === 'games'
-                  ? `availabelGame${i}`
-                  : `availableLearning${i}`
+                  ? `availabelGame${option._id}`
+                  : `availableLearning${option._id}`
               }
             >
               {option.activityTitle}
@@ -112,17 +136,48 @@ const DualList = ({
 
       //render selected list
       setRenderSelected(
-        selectedOptions.map((option, i) => {
+        selectedOptions.map((option) => {
           return (
             <li
               onClick={() => handleRemove(option)}
               key={
                 listType === 'games'
-                  ? `selectedGame${i}`
-                  : `selectedLearning${i}`
+                  ? `selectedGame${option._id}`
+                  : `selectedLearning${option._id}`
               }
             >
               {option.activityTitle}
+            </li>
+          )
+        })
+      )
+    }
+
+    //render chat topics list
+    if (listType === 'chatTopics') {
+      //render available list
+      setRenderAvailable(
+        availableOptions.map((option) => {
+          return (
+            <li
+              onClick={() => handleAdd(option)}
+              key={`availabelTopics${option._id}`}
+            >
+              {option.topicTitle}
+            </li>
+          )
+        })
+      )
+
+      //render selected list
+      setRenderSelected(
+        selectedOptions.map((option) => {
+          return (
+            <li
+              onClick={() => handleRemove(option)}
+              key={`selectedTopics${option._id}`}
+            >
+              {option.topicTitle}
             </li>
           )
         })
@@ -139,6 +194,9 @@ const DualList = ({
     if (listType === 'learning') {
       setDualListTitle('Learning Activities')
       return
+    }
+    if (listType === 'chatTopics') {
+      setDualListTitle('Chat Topics')
     }
   }
 
@@ -174,6 +232,8 @@ const DualList = ({
     if (listType === 'games') setGamesAccess(arr)
 
     if (listType === 'learning') setLearningAccess(arr)
+
+    if (listType === 'chatTopics') setChatAccess(arr)
   }
 
   //* USEEFFECT

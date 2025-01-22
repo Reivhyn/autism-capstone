@@ -1,71 +1,154 @@
-import  { useContext, useEffect, useState } from 'react';
-import './chat.css';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from 'react'
+import './chat.css'
 
-// COMPONENT IMPORTS
-import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
-import SiteTitle from '../SiteTitle/SiteTitle';
+//COMPONENT IMPORTS
+import Banner from '../Banner/Banner'
+import Footer from '../Footer/Footer'
+import SiteTitle from '../SiteTitle/SiteTitle'
+import ChatTopicDropMenu from '../ChatTopicDropMenu/ChatTopicDropMenu'
 
-
-// Material-UI Imports
-import { Container, Typography, TextField, Button } from '@mui/material';
-
-// CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+//CONTEXT IMPORTS
+// pdt -> page to display
+import { ptdContext } from '../zContextHooks/contextHooks'
+import { use } from 'react'
+import { FaSleigh } from 'react-icons/fa'
+import { SiRender } from 'react-icons/si'
 
 const Chat = () => {
-  // USESTATE
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [geminiStream, setGeminiStream] = useState('');
-  const [prompt, setPrompt] = useState('');
+  //* USESTATE
+  //determins which page to display
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [prompt, setPrompt] = useState('')
+  const [geminiStream, setGeminiStream] = useState('')
+  const [history, setHistory] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [displayLog, setDisplayLog] = useState([])
+  const [currentTopic, setCurrentTopic] = useState('')
 
-  // FUNCTION
-  const handleClick = async () => {
-    // Place your async logic here
-    console.log(prompt);
-  };
 
-  // USEEFFECT
-  useEffect(() => {
-    const geminiStream = new EventSource('http://127.0.0.1:4000/chat/gemini');
+  //* FETCH
+  const callGemini = async (e) => {
+    try {
+      e.preventDefault()
 
-    geminiStream.onmessage = (event) => {
-      if (event.data === '[DONE]') {
-        geminiStream.close();
+      setIsLoading(true)
+      setGeminiStream('')
+
+      const res = await fetch(`http://127.0.0.1:4000/chat/gemini`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          history,
+          topic : currentTopic
+        }),
+
+        credentials: 'include',
+      })
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let done = false
+      let streamedText = ''
+      let jsonData = ''
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read()
+        done = doneReading
+        const deccodedChunk = decoder.decode(value, { stream: true })
+
+        // break up by lines starting with TEXT
+        const lines = deccodedChunk.split('\n')
+        lines.forEach((line) => {
+          //extract text
+          if (line.startsWith('TEXT')) {
+            const chunk = line.replace('TEXT: ', '')
+            streamedText += chunk + '\n'
+          }
+
+          if (line.startsWith('JSON')) {
+            //get json data and parse
+            try {
+              const jsonChunk = line.replace('JSON', '').trim()
+              jsonData = JSON.parse(jsonChunk)
+            } catch (error) {
+              console.log('error parsing JSON', error)
+            }
+          }
+        })
+        setGeminiStream(streamedText)
+        setHistory(jsonData)
       }
-      setGeminiStream((prev) => prev + event.data);
+    } catch (error) {
+      // if(!res.ok) throw new Error(res.message || 'gemini fetch failed');
+      console.log('Streaming error', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
-      geminiStream.onerror = (error) => {
-        console.log('Error occurred', error);
-        geminiStream.close();
-      };
-      return () => {
-        geminiStream.close();
-      };
-    };
-  }, []);
+  //* FUNCTIONS
+  const RenderLog = () => {
+    if (history) {
+      setDisplayLog(
+        history.map(
+          (log, i) => {
+            return (
+              <div
+                key={`log${i}`}
+                className={i % 2 === 0 ? 'chatRes' : 'userRes'}
+              >
+                {log.parts[0].text}
+              </div>
+            )
+          },
+          [history]
+        )
+      )
+    }
+  }
 
-  // RENDER
+  //* USEEFFECT
+  useEffect(() => {
+    if (history) {
+      console.log('history', history)
+      RenderLog()
+    }
+  }, [history])
+
+  //* RENDER
   return (
-    <Container>
-      <Banner />
+    <>
       <SiteTitle />
-      <Typography variant="h4">Chat</Typography>
-      <Typography variant="body1" gutterBottom>
-        {geminiStream}
-      </Typography>
-      <TextField
-        label="Enter your prompt"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        fullWidth
+      <h1>CHAT PAGE</h1>
+      <ChatTopicDropMenu
+        currentTopic={currentTopic}
+        setCurrentTopic={setCurrentTopic}
       />
-      <Button onClick={handleClick} variant="contained" color="primary">
-        Submit
-      </Button>
+      <div className="chatHistoryWrapper">
+        <div className="history">{displayLog ? displayLog : ''}</div>
+        <div className="currentResponce">{geminiStream}</div>
+      </div>
+      <form action="">
+        <textarea
+          name=""
+          id=""
+          value={prompt}
+          onChange={(e) => {
+            setPrompt(e.target.value)
+          }}
+        ></textarea>
+        <button onClick={(e) => callGemini(e)} disabled={isLoading}>
+          Ask Gemini
+        </button>
+      </form>
+      <Banner />
       <Footer />
-    </Container>
-  );
-};
+    </>
+  )
+}
 
-export default Chat;
+export default Chat

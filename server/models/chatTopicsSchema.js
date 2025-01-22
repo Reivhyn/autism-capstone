@@ -5,3 +5,5 @@ const ChatTopic = new mongoose.Schema({
   description: { type: String, required: true },
   ageRange: {type: String, require: true}, //suggested age range for the topic
 })
+
+module.exports = mongoose.model('chatTopic', ChatTopic)

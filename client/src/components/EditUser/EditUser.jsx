@@ -27,6 +27,7 @@ import {
   editUser,
   deleteUser,
   addNewUser,
+  getAllChatTopics
 } from '../zzzFetches/fetches'
 import { use } from 'react'
 import { Email } from '@mui/icons-material'
@@ -55,7 +56,9 @@ const EditUser = () => {
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
-  const [learingAccess, setlearningAccess] = useState('')
+  const [learingAccess, setLearningAccess] = useState('')
+  const [allChatTopics, setAllChatTopics] = useState('')
+  const [chatAccess, setChatAccess] = useState('')
 
   //combines the two access arrays to be passed when save button is pressed
   const [activitiesAccess, setActivitiesAccess] = useState('')
@@ -64,9 +67,10 @@ const EditUser = () => {
   const [checkedBox, setCheckedBox] = useState('kid')
 
   //* FUNCTIONS
-  //function to retreve all user
-  const fetchAllActivities = async () => {
+  //function to retreve all activities
+  const fetchAllData = async () => {
     setAllActivities(await getActivities())
+    setAllChatTopics(await getAllChatTopics())
   }
 
   //hanle setting userType
@@ -77,8 +81,6 @@ const EditUser = () => {
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    console.log('trigger') //TODO FIGURE OUT WHY ITS NOT UPDATING ON PORTAL
-
     //delete user user if checkbox is selected
 
     //edit changes if delete user is not selected
@@ -91,7 +93,8 @@ const EditUser = () => {
       editPassword,
       editDisableLogin,
       activitiesAccess,
-      editEmail
+      editEmail,
+      chatAccess
     )
     setEditSaved(true)
   }
@@ -131,8 +134,13 @@ const EditUser = () => {
     callEditUser()
   }
 
+  // handle cancel button
+  const hangleCancelButton = () => {
+    setPageToDisplay(userData.userType)
+  }
+
   //* USEEFFECT
-  //get all activites when page is loaded
+  //get all data when page is loaded
   useEffect(() => {
     if (
       pageToDisplay === 'editUser' ||
@@ -140,7 +148,7 @@ const EditUser = () => {
       pageToDisplay === 'editKid' ||
       pageToDisplay === 'addKid'
     )
-      fetchAllActivities()
+      fetchAllData()
   }, [pageToDisplay])
 
   //update learning access when its updated on the dual list
@@ -152,8 +160,8 @@ const EditUser = () => {
   useEffect(() => {
     if (editSaved === true) {
       setTimeout(() => {
-        setPageToDisplay('parent')
-      }, 1500)
+        setPageToDisplay(userData.userType)
+      }, 500)
     }
   }, [editSaved])
 
@@ -166,9 +174,10 @@ const EditUser = () => {
   return (
     <>
       <div>
-        {pageToDisplay === 'editUser' || pageToDisplay === 'edit kid'
+        {/* show weather adding new user or editing user */}
+        {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-          : 'Add New Child'}
+          : userData.userType === 'admin' ? 'Add New User' :'Add New Child'}
       </div>
       {/* form for editing user properties */}
       <div className="formWrapper">
@@ -257,15 +266,16 @@ const EditUser = () => {
             />
           </div>
 
-          {/* do not show delte user button when adding user */}
-          {pageToDisplay === 'editkid' || pageToDisplay === 'editUser' ? (
+          {/* do not show delete user button when adding user 
+          or for logged in user */}
+          {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') && userData._id !== editTarget._id ? (
             <div>
               Delete {`${editTarget.firstName} ${editTarget.lastName}`}
               <input
                 type="checkbox"
                 checked={editDeleteUser}
-                onChange={(e) => {
-                  setEditDeleteUser(e.target.checked)
+                onChange={() => {
+                  setEditDeleteUser(!editDeleteUser)
                 }}
               />
             </div>
@@ -286,7 +296,7 @@ const EditUser = () => {
               <input
                 type="checkbox"
                 checked={checkedBox === 'kid' || pageToDisplay === 'addKid'}
-                onChange={() => handleCheck(1)}
+                onChange={() => handleCheck('kid')}
               />
             </div>
 
@@ -298,7 +308,7 @@ const EditUser = () => {
                 <input
                   type="checkbox"
                   checked={checkedBox === 'parent'}
-                  onChange={() => handleCheck(2)}
+                  onChange={() => handleCheck('parent')}
                 />
               </div>
             ) : (
@@ -313,7 +323,7 @@ const EditUser = () => {
                 <input
                   type="checkbox"
                   checked={checkedBox === 'admin'}
-                  onChange={() => handleCheck(3)}
+                  onChange={() => handleCheck('admin')}
                 />
               </div>
             ) : (
@@ -325,8 +335,11 @@ const EditUser = () => {
         ''
       )}
 
+      {/* only show dual list if editing or adding kid */}
+
       {/* games duallist */}
-      {allActivities ? (
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
         <DualList
           dataToList={allActivities}
           listType="games"
@@ -334,19 +347,35 @@ const EditUser = () => {
           setGamesAccess={setGamesAccess}
         />
       ) : (
-        'fetching data'
+        pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
       )}
 
       {/* learning duallist */}
-      {allActivities ? (
+      {allActivities &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
         <DualList
           dataToList={allActivities}
           listType="learning"
           learingAccess={learingAccess}
-          setLearningAccess={setlearningAccess}
+          setLearningAccess={setLearningAccess}
         />
-      ) : (
-        'fetching data'
+      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
+      )}
+
+
+      {/* chat topics duallist */}
+      {allChatTopics &&
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
+        <DualList
+          dataToList={allChatTopics}
+          listType="chatTopics"
+          chatAccess={chatAccess}
+          setChatAccess={setChatAccess}
+        />
+      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
+        'fetching data' : ''
       )}
 
       <div className="saveCancelButtons">
@@ -354,7 +383,7 @@ const EditUser = () => {
         <button onClick={() => handleSave()}>Save</button>
 
         {/* cancel button */}
-        <button onClick={() => setPageToDisplay('parent')}>Cancel</button>
+        <button onClick={() => hangleCancelButton()}>Cancel</button>
       </div>
     </>
   )

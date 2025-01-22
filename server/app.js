@@ -23,6 +23,7 @@ const {validateSession} = require('./middlewares/sesson')
 const authController = require('./controllers/auth')
 const userController = require('./controllers/user')
 const activitiesController = require('./controllers/activity')
+const chatTopicsController = require('./controllers/chatTopics')
 const geminiController = require('./controllers/gemini')
 
 
@@ -36,6 +37,7 @@ const PORT = process.env.PORT
 const HOST = process.env.HOST
 const SESSION_KEY = process.env.SESSION_KEY
 
+
 //MIDDLEWARES
 
 // allow cross origin requests only from front end
@@ -46,6 +48,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/auth', authController)
 app.use('/users', validateSession, userController)
 app.use('/activities', validateSession, activitiesController)
+app.use('/chatTopics', validateSession, chatTopicsController)
 app.use('/chat', validateSession, geminiController)
 
 

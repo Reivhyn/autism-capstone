@@ -23,7 +23,7 @@ import { logIn } from '../zzzFetches/fetches';
 
 const Login = () => {
   //* USESTATE
-    const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)  
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext); // Page control
   const [userData, setUserData] = useContext(userDataContext); // User data context
   const [userName, setUserName] = useState(''); // Username input
   const [password, setPassword] = useState(''); // Password input
@@ -45,15 +45,17 @@ const Login = () => {
 
   //* USEEFFECTS
   useEffect(() => {
+    console.log('pageToDisplay', pageToDisplay)
     if (userData) {
       setTimeout(() => {
-        if (userData.userType === 'admin') {
-          setPageToDisplay('admin');
-        } else if (userData.userType === 'parent') {
-          setPageToDisplay('parent');
-        } else if (userData.userType === 'kid') {
+        //if kid take to landing
+        if (userData.userType === 'kid') {
           setPageToDisplay('landing');
-        }
+          return
+        } 
+
+        // if parent or admin take to portal
+        setPageToDisplay(userData.userType)
       }, 500);
     }
   }, [userData, setPageToDisplay]);
