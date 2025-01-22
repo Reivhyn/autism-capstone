@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const { GoogleGenerativeAI } = require('@google/generative-ai')
 const { json } = require('express')
-const {deconstructChatTopic} = require('../helpers/deconstructChatTopic')
+const { deconstructChatTopic } = require('../helpers/deconstructChatTopic')
 
 // SCHEMA IMPORT
 const chatTopicSchema = require('../models/chatTopicsSchema')
@@ -11,17 +11,19 @@ const chatTopicSchema = require('../models/chatTopicsSchema')
 const GEMINI = process.env.GEMINI
 
 // Globals
-const genAI = new GoogleGenerativeAI(GEMINI)
-const model = genAI.getGenerativeModel({
-  model: 'gemini-1.5-flash',
-  systemInstruction:
-    'You are an instructor. Your name is Bob. You can only teach about animals, all other subjects are forbidden',
-})
 
 router.post('/gemini', async (req, res) => {
   try {
     const prompt = req.body.prompt
     const history = req.body.history || []
+    const description = req.body.topic.description
+    console.log('req.body', description)
+
+    const genAI = new GoogleGenerativeAI(GEMINI)
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: description,
+    })
 
     //start chat
     const chat = model.startChat({

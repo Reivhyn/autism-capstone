@@ -74,14 +74,14 @@ function App() {
               )}
 
               {/* render logout button once logged in */}
-              {userData ? <LogoutButton /> : ''  }
+              {userData ? <LogoutButton /> : ''}
 
               {/*//*  Page Rendering */}
               {/* login page */}
-              {pageToDisplay === 'login' && !userData && <Login />}
+              {pageToDisplay === 'login' && <Login />}
 
               {/* registration gage */}
-              {pageToDisplay === 'register' && !userData && <Register />}
+              {pageToDisplay === 'register' && <Register />}
 
               {/* home page */}
               {pageToDisplay === 'landing' && <Landing />}

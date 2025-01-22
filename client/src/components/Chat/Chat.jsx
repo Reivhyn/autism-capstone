@@ -6,6 +6,7 @@ import './chat.css'
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
 import SiteTitle from '../SiteTitle/SiteTitle'
+import ChatTopicDropMenu from '../ChatTopicDropMenu/ChatTopicDropMenu'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
@@ -23,6 +24,8 @@ const Chat = () => {
   const [history, setHistory] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [displayLog, setDisplayLog] = useState([])
+  const [currentTopic, setCurrentTopic] = useState('')
+
 
   //* FETCH
   const callGemini = async (e) => {
@@ -38,8 +41,9 @@ const Chat = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: prompt,
-          history: history,
+          prompt,
+          history,
+          topic : currentTopic
         }),
 
         credentials: 'include',
@@ -120,6 +124,10 @@ const Chat = () => {
     <>
       <SiteTitle />
       <h1>CHAT PAGE</h1>
+      <ChatTopicDropMenu
+        currentTopic={currentTopic}
+        setCurrentTopic={setCurrentTopic}
+      />
       <div className="chatHistoryWrapper">
         <div className="history">{displayLog ? displayLog : ''}</div>
         <div className="currentResponce">{geminiStream}</div>
