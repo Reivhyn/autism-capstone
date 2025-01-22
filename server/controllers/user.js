@@ -21,7 +21,7 @@ router.put('/updateUser', async (req, res) => {
   try {
     console.log('Update user endpoint hit')
 
-    console.log('req.body in updateuser endpoint', req.body)
+    console.log('req.body in update user endpoint', req.body)
 
     deconstructUser(req.body, 'update')
 

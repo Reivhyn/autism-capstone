@@ -9,6 +9,7 @@ const chatTopicSchema = require('../models/chatTopicsSchema')
 router.post('/creatChatTopic', async (req, res) => {
   try {
     console.log('create chat endpoint hit')
+    console.log('req.body', req.body)
 
     deconstructChatTopic(req.body)
 
@@ -50,8 +51,12 @@ router.post('/updateChatTopic', async (req, res) => {
     // find chat topic with id
     const foundTopic = await chatTopicSchema.findById(id)
 
+    /* remove the id from the body otherwise mongo throws an error
+    it thinks your trying to update _id */
+    const {_id, ...updateFields} =req.body
+
     //update acticity with req.body
-    const updatedTopic = await chatTopicSchema.findByIdAndUpdate(id, req.body, {
+    const updatedTopic = await chatTopicSchema.findByIdAndUpdate(id, updateFields, {
       returnDocument: 'after',
     })
 
@@ -63,6 +68,7 @@ router.post('/updateChatTopic', async (req, res) => {
       updatedDocument: updatedTopic,
     })
   } catch (error) {
+    console.log('error', error)
     return res.status(500).json({
       message: `${error}`,
     })
