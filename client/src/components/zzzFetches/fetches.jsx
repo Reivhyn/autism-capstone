@@ -288,15 +288,12 @@ export async function addNewActivity(
   description,
   url,
   imageURL,
-  imagebuffer,
-  imageType,
   category,
-  educational,
   searchKeywords
 ) {
   try {
     console.log('add activity fetch hit')
-    const res = await fetch('http://127.0.0.1:4000//activities/addActivity', {
+    const res = await fetch('http://127.0.0.1:4000/activities/addActivity', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -307,10 +304,7 @@ export async function addNewActivity(
         ...(description && { description }),
         ...(url && { url }),
         ...(imageURL && { imageURL }),
-        ...(imagebuffer && { imagebuffer }),
-        ...(imageType && { imageType }),
         ...(category && { category }),
-        ...(educational && { educational }),
         ...(searchKeywords && { searchKeywords }),
         portalReg: true,
       }),
@@ -327,6 +321,80 @@ export async function addNewActivity(
 
     return addedActivity
   } catch (error) {
+    console.log(error)
+  }
+
+}
+
+// Fetch to edit an activity
+export async function editActivity(
+  id,
+  activityType,
+  activityTitle,
+  description,
+  url,
+  imageURL,
+  category,
+  searchKeywords
+) {
+  try {
+    console.log('edit activity fetch hit')
+    const res = await fetch('http://127.0.0.1:4000/activities/updateActivity', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...(id && { id }),
+        ...(activityType && { activityType }),
+        ...(activityTitle && { activityTitle }),
+        ...(description && { description }),
+        ...(url && { url }),
+        ...(imageURL && { imageURL }),
+        ...(category && { category }),
+        ...(searchKeywords && { searchKeywords }),
+        portalReg: true,
+      }),
+
+      credentials: 'include',
+    })
+
+    const editedActivity = await res.json()
+
+    if (!res.ok) {
+      throw new Error(editedActivity.message || 'edit activity fetch failed')
+    }
+
+    return editedActivity
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Fetch to delete an activity
+export async function deleteActivity(id) {
+  try {
+    console.log('delete activity fetch hit')
+    const res = await fetch('http://127.0.0.1:4000/activities/deleteActivity', {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+
+      credentials: 'include',
+    })
+
+    const deletedActivity = await res.json()
+
+    if (!res.ok) {
+      throw new Error(deletedActivity.message || 'delete activity fetch failed')
+    }
+
+    return deletedActivity
+  }catch (error) {
     console.log(error)
   }
 }

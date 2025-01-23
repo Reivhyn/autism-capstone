@@ -49,7 +49,12 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'games') {
       setDisplayList(
         itemsToList.allGames.map((item, i) => {
-          return <li key={`item${i}`}>{item.activityTitle}</li>
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }} 
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
@@ -57,7 +62,12 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => {
-          return <li key={`item${i}`}>{item.activityTitle}</li>
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }}
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
@@ -109,11 +119,12 @@ const PortalList = ({ itemsToList, listType }) => {
         return
       }
       if (listType === 'games') {
-        setPageToDisplay('editActivity')
+        setPageToDisplay('addGame')
+        
         return
       }
       if (listType === 'learning') {
-        setPageToDisplay('editActivity')
+        setPageToDisplay('addLearning')
         return
       }
       if (listType === 'chat') {
