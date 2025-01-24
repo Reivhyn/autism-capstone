@@ -13,11 +13,11 @@ import { styled } from '@mui/system'
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'
 
 const StyledFooter = styled(Box)(({ theme }) => ({
-  backgroundColor: '#1a237e',
-  color: '#ffffff',
-  padding: '48px 0 24px 0',
-  marginTop: 'auto',
-}))
+  backgroundColor: "#008080",
+  color: "#ffffff",
+  padding: "48px 0 24px 0",
+  marginTop: "auto"
+}));
 
 const StyledNav = styled(Box)(({ theme }) => ({
   display: 'flex',

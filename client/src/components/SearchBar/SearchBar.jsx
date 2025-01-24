@@ -10,32 +10,31 @@ import SearchIcon from '@mui/icons-material/Search';
 import './SearchBar.css';
 
 const SearchBar = ({ setSearchTerm }) => {
-  const [inputValue, setInputValue] = useState('');
+const [inputValue, setInputValue] = useState('');
+
+  const handleSubmit = (e) => {
+    console.log(e)
+    console.log(inputValue)
+    e.preventDefault();
+    setSearchTerm(inputValue); // Update search term in parent
+  };
 
   return (
    //*Input Field*//
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSearchTerm(inputValue);
-      }}
-      className="search-bar-form"
-    >
+    <form onSubmit={handleSubmit} className="search-bar-form">
       <TextField
         variant="outlined"
-        placeholder="Search"
+        placeholder="Search activities..."
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-
-        //*Button To Search*//
+        onChange={(e) => setInputValue(e.target.value)} // Update local state
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-                onClick={() => setSearchTerm(inputValue)}
+                onClick={(e) => handleSubmit(e)} // Allow search via button click
                 edge="end"
                 aria-label="search"
-              >
+                >
                 <SearchIcon />
               </IconButton>
             </InputAdornment>
