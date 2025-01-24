@@ -1,0 +1,28 @@
+.logOutButton {
+    position: absolute;
+    right: 10px; /* Fixed distance from the left */
+    top: 10px; /* Fixed distance from the top */
+    padding: 10px 20px; /* Fixed padding */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; 
+    width: auto; 
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+  /* Prevent resizing on small screens */
+@media (max-width: 768px) {
+    .logOutButton {
+      padding: 10px 20px; /* Keep the same padding */
+      font-size: 16px; /* Keep the same font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .logOutButton {
+      padding: 10px 20px; /* Keep the same padding */
+      font-size: 16px; /* Keep the same font size */
+    }
+}

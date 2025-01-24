@@ -16,3 +16,6 @@ export const KidsOfParentContext = createContext('')
 
 //creates an object to target for editing users
 export const editTargetContext = createContext('')
+
+// sellect which theme to use
+export const themeContext = createContext('light')

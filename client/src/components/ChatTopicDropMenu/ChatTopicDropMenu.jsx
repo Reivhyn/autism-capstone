@@ -10,8 +10,7 @@ import { userDataContext } from '../zContextHooks/contextHooks'
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
 
-const ChatTopicDropMenu = ({currentTopic, setCurrentTopic
-}) => {
+const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   //* USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
@@ -36,8 +35,11 @@ const ChatTopicDropMenu = ({currentTopic, setCurrentTopic
     setdisplayList(
       allowedTopics.map((topic) => {
         return (
-          <div className="chatTopicItem" key={topic._id}
-           onClick={() => setCurrentTopic(topic)} >
+          <div
+            className="chatTopicItem"
+            key={topic._id}
+            onClick={() => setCurrentTopic(topic)}
+          >
             {topic.topicTitle}
           </div>
         )
@@ -75,19 +77,5 @@ const ChatTopicDropMenu = ({currentTopic, setCurrentTopic
     </div>
   )
 }
-
-//   return (
-//     <>
-//     <div className="chatDrop">
-//       <button className='chatDropButton' >Chat Topics</button>
-
-//       {/* chat drop content */}
-//       <div className="chatDropItems">
-//       {chatDropRender? chatDropRender : ''}
-//       </div>
-//     </div>
-//     </>
-//   )
-// }
 
 export default ChatTopicDropMenu

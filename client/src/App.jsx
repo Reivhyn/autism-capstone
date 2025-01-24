@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 // COMPONENT IMPORTS
@@ -28,16 +28,27 @@ import {
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-import darkTheme from './Theme/theme.jsx'
+import darkTheme from './zzztheme/darkTheme.jsx'
+import lightTheme from './zzztheme/lightTheme'
 import { LogoutOutlined } from '@mui/icons-material'
+import { ThemeContext } from '@emotion/react'
 
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
   const [userData, setUserData] = useState('')
   const [kidsOfParent, setKidsOfParent] = useState('')
   const [editTarget, setEditTarget] = useState('')
+  const [themeName, setThemeName] = useState()
 
   //* FUNCTIONS
+  const theme = useMemo(() => {
+    switch (themeName) {
+      case 'light':
+        return lightTheme
+      default:
+        return darkTheme
+    }
+  })
 
   //* USESTATES
   //try to get session data on pageload
@@ -65,60 +76,61 @@ function App() {
 
   //* RENDERING
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <userDataContext.Provider value={[userData, setUserData]}>
-        <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
-          <KidsOfParentContext.Provider value={[kidsOfParent, setKidsOfParent]}>
-            <editTargetContext.Provider value={[editTarget, setEditTarget]}>
-              {/* Conditionally Render DropMenu */}
-              {['learning', 'games', 'chat'].includes(pageToDisplay) && (
-                <DropMenu />
-              )}
+    <ThemeContext.Provider value={(themeName, setThemeName)}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <userDataContext.Provider value={[userData, setUserData]}>
+          <ptdContext.Provider value={[pageToDisplay, setPageToDisplay]}>
+            <KidsOfParentContext.Provider
+              value={[kidsOfParent, setKidsOfParent]}
+            >
+              <editTargetContext.Provider value={[editTarget, setEditTarget]}>
+                {/* Conditionally Render DropMenu */}
+                {['learning', 'games', 'chat'].includes(pageToDisplay) && (
+                  <DropMenu />
+                )}
 
-              {/* render logout button once logged in */}
-              {userData ? <LogoutButton /> : ''}
+                {/* render logout button once logged in */}
+                {userData ? <LogoutButton /> : ''}
 
-              {/*//*  Page Rendering */}
-              {/* login page */}
-              {pageToDisplay === 'login' && <Login />}
+                {/*//*  Page Rendering */}
+                {/* login page */}
+                {pageToDisplay === 'login' && <Login />}
 
-              {/* registration gage */}
-              {pageToDisplay === 'register' && <Register />}
+                {/* registration gage */}
+                {pageToDisplay === 'register' && <Register />}
 
-              {/* home page */}
-              {pageToDisplay === 'landing' && <Landing />}
+                {/* home page */}
+                {pageToDisplay === 'landing' && <Landing />}
 
-              {/* games and lerning  pages */}
-              {(pageToDisplay === 'games' || pageToDisplay === 'learning') && (
-                <Activities />
-              )}
+                {/* games and lerning  pages */}
+                {(pageToDisplay === 'games' ||
+                  pageToDisplay === 'learning') && <Activities />}
 
-              {/* chat page */}
-              {pageToDisplay === 'chat' && <Chat />}
+                {/* chat page */}
+                {pageToDisplay === 'chat' && <Chat />}
 
-              {/* admin and parent portal pages */}
-              {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
-                <Portal />
-              )}
+                {/* admin and parent portal pages */}
+                {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                  <Portal />
+                )}
 
-              {/* edit user page */}
-              {(pageToDisplay === 'editUser' ||
-                pageToDisplay === 'addUser' ||
-                pageToDisplay === 'editKid' ||
-                pageToDisplay === 'addKid') && <EditUser />}
+                {/* edit user page */}
+                {(pageToDisplay === 'editUser' ||
+                  pageToDisplay === 'addUser' ||
+                  pageToDisplay === 'editKid' ||
+                  pageToDisplay === 'addKid') && <EditUser />}
 
-              {/* edit chat topic page */}
-              {(pageToDisplay === 'editChatTopic' ||
-                pageToDisplay === 'addChatTopic') && <EditChatTopic />}
-
-              {/* edit activity page */}
-              {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
-            </editTargetContext.Provider>
-          </KidsOfParentContext.Provider>
-        </ptdContext.Provider>
-      </userDataContext.Provider>
-    </ThemeProvider>
+                {/* edit chat topic page */}
+                {(pageToDisplay === 'editChatTopic' ||
+                  pageToDisplay === 'addChatTopic') && <EditChatTopic />}
+                {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
+              </editTargetContext.Provider>
+            </KidsOfParentContext.Provider>
+          </ptdContext.Provider>
+        </userDataContext.Provider>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   )
 }
 
