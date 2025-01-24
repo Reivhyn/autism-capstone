@@ -25,22 +25,8 @@ const EditActivity = () => {
   //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
-  const [editSaved, setEditSaved] = useState('')
+  const [editSaved, setEditSaved] = useState(false)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
-  
-
-  // usestates for adding activity
-  // const [activityType, setActivityType] = useState('')
-  // const [activityTitle, setActivityTitle] = useState('')
-  // const [description, setDescription] = useState('')
-  // const [url, seturl] = useState('')
-  // const [imageURL, setImageURL] = useState('')
-  // const [imagebuffer, setImagebuffer] = useState('')
-  // const [imageType, setImageType] = useState('')
-  // const [category, setCategory] = useState('')
-  // const [educational, setEducational] = useState('')
-  // const [searchKeywords, setSearchKeywords] = useState('')
-  
 
   // usestates for editing activity
   const [editActivityType, seteditActivityType] = useState('')
@@ -50,8 +36,7 @@ const EditActivity = () => {
   const [editImageURL, seteditImageURL] = useState('')
   const [editCategory, seteditCategory] = useState('')
   const [editSearchKeywords, seteditSearchKeywords] = useState('')
-  const [editDeleteActivity, setEditDeleteActivity] = useState('')
-
+  const [editDeleteActivity, setEditDeleteActivity] = useState(false)
 
   const [activityType, setActivityType] = useState('')
   const [editCatArray, setEditCatArray] = useState('')
@@ -59,28 +44,12 @@ const EditActivity = () => {
   const [ageRange, setAgeRange] = useState('')
   const [ageRangeArray, setAgeRangeArray] = useState('')
   
-
-  // usestate for checked box
-  const [checkedBox, setCheckedBox] = useState('educational')
-
   //* FUNCTIONS
   const handlePageDisplay = async () => {}
-
-  // handle setting checked box
-  const handleCheck = (box) => {
-    setCheckedBox(box)
-    seteditEducational(box === 1 ? true : false)
-  }
 
   // save chagnes to existing activity when save button is clicked
   const callEditActivity = () => {
     console.log('edit activity called')
-    // delete activity if delete checkbox is checked
-    // !this breaks it?
-    // if (editDeleteActivity) {
-    //   deleteActivity(editTarget._id)
-    //   return
-    // }
 
     // edit chagnes if delete checkbox is not checked
     editActivity(
@@ -89,24 +58,25 @@ const EditActivity = () => {
       editActivityTitle,
       editDescription,
       editurl,
-      editCategory,
-      editSearchKeywords
+      editImageURL,
+      editCategory.split(' '), // split category string into array
+      editSearchKeywords.split(' '), // split search keywords string into array
+      ageRange.split(' '), // split age range string into array
     )
     setEditSaved(true)
   }
 
   // create new activity
   const createNewActivity = () => {
-    const catArray = editCategory.split(' ')
-    console.log(catArray)
-
     addNewActivity(
       activityType,
       editActivityTitle,
       editDescription,
       editurl,
-      editCategory,
-      editSearchKeywords,
+      editImageURL,
+      editCategory.split(' '), // split category string into array
+      editSearchKeywords.split(' '), // split search keywords string into array
+      ageRange.split(' '), // split age range string into array
     )
     setEditSaved(true)
   }
@@ -119,7 +89,7 @@ const EditActivity = () => {
     setEditSaved(true)
     return
   }
-  
+  console.log("handle save hit")
   // add new activity 
   if (pageToDisplay === 'addGame' || pageToDisplay === 'addLearning') {
     createNewActivity()
@@ -130,21 +100,19 @@ const EditActivity = () => {
 }
 
   //* useeffect
-  // useEffect(() => {
-  //   // set edit activity values when edit activity page is displayed
-  //   if (pageToDisplay === 'editActivity') {
-  //     seteditActivityType(editTarget.activityType)
-  //     seteditActivityTitle(editTarget.activityTitle)
-  //     seteditDescription(editTarget.description)
-  //     setediturl(editTarget.url)
-  //     seteditImageURL(editTarget.imageURL)
-  //     seteditImagebuffer(editTarget.imagebuffer)
-  //     seteditImageType(editTarget.imageType)
-  //     seteditCategory(editTarget.category)
-  //     seteditEducational(editTarget.educational)
-  //     seteditSearchKeywords(editTarget.searchKeywords)
-  //   }
-  // }, [pageToDisplay])
+//   useEffect(() => {
+//   // set edit activity values when edit activity page is displayed
+//   if (pageToDisplay === 'editActivity') {
+//     seteditActivityType(editTarget.activityType)
+//     seteditActivityTitle(editTarget.activityTitle)
+//     seteditDescription(editTarget.description)
+//     setediturl(editTarget.url)
+//     seteditImageURL(editTarget.imageURL)
+//     seteditCategory(editTarget.category)
+//     seteditSearchKeywords(editTarget.searchKeywords)
+//     setAgeRange(editTarget.ageRange)
+//   }
+// }, [pageToDisplay])
 
   useEffect(() => {
     if(pageToDisplay === 'addGame') {
@@ -154,6 +122,7 @@ const EditActivity = () => {
       setActivityType('learning')
     }
 }, [pageToDisplay])
+
   // chagne page back to portal after saves are made
   useEffect(() => {
     if (editSaved) {
@@ -164,11 +133,12 @@ const EditActivity = () => {
   }, [editSaved])
 
   return (
+    // console.log(editTarget),
     <>
     <div>
       {pageToDisplay === 'editActivity'
         ? `Editing ${editTarget.activityTitle}`
-        : 'Add New Activity'}
+        : `Add New ${activityType}`}
     </div>
     {/* form for editing activity properties */}
     <div className="formWrapper">
@@ -226,33 +196,33 @@ const EditActivity = () => {
           Category
           <input
             type="text"
-            checked={editCategory}
+            value={editCategory}
             onChange={(e) => {
-              seteditCategory(e.target.checked)
+              seteditCategory(e.target.value)
             }}
           />
         </div>
-
-          {/* educational in checkbox */}
-          {/* <div>
-          Disable Login
-          <input
-            type="checkbox"
-            checked={editEducational}
-            onChange={(e) => {
-              seteditEducational(e.target.checked)
-            }}
-          />
-        </div> */}
 
           {/* search keywords in field */}
           <div>
           Search Keywords
           <input
             type="text"
-            checked={editSearchKeywords}
+            value={editSearchKeywords}
             onChange={(e) => {
-              seteditSearchKeywords(e.target.checked)
+              seteditSearchKeywords(e.target.value)
+            }}
+          />
+        </div>
+
+        {/* age range field */}
+        <div>
+          Age Range
+          <input
+            type="text"
+            value={ageRange}
+            onChange={(e) => {
+              setAgeRange(e.target.value)
             }}
           />
         </div>
@@ -275,46 +245,7 @@ const EditActivity = () => {
       </form>
     </div>
 
-    {pageToDisplay === 'addGame' || pageToDisplay === "addLearning" ? (
-      <>
-
-        <div className="activityTypeCheckBoxWrap">
-        
-
-          {/* display parent checkbox if page to display is admin */}
-          {/* parent checkbox */}
-          {pageToDisplay === 'addActivity' ? (
-            <div className="buttonAndTitleWrap">
-              <div>Parent</div>
-              <input
-                type="checkbox"
-                checked={checkedBox === 'parent'}
-                onChange={() => handleCheck(2)}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-
-          {/* display admin checkbox if page to display is admin */}
-          {/* admin checkbox */}
-          {pageToDisplay === 'addActivity' ? (
-            <div className="buttonAndTitleWrap">
-              <div>Admin</div>
-              <input
-                type="checkbox"
-                checked={checkedBox === 'admin'}
-                onChange={() => handleCheck(3)}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-        </div>
-      </>
-    ) : (
-      ''
-    )}
+    {/* save and cancel buttons */}
     <div className="saveCancelButtons">
       {/* Save button */}
       <button onClick={() => handleSave()}>Save</button>

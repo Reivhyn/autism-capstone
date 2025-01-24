@@ -92,7 +92,9 @@ function App() {
                 pageToDisplay === 'addUser' ||
                 pageToDisplay === 'editKid' ||
                 pageToDisplay === 'addKid') && <EditUser />}
-                {(pageToDisplay === 'editActivity' || pageToDisplay === 'addGame' || pageToDisplay === 'addLearning') && <EditActivity />}
+                {(pageToDisplay === 'editActivity' || 
+                  pageToDisplay === 'addGame' || 
+                  pageToDisplay === 'addLearning') && <EditActivity />}
             </editTargetContext.Provider>
           </KidsOfParentContext.Provider>
         </ptdContext.Provider>

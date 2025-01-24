@@ -120,7 +120,6 @@ const PortalList = ({ itemsToList, listType }) => {
       }
       if (listType === 'games') {
         setPageToDisplay('addGame')
-        
         return
       }
       if (listType === 'learning') {

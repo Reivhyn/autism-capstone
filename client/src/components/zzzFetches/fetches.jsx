@@ -289,10 +289,10 @@ export async function addNewActivity(
   url,
   imageURL,
   category,
-  searchKeywords
+  searchKeywords,
+  ageRange
 ) {
   try {
-    console.log('add activity fetch hit')
     const res = await fetch('http://127.0.0.1:4000/activities/addActivity', {
       method: 'POST',
       headers: {
@@ -306,6 +306,7 @@ export async function addNewActivity(
         ...(imageURL && { imageURL }),
         ...(category && { category }),
         ...(searchKeywords && { searchKeywords }),
+        ...(ageRange && { ageRange }),
         portalReg: true,
       }),
 

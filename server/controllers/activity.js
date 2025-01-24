@@ -84,11 +84,13 @@ router.post('/getActivities', async (req, res) => {
 router.post('/addActivity', async (req, res) => {
   try {
     console.log('addActivity endpoint hit')
-
+    console.log(req.body)
     deconstructActivity(req.body)
 
+    // taking id out of the body
+    const { _id, ...activityFields } = req.body
     //create new game
-    const newGame = new activitySchema(req.body)
+    const newGame = new activitySchema(activityFields)
 
     //save new game
     await newGame.save()
@@ -98,6 +100,7 @@ router.post('/addActivity', async (req, res) => {
       game: newGame,
     })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       message: `${error}`,
     })
@@ -116,10 +119,12 @@ router.put('/updateActivity', async (req, res) => {
     // find activity with id
     const foundActivity = await activitySchema.findById(id)
 
+    // taking id out of the body
+    const { _id, ...updatedFields } = req.body
     // update activity with req.body
     const updatedActivity = await activitySchema.findByIdAndUpdate(
       id,
-      req.body,
+      updatedFields,
       {
         returnDocument: 'after',
       }

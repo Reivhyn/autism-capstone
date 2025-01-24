@@ -16,8 +16,8 @@ function deconstructActivity(gameObject, flag) {
     category,
     searchKeywords,
     ageRange,
-  } = gameObject
-
+    } = gameObject
+    
   if (flag === 'update') {
     if (!id) throw new Error('Provide id of the activity do be updated')
     return
@@ -29,7 +29,6 @@ function deconstructActivity(gameObject, flag) {
   }
 
   if (!flag) {
-
     if (!activityTitle) throw new Error('Provide a value for activityTitle ')
 
     if (!description) throw new Error('Provide a value for desription')
@@ -38,7 +37,7 @@ function deconstructActivity(gameObject, flag) {
 
     if (searchKeywords.length === 0)
       throw new Error('Provide values for searchKeywords')
-
+console.log(ageRange)
     if (ageRange.length === 0) throw new Error('Provide values for ageRange')
   }
 }
