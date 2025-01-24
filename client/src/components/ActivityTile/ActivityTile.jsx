@@ -1,38 +1,33 @@
 /* eslint-disable react/prop-types */
 /*
- * this component displays the tiles users can press for games or learning activities.
+ * This component displays the tiles users can press for games or learning activities.
  */
 
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react';
 
-//CONTEXT IMPORTS
-// pdt -> page to display
-import { ptdContext } from '../zContextHooks/contextHooks'
+// CONTEXT IMPORTS
+import { ptdContext } from '../zContextHooks/contextHooks';
 
 const ActivityTile = ({ tileData }) => {
-  //* USESTATE
-  //determins which page to display
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
 
-  //* RENDER
   return (
-    <>
-      <div className="activityWrap">
-        {/* tile title */}
-        <div className="activityTile">{tileData.activityTitle}</div>
+    <div className="activityTileWrapper">
+      {/* Tile title */}
+      <div className="activityTileTitle">{tileData.activityTitle}</div>
 
-        {/* tile image */}
-        <img
-          src={tileData.imageURL}
-          alt={`Image for ${tileData.ActivityTile}`}
-        />
+      {/* Tile image */}
+      <img
+        className="activityTileImage"
+        src={tileData.imageURL}
+        alt={`Image for ${tileData.activityTitle}`}
+      />
 
-        {/* tile description */}
-        <div className="acvtivityDescription">{tileData.description}</div>
-      </div>
-    </>
-  )
-}
+      {/* Tile description */}
+      <div className="activityTileDescription">{tileData.description}</div>
+    </div>
+  );
+};
 
-export default ActivityTile
+export default ActivityTile;

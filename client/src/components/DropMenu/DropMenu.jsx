@@ -1,3 +1,4 @@
+
 import { useContext, useState } from 'react';
 import { Menu, MenuItem, Button, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -32,12 +33,13 @@ const DropMenu = () => {
         onClick={handleClick}
         startIcon={<MenuIcon />}
         sx={{
-          background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.primary.main, // Light green button
+          color: theme.palette.background.default, // Contrast dark text
           '&:hover': {
-            background: `linear-gradient(90deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
+            backgroundColor: theme.palette.secondary.main, // Peach on hover
           },
           padding: '10px 20px',
+          borderRadius: '8px',
         }}
       >
         Site Navigation
@@ -50,15 +52,57 @@ const DropMenu = () => {
         onClose={handleClose}
         PaperProps={{
           style: {
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.background.paper, // Deep teal menu
+            color: theme.palette.text.primary, // White text
+            borderRadius: '8px',
+            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)',
           },
         }}
       >
-        <MenuItem onClick={() => handleMenuItemClick('landing')}>Home</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('learning')}>Learning Activities</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('games')}>Games</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('chat')}>Chat</MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick('landing')}
+          sx={{
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main, // Light green hover
+              color: theme.palette.background.default, // Contrast text
+            },
+          }}
+        >
+          Home
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick('learning')}
+          sx={{
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.background.default,
+            },
+          }}
+        >
+          Learning Activities
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick('games')}
+          sx={{
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.background.default,
+            },
+          }}
+        >
+          Games
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleMenuItemClick('chat')}
+          sx={{
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.background.default,
+            },
+          }}
+        >
+          Chat
+        </MenuItem>
       </Menu>
     </div>
   );
