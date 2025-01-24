@@ -13,10 +13,7 @@ function deconstructActivity(activityObject, flag) {
     description,
     url,
     imageURL,
-    imagebuffer,
-    imageType,
     category,
-    educational,
     searchKeywords,
     ageRange,
   } = activityObject
@@ -32,23 +29,15 @@ function deconstructActivity(activityObject, flag) {
   }
 
   if (!flag) {
-    if (activityType !== 'game' && activityType !== 'learning')
-      throw new Error("activityType must either 'learning' or 'game'")
-
     if (!activityTitle) throw new Error('Provide a value for activityTitle ')
 
     if (!description) throw new Error('Provide a value for desription')
 
-    if (!imageType) throw new Error('provide a value for imageType')
-
     if (category.length === 0) throw new Error('provide values for category')
-
-    if (educational === undefined)
-      throw new Error('Value for educational must be true or false')
 
     if (searchKeywords.length === 0)
       throw new Error('Provide values for searchKeywords')
-
+console.log(ageRange)
     if (ageRange.length === 0) throw new Error('Provide values for ageRange')
   }
 }

@@ -124,7 +124,9 @@ function App() {
                 {/* edit chat topic page */}
                 {(pageToDisplay === 'editChatTopic' ||
                   pageToDisplay === 'addChatTopic') && <EditChatTopic />}
-                {(pageToDisplay === 'editActivity' || pageToDisplay === 'addActivity') && <EditActivity />}
+                {(pageToDisplay === 'editActivity' || 
+                  pageToDisplay === 'addGame' || 
+                  pageToDisplay === 'addLearning') && <EditActivity />}
               </editTargetContext.Provider>
             </KidsOfParentContext.Provider>
           </ptdContext.Provider>

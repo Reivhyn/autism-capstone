@@ -61,7 +61,12 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'games') {
       setDisplayList(
         itemsToList.allGames.map((item, i) => {
-          return <li key={item._id}>{item.activityTitle}</li>
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }} 
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
@@ -69,7 +74,12 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => {
-          return <li key={item._id}>{item.activityTitle}</li>
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }}
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
