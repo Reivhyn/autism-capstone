@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import './App.css'
 
@@ -10,6 +12,7 @@ import Chat from './components/Chat/Chat'
 import Portal from './components/Portal/Portal'
 import DropMenu from './components/DropMenu/DropMenu'
 import EditUser from './components/EditUser/EditUser.jsx'
+import EditActivity from './components/EditActivity/EditActivity.jsx'
 import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 
@@ -121,6 +124,9 @@ function App() {
                 {/* edit chat topic page */}
                 {(pageToDisplay === 'editChatTopic' ||
                   pageToDisplay === 'addChatTopic') && <EditChatTopic />}
+                {(pageToDisplay === 'editActivity' || 
+                  pageToDisplay === 'addGame' || 
+                  pageToDisplay === 'addLearning') && <EditActivity />}
               </editTargetContext.Provider>
             </KidsOfParentContext.Provider>
           </ptdContext.Provider>
