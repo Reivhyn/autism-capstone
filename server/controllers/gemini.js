@@ -14,6 +14,7 @@ const GEMINI = process.env.GEMINI
 
 router.post('/gemini', async (req, res) => {
   try {
+    const dob = req.body.dob
     const prompt = req.body.prompt
     const history = req.body.history || []
     const description = req.body.topic.description
@@ -22,7 +23,7 @@ router.post('/gemini', async (req, res) => {
     const genAI = new GoogleGenerativeAI(GEMINI)
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
-      systemInstruction: description,
+      systemInstruction: `${description}. The material and presentation should be appropriate for someone born on ${dob} `
     })
 
     //start chat

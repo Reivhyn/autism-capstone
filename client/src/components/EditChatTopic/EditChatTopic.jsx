@@ -48,13 +48,13 @@ const EditChatTopic = () => {
 
     //add user if new uer is being created
     if (pageToDisplay === 'addChatTopic') {
-      addChatTopic(editTopicTitle, editDescription, editAgeRange)
+      addChatTopic(editTopicTitle, editDescription, userData._id)
       setEditSaved(true)
       return
     }
 
     //edit chat topic
-    editChatTopic(editTarget._id, editTopicTitle, editDescription, editAgeRange)
+    editChatTopic(editTarget._id, editTopicTitle, editDescription, )
     setEditSaved(true)
   }
 
@@ -76,55 +76,74 @@ const EditChatTopic = () => {
 
   return (
     <>
+      {/* title being edited */}
       <div>
         {pageToDisplay === 'editChatTopic'
           ? `Editing ${editTarget.topicTitle}`
           : `Add New Chat Topic`}
       </div>
-      <div className="editTopicFieldsWrapper">
-        {/* TopicTitle field */}
-        <input
-          type="text"
-          placeholder="Topic Title"
-          value={editTopicTitle}
-          onChange={(e) => setEditTopicTitle(e.target.value)}
-        />
 
-        {/* Description Filed */}
-        <textarea
-          type="text"
-          placeholder="Description"
-          value={editDescription}
-          onChange={(e) => setEditDescription(e.target.value)}
-        />
-
-        {/* Age range field */}
-        <input
-          type="text"
-          placeholder="Age Range"
-          value={editAgeRange}
-          onChange={(e) => setEditAgeRange(e.target.value)}
-        />
+      {/* current data */}
+      <div className="currentData">
+        <div>Current Title: {editTarget.topicTitle}</div>
+        <div>Current Description: {editTarget.description}</div>
+        <div>Current Age Range: {editTarget.ageRage}</div>
       </div>
 
-      {/* delete topic check box */}
-      {pageToDisplay === 'editChatTopic' ? (
-        <div className="deleteTopicWrap">
-          <div>{`Delete ${editTarget.topicTitle} Topic`}</div>
-          <input
-            type="CheckBox"
-            onChange={() => {
-              setEditDeleteTopic(!editDeleteTopic)
-            }}
-          />
-        </div>
+      {/* only show editing features when the user created the item */}
+      {userData._id === editTarget.createdBy ||
+      userData.userType === 'admin' ||
+      pageToDisplay === 'addChatTopic' ? (
+        <>
+          <div className="editTopicFieldsWrapper">
+            {/* TopicTitle field */}
+            <input
+              type="text"
+              placeholder="Topic Title"
+              value={editTopicTitle}
+              onChange={(e) => setEditTopicTitle(e.target.value)}
+            />
+
+            {/* Description Filed */}
+            <textarea
+              type="text"
+              placeholder="System Instruction : give instructuions the the chat bot the more specific the more precice it will follow the instructions ex: 'You are a cat. Your name is Neko' Or  ' You are a teacher you teach about American history, all other subjects are forbidden. The chat bot will automaticaly check the age of the child and present it in an apprpriate manner for them" 
+              value={editDescription}
+              onChange={(e) => setEditDescription(e.target.value)}
+            />
+          </div>
+
+          {/* delete topic check box */}
+          {pageToDisplay === 'editChatTopic' ? (
+            <div className="deleteTopicWrap">
+              <div>{`Delete ${editTarget.topicTitle} Topic`}</div>
+              <input
+                type="CheckBox"
+                onChange={() => {
+                  setEditDeleteTopic(!editDeleteTopic)
+                }}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+        </>
       ) : (
         ''
       )}
 
       <div className="editTopicButtonsWrapper">
-        {/* save button */}
-        <button onClick={() => handleSave()}>Save</button>
+        {/* only show save button when user is admin or created item */}
+        {userData._id === editTarget.createdBy ||
+        userData.userType === 'admin' ||
+        pageToDisplay === 'addChatTopic' ? (
+          <>
+            {/* Save button */}
+            <button onClick={() => handleSave()}>Save</button>
+          </>
+        ) : (
+          ''
+        )}
 
         {/* cancel button */}
         <button onClick={() => setPageToDisplay(userData.userType)}>

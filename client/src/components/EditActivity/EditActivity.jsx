@@ -18,7 +18,11 @@ import {
 } from '../zContextHooks/contextHooks'
 
 // FETCH IMPORTS
-import { addNewActivity, editActivity, deleteActivity } from '../zzzFetches/fetches'
+import {
+  addNewActivity,
+  editActivity,
+  deleteActivity,
+} from '../zzzFetches/fetches'
 
 const EditActivity = () => {
   //* USESTATE
@@ -43,7 +47,7 @@ const EditActivity = () => {
   const [setSeachArray, setSearchArray] = useState('')
   const [ageRange, setAgeRange] = useState('')
   const [ageRangeArray, setAgeRangeArray] = useState('')
-  
+
   //* FUNCTIONS
   const handlePageDisplay = async () => {}
 
@@ -61,7 +65,7 @@ const EditActivity = () => {
       editImageURL,
       editCategory.split(' '), // split category string into array
       editSearchKeywords.split(' '), // split search keywords string into array
-      ageRange.split(' '), // split age range string into array
+      ageRange.split(' ') // split age range string into array
     )
     setEditSaved(true)
   }
@@ -77,185 +81,196 @@ const EditActivity = () => {
       editCategory.split(' '), // split category string into array
       editSearchKeywords.split(' '), // split search keywords string into array
       ageRange.split(' '), // split age range string into array
+      userData._id
     )
     setEditSaved(true)
   }
 
-
   const handleSave = () => {
-  // delete activity if delete checkbox is checked
-  if (editDeleteActivity) {
-    deleteActivity(editTarget._id)
-    setEditSaved(true)
-    return
-  }
-  console.log("handle save hit")
-  // add new activity 
-  if (pageToDisplay === 'addGame' || pageToDisplay === 'addLearning') {
-    createNewActivity()
-    return
-  }
+    // delete activity if delete checkbox is checked
+    if (editDeleteActivity) {
+      deleteActivity(editTarget._id)
+      setEditSaved(true)
+      return
+    }
+    console.log('handle save hit')
+    // add new activity
+    if (pageToDisplay === 'addGame' || pageToDisplay === 'addLearning') {
+      createNewActivity()
+      return
+    }
 
-  callEditActivity()
-}
-
-  //* useeffect
-//   useEffect(() => {
-//   // set edit activity values when edit activity page is displayed
-//   if (pageToDisplay === 'editActivity') {
-//     seteditActivityType(editTarget.activityType)
-//     seteditActivityTitle(editTarget.activityTitle)
-//     seteditDescription(editTarget.description)
-//     setediturl(editTarget.url)
-//     seteditImageURL(editTarget.imageURL)
-//     seteditCategory(editTarget.category)
-//     seteditSearchKeywords(editTarget.searchKeywords)
-//     setAgeRange(editTarget.ageRange)
-//   }
-// }, [pageToDisplay])
+    callEditActivity()
+  }
 
   useEffect(() => {
-    if(pageToDisplay === 'addGame') {
+    if (pageToDisplay === 'addGame') {
       setActivityType('game')
     }
     if (pageToDisplay === 'addLearning') {
       setActivityType('learning')
     }
-}, [pageToDisplay])
+  }, [pageToDisplay])
 
   // chagne page back to portal after saves are made
   useEffect(() => {
     if (editSaved) {
       setTimeout(() => {
-      setPageToDisplay('parent')
+        setPageToDisplay('parent')
       }, 1500)
     }
   }, [editSaved])
 
   return (
-    // console.log(editTarget),
     <>
-    <div>
-      {pageToDisplay === 'editActivity'
-        ? `Editing ${editTarget.activityTitle}`
-        : `Add New ${activityType}`}
-    </div>
-    {/* form for editing activity properties */}
-    <div className="formWrapper">
-      <form action="">
-        {/* activity name field */}
-        <div>
-        Name
-          <input
-            type="text"
-            value={editActivityTitle}
-            onChange={(e) => {
-              seteditActivityTitle(e.target.value)
-            }}
-          />
-        </div>
+      <div className="currentData">
+        <div>Curent Name: {editTarget.activityTitle}</div>
+        <div>Current Description: {editTarget.description}</div>
+        <div>Curent Image URL: {editTarget.url}</div>
+        <div>Curent Category: {editTarget.category}</div>
+        <div>Curent Search Keywords: {editTarget.ageRange}</div>
+      </div>
 
-        {/* description field */}
-        <div>
-          Description
-          <input
-            type="text"
-            value={editDescription}
-            onChange={(e) => {
-              seteditDescription(e.target.value)
-            }}
-          />
-        </div>
+      <div>
+        {pageToDisplay === 'editActivity'
+          ? `Editing ${editTarget.activityTitle}`
+          : `Add New ${activityType}`}
+      </div>
 
-        {/* url field */}
-        <div>
-          URL
-          <input
-            type="text"
-            value={editurl}
-            onChange={(e) => {
-              setediturl(e.target.value)
-            }}
-          />
-        </div>
+      {/* only show editing features when the user created the item */}
+      {userData._id === editTarget.createdBy ||
+        userData.userType === 'admin' ||
+        pageToDisplay === 'addLearning' ||
+        pageToDisplay === 'addGame'  ? (
+        <>
+          {/* form for editing activity properties */}
+          <div className="formWrapper">
+            <form action="">
+              {/* activity name field */}
+              <div>
+                Name
+                <input
+                  type="text"
+                  value={editActivityTitle}
+                  onChange={(e) => {
+                    seteditActivityTitle(e.target.value)
+                  }}
+                />
+              </div>
 
-        {/* image url field */}
-        <div>
-          Image url
-          <input
-            type="test"
-            value={editImageURL}
-            onChange={(e) => {
-              seteditImageURL(e.target.value)
-            }}
-          />
-        </div>
+              {/* description field */}
+              <div>
+                Description
+                <input
+                  type="text"
+                  value={editDescription}
+                  onChange={(e) => {
+                    seteditDescription(e.target.value)
+                  }}
+                />
+              </div>
 
-          {/* category in field */}
-          <div>
-          Category
-          <input
-            type="text"
-            value={editCategory}
-            onChange={(e) => {
-              seteditCategory(e.target.value)
-            }}
-          />
-        </div>
+              {/* url field */}
+              <div>
+                URL
+                <input
+                  type="text"
+                  value={editurl}
+                  onChange={(e) => {
+                    setediturl(e.target.value)
+                  }}
+                />
+              </div>
 
-          {/* search keywords in field */}
-          <div>
-          Search Keywords
-          <input
-            type="text"
-            value={editSearchKeywords}
-            onChange={(e) => {
-              seteditSearchKeywords(e.target.value)
-            }}
-          />
-        </div>
+              {/* image url field */}
+              <div>
+                Image url
+                <input
+                  type="test"
+                  value={editImageURL}
+                  onChange={(e) => {
+                    seteditImageURL(e.target.value)
+                  }}
+                />
+              </div>
 
-        {/* age range field */}
-        <div>
-          Age Range
-          <input
-            type="text"
-            value={ageRange}
-            onChange={(e) => {
-              setAgeRange(e.target.value)
-            }}
-          />
-        </div>
+              {/* category in field */}
+              <div>
+                Category
+                <input
+                  type="text"
+                  value={editCategory}
+                  onChange={(e) => {
+                    seteditCategory(e.target.value)
+                  }}
+                />
+              </div>
 
-        {/* do not show delte activity button when adding activity */}
-        {pageToDisplay === 'editActivity' ? (
-          <div>
-            Delete
-            <input
-              type="checkbox"
-              checked={editDeleteActivity}
-              onChange={(e) => {
-                setEditDeleteActivity(e.target.checked)
-              }}
-            />
+              {/* search keywords in field */}
+              <div>
+                Search Keywords
+                <input
+                  type="text"
+                  value={editSearchKeywords}
+                  onChange={(e) => {
+                    seteditSearchKeywords(e.target.value)
+                  }}
+                />
+              </div>
+
+              {/* age range field */}
+              <div>
+                Age Range
+                <input
+                  type="text"
+                  value={ageRange}
+                  onChange={(e) => {
+                    setAgeRange(e.target.value)
+                  }}
+                />
+              </div>
+
+              {/* do not show delte activity button when adding activity */}
+              {pageToDisplay === 'editActivity' ? (
+                <div>
+                  Delete
+                  <input
+                    type="checkbox"
+                    checked={editDeleteActivity}
+                    onChange={(e) => {
+                      setEditDeleteActivity(e.target.checked)
+                    }}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </form>
           </div>
+        </>
+      ) : (
+        ''
+      )}
+
+      {/* save and cancel buttons */}
+      <div className="saveCancelButtons">
+        {/* only show save button when user is admin or created item */}
+        {userData._id === editTarget.createdBy ||
+        userData.userType === 'admin' ||
+        pageToDisplay === 'addLearning' ||
+        pageToDisplay === 'addGame' ? (
+          <>
+            {/* Save button */}
+            <button onClick={() => handleSave()}>Save</button>
+          </>
         ) : (
           ''
         )}
-      </form>
-    </div>
 
-    {/* save and cancel buttons */}
-    <div className="saveCancelButtons">
-      {/* Save button */}
-      <button onClick={() => handleSave()}>Save</button>
-
-      {/* cancel button */}
-      <button onClick={() => setPageToDisplay('parent')}>Cancel</button>
-    </div>
-  </>
+        {/* cancel button */}
+        <button onClick={() => setPageToDisplay(userData.userType)}>Cancel</button>
+      </div>
+    </>
   )
-
-
 }
 export default EditActivity

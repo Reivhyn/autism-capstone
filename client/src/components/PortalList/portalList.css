@@ -1,4 +1,4 @@
-.portalList{
+.portalList {
   list-style-type: none;
 }
 
@@ -6,3 +6,9 @@
   cursor: pointer;
 }
 
+.editableByCurrentUser {
+  font-weight: bold;
+}
+/* .editableByCurrentUser:hover {
+  cursor: pointer;
+} */
