@@ -154,6 +154,12 @@ const Register = () => {
             <Button type="submit" fullWidth variant="contained">
               Sign Up
             </Button>
+            <Button
+            variant="text"
+            onClick={() => changePage(setPageToDisplay, 'landing')}
+          >
+            Back
+          </Button>
           </Box>
           <Divider sx={{ my: 2 }}>or</Divider>
           <Typography textAlign="center">
