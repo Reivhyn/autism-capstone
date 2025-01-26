@@ -18,12 +18,13 @@ import {
 import { ptdContext } from '../zContextHooks/contextHooks';
 
 // HELPER IMPORTS
-import { changePage, validatePasswordCriteria } from '../zzHelpers/helpers'
+import { changePage } from '../zzHelpers/helpers';
+import { validatePasswordCriteria } from '../zzHelpers/helpers';
 import { register } from '../zzzFetches/fetches'
 
 const Register = () => {
   //* USESTATE
-  const [, setPageToDisplay] = useContext(ptdContext); // Using only `setPageToDisplay`
+  const [pageToDisplay ,setPageToDisplay] = useContext(ptdContext); // Using only `setPageToDisplay`
   const [userData, setUserData] = useState('');
 
   const [username, setUsername] = useState('');
@@ -38,29 +39,15 @@ const Register = () => {
 
 
   //* FUNCTIONS
-  const validateInputs = () => {
-    if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
-      setError('All fields are required.');
-      return false;
-    }
-    if (validatePasswordCriteria(password)) {
-      setError('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
-      return false;
-    }
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return false;
-    }
-
-    setError('');
-    return true;
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(!validateInputs()) return; // stop submission if validation fails
+    console.log(password, confirmPassword, validateInputs); // Log the passwords
+    if (!validateInputs()) {
+      return; // stop submission if validation fails
+    }
       console.log({ username, firstName, lastName, email, password });
-      setUserData(
+      try{
+      const response =
         await register(
           username, 
           firstName, 
@@ -69,11 +56,39 @@ const Register = () => {
           password, 
           dob, 
           userType
-        )); // register the user
+        ); // register the user
+        setUserData(response);
       alert('Registration Successful!');
-      setPageToDisplay('portal'); // Navigate to the portal page after successful registration
+      setPageToDisplay('parent');
+      }
+    catch (error) {
+      console.error('Registration failed:', error);
     }
+  }
+    const validateInputs = () => {
+      console.log(password, confirmPassword); // Log the passwords
+      if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
+        console.log('All fields are required.'); // Log the error
+        setError('All fields are required.');
+        return false;
+      }
+      if (password !== confirmPassword) {
+        console.log('Passwords do not match.'); // Log the error
+        setError('Passwords do not match.');
+        return false;
+      }
+      try {
+        validatePasswordCriteria(password);
+      } catch (error) { 
+        setError(error.message);
+        return false;
+      } // Validate the password
+      setError('');
+  
+      return true;
+    };
 
+  //* RENDER
     return (
       <Stack sx={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', padding: 2 }}>
         <CssBaseline />
