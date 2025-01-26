@@ -43,9 +43,13 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if ( e.key === 'Enter') 
+      loginUser()
+  }
+
   //* USEEFFECTS
   useEffect(() => {
-    console.log('pageToDisplay', pageToDisplay)
     if (userData) {
       setTimeout(() => {
         //if kid take to landing
@@ -82,6 +86,7 @@ const Login = () => {
             fullWidth
             label="Username"
             value={userName}
+            onKeyDown={(e) => handleKeyDown(e)}
             onChange={(e) => setUserName(e.target.value)}
             error={!!error}
             helperText={error && 'Invalid username or password.'}
@@ -92,6 +97,7 @@ const Login = () => {
             label="Password"
             type="password"
             value={password}
+            onKeyDown={(e) => handleKeyDown(e)}
             onChange={(e) => setPassword(e.target.value)}
             error={!!error}
           />

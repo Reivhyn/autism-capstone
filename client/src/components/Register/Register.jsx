@@ -22,6 +22,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [userData, setUserData] = useState('')
 
   const validateInputs = () => {
     if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {

@@ -13,6 +13,7 @@ const Activity = new mongoose.Schema({
   category: { type: Array, require: true }, // the category the game belongs to
   searchKeywords: { type: Array, required: true }, //keywords that can be used to search the game
   ageRange: { type: Array, require: true }, //suggested age range for the game - search by grade
+  createdBy: {type: String}
 })
 
 

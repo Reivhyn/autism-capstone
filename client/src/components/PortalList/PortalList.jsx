@@ -9,6 +9,7 @@ import {
   ptdContext,
   // KidsOfParentContext,
   editTargetContext,
+  userDataContext,
 } from '../zContextHooks/contextHooks'
 
 const PortalList = ({ itemsToList, listType }) => {
@@ -18,7 +19,8 @@ const PortalList = ({ itemsToList, listType }) => {
   // const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
-  
+  const [userData, setUserData] = useContext(userDataContext)
+
   //* FUNCTIONS
   const setUpList = () => {
     if (listType === 'user') {
@@ -61,12 +63,22 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'games') {
       setDisplayList(
         itemsToList.allGames.map((item, i) => {
-          return <li
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editActivity')
-            }} 
-          key={`item${i}`}>{item.activityTitle}</li>
+          return (
+            <li
+              className={
+                userData._id === item.createdBy || userData.userType === 'admin'
+                  ? 'editableByCurrentUser'
+                  : 'not'
+              }
+              onClick={() => {
+                setEditTarget(item)
+                setPageToDisplay('editActivity')
+              }}
+              key={`${item._id}`}
+            >
+              {item.activityTitle}
+            </li>
+          )
         })
       )
     }
@@ -74,12 +86,22 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => {
-          return <li
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editActivity')
-            }}
-          key={`item${i}`}>{item.activityTitle}</li>
+          return (
+            <li
+            className={
+              userData._id === item.createdBy || userData.userType === 'admin'
+                ? 'editableByCurrentUser'
+                : 'not'
+            }
+              onClick={() => {
+                setEditTarget(item)
+                setPageToDisplay('editActivity')
+              }}
+              key={`item${i}`}
+            >
+              {item.activityTitle}
+            </li>
+          )
         })
       )
     }
@@ -90,6 +112,11 @@ const PortalList = ({ itemsToList, listType }) => {
         itemsToList.allChatTopics.map((item) => {
           return (
             <li
+            className={
+              userData._id === item.createdBy || userData.userType === 'admin'
+                ? 'editableByCurrentUser'
+                : 'not'
+            }
               onClick={() => {
                 setEditTarget(item)
                 setPageToDisplay('editChatTopic')
@@ -174,7 +201,6 @@ const PortalList = ({ itemsToList, listType }) => {
           {displayList ? displayList : 'failed to load list'}
         </ul>
 
-        {/* //TODO onclick call function to handl click */}
         {listType !== 'reporting' ? (
           <button onClick={() => handleClick()}>Add</button>
         ) : (

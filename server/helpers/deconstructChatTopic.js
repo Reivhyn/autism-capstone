@@ -3,9 +3,9 @@
  */
 
 function deconstructChatTopic(chatObject, flag) {
-  const { id, topicTitle, description, ageRange } = chatObject
+  const { id, topicTitle, description } = chatObject
 
-  if (flag === 'update'|| flag === 'delete') {
+  if (flag === 'update' || flag === 'delete') {
     if (!id) throw new Error(`Provide id to ${flag} chat topic`)
   }
 
@@ -15,9 +15,6 @@ function deconstructChatTopic(chatObject, flag) {
 
     if (!description)
       throw new Error('Provide description to create new chat topic')
-
-    if (!ageRange)
-      throw new Error('provide an age range to create new chat topic')
   }
 }
 

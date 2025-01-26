@@ -288,7 +288,8 @@ export async function addNewActivity(
   imageURL,
   category,
   searchKeywords,
-  ageRange
+  ageRange,
+  createdBy
 ) {
   try {
     const res = await fetch('http://127.0.0.1:4000/activities/addActivity', {
@@ -305,7 +306,7 @@ export async function addNewActivity(
         ...(category && { category }),
         ...(searchKeywords && { searchKeywords }),
         ...(ageRange && { ageRange }),
-        portalReg: true,
+        ...(createdBy && { createdBy }),
       }),
 
       credentials: 'include',
@@ -322,7 +323,6 @@ export async function addNewActivity(
   } catch (error) {
     console.log(error)
   }
-
 }
 
 // Fetch to edit an activity
@@ -352,7 +352,6 @@ export async function editActivity(
         ...(imageURL && { imageURL }),
         ...(category && { category }),
         ...(searchKeywords && { searchKeywords }),
-        portalReg: true,
       }),
 
       credentials: 'include',
@@ -393,7 +392,7 @@ export async function deleteActivity(id) {
     }
 
     return deletedActivity
-  }catch (error) {
+  } catch (error) {
     console.log(error)
   }
 }
@@ -424,7 +423,11 @@ export async function getAllChatTopics() {
 }
 
 //edit chat topic
-export async function editChatTopic(id, topicTitle, description, ageRange) {
+export async function editChatTopic(
+  id,
+  topicTitle,
+  description,
+) {
   try {
     const res = await fetch(
       `http://127.0.0.1:4000/chatTopics/updateChatTopic`,
@@ -437,7 +440,6 @@ export async function editChatTopic(id, topicTitle, description, ageRange) {
           ...(id && { id }),
           ...(topicTitle && { topicTitle }),
           ...(description && { description }),
-          ...(ageRange && { ageRange }),
         }),
         credentials: 'include',
       }
@@ -455,7 +457,7 @@ export async function editChatTopic(id, topicTitle, description, ageRange) {
   }
 }
 //edit chat topic
-export async function addChatTopic(topicTitle, description, ageRange) {
+export async function addChatTopic(topicTitle, description, createdBy) {
   try {
     const res = await fetch(`http://127.0.0.1:4000/chatTopics/creatChatTopic`, {
       method: 'POST',
@@ -465,7 +467,7 @@ export async function addChatTopic(topicTitle, description, ageRange) {
       body: JSON.stringify({
         topicTitle: topicTitle,
         description: description,
-        ageRange: ageRange,
+        createdBy : createdBy
       }),
       credentials: 'include',
     })

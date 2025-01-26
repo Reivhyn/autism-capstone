@@ -15,6 +15,7 @@ import EditUser from './components/EditUser/EditUser.jsx'
 import EditActivity from './components/EditActivity/EditActivity.jsx'
 import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
+import PleaseLogin from './components/PleaseLogIn/PleaseLogin.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -29,9 +30,10 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import darkTheme from './zzztheme/darkTheme.jsx'
-import lightTheme from './zzztheme/lightTheme'
+import moongrad from './zzztheme/moongrad.jsx'
 import { LogoutOutlined } from '@mui/icons-material'
 import { ThemeContext } from '@emotion/react'
+import lightTheme from './zzztheme/lightTheme.jsx'
 
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
@@ -66,6 +68,7 @@ function App() {
     if (userData) {
       if (userData.userType === 'admin') setPageToDisplay('admin')
       if (userData.userType === 'parent') setPageToDisplay('parent')
+        console.log('userData', userData)
     }
   }, [userData])
 
@@ -73,6 +76,10 @@ function App() {
   useEffect(() => {
     if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
   }, [userData])
+
+  useEffect(() => {
+    console.log('pageToDisplay', pageToDisplay)
+  },[pageToDisplay])
 
   //* RENDERING
   return (
@@ -84,9 +91,15 @@ function App() {
             <KidsOfParentContext.Provider
               value={[kidsOfParent, setKidsOfParent]}
             >
+              {/* please log in - shoews if trying to access other sights without login */}
+              {pageToDisplay !== 'landing' &&
+                pageToDisplay !== 'login' &&
+                pageToDisplay !== 'register' &&
+                !userData && <PleaseLogin />}
+
               <editTargetContext.Provider value={[editTarget, setEditTarget]}>
                 {/* Conditionally Render DropMenu */}
-                {['learning', 'games', 'chat'].includes(pageToDisplay) && (
+                {['learning', 'games', 'chat'].includes(pageToDisplay) && userData && (
                   <DropMenu />
                 )}
 
@@ -95,7 +108,7 @@ function App() {
 
                 {/*//*  Page Rendering */}
                 {/* login page */}
-                {pageToDisplay === 'login' && <Login />}
+                {pageToDisplay === 'login'&& <Login />}
 
                 {/* registration gage */}
                 {pageToDisplay === 'register' && <Register />}
@@ -105,13 +118,13 @@ function App() {
 
                 {/* games and lerning  pages */}
                 {(pageToDisplay === 'games' ||
-                  pageToDisplay === 'learning') && <Activities />}
+                  pageToDisplay === 'learning') && userData && <Activities />}
 
                 {/* chat page */}
-                {pageToDisplay === 'chat' && <Chat />}
+                {pageToDisplay === 'chat' && userData && <Chat />}
 
                 {/* admin and parent portal pages */}
-                {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && (
+                {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && userData && (
                   <Portal />
                 )}
 
@@ -119,7 +132,7 @@ function App() {
                 {(pageToDisplay === 'editUser' ||
                   pageToDisplay === 'addUser' ||
                   pageToDisplay === 'editKid' ||
-                  pageToDisplay === 'addKid') && <EditUser />}
+                  pageToDisplay === 'addKid') && userData && <EditUser />}
 
                 {/* edit chat topic page */}
                 {(pageToDisplay === 'editChatTopic' ||
