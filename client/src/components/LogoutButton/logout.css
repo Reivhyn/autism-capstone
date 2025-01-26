@@ -1,17 +1,25 @@
 .logOutButton {
-    position: absolute;
-    right: 10px; /* Fixed distance from the left */
-    top: 10px; /* Fixed distance from the top */
-    padding: 10px 20px; /* Fixed padding */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px; 
-    width: auto; 
-    transition: background-color 0.3s ease;
-    z-index: 1000;
+  background-color: #DD5E56; /* Coral red from dark theme for the button background */
+  color: #FFFFFF; /* White text for contrast */
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
 }
 
+.logOutButton:hover {
+  background-color: #A3C9A8; /* Light green hover effect */
+  color: #1C2629; /* Dark text for contrast on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.logOutButton:active {
+  transform: scale(0.95); /* Button press effect */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on press */
+}
   /* Prevent resizing on small screens */
 @media (max-width: 768px) {
     .logOutButton {

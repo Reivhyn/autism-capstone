@@ -7,7 +7,7 @@ import './portalList.css'
 // pdt -> page to display
 import {
   ptdContext,
-  KidsOfParentContext,
+  // KidsOfParentContext,
   editTargetContext,
   userDataContext,
 } from '../zContextHooks/contextHooks'
@@ -16,11 +16,12 @@ const PortalList = ({ itemsToList, listType }) => {
   //* USESTATE
   const [listTitle, setListTitle] = useState('')
   const [displayList, setDisplayList] = useState('')
-  const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
+  // const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
   const [userData, setUserData] = useContext(userDataContext)
 
+  
   //* FUNCTIONS
   const setUpList = () => {
     if (listType === 'user') {
@@ -62,8 +63,13 @@ const PortalList = ({ itemsToList, listType }) => {
 
     if (listType === 'games') {
       setDisplayList(
-        itemsToList.allGames.map((item) => {
-          return <li key={item._id}>{item.activityTitle}</li>
+        itemsToList.allGames.map((item, i) => {
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }} 
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
@@ -71,7 +77,12 @@ const PortalList = ({ itemsToList, listType }) => {
     if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => {
-          return <li key={item._id}>{item.activityTitle}</li>
+          return <li
+            onClick={() => {
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
+            }}
+          key={`item${i}`}>{item.activityTitle}</li>
         })
       )
     }
@@ -149,7 +160,7 @@ const PortalList = ({ itemsToList, listType }) => {
     }
   }
 
-  //* USESTATE
+  //* USEEFFECT
   //initilize dual list
   useEffect(() => {
     setUpList()
