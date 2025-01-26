@@ -9,6 +9,7 @@ import {
   ptdContext,
   KidsOfParentContext,
   editTargetContext,
+  userDataContext,
 } from '../zContextHooks/contextHooks'
 
 const PortalList = ({ itemsToList, listType }) => {
@@ -18,6 +19,7 @@ const PortalList = ({ itemsToList, listType }) => {
   const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
+  const [userData, setUserData] = useContext(userDataContext)
 
   //* FUNCTIONS
   const setUpList = () => {
@@ -60,7 +62,7 @@ const PortalList = ({ itemsToList, listType }) => {
 
     if (listType === 'games') {
       setDisplayList(
-        itemsToList.allGames.map((item, i) => {
+        itemsToList.allGames.map((item) => {
           return <li key={item._id}>{item.activityTitle}</li>
         })
       )

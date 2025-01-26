@@ -26,7 +26,6 @@ const Chat = () => {
   const [displayLog, setDisplayLog] = useState([])
   const [currentTopic, setCurrentTopic] = useState('')
 
-
   //* FETCH
   const callGemini = async (e) => {
     try {
@@ -43,7 +42,7 @@ const Chat = () => {
         body: JSON.stringify({
           prompt,
           history,
-          topic : currentTopic
+          topic: currentTopic,
         }),
 
         credentials: 'include',
@@ -94,7 +93,7 @@ const Chat = () => {
   const RenderLog = () => {
     if (history) {
       setDisplayLog(
-        history.map(
+        history.reverse().map(
           (log, i) => {
             return (
               <div
@@ -124,14 +123,16 @@ const Chat = () => {
     <>
       <SiteTitle />
       <h1>CHAT PAGE</h1>
+      {/* selected topic */}
+      <h2>{currentTopic ? currentTopic.topicTitle : 'Select a Topic'}</h2>
+      {/* Chat topic drop menu */}
       <ChatTopicDropMenu
         currentTopic={currentTopic}
         setCurrentTopic={setCurrentTopic}
       />
-      <div className="chatHistoryWrapper">
-        <div className="history">{displayLog ? displayLog : ''}</div>
-        <div className="currentResponce">{geminiStream}</div>
-      </div>
+
+
+      {/* promt form */}
       <form action="">
         <textarea
           name=""
@@ -141,10 +142,19 @@ const Chat = () => {
             setPrompt(e.target.value)
           }}
         ></textarea>
-        <button onClick={(e) => callGemini(e)} disabled={isLoading}>
+        <button
+          onClick={(e) => callGemini(e)}
+          disabled={isLoading || !currentTopic}
+        >
           Ask Gemini
         </button>
       </form>
+      {/* History log */}
+      <div className="chatHistoryWrapper">
+        <div className="history">{displayLog ? displayLog : ''}</div>
+        <div className="currentResponce">{geminiStream}</div>
+      </div>
+
       <Banner />
       <Footer />
     </>

@@ -14,18 +14,19 @@ const User = new mongoose.Schema(
       required: true,
       unique: true,
       match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      select: false,
     },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
 
     // PARENT section of schema
     kids: { type: Array },
 
     // KID section of schema
-    parentUser: { type: String}, //if parent it value is parent otherwise it is the id of the parent user
+    parentUser: { type: String }, //if parent it value is parent otherwise it is the id of the parent user
     activitiesAccess: { type: Array },
-    
+
     // if the kid is disable they should not be able to log in
-    disabled: {type: Boolean},
+    disabled: { type: Boolean },
     /* 
       contains the id of activities the user has access to
       if it contains all then all gmaes and activities are available
@@ -36,8 +37,8 @@ const User = new mongoose.Schema(
 
     //LOCKOUT section
     failedAttempts: { type: Number, default: 0 },
-    lockedOut : {type: Boolean, default: false},
-    lockOutTime : {type: Date}
+    lockedOut: { type: Boolean, default: false },
+    lockOutTime: { type: Date },
   },
   { Timestamp: true }
 )
@@ -52,7 +53,7 @@ User.pre('save', function (next) {
     }
   }
 
-  if(this.failedAttempts === 4){
+  if (this.failedAttempts === 4) {
     this.lockedOut = true
     this.lockOutTime = Date.now
   }

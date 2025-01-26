@@ -15,6 +15,7 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
+const { LuClock10 } = require('react-icons/lu')
 
 //checks other schema for existing email or username
 
@@ -38,9 +39,12 @@ router.post('/register', async (req, res) => {
     
     //hash user passprd
     newUser.password = bcrypt.hashSync(newUser.password, SALT)
+
     
     //save user
     await newUser.save()
+
+    const {password,  ...userData} = newUser._doc
     
     //generate token
     const token = jwt.sign(
@@ -52,11 +56,11 @@ router.post('/register', async (req, res) => {
       { expiresIn: '24 hours' }
     )
     
-    //if this is called in the portal on the front end do not issue token
+    //if this is called in the parent or admin portal on the front end do not issue token
     if (req.body.portalReg) {
       return res.status(200).json({
         message: `new ${newUser.userType} user created`,
-        ...newUser._doc,
+        ...userData,
       })
     }
     
@@ -69,7 +73,7 @@ router.post('/register', async (req, res) => {
     })
     .json({
       message: `new ${newUser.userType} user created`,
-      ...newUser._doc,
+      ...userData,
     })
   } catch (error) {
     return res.status(500).json({
@@ -91,7 +95,7 @@ router.post('/login', async (req, res) => {
     //look for user. case insensitive
     const foundUser = await userSchema.findOne({
       userName: { $regex: userName, $options: 'i' },
-    }) //4
+    }).select('+password') //4
 
     //if not found throw errror
     if (!foundUser) throw new Error('invalid username or password 1')
@@ -104,6 +108,11 @@ router.post('/login', async (req, res) => {
 
     //throw error if password invalid
     if (!passwordVerified) throw new Error('invalid username or password')
+
+    //remove password from res 
+    const {password,  ...userData} = foundUser._doc
+
+    console.log('userData', userData)
 
     //generate token
     const token = jwt.sign(
@@ -125,7 +134,7 @@ router.post('/login', async (req, res) => {
       })
       .json({
         message: `Welcome ${foundUser.userName}`,
-        ...foundUser._doc,
+        ...userData,
       })
   } catch (error) {
     return res.status(500).json({

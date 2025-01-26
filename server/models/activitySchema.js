@@ -16,6 +16,7 @@ const Activity = new mongoose.Schema({
   educational: { type: Boolean, required: true }, //if the game is educational it can appear in the learning section as well
   searchKeywords: { type: Array, required: true }, //keywords that can be used to search the game
   ageRange: { type: Array, require: true }, //suggested age range for the game - search by grade
+  createdBy: {type: String}
 })
 
 
