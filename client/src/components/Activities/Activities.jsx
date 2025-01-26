@@ -12,7 +12,7 @@ import ActivityTile from '../ActivityTile/ActivityTile';
 import Footer from '../Footer/Footer';
 
 // Material-UI Imports
-import { Container, Typography, Grid } from '@mui/material';
+import { Container, Typography, Grid, useTheme } from '@mui/material';
 
 // CONTEXT IMPORTS
 import { ptdContext } from '../zContextHooks/contextHooks';
@@ -24,7 +24,8 @@ import { runSearch } from '../zzHelpers/helpers';
 import { getActivities } from '../zzzFetches/fetches';
 
 const Activities = () => {
-  const [pageToDisplay,] = useContext(ptdContext);
+  const theme = useTheme(); // Access the theme for consistent styling
+  const [pageToDisplay] = useContext(ptdContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [displayResult, setDisplayResult] = useState(null);
   const [allActivities, setAllActivities] = useState(null);
@@ -40,7 +41,16 @@ const Activities = () => {
 
   const displayGames = (activityArray) => {
     if (!activityArray || activityArray.length === 0) {
-      return <Typography variant="body1">No activities available.</Typography>;
+      return (
+        <Typography
+          variant="body1"
+          style={{
+            color: theme.palette.text.primary, // White text
+          }}
+        >
+          No activities available.
+        </Typography>
+      );
     }
     return activityArray.map((activity, i) => (
       <ActivityTile key={`game${i}`} tileData={activity} />
@@ -78,10 +88,23 @@ const Activities = () => {
   return (
     <Container
       maxWidth="lg"
-      style={{ padding: '20px', backgroundColor: '#121212', color: '#FFFFFF' }}
+      style={{
+        padding: '20px',
+        backgroundColor: theme.palette.background.default, // Dark navy/teal background
+        color: theme.palette.text.primary, // White text
+        borderRadius: '8px',
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)', // Subtle shadow
+      }}
     >
       <SiteTitle />
-      <Typography variant="h4" gutterBottom style={{ marginBottom: '20px' }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{
+          marginBottom: '20px',
+          color: theme.palette.primary.main, // Light green for title
+        }}
+      >
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </Typography>
       <Banner />
@@ -90,9 +113,22 @@ const Activities = () => {
           <SearchBar setSearchTerm={setSearchTerm} />
         </div>
       </div>
-      <Grid container spacing={3} style={{ marginTop: '20px' }}>
+      <Grid
+        container
+        spacing={3}
+        style={{
+          marginTop: '20px',
+        }}
+      >
         {displayResult || (
-          <Typography variant="body1">Loading Activities...</Typography>
+          <Typography
+            variant="body1"
+            style={{
+              color: theme.palette.text.secondary, // Coral red for loading text
+            }}
+          >
+            Loading Activities...
+          </Typography>
         )}
       </Grid>
       <Footer />
@@ -100,4 +136,4 @@ const Activities = () => {
   );
 };
 
-export default Activities;
+export default Activities

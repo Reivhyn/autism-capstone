@@ -1,174 +1,76 @@
-/* ---------------------------------------- */
-/* Card Styles                              */
-/* ---------------------------------------- */
-
-.cardButton {
-  display: flex;
-  flex-direction: column; /* Ensures icon is above text */
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  background-color: #007BFF; 
-  color: black; 
-  border: none;
-  border-radius: 10px; /* Rounded corners */
-  width: 10vw;
-  height: 200px; /* Consistent height */
-  margin: 10px; 
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
-  text-align: center;
-}
-
-.cardIcon {
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  margin-bottom: 10px; 
-  width: 80px; 
-  height: 80px; 
-}
-
-.cardText {
-  text-align: center;
-  font-size: 1.2rem;
-}
-/* ---------------------------------------- */
-/* Card Styles for Each Type with Gradients */
-/* ---------------------------------------- */
-
-.learningCard {
-  background: linear-gradient(135deg, #1de9b6,rgb(10, 78, 122)); 
-  border-radius: 20px; 
-  color: black; 
-  width: 25vw; 
-  height: 200px; 
+.landing {
+  background-color: #1C2629; /* Dark navy/teal for app background */
+  color: #FFFFFF; /* White text for readability */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
-
-.learningCard:hover {
-  background: linear-gradient(135deg, #0dbf8a,rgb(3, 44, 70)); 
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
-}
-
-.gamesCard {
-  background: linear-gradient(135deg, #31d111, #c7e619); 
-  border-radius: 20px;
-  color: black;
-  width: 25vw;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.gamesCard:hover {
-  background: linear-gradient(135deg, #28a80e, #a8c21a); 
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.chatCard {
-  background: linear-gradient(135deg, #8222ff,rgb(14, 5, 153));
-  border-radius: 20px;
-  color: black;
-  width: 25vw;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.chatCard:hover {
-  background: linear-gradient(135deg, #651bcc,rgb(3, 19, 156)); /* Darker gradient on hover */
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* ---------------------------------------- */
-/* Flexbox Layout for Cards                 */
-/* ---------------------------------------- */
-
-.mainPageCards {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-
-/* ---------------------------------------- */
-/* Top-right Buttons                        */
-/* ---------------------------------------- */
 
 .topRightButtons {
   position: absolute;
-  top: 20px; /* Adjust position from the top */
-  right: 20px; 
-  display: flex;
-  gap: 10px; 
+  top: 1rem;
+  right: 1rem;
 }
 
 .topRightButton {
-  background: linear-gradient(90deg, #1de9b6, rgb(7, 70, 77)); 
-  color: black;
-  padding: 10px 15px;
+  background-color: #A3C9A8; /* Light green */
+  color: #1C2629; /* Dark text on buttons for contrast */
   border: none;
-  border-radius: 25px; 
-  font-size: 14px;
-  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease, -webkit-transform 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease;
 }
 
 .topRightButton:hover {
-  background: linear-gradient(90deg, rgb(15, 99, 78), #1de9ff); /* Gradient on hover */
-  transform: scale(1.1); /* Slight zoom effect */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  background-color: #E7B8A5; /* Peach on hover */
 }
 
 .siteNameHeader {
-  font-size: 3rem;
-  font-weight: bold;
-  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); /* New gradient */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent; 
-  text-fill-color: transparent;
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px 0;
+  color: #A3C9A8; /* Light green for headers */
+  font-size: 2rem;
+  margin-top: 2rem;
 }
-/* ---------------------------------------- */
-/* Responsive Styles                        */
-/* ---------------------------------------- */
 
-@media (max-width: 768px) {
-  .mainPageCards {
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 10px;
-  }
+.mainPageCards {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+}
 
-  .cardButton {
-    width: 80vw; /* Make cards full-width on smaller screens */
-    height: 150px; /* Adjust height to fit content */
-  }
+.card {
+  background-color: #304B54; /* Deep teal for cards/paper */
+  color: #FFFFFF; /* White text */
+  border-radius: 8px;
+  padding: 1rem;
+  width: 15rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  .topRightButtons {
-    top: 10px;
-    right: 10px;
-  }
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+.cardIcon {
+  margin-bottom: 0.5rem;
+}
+
+.cardText {
+  font-size: 1.2rem;
+}
+
+.footer {
+  background-color: #304B54; /* Footer matches cards */
+  color: #FFFFFF;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid #A3C9A8; /* Light green border */
 }
