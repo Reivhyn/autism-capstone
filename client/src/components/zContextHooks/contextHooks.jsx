@@ -18,4 +18,4 @@ export const KidsOfParentContext = createContext('')
 export const editTargetContext = createContext('')
 
 // sellect which theme to use
-export const themeContext = createContext('light')
+export const activeThemeContext = createContext('light')

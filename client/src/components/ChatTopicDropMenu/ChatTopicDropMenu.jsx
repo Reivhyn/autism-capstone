@@ -62,10 +62,6 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
     }
   }, [allowedTopics])
 
-  useEffect(() => {
-    console.log('displayList', displayList)
-  })
-
   //* RENDER
   return (
     <div className="dropMenu">

@@ -16,6 +16,7 @@ import EditActivity from './components/EditActivity/EditActivity.jsx'
 import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 import PleaseLogin from './components/PleaseLogIn/PleaseLogin.jsx'
+import ThemeDropMenu from './components/ThemeDropMenu/ThemeDropMenu.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -23,34 +24,29 @@ import {
   userDataContext,
   editTargetContext,
   KidsOfParentContext,
+  activeThemeContext,
 } from './components/zContextHooks/contextHooks'
 
 // MATERIAL-UI IMPORTS
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-
-import darkTheme from './zzztheme/darkTheme.jsx'
-import moongrad from './zzztheme/moongrad.jsx'
 import { LogoutOutlined } from '@mui/icons-material'
 import { ThemeContext } from '@emotion/react'
-import lightTheme from './zzztheme/lightTheme.jsx'
+
+//theme imports
+import {
+  darkTheme,
+  lightTheme,
+  moon,
+  synth,
+} from './components/zzztheme/themes.jsx'
 
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
   const [userData, setUserData] = useState('')
   const [kidsOfParent, setKidsOfParent] = useState('')
   const [editTarget, setEditTarget] = useState('')
-  const [themeName, setThemeName] = useState()
-
-  //* FUNCTIONS
-  const theme = useMemo(() => {
-    switch (themeName) {
-      case 'light':
-        return lightTheme
-      default:
-        return darkTheme
-    }
-  })
+  const [activeTheme, setActiveTheme] = useState('')
 
   //* USESTATES
   //try to get session data on pageload
@@ -63,12 +59,27 @@ function App() {
     }
   }, [])
 
+  //* FUNCTIONS
+  const theme = useMemo(() => {
+    switch (activeTheme) {
+      case 'light':
+        return lightTheme
+      case 'moon':
+        return moon
+      case 'synth':
+        return synth
+      default:
+        return darkTheme
+    }
+  })
+
+  //* USEEFFECTS
   //if userdata exist and user is admin or parent redirect to their portal
   useEffect(() => {
     if (userData) {
       if (userData.userType === 'admin') setPageToDisplay('admin')
       if (userData.userType === 'parent') setPageToDisplay('parent')
-        console.log('userData', userData)
+      console.log('userData', userData)
     }
   }, [userData])
 
@@ -79,11 +90,13 @@ function App() {
 
   useEffect(() => {
     console.log('pageToDisplay', pageToDisplay)
-  },[pageToDisplay])
+    console.log('theme', theme)
+    console.log('activeTheme', activeTheme)
+  }, [pageToDisplay, activeTheme, theme])
 
   //* RENDERING
   return (
-    <ThemeContext.Provider value={(themeName, setThemeName)}>
+    <activeThemeContext.Provider value={[activeTheme, setActiveTheme]}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <userDataContext.Provider value={[userData, setUserData]}>
@@ -97,18 +110,20 @@ function App() {
                 pageToDisplay !== 'register' &&
                 !userData && <PleaseLogin />}
 
+              {/* theme frop menu */}
+              <ThemeDropMenu />
+
               <editTargetContext.Provider value={[editTarget, setEditTarget]}>
                 {/* Conditionally Render DropMenu */}
-                {['learning', 'games', 'chat'].includes(pageToDisplay) && userData && (
-                  <DropMenu />
-                )}
+                {['learning', 'games', 'chat'].includes(pageToDisplay) &&
+                  userData && <DropMenu />}
 
                 {/* render logout button once logged in */}
                 {userData ? <LogoutButton /> : ''}
 
                 {/*//*  Page Rendering */}
                 {/* login page */}
-                {pageToDisplay === 'login'&& <Login />}
+                {pageToDisplay === 'login' && <Login />}
 
                 {/* registration gage */}
                 {pageToDisplay === 'register' && <Register />}
@@ -117,35 +132,35 @@ function App() {
                 {pageToDisplay === 'landing' && <Landing />}
 
                 {/* games and lerning  pages */}
-                {(pageToDisplay === 'games' ||
-                  pageToDisplay === 'learning') && userData && <Activities />}
+                {(pageToDisplay === 'games' || pageToDisplay === 'learning') &&
+                  userData && <Activities />}
 
                 {/* chat page */}
                 {pageToDisplay === 'chat' && userData && <Chat />}
 
                 {/* admin and parent portal pages */}
-                {(pageToDisplay === 'admin' || pageToDisplay === 'parent') && userData && (
-                  <Portal />
-                )}
+                {(pageToDisplay === 'admin' || pageToDisplay === 'parent') &&
+                  userData && <Portal />}
 
                 {/* edit user page */}
                 {(pageToDisplay === 'editUser' ||
                   pageToDisplay === 'addUser' ||
                   pageToDisplay === 'editKid' ||
-                  pageToDisplay === 'addKid') && userData && <EditUser />}
+                  pageToDisplay === 'addKid') &&
+                  userData && <EditUser />}
 
                 {/* edit chat topic page */}
                 {(pageToDisplay === 'editChatTopic' ||
                   pageToDisplay === 'addChatTopic') && <EditChatTopic />}
-                {(pageToDisplay === 'editActivity' || 
-                  pageToDisplay === 'addGame' || 
+                {(pageToDisplay === 'editActivity' ||
+                  pageToDisplay === 'addGame' ||
                   pageToDisplay === 'addLearning') && <EditActivity />}
               </editTargetContext.Provider>
             </KidsOfParentContext.Provider>
           </ptdContext.Provider>
         </userDataContext.Provider>
       </ThemeProvider>
-    </ThemeContext.Provider>
+    </activeThemeContext.Provider>
   )
 }
 
