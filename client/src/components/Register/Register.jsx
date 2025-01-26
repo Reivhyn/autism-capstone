@@ -36,7 +36,6 @@ const Register = () => {
   const [userType, setUserType] = useState('parent');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [userData, setUserData] = useState('')
 
 
   //* FUNCTIONS
