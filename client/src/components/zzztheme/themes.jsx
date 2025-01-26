@@ -34,7 +34,7 @@ export const darkTheme = createTheme({
   },
 });
 
-export const lightTheme = createTheme({
+export const evening = createTheme({
   palette: {
     primary: {
       main: '#494E6B', // Stormy
@@ -160,5 +160,28 @@ export const synth = createTheme({
         },
       },
     },
+  },
+});
+
+export const day = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#FF5722', // Orange
+    },
+    secondary: {
+      main: '#2196F3', // Blue
+    },
+    background: {
+      default: '#F5F5F5', // Softer off-white background
+      paper: '#FFFFFF', // White paper, can be adjusted too if desired
+    },
+    text: {
+      primary: '#000000', // Black text for readability
+      secondary: '#757575', // Lighter text color
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
 });

@@ -10,7 +10,7 @@ const ThemeDropMenu = () => {
   const [activeTheme, setActiveTheme] = useContext(activeThemeContext)
 
   //array that has names of all themes
-  const themeStringNamesArr = ['light', 'dark', 'moon', 'synth']
+  const themeStringNamesArr = ['evening', 'dark', 'moon', 'synth', 'day']
 
 
 

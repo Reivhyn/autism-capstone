@@ -36,9 +36,10 @@ import { ThemeContext } from '@emotion/react'
 //theme imports
 import {
   darkTheme,
-  lightTheme,
+  evening,
   moon,
   synth,
+  day,
 } from './components/zzztheme/themes.jsx'
 
 function App() {
@@ -62,12 +63,14 @@ function App() {
   //* FUNCTIONS
   const theme = useMemo(() => {
     switch (activeTheme) {
-      case 'light':
-        return lightTheme
+      case 'evening':
+        return evening
       case 'moon':
         return moon
       case 'synth':
         return synth
+      case 'day':
+        return day
       default:
         return darkTheme
     }
