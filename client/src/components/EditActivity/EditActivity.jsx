@@ -128,7 +128,7 @@ const EditActivity = () => {
     if (editSaved) {
       setTimeout(() => {
       setPageToDisplay('parent')
-      }, 1500)
+      }, 500)
     }
   }, [editSaved])
 
