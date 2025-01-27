@@ -108,10 +108,12 @@ const Activities = () => {
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </Typography>
       <Banner />
+      
       <div className="dropSearch-container">
         <div className="searchbar-container">
           <SearchBar setSearchTerm={setSearchTerm} />
-        </div>
+      </div>
+      
       </div>
       <Grid
         container
