@@ -206,7 +206,7 @@ export async function editUser(
 // fetch to delete user user
 export async function deleteUser(id) {
   try {
-    const res = await fetch(`http://127.0.0.1:4000/user/delete-user`, {
+    const res = await fetch(`http://127.0.0.1:4000/users/delete-user`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

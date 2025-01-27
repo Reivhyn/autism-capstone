@@ -103,6 +103,7 @@ const EditActivity = () => {
     callEditActivity()
   }
 
+  // *USEEFFECT
   useEffect(() => {
     if (pageToDisplay === 'addGame') {
       setActivityType('game')
@@ -116,8 +117,8 @@ const EditActivity = () => {
   useEffect(() => {
     if (editSaved) {
       setTimeout(() => {
-        setPageToDisplay('parent')
-      }, 1500)
+        setPageToDisplay(userData.userType)
+      }, 500)
     }
   }, [editSaved])
 
