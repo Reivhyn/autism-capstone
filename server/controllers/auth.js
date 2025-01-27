@@ -24,6 +24,7 @@ const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
 
+
 //register new user
 router.post('/register', async (req, res) => {
   try {
