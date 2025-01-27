@@ -9,24 +9,45 @@ import React, { useContext } from 'react';
 // CONTEXT IMPORTS
 import { ptdContext } from '../zContextHooks/contextHooks';
 
+// MATERIAL-UI Imports
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+
 const ActivityTile = ({ tileData }) => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
 
   return (
-    <div className="activityTileWrapper">
-      {/* Tile title */}
-      <div className="activityTileTitle">{tileData.activityTitle}</div>
-
+    <Card 
+      className="activityTileWrapper" 
+      sx={{
+        width: '100%', 
+        maxWidth: 300, 
+        margin: 'auto',
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
+    >
       {/* Tile image */}
-      <img
-        className="activityTileImage"
-        src={tileData.imageURL}
+      <CardMedia
+        component="img"
+        height="180"
+        image={tileData.imageURL}
         alt={`Image for ${tileData.activityTitle}`}
+        style={{ objectFit: 'cover' }}
       />
 
-      {/* Tile description */}
-      <div className="activityTileDescription">{tileData.description}</div>
-    </div>
+      {/* Tile content */}
+      <CardContent>
+        {/* Tile title */}
+        <Typography variant="h6" component="div" textAlign="center">
+          {tileData.activityTitle}
+        </Typography>
+
+        {/* Tile description */}
+        <Typography variant="body2" color="text.secondary" textAlign="center">
+          {tileData.description}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
