@@ -7,6 +7,7 @@ import './activities.css'
 // COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Banner from '../Banner/Banner';
+import DropLearnCat from '../DropLearnCat/DropLearnCat';
 import SearchBar from '../SearchBar/SearchBar';
 import ActivityTile from '../ActivityTile/ActivityTile';
 import Footer from '../Footer/Footer';
@@ -110,29 +111,34 @@ const Activities = () => {
       <Banner />
       
       <div className="dropSearch-container">
-        <div className="searchbar-container">
-          <SearchBar setSearchTerm={setSearchTerm} />
-      </div>
       
+      <div className="dropdown-container">
+          <DropLearnCat onChange={(e) => console.log('Game:', e.target.value)} />
+      </div>
+        
+      <div className="searchbar-container">
+          <SearchBar setSearchTerm={setSearchTerm} />
+      </div> 
+
       </div>
       <Grid
-        container
-        spacing={3}
-        style={{
-          marginTop: '20px',
-        }}
-      >
-        {displayResult || (
-          <Typography
-            variant="body1"
-            style={{
-              color: theme.palette.text.secondary, // Coral red for loading text
-            }}
-          >
-            Loading Activities...
-          </Typography>
-        )}
+  container
+  spacing={3}
+  justifyContent="center" /* Center tiles horizontally */
+  alignItems="flex-start" /* Align tiles to the top */
+  style={{ marginTop: '20px' }}
+>
+  {allActivities &&
+    (pageToDisplay === 'games'
+      ? allActivities.allowedGames
+      : allActivities.allowedLearning
+    ).map((activity, index) => (
+      <Grid item xs={12} sm={6} md={4} lg={3} key={`activity-${index}`}>
+        <ActivityTile tileData={activity} />
       </Grid>
+    ))}
+</Grid>
+
       <Footer />
     </Container>
   );
