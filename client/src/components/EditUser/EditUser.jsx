@@ -15,64 +15,81 @@ import { darkTheme } from "../zzztheme/themes";
 import DualList from "../DualList/DualList";
 import "./editUser.css";
 
-// CONTEXT IMPORTS
+
+//CONTEXT IMPORTS
+// pdt -> page to display
 import {
   ptdContext,
   userDataContext,
+  KidsOfParentContext,
   editTargetContext,
-} from "../zContextHooks/contextHooks";
+} from '../zContextHooks/contextHooks'
 
 // FETCH IMPORTS
 import {
   getActivities,
-  getAllChatTopics,
+  findKidsOfParent,
+  getAllUsers,
   editUser,
   deleteUser,
   addNewUser,
-} from "../zzzFetches/fetches";
+  getAllChatTopics
+} from '../zzzFetches/fetches'
+import { use } from 'react'
+import { Email } from '@mui/icons-material'
 
 const EditUser = () => {
   //* USESTATE
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [userData, setUserData] = useContext(userDataContext);
-  const [editTarget, setEditTarget] = useContext(editTargetContext);
+  //determins which page to display
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [userData, setUserData] = useContext(userDataContext)
+  const [allActivities, setAllActivities] = useState('')
+  const [editTarget, setEditTarget] = useContext(editTargetContext)
+  const [allUsers, setAllUsers] = useState('')
+  const [editSaved, setEditSaved] = useState('')
 
-  // State for form fields
-  const [editFirstName, setEditFirstname] = useState("");
-  const [editLastName, setEditLastName] = useState("");
-  const [editDateOfBirth, setEditDateOfBirth] = useState("");
-  const [editUserName, setEditUserName] = useState("");
-  const [editEmail, setEditEmail] = useState("");
-  const [editPassword, setEditPassword] = useState("");
-  const [editDisableLogin, setEditDisableLogin] = useState(false);
-  const [editDeleteUser, setEditDeleteUser] = useState(false);
+  //userStates pertaining to editing user properties
+  const [editFirstName, setEditFirstname] = useState('')
+  const [editLastName, setEditLastName] = useState('')
+  const [editDateOfBirth, setEditDateOfBirth] = useState('')
+  const [editUserName, setEditUserName] = useState('')
+  const [editEmail, setEditEmail] = useState('')
+  const [editPassword, setEditPassword] = useState('')
+  const [editDisableLogin, setEditDisableLogin] = useState('')
+  const [editDeleteUser, setEditDeleteUser] = useState('')
+  const [userType, setUserType] = useState('kid')
+  const [parentUser, setParentUser] = useState('')
 
-  const [userType, setUserType] = useState("kid");
-  const [checkedBox, setCheckedBox] = useState("kid");
+  //useStates pertaining to games dual list
+  const [gamesAccess, setGamesAccess] = useState('')
+  const [learingAccess, setLearningAccess] = useState('')
+  const [allChatTopics, setAllChatTopics] = useState('')
+  const [chatAccess, setChatAccess] = useState('')
 
-  // State for dual list and data fetching
-  const [allActivities, setAllActivities] = useState([]);
-  const [gamesAccess, setGamesAccess] = useState([]);
-  const [learningAccess, setLearningAccess] = useState([]);
-  const [allChatTopics, setAllChatTopics] = useState([]);
-  const [chatAccess, setChatAccess] = useState([]);
-  const [activitiesAccess, setActivitiesAccess] = useState([]);
+  //combines the two access arrays to be passed when save button is pressed
+  const [activitiesAccess, setActivitiesAccess] = useState('')
+
+  //handles the usertype ckeckbox values
+  const [checkedBox, setCheckedBox] = useState('kid')
 
   //* FUNCTIONS
-  // Fetch all required data
+  //function to retreve all activities
   const fetchAllData = async () => {
-    setAllActivities(await getActivities());
-    setAllChatTopics(await getAllChatTopics());
-  };
+    setAllActivities(await getActivities())
+    setAllChatTopics(await getAllChatTopics())
+  }
 
-  // Handle user type selection
+  //hanle setting userType
   const handleCheck = (value) => {
-    setCheckedBox(value);
-    setUserType(value);
-  };
+    setCheckedBox(value)
+    setUserType(value)
+  }
 
-  // Save changes to the user
+  //saves changes to existing user when save button is pressed
   const callEditUser = () => {
+    //delete user user if checkbox is selected
+
+    //edit changes if delete user is not selected
     editUser(
       editTarget._id,
       editFirstName,
@@ -81,13 +98,14 @@ const EditUser = () => {
       editUserName,
       editPassword,
       editDisableLogin,
-      [...gamesAccess, ...learningAccess],
+      activitiesAccess,
       editEmail,
       chatAccess
-    );
-  };
+    )
+    setEditSaved(true)
+  }
 
-  // Create a new user
+  // creates new user when save button is pressed
   const callCreateNewUser = () => {
     addNewUser(
       editFirstName,
@@ -96,40 +114,41 @@ const EditUser = () => {
       editUserName,
       editPassword,
       editDisableLogin,
-      [...gamesAccess, ...learningAccess],
+      activitiesAccess,
       editEmail,
       userType,
       userData._id
-    );
-  };
+    )
+
+    setEditSaved(true)
+  }
 
   const handleSave = () => {
-    if (editDeleteUser) {
-      deleteUser(editTarget._id);
-      return;
+    //delete user if selected
+    if (editDeleteUser === true) {
+      deleteUser(editTarget._id)
+      setEditSaved(true)
+      return
     }
-    if (pageToDisplay === "addUser" || pageToDisplay === "addKid") {
-      callCreateNewUser();
-    } else {
-      callEditUser();
-    }
-  };
 
+    //add user if new user is being created
+    if (pageToDisplay === 'addUser' || pageToDisplay === 'addKid') {
+      callCreateNewUser()
+      return
+    }
+    //else edit user
+    callEditUser()
+  }
+
+  // handle cancel button
   const handleCancel = () => {
-    setPageToDisplay(userData.userType);
-  };
+    setPageToDisplay(userData.userType)
+  }
 
   //* USEEFFECT
+  //get all data when page is loaded
   useEffect(() => {
     if (
-<<<<<<< HEAD
-      pageToDisplay === "editUser" ||
-      pageToDisplay === "addUser" ||
-      pageToDisplay === "editKid" ||
-      pageToDisplay === "addKid"
-    ) {
-      fetchAllData();
-=======
       pageToDisplay === 'editUser' ||
       pageToDisplay === 'addUser' ||
       pageToDisplay === 'editKid' ||
@@ -149,13 +168,14 @@ const EditUser = () => {
       setTimeout(() => {
         setPageToDisplay(userData.userType)
       }, 1000)
->>>>>>> e1905c05c5f61dc4bdf8dfba1b8e426df985c274
     }
-  }, [pageToDisplay]);
+  }, [editSaved])
 
-  useEffect(() => {
-    setActivitiesAccess([...gamesAccess, ...learningAccess]);
-  }, [gamesAccess, learningAccess]);
+  // * RETURN
+  //feedback saing changes were saved
+  if (editSaved) {
+    return <h1>Changes Saved</h1>
+  }
 
   //* RENDER
   return (
@@ -309,7 +329,7 @@ const EditUser = () => {
             <DualList
               dataToList={allActivities}
               listType="learning"
-              learningAccess={learningAccess}
+              learningAccess={learingAccess}
               setLearningAccess={setLearningAccess}
             />
             <DualList

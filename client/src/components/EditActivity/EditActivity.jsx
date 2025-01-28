@@ -105,8 +105,10 @@ const EditActivity = () => {
   useEffect(() => {
     if (editSaved) {
       setTimeout(() => {
-        setPageToDisplay('parent');
-      }, 1500);
+
+        setPageToDisplay(userData.userType)
+      }, 1000)
+
     }
   }, [editSaved]);
 
