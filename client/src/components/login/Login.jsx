@@ -60,7 +60,7 @@ const Login = () => {
 
         // if parent or admin take to portal
         setPageToDisplay(userData.userType)
-      }, 500);
+      }, 1000);
     }
   }, [userData, setPageToDisplay]);
 

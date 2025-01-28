@@ -1,85 +1,173 @@
-import { useContext } from 'react';
-import './Landing.css';
-import Banner from '../Banner/Banner';
-import SiteTitle from '../SiteTitle/SiteTitle';
-
-// CONTEXT IMPORTS
-import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
-
-// ICON IMPORTS
-import SchoolIcon from '@mui/icons-material/School';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import ChatIcon from '@mui/icons-material/Chat';
+import React, { useContext } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import SchoolIcon from "@mui/icons-material/School";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import ChatIcon from "@mui/icons-material/Chat";
+import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
+import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
 
 const Landing = () => {
   const [, setPageToDisplay] = useContext(ptdContext);
   const [userData] = useContext(userDataContext);
 
   return (
-    <div className="landing">
-      {/* Top-right Login and Register Buttons */}
-      {!userData ? (
-        <div className="topRightButtons">
-          <button
-            className="topRightButton"
-            onClick={() => setPageToDisplay('login')}
+    <ThemeProvider theme={darkTheme}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          backgroundColor: "background.default",
+          color: "text.primary",
+        }}
+      >
+        {/* Top-right Login and Register Buttons */}
+        {!userData && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              display: "flex",
+              gap: 2,
+            }}
           >
-            Login
-          </button>
-          <button
-            className="topRightButton"
-            onClick={() => setPageToDisplay('register')}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setPageToDisplay("login")}
+            >
+              Login
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => setPageToDisplay("register")}
+            >
+              Register
+            </Button>
+          </Box>
+        )}
+
+        {/* Site Header */}
+        <Typography variant="h2" gutterBottom>
+          Welcome to the Site!
+        </Typography>
+
+        {/* Main Cards Section */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 4,
+            justifyContent: "center",
+            marginTop: 4,
+          }}
+        >
+          {/* Learning Activities Card */}
+          <Card
+            sx={{
+              width: 250,
+              textAlign: "center",
+              backgroundColor: "background.paper",
+              boxShadow: 3,
+              borderRadius: 2,
+            }}
           >
-            Register
-          </button>
-        </div>
-      ) : null}
+            <CardActionArea onClick={() => setPageToDisplay("learning")}>
+              <CardContent>
+                <IconButton
+                  sx={{ fontSize: "3rem", color: "#A3C9A8" }}
+                  disableRipple
+                >
+                  <SchoolIcon fontSize="inherit" />
+                </IconButton>
+                <Typography variant="h6" color="text.primary">
+                  Learning Activities
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
 
-      {/* Site Header */}
-      <SiteTitle />
-      <Banner />
-      <div className="mainPageCards">
-        {/* Learning Activities Card */}
-        <div
-          className="card learningCard"
-          onClick={() => setPageToDisplay('learning')}
+          {/* Games Card */}
+          <Card
+            sx={{
+              width: 250,
+              textAlign: "center",
+              backgroundColor: "background.paper",
+              boxShadow: 3,
+              borderRadius: 2,
+            }}
+          >
+            <CardActionArea onClick={() => setPageToDisplay("games")}>
+              <CardContent>
+                <IconButton
+                  sx={{ fontSize: "3rem", color: "#E7B8A5" }}
+                  disableRipple
+                >
+                  <SportsEsportsIcon fontSize="inherit" />
+                </IconButton>
+                <Typography variant="h6" color="text.primary">
+                  Games
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+
+          {/* Chat Card */}
+          <Card
+            sx={{
+              width: 250,
+              textAlign: "center",
+              backgroundColor: "background.paper",
+              boxShadow: 3,
+              borderRadius: 2,
+            }}
+          >
+            <CardActionArea onClick={() => setPageToDisplay("chat")}>
+              <CardContent>
+                <IconButton
+                  sx={{ fontSize: "3rem", color: "#DD5E56" }}
+                  disableRipple
+                >
+                  <ChatIcon fontSize="inherit" />
+                </IconButton>
+                <Typography variant="h6" color="text.primary">
+                  Chat
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Box>
+
+        {/* Footer */}
+        <Box
+          component="footer"
+          sx={{
+            position: "absolute",
+            bottom: 16,
+            textAlign: "center",
+            width: "100%",
+            color: "text.secondary",
+          }}
         >
-          <div className="cardIcon">
-            <SchoolIcon style={{ fontSize: '3rem', color: '#A3C9A8' }} />
-          </div>
-          <div className="cardText">Learning Activities</div>
-        </div>
-
-        {/* Games Card */}
-        <div
-          className="card gamesCard"
-          onClick={() => setPageToDisplay('games')}
-        >
-          <div className="cardIcon">
-            <SportsEsportsIcon style={{ fontSize: '3rem', color: '#E7B8A5' }} />
-          </div>
-          <div className="cardText">Games</div>
-        </div>
-
-        {/* Chat Card */}
-        <div
-          className="card chatCard"
-          onClick={() => setPageToDisplay('chat')}
-        >
-          <div className="cardIcon">
-            <ChatIcon style={{ fontSize: '3rem', color: '#DD5E56' }} />
-          </div>
-          <div className="cardText">Chat</div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>&copy; 2025 Your Site Name. All rights reserved.</p>
-      </footer>
-    </div>
+          <Typography variant="body2">
+            &copy; 2025 Your Site Name. All rights reserved.
+          </Typography>
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 };
 
 export default Landing;
-

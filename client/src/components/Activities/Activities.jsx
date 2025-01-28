@@ -23,6 +23,7 @@ import { runSearch } from '../zzHelpers/helpers';
 
 // FETCH IMPORTS
 import { getActivities } from '../zzzFetches/fetches';
+import { orange } from '@mui/material/colors';
 
 const Activities = () => {
   const theme = useTheme(); // Access the theme for consistent styling
