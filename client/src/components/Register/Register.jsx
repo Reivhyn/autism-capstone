@@ -59,7 +59,7 @@ const Register = () => {
         ); // register the user
         setUserData(response);
       alert('Registration Successful!');
-      setPageToDisplay('parent');
+      setPageToDisplay(userData.usertype);
       }
     catch (error) {
       console.error('Registration failed:', error);

@@ -27,7 +27,7 @@ import {
   editUser,
   deleteUser,
   addNewUser,
-  getAllChatTopics
+  getAllChatTopics,
 } from '../zzzFetches/fetches'
 import { use } from 'react'
 import { Email } from '@mui/icons-material'
@@ -53,6 +53,7 @@ const EditUser = () => {
   const [editDeleteUser, setEditDeleteUser] = useState('')
   const [userType, setUserType] = useState('kid')
   const [parentUser, setParentUser] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
@@ -177,7 +178,9 @@ const EditUser = () => {
         {/* show weather adding new user or editing user */}
         {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
           ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-          : userData.userType === 'admin' ? 'Add New User' :'Add New Child'}
+          : userData.userType === 'admin'
+          ? 'Add New User'
+          : 'Add New Child'}
       </div>
       {/* form for editing user properties */}
       <div className="formWrapper">
@@ -242,7 +245,7 @@ const EditUser = () => {
             />
           </div>
 
-          {/* passwprd field */}
+          {/* password field */}
           <div>
             Password
             <input
@@ -250,6 +253,26 @@ const EditUser = () => {
               value={editPassword}
               onChange={(e) => {
                 setEditPassword(e.target.value)
+              }}
+            />
+          </div>
+
+          <div>
+            {confirmPassword && editPassword
+              ? confirmPassword !== editPassword
+                ? 'Passwords do not match'
+                : ''
+              : ''}
+          </div>
+
+          {/* confirm password field */}
+          <div>
+            Confirm Password
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
               }}
             />
           </div>
@@ -268,7 +291,8 @@ const EditUser = () => {
 
           {/* do not show delete user button when adding user 
           or for logged in user */}
-          {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') && userData._id !== editTarget._id ? (
+          {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') &&
+          userData._id !== editTarget._id ? (
             <div>
               Delete {`${editTarget.firstName} ${editTarget.lastName}`}
               <input
@@ -346,41 +370,57 @@ const EditUser = () => {
           gamesAccess={gamesAccess}
           setGamesAccess={setGamesAccess}
         />
+      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+        'fetching data'
       ) : (
-        pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
-        'fetching data' : ''
+        ''
       )}
 
       {/* learning duallist */}
       {allActivities &&
-      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
         <DualList
           dataToList={allActivities}
           listType="learning"
           learingAccess={learingAccess}
           setLearningAccess={setLearningAccess}
         />
-      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
-        'fetching data' : ''
+      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+        'fetching data'
+      ) : (
+        ''
       )}
-
 
       {/* chat topics duallist */}
       {allChatTopics &&
-      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid')? (
+      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
         <DualList
           dataToList={allChatTopics}
           listType="chatTopics"
           chatAccess={chatAccess}
           setChatAccess={setChatAccess}
         />
-      ) : (pageToDisplay === 'edditKid' || pageToDisplay === 'addKid'? 
-        'fetching data' : ''
+      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+        'fetching data'
+      ) : (
+        ''
       )}
 
       <div className="saveCancelButtons">
         {/* Save button */}
-        <button onClick={() => handleSave()}>Save</button>
+        <button
+          disabled={
+            (pageToDisplay === 'addUser' &&
+              (!editFirstName ||
+                !editLastName ||
+                !editDateOfBirth ||
+                !editPassword)) ||
+            confirmPassword !== editPassword
+          }
+          onClick={() => handleSave()}
+        >
+          Save
+        </button>
 
         {/* cancel button */}
         <button onClick={() => hangleCancelButton()}>Cancel</button>

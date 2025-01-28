@@ -54,7 +54,7 @@ router.post('/register', async (req, res) => {
       //token key
       JWT_KEY,
       //epiration
-      { expiresIn: '24 hours' }
+      { expiresIn: '24 hours' } // need to impliment a token refresh sytem instead
     )
     
     //if this is called in the parent or admin portal on the front end do not issue token
@@ -122,7 +122,7 @@ router.post('/login', async (req, res) => {
       //token key
       JWT_KEY,
       //epiration
-      { expiresIn: '1 hour' }
+      { expiresIn: '24 hours' }// need to impliment a token refresh sytem instead
     )
 
     return res
