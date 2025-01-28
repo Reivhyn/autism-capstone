@@ -118,10 +118,15 @@ const EditActivity = () => {
     if (editSaved) {
       setTimeout(() => {
         setPageToDisplay(userData.userType)
-      }, 500)
+      }, 1000)
     }
   }, [editSaved])
 
+  //* RETURN
+  // feedback message when changes are saved
+  if(editSaved) {
+    return <h1>Changes Saved</h1>
+  }
   return (
     <>
       <div className="currentData">

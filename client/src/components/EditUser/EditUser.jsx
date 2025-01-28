@@ -161,7 +161,7 @@ const EditUser = () => {
     if (editSaved === true) {
       setTimeout(() => {
         setPageToDisplay(userData.userType)
-      }, 500)
+      }, 1000)
     }
   }, [editSaved])
 

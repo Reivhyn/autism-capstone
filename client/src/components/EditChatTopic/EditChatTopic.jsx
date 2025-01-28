@@ -64,7 +64,7 @@ const EditChatTopic = () => {
     if (editSaved === true) {
       setTimeout(() => {
         setPageToDisplay(userData.userType)
-      }, 1500)
+      }, 1000)
     }
   }, [editSaved])
 
