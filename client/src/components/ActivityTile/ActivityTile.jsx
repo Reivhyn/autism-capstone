@@ -10,10 +10,16 @@ import React, { useContext } from 'react';
 import { ptdContext } from '../zContextHooks/contextHooks';
 
 // MATERIAL-UI Imports
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Link } from '@mui/material';
+
+
 
 const ActivityTile = ({ tileData }) => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
+
+  console.log('tileData:', tileData);
+  console.log('titledate url:', tileData.url);
+  console.log('titledate imageURL:', tileData.imageURL);
 
   return (
     <Card 
@@ -26,6 +32,7 @@ const ActivityTile = ({ tileData }) => {
         borderRadius: 2,
       }}
     >
+      <Link href={tileData.url} underline='none'>
       {/* Tile image */}
       <CardMedia
         component="img"
@@ -34,7 +41,6 @@ const ActivityTile = ({ tileData }) => {
         alt={`Image for ${tileData.activityTitle}`}
         style={{ objectFit: 'cover' }}
       />
-
       {/* Tile content */}
       <CardContent>
         {/* Tile title */}
@@ -47,8 +53,11 @@ const ActivityTile = ({ tileData }) => {
           {tileData.description}
         </Typography>
       </CardContent>
+      </Link>
     </Card>
   );
 };
 
 export default ActivityTile;
+
+
