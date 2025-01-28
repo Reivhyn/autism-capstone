@@ -1,4 +1,3 @@
-
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
@@ -12,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { darkTheme } from '../themes'; // Import your desired theme
+import { darkTheme } from "../zzztheme/themes.jsx";
 import './EditActivity.css';
 
 // CONTEXT IMPORTS
@@ -93,6 +92,7 @@ const EditActivity = () => {
     callEditActivity();
   };
 
+  // *USEEFFECT
   useEffect(() => {
     if (pageToDisplay === 'addGame') {
       setActivityType('game');
@@ -105,13 +105,16 @@ const EditActivity = () => {
   useEffect(() => {
     if (editSaved) {
       setTimeout(() => {
-
         setPageToDisplay(userData.userType)
       }, 1000)
-
     }
   }, [editSaved]);
 
+  //* RETURN
+  // feedback message when changes are saved
+  if(editSaved) {
+    return <h1>Changes Saved</h1>
+  }
   return (
     <ThemeProvider theme={darkTheme}>
       <Box
