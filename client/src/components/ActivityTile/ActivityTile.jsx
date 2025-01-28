@@ -32,7 +32,7 @@ const ActivityTile = ({ tileData }) => {
         borderRadius: 2,
       }}
     >
-      <Link href={tileData.url} underline='none'>
+      <Link href={tileData.url} underline='none' target='_blank' rel='noreferrer'>
       {/* Tile image */}
       <CardMedia
         component="img"
