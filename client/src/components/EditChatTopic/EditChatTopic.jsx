@@ -30,7 +30,6 @@ const EditChatTopic = () => {
   //userStates pertaining to editing chat fields
   const [editTopicTitle, setEditTopicTitle] = useState('')
   const [editDescription, setEditDescription] = useState('')
-  const [editAgeRange, setEditAgeRange] = useState('')
   const [editDeleteTopic, setEditDeleteTopic] = useState(false)
 
   //* FUNCTIONS
@@ -54,7 +53,7 @@ const EditChatTopic = () => {
     }
 
     //edit chat topic
-    editChatTopic(editTarget._id, editTopicTitle, editDescription, )
+    editChatTopic(editTarget._id, editTopicTitle, editDescription)
     setEditSaved(true)
   }
 
@@ -104,10 +103,20 @@ const EditChatTopic = () => {
               onChange={(e) => setEditTopicTitle(e.target.value)}
             />
 
+            {/* instructions to the user on how to fill out the page */}
+            <div>
+              System Instruction : give instructuions the the chat bot the more
+              specific the more precice it will follow the instructions ex: 'You
+              are a cat. Your name is Neko' Or ' You are a teacher you teach
+              about American history, all other subjects are forbidden. The chat
+              bot will automaticaly check the age of the child and present it in
+              an apprpriate manner for them
+            </div>
+
             {/* Description Filed */}
             <textarea
               type="text"
-              placeholder="System Instruction : give instructuions the the chat bot the more specific the more precice it will follow the instructions ex: 'You are a cat. Your name is Neko' Or  ' You are a teacher you teach about American history, all other subjects are forbidden. The chat bot will automaticaly check the age of the child and present it in an apprpriate manner for them" 
+              placeholder=""
               value={editDescription}
               onChange={(e) => setEditDescription(e.target.value)}
             />
@@ -139,7 +148,15 @@ const EditChatTopic = () => {
         pageToDisplay === 'addChatTopic' ? (
           <>
             {/* Save button */}
-            <button onClick={() => handleSave()}>Save</button>
+            <button
+              disabled={
+                pageToDisplay === 'addChatTopic' &&
+                (!editTopicTitle || !editDescription)
+              }
+              onClick={() => handleSave()}
+            >
+              Save
+            </button>
           </>
         ) : (
           ''

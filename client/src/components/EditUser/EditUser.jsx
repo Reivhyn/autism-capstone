@@ -256,6 +256,23 @@ const EditUser = () => {
             value={editPassword}
             onChange={(e) => setEditPassword(e.target.value)}
           />
+          <div>
+            {confirmPassword && editPassword
+              ? confirmPassword !== editPassword
+                ? 'Passwords do not match'
+                : ''
+              : ''}
+          </div>
+
+          <TextField
+            label="Confirm Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
 
           <FormControlLabel
             control={

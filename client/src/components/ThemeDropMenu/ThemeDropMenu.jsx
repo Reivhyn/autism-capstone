@@ -10,7 +10,7 @@ const ThemeDropMenu = () => {
   const [activeTheme, setActiveTheme] = useContext(activeThemeContext)
 
   //array that has names of all themes
-  const themeStringNamesArr = ['evening', 'dark', 'moon', 'synth', 'day']
+  const themeStringNamesArr = ['dark', 'evening', 'moon', 'synth', 'day']
 
 
 
@@ -37,7 +37,7 @@ const ThemeDropMenu = () => {
   //* RENDER
   return (
     <div className="dropMenu">
-      <div>THEMES</div>
+      <div>THEME: {activeTheme}</div>
       <div className="dropContent">
         {/* button to go home */}
         {displayList ? displayList : 'test'}

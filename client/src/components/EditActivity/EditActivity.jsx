@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -9,44 +9,44 @@ import {
   FormControlLabel,
   TextField,
   Typography,
-} from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { darkTheme } from "../zzztheme/themes.jsx";
-import './EditActivity.css';
+} from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
+import { darkTheme } from '../zzztheme/themes.jsx'
+import './EditActivity.css'
 
 // CONTEXT IMPORTS
 import {
   ptdContext,
   userDataContext,
   editTargetContext,
-} from '../zContextHooks/contextHooks';
+} from '../zContextHooks/contextHooks'
 
 // FETCH IMPORTS
 import {
   addNewActivity,
   editActivity,
   deleteActivity,
-} from '../zzzFetches/fetches';
+} from '../zzzFetches/fetches'
 
 const EditActivity = () => {
   //* USESTATE
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [userData, setUserData] = useContext(userDataContext);
-  const [editSaved, setEditSaved] = useState(false);
-  const [editTarget, setEditTarget] = useContext(editTargetContext);
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [userData, setUserData] = useContext(userDataContext)
+  const [editSaved, setEditSaved] = useState(false)
+  const [editTarget, setEditTarget] = useContext(editTargetContext)
 
   // States for editing activity
-  const [editActivityType, seteditActivityType] = useState('');
-  const [editActivityTitle, seteditActivityTitle] = useState('');
-  const [editDescription, seteditDescription] = useState('');
-  const [editurl, setediturl] = useState('');
-  const [editImageURL, seteditImageURL] = useState('');
-  const [editCategory, seteditCategory] = useState('');
-  const [editSearchKeywords, seteditSearchKeywords] = useState('');
-  const [editDeleteActivity, setEditDeleteActivity] = useState(false);
+  const [editActivityType, seteditActivityType] = useState('')
+  const [editActivityTitle, seteditActivityTitle] = useState('')
+  const [editDescription, seteditDescription] = useState('')
+  const [editurl, setediturl] = useState('')
+  const [editImageURL, seteditImageURL] = useState('')
+  const [editCategory, seteditCategory] = useState('')
+  const [editSearchKeywords, seteditSearchKeywords] = useState('')
+  const [editDeleteActivity, setEditDeleteActivity] = useState(false)
 
-  const [activityType, setActivityType] = useState('');
-  const [ageRange, setAgeRange] = useState('');
+  const [activityType, setActivityType] = useState('')
+  const [ageRange, setAgeRange] = useState('')
 
   //* FUNCTIONS
   const callEditActivity = () => {
@@ -60,9 +60,9 @@ const EditActivity = () => {
       editCategory.split(' '),
       editSearchKeywords.split(' '),
       ageRange.split(' ')
-    );
-    setEditSaved(true);
-  };
+    )
+    setEditSaved(true)
+  }
 
   const createNewActivity = () => {
     addNewActivity(
@@ -75,32 +75,32 @@ const EditActivity = () => {
       editSearchKeywords.split(' '),
       ageRange.split(' '),
       userData._id
-    );
-    setEditSaved(true);
-  };
+    )
+    setEditSaved(true)
+  }
 
   const handleSave = () => {
     if (editDeleteActivity) {
-      deleteActivity(editTarget._id);
-      setEditSaved(true);
-      return;
+      deleteActivity(editTarget._id)
+      setEditSaved(true)
+      return
     }
     if (pageToDisplay === 'addGame' || pageToDisplay === 'addLearning') {
-      createNewActivity();
-      return;
+      createNewActivity()
+      return
     }
-    callEditActivity();
-  };
+    callEditActivity()
+  }
 
   // *USEEFFECT
   useEffect(() => {
     if (pageToDisplay === 'addGame') {
-      setActivityType('game');
+      setActivityType('game')
     }
     if (pageToDisplay === 'addLearning') {
-      setActivityType('learning');
+      setActivityType('learning')
     }
-  }, [pageToDisplay]);
+  }, [pageToDisplay])
 
   useEffect(() => {
     if (editSaved) {
@@ -108,11 +108,11 @@ const EditActivity = () => {
         setPageToDisplay(userData.userType)
       }, 1000)
     }
-  }, [editSaved]);
+  }, [editSaved])
 
   //* RETURN
   // feedback message when changes are saved
-  if(editSaved) {
+  if (editSaved) {
     return <h1>Changes Saved</h1>
   }
   return (
@@ -137,12 +137,16 @@ const EditActivity = () => {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Current Data:
           </Typography>
-          <Typography variant="body2">Name: {editTarget.activityTitle}</Typography>
+          <Typography variant="body2">
+            Name: {editTarget.activityTitle}
+          </Typography>
           <Typography variant="body2">
             Description: {editTarget.description}
           </Typography>
           <Typography variant="body2">URL: {editTarget.url}</Typography>
-          <Typography variant="body2">Category: {editTarget.category}</Typography>
+          <Typography variant="body2">
+            Category: {editTarget.category}
+          </Typography>
           <Typography variant="body2">
             Search Keywords: {editTarget.ageRange}
           </Typography>
@@ -228,8 +232,26 @@ const EditActivity = () => {
               />
             )}
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-              <Button variant="contained" color="primary" onClick={handleSave}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: 2,
+              }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={
+                  (pageToDisplay === 'addLearning' ||
+                    pageToDisplay === 'addGame') &&
+                  (!editActivityTitle ||
+                    !editurl ||
+                    !editCategory ||
+                    !editSearchKeywords)
+                }
+                onClick={handleSave}
+              >
                 Save
               </Button>
               <Button
@@ -244,7 +266,7 @@ const EditActivity = () => {
         ) : null}
       </Box>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default EditActivity;
+export default EditActivity
