@@ -66,9 +66,9 @@ const PortalList = ({ itemsToList, listType }) => {
           return (
             <li
               className={
-                userData._id === item.createdBy || userData.userType === 'admin'
+                userData._id === item.createdBy
                   ? 'editableByCurrentUser'
-                  : 'not'
+                  : 'notEditable'
               }
               onClick={() => {
                 setEditTarget(item)
@@ -89,9 +89,9 @@ const PortalList = ({ itemsToList, listType }) => {
           return (
             <li
             className={
-              userData._id === item.createdBy || userData.userType === 'admin'
+              userData._id === item.createdBy
                 ? 'editableByCurrentUser'
-                : 'not'
+                : 'notEditable'
             }
               onClick={() => {
                 setEditTarget(item)
@@ -113,9 +113,9 @@ const PortalList = ({ itemsToList, listType }) => {
           return (
             <li
             className={
-              userData._id === item.createdBy || userData.userType === 'admin'
+              userData._id === item.createdBy
                 ? 'editableByCurrentUser'
-                : 'not'
+                : 'notEditable'
             }
               onClick={() => {
                 setEditTarget(item)

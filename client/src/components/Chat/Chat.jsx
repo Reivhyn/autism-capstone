@@ -123,8 +123,7 @@ const Chat = () => {
     <>
       <SiteTitle />
       <h1>CHAT PAGE</h1>
-      {/* selected topic */}
-      <h2>{currentTopic ? currentTopic.topicTitle : 'Select a Topic'}</h2>
+      
       {/* Chat topic drop menu */}
       <ChatTopicDropMenu
         currentTopic={currentTopic}
