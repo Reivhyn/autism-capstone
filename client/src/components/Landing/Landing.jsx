@@ -14,6 +14,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import ChatIcon from "@mui/icons-material/Chat";
 import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
 import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
+import Logo from "../Logo/Logo";
 
 const Landing = () => {
   const [, setPageToDisplay] = useContext(ptdContext);
@@ -60,9 +61,12 @@ const Landing = () => {
           </Box>
         )}
 
+        {/* Site Logo */}
+        <Logo />
+
         {/* Site Header */}
         <Typography variant="h2" gutterBottom>
-          Welcome to the Site!
+          Welcome To The Imagination Treehouse!
         </Typography>
 
         {/* Main Cards Section */}
