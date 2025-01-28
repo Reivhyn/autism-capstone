@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 // CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
 
 // HELPER IMPORTS
 import { changePage } from '../zzHelpers/helpers';
@@ -25,7 +25,7 @@ import { register } from '../zzzFetches/fetches'
 const Register = () => {
   //* USESTATE
   const [pageToDisplay ,setPageToDisplay] = useContext(ptdContext); // Using only `setPageToDisplay`
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useContext(userDataContext);
 
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -59,7 +59,6 @@ const Register = () => {
         ); // register the user
         setUserData(response);
       alert('Registration Successful!');
-      setPageToDisplay('parent');
       }
     catch (error) {
       console.error('Registration failed:', error);
@@ -87,6 +86,16 @@ const Register = () => {
   
       return true;
     };
+
+    //* USEEFFECTS
+    useEffect(() => {
+      console.log('userData', userData); // Log the user data
+      if (userData) {
+        setTimeout(() => {
+        setPageToDisplay(userData.userType);
+        }, 1000);
+      }
+    }, [userData, setPageToDisplay]);
 
   //* RENDER
     return (
