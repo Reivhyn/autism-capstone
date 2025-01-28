@@ -24,6 +24,9 @@ import {
   editTargetContext,
 } from '../zContextHooks/contextHooks'
 
+// HELPER IMPORTS
+import { validatePasswordCriteria } from '../zzHelpers/helpers'
+
 // FETCH IMPORTS
 import {
   getActivities,
@@ -59,6 +62,7 @@ const EditUser = () => {
   const [userType, setUserType] = useState('kid')
   const [parentUser, setParentUser] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
@@ -85,6 +89,36 @@ const EditUser = () => {
     setUserType(value)
   }
 
+  //validate inputs
+  const handlePasswordCheck = () => {
+    if (editPassword !== confirmPassword) {
+      console.log('Passwords do not match.'); // Log the error
+      setError('Passwords do not match.');
+      return false;
+    }
+    try {
+      validatePasswordCriteria(editPassword);
+    } catch (error) { 
+      setError(error.message);
+      return false;
+    } // Validate the password
+    setError('');
+
+    return true;
+  }
+
+  //validate inputs
+  const validateInputs = () => {
+        console.log(editPassword, confirmPassword); // Log the passwords
+        if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
+          console.log('All fields are required.'); // Log the error
+          setError('All fields are required.');
+          return false;
+        }
+        handlePasswordCheck()
+        return true;
+      };
+
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     //delete user user if checkbox is selected
@@ -102,11 +136,15 @@ const EditUser = () => {
       editEmail,
       chatAccess
     )
+
+    if(!handlePasswordCheck()) return //stop submission if validation fails
+    event
     setEditSaved(true)
   }
 
   // creates new user when save button is pressed
-  const callCreateNewUser = () => {
+  const callCreateNewUser = (event) => {
+  
     addNewUser(
       editFirstName,
       editLastName,
@@ -119,6 +157,9 @@ const EditUser = () => {
       userType,
       userData._id
     )
+
+    if(!validateInputs()) return //stop submission if validation fails
+
 
     setEditSaved(true)
   }
