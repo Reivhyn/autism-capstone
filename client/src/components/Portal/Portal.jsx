@@ -11,18 +11,10 @@ import PortalList from '../PortalList/PortalList';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 // CONTEXT IMPORTS
-import {
-  ptdContext,
-  userDataContext,
-} from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
 
 // FETCH IMPORTS
-import {
-  getActivities,
-  findKidsOfParent,
-  getAllUsers,
-  getAllChatTopics,
-} from '../zzzFetches/fetches';
+import { getActivities, findKidsOfParent, getAllUsers, getAllChatTopics } from '../zzzFetches/fetches';
 
 const Portal = () => {
   const theme = useTheme(); // Access the theme for colors and styling
@@ -71,7 +63,7 @@ const Portal = () => {
       <SiteTitle />
       <h2
         style={{
-          color: theme.palette.primary.main, // Light green text
+          color: theme.palette.primary.main,
           textAlign: 'center',
           marginBottom: '1rem',
         }}
@@ -79,49 +71,118 @@ const Portal = () => {
         {`${pageToDisplay.toUpperCase()} PORTAL`}
       </h2>
 
-      <div
-        className="portalListWrapper"
-        style={{
-          backgroundColor: theme.palette.background.paper, // Deep teal background
-          color: theme.palette.text.primary, // White text
-          padding: '1rem',
-          borderRadius: '8px',
-          boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)', // Subtle shadow
-        }}
-      >
-        {allUsers && pageToDisplay === 'admin' ? (
-          <PortalList itemsToList={allUsers} listType={'user'} />
-        ) : pageToDisplay === 'admin' ? (
-          'fetching data'
-        ) : (
-          ''
-        )}
+      <div className="portalGridWrapper">
+        {/* Users Column */}
+        <div
+          className="portalColumn"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+          }}
+        >
+          <h3
+            style={{
+              color: theme.palette.primary.main,
+            }}
+          >
+            Users
+          </h3>
+          {allUsers && pageToDisplay === 'admin' ? (
+            <PortalList itemsToList={allUsers} listType={'user'} />
+          ) : pageToDisplay === 'admin' ? (
+            <p
+              className="fetchingData"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              Fetching data...
+            </p>
+          ) : null}
+        </div>
 
-        {kidsOfParent && pageToDisplay === 'parent' ? (
-          <PortalList itemsToList={kidsOfParent} listType={'kids'} />
-        ) : pageToDisplay === 'parent' ? (
-          'fetching data'
-        ) : (
-          ''
-        )}
+        {/* Games Column */}
+        <div
+          className="portalColumn"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+          }}
+        >
+          <h3
+            style={{
+              color: theme.palette.secondary.main,
+            }}
+          >
+            Games
+          </h3>
+          {allActivities ? (
+            <PortalList itemsToList={allActivities} listType={'games'} />
+          ) : (
+            <p
+              className="fetchingData"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              Fetching data...
+            </p>
+          )}
+        </div>
 
-        {allActivities ? (
-          <PortalList itemsToList={allActivities} listType={'games'} />
-        ) : (
-          'Fetching Data'
-        )}
+        {/* Learning Activities Column */}
+        <div
+          className="portalColumn"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+          }}
+        >
+          <h3
+            style={{
+              color: theme.palette.primary.main,
+            }}
+          >
+            Learning Activities
+          </h3>
+          {allActivities ? (
+            <PortalList itemsToList={allActivities} listType={'learning'} />
+          ) : (
+            <p
+              className="fetchingData"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              Fetching data...
+            </p>
+          )}
+        </div>
 
-        {allActivities ? (
-          <PortalList itemsToList={allActivities} listType={'learning'} />
-        ) : (
-          'Fetching Data'
-        )}
-
-        {allChatTopics ? (
-          <PortalList itemsToList={allChatTopics} listType={'chatTopics'} />
-        ) : (
-          'Fetching Data'
-        )}
+        {/* Chat Topics Column */}
+        <div
+          className="portalColumn"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+          }}
+        >
+          <h3
+            style={{
+              color: theme.palette.secondary.main,
+            }}
+          >
+            Chat Topics
+          </h3>
+          {allChatTopics ? (
+            <PortalList itemsToList={allChatTopics} listType={'chatTopics'} />
+          ) : (
+            <p
+              className="fetchingData"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              Fetching data...
+            </p>
+          )}
+        </div>
       </div>
 
       <Footer />

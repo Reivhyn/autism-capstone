@@ -1,36 +1,22 @@
-.portalListWrapper{
-  display: flex;
-}
-.portalListWrapper {
-  background-color: #304B54; /* Deep teal background from darkTheme */
-  color: #FFFFFF; /* White text for readability */
+/* General Wrapper for Portal Columns */
+.portalGridWrapper {
+  display: grid;
+  grid-template-columns: 1fr; /* Start with one column spanning the full width */
+  gap: 1rem; /* Space between columns */
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  width: 100%; /* Full width of the page */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
 }
 
-.portalListWrapper h2 {
-  text-align: center;
-  color: #A3C9A8; /* Light green for headings */
-  margin-bottom: 1rem;
+/* Adjust columns for larger screens */
+@media (min-width: 768px) {
+  .portalGridWrapper {
+    grid-template-columns: 1fr 1fr; /* Two columns on medium-sized screens */
+  }
 }
 
-.portalListWrapper .listItem {
-  background-color: #1C2629; /* Darker background for list items */
-  color: #FFFFFF; /* White text for contrast */
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin: 0.5rem 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.portalListWrapper .listItem:hover {
-  background-color: #A3C9A8; /* Light green on hover */
-  color: #1C2629; /* Contrast dark text on hover */
-}
-
-.portalListWrapper .fetchingData {
-  color: #DD5E56; /* Coral red for fetching data */
-  font-style: italic;
-  text-align: center;
+@media (min-width: 1200px) {
+  .portalGridWrapper {
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns on large screens */
+  }
 }
