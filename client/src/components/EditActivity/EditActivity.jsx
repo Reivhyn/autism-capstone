@@ -92,6 +92,7 @@ const EditActivity = () => {
     callEditActivity();
   };
 
+  // *USEEFFECT
   useEffect(() => {
     if (pageToDisplay === 'addGame') {
       setActivityType('game');
@@ -104,11 +105,21 @@ const EditActivity = () => {
   useEffect(() => {
     if (editSaved) {
       setTimeout(() => {
+<<<<<<< HEAD
         setPageToDisplay('parent');
       }, 1500);
+=======
+        setPageToDisplay(userData.userType)
+      }, 1000)
+>>>>>>> e1905c05c5f61dc4bdf8dfba1b8e426df985c274
     }
   }, [editSaved]);
 
+  //* RETURN
+  // feedback message when changes are saved
+  if(editSaved) {
+    return <h1>Changes Saved</h1>
+  }
   return (
     <ThemeProvider theme={darkTheme}>
       <Box

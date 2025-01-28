@@ -122,12 +122,34 @@ const EditUser = () => {
   //* USEEFFECT
   useEffect(() => {
     if (
+<<<<<<< HEAD
       pageToDisplay === "editUser" ||
       pageToDisplay === "addUser" ||
       pageToDisplay === "editKid" ||
       pageToDisplay === "addKid"
     ) {
       fetchAllData();
+=======
+      pageToDisplay === 'editUser' ||
+      pageToDisplay === 'addUser' ||
+      pageToDisplay === 'editKid' ||
+      pageToDisplay === 'addKid'
+    )
+      fetchAllData()
+  }, [pageToDisplay])
+
+  //update learning access when its updated on the dual list
+  useEffect(() => {
+    setActivitiesAccess([...gamesAccess, ...learingAccess])
+  }, [gamesAccess, learingAccess])
+
+  //change page back to portal after saves made
+  useEffect(() => {
+    if (editSaved === true) {
+      setTimeout(() => {
+        setPageToDisplay(userData.userType)
+      }, 1000)
+>>>>>>> e1905c05c5f61dc4bdf8dfba1b8e426df985c274
     }
   }, [pageToDisplay]);
 
