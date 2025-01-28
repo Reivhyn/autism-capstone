@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useContext, useEffect } from 'react'
 import './chatTopicDropMenu.css'
@@ -40,7 +41,7 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
             key={topic._id}
             onClick={() => setCurrentTopic(topic)}
           >
-            {topic.topicTitle}
+            {topic.topicTitle} 
           </div>
         )
       })
@@ -65,7 +66,7 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   //* RENDER
   return (
     <div className="dropMenu">
-      <div>Choose A Topic</div>
+      <h2>{currentTopic ? currentTopic.topicTitle : 'Choose A Topic'}</h2>
       <div className="dropContent">
         {/* button to go home */}
         {displayList ? displayList : ''}

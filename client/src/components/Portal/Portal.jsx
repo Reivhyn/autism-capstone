@@ -4,19 +4,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import './portal.css';
 
-// COMPONENT IMPORTS
+//* COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Footer from '../Footer/Footer';
 import PortalList from '../PortalList/PortalList';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
-// CONTEXT IMPORTS
+//* CONTEXT IMPORTS
 import {
   ptdContext,
   userDataContext,
 } from '../zContextHooks/contextHooks';
 
-// FETCH IMPORTS
+//* FETCH IMPORTS
 import {
   getActivities,
   findKidsOfParent,
@@ -27,7 +27,7 @@ import {
 const Portal = () => {
   const theme = useTheme(); // Access the theme for colors and styling
 
-  // USESTATE
+  //* USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
   const [userData, setUserData] = useContext(userDataContext);
   const [allActivities, setAllActivities] = useState('');
@@ -35,7 +35,7 @@ const Portal = () => {
   const [allUsers, setAllUsers] = useState('');
   const [allChatTopics, setAllChatTopics] = useState('');
 
-  // FUNCTIONS
+  //* FUNCTIONS
   const getAdminData = async () => {
     if (pageToDisplay === 'admin') {
       setAllUsers(await getAllUsers(userData));
@@ -52,7 +52,7 @@ const Portal = () => {
     }
   };
 
-  // USEEFFECT
+  //* USEEFFECT
   useEffect(() => {
     if (pageToDisplay === 'admin') {
       getAdminData();

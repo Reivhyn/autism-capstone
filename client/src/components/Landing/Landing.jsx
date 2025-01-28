@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import './Landing.css';
+import Banner from '../Banner/Banner';
+import SiteTitle from '../SiteTitle/SiteTitle';
 
 // CONTEXT IMPORTS
 import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
@@ -34,7 +36,8 @@ const Landing = () => {
       ) : null}
 
       {/* Site Header */}
-      <h1 className="siteNameHeader">Welcome to the Site!</h1>
+      <SiteTitle />
+      <Banner />
       <div className="mainPageCards">
         {/* Learning Activities Card */}
         <div

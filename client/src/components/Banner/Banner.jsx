@@ -15,16 +15,16 @@ const Banner = () => {
 
   const bannerText = () => {
     if (pageToDisplay === 'landing') {
-      return 'Welcome To Our Site';
+      return 'Fun or learning your adventure starts here!';
     }
     if (pageToDisplay === 'learning') {
-      return 'Welcome to the learning page! Select an activity';
+      return 'Welcome to the learning page! Select an activity.';
     }
     if (pageToDisplay === 'games') {
       return 'Welcome to the games page! Select a game';
     }
     if (pageToDisplay === 'chat') {
-      return 'Say hi to our chat bot';
+      return 'Say hi to our chat bot.';
     }
     return 'Welcome to our site';
   };
