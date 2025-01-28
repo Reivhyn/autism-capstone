@@ -334,7 +334,7 @@ const EditUser = () => {
           </Box>
         ) : null}
 
-        {allActivities.length &&
+        {allActivities &&
         (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
           <>
             <DualList

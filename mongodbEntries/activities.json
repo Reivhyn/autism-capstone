@@ -1,0 +1,37 @@
+{
+  "activityType": "",
+  "activityTitle": "",
+  "description": "",
+  "url": "",
+  "imageURL": "",
+  "category": [],
+  "searchKeywords": [],
+  "ageRange": [],
+  "createdBy": ""
+}
+
+[
+  {
+  "activityType": "game",
+  "activityTitle": "Space Waves",
+  "description": "Space Waves is an arcade game where you need to control an arrow to avoid obstacles until you get to the end. There are 33 levels to the game, and you can choose any level you want to play at any time. All levels vary in difficulty and are labeled accordingly with faces; this way you get to decide how courageous you want to be.",
+  "url": "https://www.crazygames.com/game/space-waves",
+  "imageURL": "https://imgs.crazygames.com/space-waves_16x9/20241203031650/space-waves_16x9-cover?metadata=none&quality=70&width=320",
+  "category": ["Arcade", "Skill", "Obstacle"],
+  "searchKeywords": ["Casual", "One Button", "Mobile", "Avoid", "Difficult", "Side Scrolling", "2D", "Obstacle", "Skill", "Mouse", "Arcade"],
+  "ageRange": ["8+", "10+", "12+"],
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "game",
+  "activityTitle": "Card Games",
+  "description": "Game Night is Online!
+Meet and play online from anywhere in the world
+PlayingCards.io provides online rooms to play games, learn, and hang out",
+  "url": "https://playingcards.io/",
+  "imageURL": "https://playingcards.io/img/header.svg",
+  "category": ["board", "card", "game"],
+  "searchKeywords": ["31", "500", "checkers", "chess", "crazy eights", "board", "games", "card" ],
+  "ageRange": [8+],
+  "createdBy": "admin"
+}
+]

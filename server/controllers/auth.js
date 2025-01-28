@@ -113,8 +113,6 @@ router.post('/login', async (req, res) => {
     //remove password from res 
     const {password,  ...userData} = foundUser._doc
 
-    console.log('userData', userData)
-
     //generate token
     const token = jwt.sign(
       //payload
