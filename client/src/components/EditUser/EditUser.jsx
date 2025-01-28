@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -9,12 +9,11 @@ import {
   FormControlLabel,
   TextField,
   Typography,
-} from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme } from "../zzztheme/themes"; 
-import DualList from "../DualList/DualList";
-import "./editUser.css";
-
+} from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
+import { darkTheme } from '../zzztheme/themes'
+import DualList from '../DualList/DualList'
+import './editUser.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
@@ -184,19 +183,19 @@ const EditUser = () => {
       <Box
         sx={{
           maxWidth: 600,
-          margin: "0 auto",
+          margin: '0 auto',
           padding: 4,
-          backgroundColor: "background.paper",
+          backgroundColor: 'background.paper',
           borderRadius: 2,
           boxShadow: 3,
         }}
       >
         <Typography variant="h5" color="text.primary" gutterBottom>
-          {pageToDisplay === "editUser" || pageToDisplay === "editKid"
+          {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
             ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-            : pageToDisplay === "addUser"
-            ? "Add New User"
-            : "Add New Child"}
+            : pageToDisplay === 'addUser'
+            ? 'Add New User'
+            : 'Add New Child'}
         </Typography>
 
         <form>
@@ -268,7 +267,7 @@ const EditUser = () => {
             label="Disable Login"
           />
 
-          {pageToDisplay === "editKid" || pageToDisplay === "editUser" ? (
+          {pageToDisplay === 'editKid' || pageToDisplay === 'editUser' ? (
             <FormControlLabel
               control={
                 <Checkbox
@@ -281,25 +280,25 @@ const EditUser = () => {
           ) : null}
         </form>
 
-        {pageToDisplay === "addUser" || pageToDisplay === "addKid" ? (
+        {pageToDisplay === 'addUser' || pageToDisplay === 'addKid' ? (
           <Box>
             <Typography>User Type</Typography>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={checkedBox === "kid"}
-                  onChange={() => handleCheck("kid")}
+                  checked={checkedBox === 'kid'}
+                  onChange={() => handleCheck('kid')}
                 />
               }
               label="Child"
             />
-            {pageToDisplay === "addUser" && (
+            {pageToDisplay === 'addUser' && (
               <>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkedBox === "parent"}
-                      onChange={() => handleCheck("parent")}
+                      checked={checkedBox === 'parent'}
+                      onChange={() => handleCheck('parent')}
                     />
                   }
                   label="Parent"
@@ -307,8 +306,8 @@ const EditUser = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={checkedBox === "admin"}
-                      onChange={() => handleCheck("admin")}
+                      checked={checkedBox === 'admin'}
+                      onChange={() => handleCheck('admin')}
                     />
                   }
                   label="Admin"
@@ -319,7 +318,7 @@ const EditUser = () => {
         ) : null}
 
         {allActivities.length &&
-        (pageToDisplay === "editKid" || pageToDisplay === "addKid") ? (
+        (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
           <>
             <DualList
               dataToList={allActivities}
@@ -342,8 +341,26 @@ const EditUser = () => {
           </>
         ) : null}
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleSave}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: 2,
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={
+              (pageToDisplay === 'addUser' &&
+                (!editFirstName ||
+                  !editLastName ||
+                  !editDateOfBirth ||
+                  !editPassword)) ||
+              confirmPassword !== editPassword
+            }
+            onClick={handleSave}
+          >
             Save
           </Button>
           <Button variant="outlined" color="secondary" onClick={handleCancel}>
@@ -352,7 +369,7 @@ const EditUser = () => {
         </Box>
       </Box>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default EditUser;
+export default EditUser
