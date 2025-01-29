@@ -1,214 +1,144 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react'
-import './portalList.css'
+import React, { useContext, useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
+import './portalList.css';
 
-//CONTEXT IMPORTS
-// pdt -> page to display
-import {
-  ptdContext,
-  // KidsOfParentContext,
-  editTargetContext,
-  userDataContext,
-} from '../zContextHooks/contextHooks'
+// CONTEXT IMPORTS
+import { ptdContext, editTargetContext, userDataContext,} from '../zContextHooks/contextHooks';
 
 const PortalList = ({ itemsToList, listType }) => {
-  //* USESTATE
-  const [listTitle, setListTitle] = useState('')
-  const [displayList, setDisplayList] = useState('')
-  // const [kidsOfParent, setKidsOfParent] = useContext(KidsOfParentContext)
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
-  const [editTarget, setEditTarget] = useContext(editTargetContext)
-  const [userData, setUserData] = useContext(userDataContext)
+  //* State and Context
+  const theme = useTheme()
+  const [listTitle, setListTitle] = useState('');
+  const [displayList, setDisplayList] = useState('');
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
+  const [editTarget, setEditTarget] = useContext(editTargetContext);
+  const [userData] = useContext(userDataContext);
 
-  //* FUNCTIONS
+  //* Functions
   const setUpList = () => {
     if (listType === 'user') {
       setDisplayList(
-        itemsToList.allUsers.map((item) => {
-          return (
-            <li
-              onClick={() => {
-                setEditTarget(item)
-                item.userType === 'kid'
-                  ? setPageToDisplay('editKid')
-                  : setPageToDisplay('editUser')
-              }}
-              key={item._id}
-            >
-              {`${item.firstName} ${item.lastName} (${item.userName})`}
-            </li>
-          )
-        })
-      )
-    }
-
-    // displau children list. clicking on item switches to edit page
-    if (listType === 'kids') {
+        itemsToList.allUsers.map((item) => (
+          <div
+            key={item._id}
+            className="portalListItem"
+            onClick={() => {
+              setEditTarget(item);
+              item.userType === 'kid'
+                ? setPageToDisplay('editKid')
+                : setPageToDisplay('editUser');
+            }}
+          >
+            {`${item.firstName} ${item.lastName} (${item.userName})`}
+          </div>
+        ))
+      );
+    } else if (listType === 'kids') {
       setDisplayList(
-        itemsToList.foundKidsOfParent.map((item) => {
-          return (
-            <li
-              onClick={() => {
-                setEditTarget(item)
-                setPageToDisplay('editKid')
-              }}
-              key={item._id}
-            >{`${item.firstName} ${item.lastName} (${item.userName})`}</li>
-          )
-        })
-      )
-    }
-
-    if (listType === 'games') {
+        itemsToList.foundKidsOfParent.map((item) => (
+          <div
+            key={item._id}
+            className="portalListItem"
+            onClick={() => {
+              setEditTarget(item);
+              setPageToDisplay('editKid');
+            }}
+          >
+            {`${item.firstName} ${item.lastName} (${item.userName})`}
+          </div>
+        ))
+      );
+    } else if (listType === 'games') {
       setDisplayList(
-        itemsToList.allGames.map((item, i) => {
-          return (
-            <li
-              className={
-                userData._id === item.createdBy
-                  ? 'editableByCurrentUser'
-                  : 'notEditable'
-              }
-              onClick={() => {
-                setEditTarget(item)
-                setPageToDisplay('editActivity')
-              }}
-              key={`${item._id}`}
-            >
-              {item.activityTitle}
-            </li>
-          )
-        })
-      )
-    }
-
-    if (listType === 'learning') {
+        itemsToList.allGames.map((item) => (
+          <div
+            key={item._id}
+            className="portalListItem"
+            onClick={() => {
+              setEditTarget(item);
+              setPageToDisplay('editActivity');
+            }}
+          >
+            {item.activityTitle}
+          </div>
+        ))
+      );
+    } else if (listType === 'learning') {
       setDisplayList(
-        itemsToList.allLearning.map((item, i) => {
-          return (
-            <li
-            className={
-              userData._id === item.createdBy
-                ? 'editableByCurrentUser'
-                : 'notEditable'
-            }
-              onClick={() => {
-                setEditTarget(item)
-                setPageToDisplay('editActivity')
-              }}
-              key={`item${i}`}
-            >
-              {item.activityTitle}
-            </li>
-          )
-        })
-      )
-    }
-
-    // display chatTopics list. clicking on item switches to edit page
-    if (listType === 'chatTopics') {
+        itemsToList.allLearning.map((item, i) => (
+          <div
+            key={`item${i}`}
+            className="portalListItem"
+            onClick={() => {
+              setEditTarget(item);
+              setPageToDisplay('editActivity');
+            }}
+          >
+            {item.activityTitle}
+          </div>
+        ))
+      );
+    } else if (listType === 'chatTopics') {
       setDisplayList(
-        itemsToList.allChatTopics.map((item) => {
-          return (
-            <li
-            className={
-              userData._id === item.createdBy
-                ? 'editableByCurrentUser'
-                : 'notEditable'
-            }
-              onClick={() => {
-                setEditTarget(item)
-                setPageToDisplay('editChatTopic')
-              }}
-              key={item._id}
-            >
-              {item.topicTitle}
-            </li>
-          )
-        })
-      )
+        itemsToList.allChatTopics.map((item) => (
+          <div
+            key={item._id}
+            className="portalListItem"
+            onClick={() => {
+              setEditTarget(item);
+              setPageToDisplay('editChatTopic');
+            }}
+          >
+            {item.topicTitle}
+          </div>
+        ))
+      );
     }
-
-    if (listType === 'reporting') {
-      setDisplayList(
-        itemsToList.map((item, i) => {
-          return <li key={item._id}>{i}</li>
-        })
-      )
-    }
-  }
-
+  };
+  ;
+/* Titles for List */
   const assignListTitle = () => {
-    if (listType === 'user') {
-      setListTitle('Users')
-    }
-    if (listType === 'kids') {
-      setListTitle('Children')
-    }
-    if (listType === 'games') {
-      setListTitle('Games')
-    }
-    if (listType === 'learning') {
-      setListTitle('Learning Activities')
-    }
-    if (listType === 'chatTopics') {
-      setListTitle('Chat Topics')
-    }
-    if (listType === 'reporting') {
-      setListTitle('Reporting')
-    }
-  }
+    const titles = {
+      user: 'Users',
+      kids: 'Children',
+      games: 'Games',
+      learning: 'Learning Activities',
+      chatTopics: 'Chat Topics',
+      reporting: 'Reporting',
+    };
+    setListTitle(titles[listType] || 'List');
+  };
 
-  //handles changing the page when the add button is pressed
-  const handleClick = () => {
-    if (listType === 'user') {
-      setPageToDisplay('addUser')
-      return
-    }
-    if (listType === 'kids') {
-      setPageToDisplay('addKid')
-      return
-    }
-    if (listType === 'games') {
-      setPageToDisplay('addGame')
-      return
-    }
-    if (listType === 'learning') {
-      setPageToDisplay('addLearning')
-      return
-    }
-    if (listType === 'chatTopics') {
-      setPageToDisplay('addChatTopic')
-      return
-    }
-  }
+  const handleAddClick = () => {
+    const addPages = {
+      user: 'addUser',
+      kids: 'addKid',
+      games: 'addGame',
+      learning: 'addLearning',
+      chatTopics: 'addChatTopic',
+    };
+    setPageToDisplay(addPages[listType] || '');
+  };
 
-  //* USEEFFECT
-  //initilize dual list
+  //* Effects
   useEffect(() => {
-    setUpList()
-    assignListTitle()
-  }, [itemsToList])
+    setUpList();
+    assignListTitle();
+  }, [itemsToList, listType]); // Ensure `listType` is included in dependencies
 
-  //* RENDER
+  //* Render
   return (
-    <>
-      <div className="portalListWrap">
-        <div className="portalTitle"></div>
-        <div>{listTitle ? listTitle : 'failed to load list title'}</div>
-        <ul className="portalList">
-          {displayList ? displayList : 'failed to load list'}
-        </ul>
-
-        {listType !== 'reporting' ? (
-          <button onClick={() => handleClick()}>Add</button>
-        ) : (
-          ''
-        )}
+    <div className="portalListWrap">
+      
+      <div className="portalList">
+        {displayList.length > 0 ? displayList : 'No items to display'}
       </div>
-    </>
-  )
-}
+      {listType !== 'reporting' && (
+        <button onClick={handleAddClick}>Add</button>
+      )}
+    </div>
+    
+  );
+};
 
-export default PortalList
+export default PortalList;
