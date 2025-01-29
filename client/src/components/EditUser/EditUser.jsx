@@ -117,7 +117,6 @@ const EditUser = () => {
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    console.log('calledit user hit')
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
