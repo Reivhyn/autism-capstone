@@ -15,6 +15,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
 import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
 import Logo from "../Logo/Logo";
+import Footer from "../Footer/Footer";
 
 const Landing = () => {
   const [, setPageToDisplay] = useContext(ptdContext);
@@ -165,9 +166,7 @@ const Landing = () => {
             color: "text.secondary",
           }}
         >
-          <Typography variant="body2">
-            &copy; 2025 Your Site Name. All rights reserved.
-          </Typography>
+          <Footer />
         </Box>
       </Box>
     </ThemeProvider>
