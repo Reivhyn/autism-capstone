@@ -232,6 +232,7 @@ const EditActivity = () => {
               />
             )}
 
+            {/* Save and Cancel Buttons */}
             <Box
               sx={{
                 display: 'flex',
@@ -264,6 +265,18 @@ const EditActivity = () => {
             </Box>
           </form>
         ) : null}
+
+        {/* Puts a cancel button on edit activities */}
+        {pageToDisplay === 'editActivity' ? (
+                      <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => setPageToDisplay(userData.userType)}
+                    >
+                      Cancel
+                    </Button>
+        ) : null  
+        }
       </Box>
     </ThemeProvider>
   )
