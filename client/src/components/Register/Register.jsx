@@ -41,11 +41,10 @@ const Register = () => {
   //* FUNCTIONS
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(password, confirmPassword, validateInputs); // Log the passwords
+    setError(''); // Clear any previous errors
     if (!validateInputs()) {
       return; // stop submission if validation fails
     }
-      console.log({ username, firstName, lastName, email, password });
       try{
       const response =
         await register(
@@ -64,16 +63,13 @@ const Register = () => {
       console.error('Registration failed:', error);
     }
   }
+  
+    // Checks that inputs are valid
     const validateInputs = () => {
       console.log(password, confirmPassword); // Log the passwords
       if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
         console.log('All fields are required.'); // Log the error
         setError('All fields are required.');
-        return false;
-      }
-      if (password !== confirmPassword) {
-        console.log('Passwords do not match.'); // Log the error
-        setError('Passwords do not match.');
         return false;
       }
       try {
@@ -89,7 +85,6 @@ const Register = () => {
 
     //* USEEFFECTS
     useEffect(() => {
-      console.log('userData', userData); // Log the user data
       if (userData) {
         setTimeout(() => {
         setPageToDisplay(userData.userType);
@@ -148,6 +143,15 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               label="Password"
             />
+
+          <div>
+            {confirmPassword && password
+              ? confirmPassword !== password
+                ? 'Passwords do not match'
+                : ''
+              : ''}
+          </div>
+
             <TextField
               required
               fullWidth

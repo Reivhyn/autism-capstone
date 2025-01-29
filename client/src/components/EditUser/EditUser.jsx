@@ -24,6 +24,9 @@ import {
   editTargetContext,
 } from '../zContextHooks/contextHooks'
 
+// HELPER IMPORTS
+import { validatePasswordCriteria } from '../zzHelpers/helpers'
+
 // FETCH IMPORTS
 import {
   getActivities,
@@ -59,6 +62,7 @@ const EditUser = () => {
   const [userType, setUserType] = useState('kid')
   const [parentUser, setParentUser] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
@@ -85,10 +89,34 @@ const EditUser = () => {
     setUserType(value)
   }
 
+  //validate inputs
+  const handlePasswordCheck = () => {
+    try {
+      validatePasswordCriteria(editPassword);
+    } catch (error) { 
+      setError(error.message);
+      return false;
+    } // Validate the password
+    setError('');
+
+    return true;
+  }
+
+  //validate inputs
+  const validateInputs = () => {
+        setError(''); // Clear any previous errors
+        console.log(editPassword, confirmPassword); // Log the passwords
+        if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
+          console.log('All fields are required.'); // Log the error
+          setError('All fields are required.');
+          return false;
+        }
+        handlePasswordCheck()
+        return true;
+      };
+
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    //delete user user if checkbox is selected
-
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -102,11 +130,14 @@ const EditUser = () => {
       editEmail,
       chatAccess
     )
+
+    if(!handlePasswordCheck()) return //stop submission if validation fails
     setEditSaved(true)
   }
 
   // creates new user when save button is pressed
   const callCreateNewUser = () => {
+  console.log('callCreateNewUser hit')
     addNewUser(
       editFirstName,
       editLastName,
@@ -119,6 +150,9 @@ const EditUser = () => {
       userType,
       userData._id
     )
+
+    if(!validateInputs()) return //stop submission if validation fails
+
 
     setEditSaved(true)
   }
@@ -274,6 +308,9 @@ const EditUser = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
+          {/* displays errors on screen */}
+          {error && <Typography color="error">{error}</Typography>}
+
           <FormControlLabel
             control={
               <Checkbox
@@ -385,6 +422,7 @@ const EditUser = () => {
           </Button>
         </Box>
       </Box>
+
     </ThemeProvider>
   )
 }
