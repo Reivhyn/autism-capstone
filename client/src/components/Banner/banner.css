@@ -2,19 +2,19 @@
 
 
 .bannerText {
-  color: #A3C9A8; /* Light green from darkTheme for text */
-  background-color: #304B54; /* Deep teal from darkTheme for background */
   text-align: center;
   padding: 1rem 2rem;
   border-radius: 8px;
   margin: 1rem auto;
   font-size: 1.5rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for a floating effect */
+  /*box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for a floating effect */
   width: fit-content;
 }
 
+/*
 .bannerText:hover {
-  background-color: #A3C9A8; /* Light green hover effect for the banner */
-  color: #1C2629; /* Dark text for contrast */
+  background-color: #A3C9A8; /* Light green hover effect for the banner * /
+  color: #1C2629; /* Dark text for contrast * /
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+*/
