@@ -12,7 +12,7 @@ const Activity = new mongoose.Schema({
   imageURL: { type: String }, //if the image is from a url
   category: { type: Array, require: true }, // the category the game belongs to
   searchKeywords: { type: Array, required: true }, //keywords that can be used to search the game
-  ageRange: { type: Array, require: true }, //suggested age range for the game - search by grade
+  ageRange: { type: Array, require: true }, //suggested age range for the game - search by grade grades are 1-14 to account for pre-k and kendergarten
   createdBy: {type: String}
 })
 
