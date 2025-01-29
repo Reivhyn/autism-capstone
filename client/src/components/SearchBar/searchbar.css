@@ -1,17 +1,17 @@
 /* General styles for the search bar */
 .search-bar-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
   /* Styling the search field */
-.custom-search-field {
+  .custom-search-field {
     width: 100%;
-    max-width: 350px; /* Adjust based on your layout */
+    max-width: 350px;
     box-sizing: border-box;
 }
 
@@ -23,14 +23,9 @@
 
   /* Search button */
 .custom-search-field .MuiIconButton-root {
-    color: #555; /* Default icon color */
     transition: color 0.3s ease;
   }
-  
-  .custom-search-field .MuiIconButton-root:hover {
-    color: #000; /* Change color on hover */
-  }
-  
+
   /* Responsiveness: Adjustments for smaller screens */
   @media (max-width: 768px) {
     .custom-search-field {

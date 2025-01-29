@@ -107,21 +107,22 @@ const Activities = () => {
       >
         {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
       </Typography>
-      <Banner />
       
-      <div className="dropSearch-container">
-        
-      <div className="searchbar-container">
+      <Banner />
+  
+     {/* Container for Category Menu and Search Bar to be aligned */}
+      <div className="cateSearch-container">
+        <div className="searchbar-container">
           <SearchBar setSearchTerm={setSearchTerm} />
       </div> 
 
       </div>
-      <Grid
-  container
-  spacing={3}
-  justifyContent="center" /* Center tiles horizontally */
-  alignItems="flex-start" /* Align tiles to the top */
-  style={{ marginTop: '20px' }}
+    <Grid
+      container
+      spacing={3}
+      justifyContent="center" /* Center tiles horizontally */
+      alignItems="flex-start" /* Align tiles to the top */
+      style={{ marginTop: '20px' }}
 >
   {allActivities &&
     (pageToDisplay === 'games'
