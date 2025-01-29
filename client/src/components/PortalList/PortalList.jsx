@@ -20,8 +20,8 @@ const PortalList = ({ itemsToList, listType }) => {
       setDisplayList(
         itemsToList.allUsers.map((item) => (
           <div
-            key={item._id} 
-            className="listItem"
+            key={item._id}
+            className="portalListItem"
             onClick={() => {
               setEditTarget(item);
               item.userType === 'kid'
@@ -38,7 +38,7 @@ const PortalList = ({ itemsToList, listType }) => {
         itemsToList.foundKidsOfParent.map((item) => (
           <div
             key={item._id}
-            className="listItem"
+            className="portalListItem"
             onClick={() => {
               setEditTarget(item);
               setPageToDisplay('editKid');
@@ -53,11 +53,7 @@ const PortalList = ({ itemsToList, listType }) => {
         itemsToList.allGames.map((item) => (
           <div
             key={item._id}
-            className={`listItem ${
-              userData._id === item.createdBy || userData.userType === 'admin'
-                ? 'editableByCurrentUser'
-                : 'not'
-            }`}
+            className="portalListItem"
             onClick={() => {
               setEditTarget(item);
               setPageToDisplay('editActivity');
@@ -72,11 +68,7 @@ const PortalList = ({ itemsToList, listType }) => {
         itemsToList.allLearning.map((item, i) => (
           <div
             key={`item${i}`}
-            className={`listItem ${
-              userData._id === item.createdBy || userData.userType === 'admin'
-                ? 'editableByCurrentUser'
-                : 'not'
-            }`}
+            className="portalListItem"
             onClick={() => {
               setEditTarget(item);
               setPageToDisplay('editActivity');
@@ -91,11 +83,7 @@ const PortalList = ({ itemsToList, listType }) => {
         itemsToList.allChatTopics.map((item) => (
           <div
             key={item._id}
-            className={`listItem ${
-              userData._id === item.createdBy || userData.userType === 'admin'
-                ? 'editableByCurrentUser'
-                : 'not'
-            }`}
+            className="portalListItem"
             onClick={() => {
               setEditTarget(item);
               setPageToDisplay('editChatTopic');
@@ -107,6 +95,7 @@ const PortalList = ({ itemsToList, listType }) => {
       );
     }
   };
+  ;
 /* Titles for List */
   const assignListTitle = () => {
     const titles = {
