@@ -7,7 +7,6 @@ import './activities.css'
 // COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Banner from '../Banner/Banner';
-import DropLearnCat from '../DropLearnCat/DropLearnCat';
 import SearchBar from '../SearchBar/SearchBar';
 import ActivityTile from '../ActivityTile/ActivityTile';
 import Footer from '../Footer/Footer';
@@ -111,10 +110,6 @@ const Activities = () => {
       <Banner />
       
       <div className="dropSearch-container">
-      
-      <div className="dropdown-container">
-          <DropLearnCat onChange={(e) => console.log('Game:', e.target.value)} />
-      </div>
         
       <div className="searchbar-container">
           <SearchBar setSearchTerm={setSearchTerm} />
