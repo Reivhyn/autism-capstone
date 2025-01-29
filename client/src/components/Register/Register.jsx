@@ -41,6 +41,7 @@ const Register = () => {
   //* FUNCTIONS
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(''); // Clear any previous errors
     console.log(password, confirmPassword, validateInputs); // Log the passwords
     if (!validateInputs()) {
       return; // stop submission if validation fails
@@ -64,6 +65,8 @@ const Register = () => {
       console.error('Registration failed:', error);
     }
   }
+  
+    // Checks that inputs are valid
     const validateInputs = () => {
       console.log(password, confirmPassword); // Log the passwords
       if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
@@ -89,7 +92,6 @@ const Register = () => {
 
     //* USEEFFECTS
     useEffect(() => {
-      console.log('userData', userData); // Log the user data
       if (userData) {
         setTimeout(() => {
         setPageToDisplay(userData.userType);
