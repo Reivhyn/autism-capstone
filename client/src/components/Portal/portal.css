@@ -1,36 +1,55 @@
-.portalListWrapper{
-  display: flex;
+/* General Wrapper for Portal Columns */
+.portalGridWrapper {
+  display: grid;
+  grid-template-columns: 1fr; /* Start with one column spanning the full width */
+  gap: 1rem; /* Space between columns */
+  padding: 1rem;
+  width: 100%; /* Full width of the page */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
 }
-.portalListWrapper {
-  background-color: #304B54; /* Deep teal background from darkTheme */
-  color: #FFFFFF; /* White text for readability */
+.portalColumn {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
 }
 
-.portalListWrapper h2 {
+.portalColumn:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.portalColumn h3 {
+  font-size: 1.5rem;
   text-align: center;
-  color: #A3C9A8; /* Light green for headings */
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease-in-out;
 }
 
-.portalListWrapper .listItem {
-  background-color: #1C2629; /* Darker background for list items */
-  color: #FFFFFF; /* White text for contrast */
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin: 0.5rem 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.portalColumn h3:hover {
+  color: var(--hover-color, #ff4081); /* Default hover color, change as needed */
 }
 
-.portalListWrapper .listItem:hover {
-  background-color: #A3C9A8; /* Light green on hover */
-  color: #1C2629; /* Contrast dark text on hover */
+.portalColumn p {
+  font-size: 1rem;
+  color: var(--text-secondary, #757575);
+  text-align: center;
 }
 
-.portalListWrapper .fetchingData {
-  color: #DD5E56; /* Coral red for fetching data */
+.portalColumn p.fetchingData {
   font-style: italic;
-  text-align: center;
+  color: var(--text-muted, #9e9e9e);
+}
+
+
+/* Adjust columns for larger screens */
+@media (min-width: 768px) {
+  .portalGridWrapper {
+    grid-template-columns: 1fr 1fr; /* Two columns on medium-sized screens */
+  }
+}
+
+@media (min-width: 1200px) {
+  .portalGridWrapper {
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns on large screens */
+  }
 }
