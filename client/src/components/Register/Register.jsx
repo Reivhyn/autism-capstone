@@ -42,11 +42,9 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(''); // Clear any previous errors
-    console.log(password, confirmPassword, validateInputs); // Log the passwords
     if (!validateInputs()) {
       return; // stop submission if validation fails
     }
-      console.log({ username, firstName, lastName, email, password });
       try{
       const response =
         await register(
@@ -72,11 +70,6 @@ const Register = () => {
       if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
         console.log('All fields are required.'); // Log the error
         setError('All fields are required.');
-        return false;
-      }
-      if (password !== confirmPassword) {
-        console.log('Passwords do not match.'); // Log the error
-        setError('Passwords do not match.');
         return false;
       }
       try {
@@ -150,6 +143,15 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               label="Password"
             />
+
+          <div>
+            {confirmPassword && password
+              ? confirmPassword !== password
+                ? 'Passwords do not match'
+                : ''
+              : ''}
+          </div>
+
             <TextField
               required
               fullWidth

@@ -91,11 +91,6 @@ const EditUser = () => {
 
   //validate inputs
   const handlePasswordCheck = () => {
-    if (editPassword !== confirmPassword) {
-      console.log('Passwords do not match.'); // Log the error
-      setError('Passwords do not match.');
-      return false;
-    }
     try {
       validatePasswordCriteria(editPassword);
     } catch (error) { 
@@ -109,6 +104,7 @@ const EditUser = () => {
 
   //validate inputs
   const validateInputs = () => {
+        setError(''); // Clear any previous errors
         console.log(editPassword, confirmPassword); // Log the passwords
         if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
           console.log('All fields are required.'); // Log the error
@@ -121,8 +117,7 @@ const EditUser = () => {
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    //delete user user if checkbox is selected
-
+    console.log('calledit user hit')
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -138,13 +133,12 @@ const EditUser = () => {
     )
 
     if(!handlePasswordCheck()) return //stop submission if validation fails
-    event
     setEditSaved(true)
   }
 
   // creates new user when save button is pressed
-  const callCreateNewUser = (event) => {
-  
+  const callCreateNewUser = () => {
+  console.log('callCreateNewUser hit')
     addNewUser(
       editFirstName,
       editLastName,
@@ -315,6 +309,9 @@ const EditUser = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
+          {/* displays errors on screen */}
+          {error && <Typography color="error">{error}</Typography>}
+
           <FormControlLabel
             control={
               <Checkbox
@@ -426,6 +423,7 @@ const EditUser = () => {
           </Button>
         </Box>
       </Box>
+
     </ThemeProvider>
   )
 }
