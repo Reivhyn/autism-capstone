@@ -1,0 +1,108 @@
+{
+  "activityType": "",
+  "activityTitle": "",
+  "description": "",
+  "url": "",
+  "imageURL": "",
+  "category": [],
+  "searchKeywords": [],
+  "ageRange": [],
+  "createdBy": ""
+}
+
+[
+  {
+  "activityType": "game",
+  "activityTitle": "Space Waves",
+  "description": "Space Waves is an arcade game where you need to control an arrow to avoid obstacles until you get to the end. There are 33 levels to the game, and you can choose any level you want to play at any time. All levels vary in difficulty and are labeled accordingly with faces; this way you get to decide how courageous you want to be.",
+  "url": "https://www.crazygames.com/game/space-waves",
+  "imageURL": "https://imgs.crazygames.com/space-waves_16x9/20241203031650/space-waves_16x9-cover?metadata=none&quality=70&width=320",
+  "category": ["Arcade", "Skill", "Obstacle"],
+  "searchKeywords": ["Casual", "One Button", "Mobile", "Avoid", "Difficult", "Side Scrolling", "2D", "Obstacle", "Skill", "Mouse", "Arcade"],
+  "ageRange": ["8+", "10+", "12+", "13+" , "14+"], // 6th grade and up
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "game",
+  "activityTitle": "Card Games",
+  "description": "Game Night is Online!
+Meet and play online from anywhere in the world
+PlayingCards.io provides online rooms to play games, learn, and hang out",
+  "url": "https://playingcards.io/",
+  "imageURL": "https://playingcards.io/img/header.svg",
+  "category": ["board", "card", "game"],
+  "searchKeywords": ["31", "500", "checkers", "chess", "crazy eights", "board", "games", "card" ],
+  "ageRange": ["8+", "10+", "12+", "14+"], // 6th grade and up
+  "createdBy": "admin"
+},{
+  "activityType": "game",
+  "activityTitle": "ABCya",
+  "description": "Educational games for grades PreK through 6 that will keep kids engaged and having fun. Topics include math, reading, typing, just-for-fun logic games… and more!",
+  "url": "https://www.abcya.com/games/",
+  "imageURL": "https://www.abcya.com/images/abcya-logo.png",
+  "category": ["Educational", "Math", "Reading", "Typing", "Logic", "game"],
+  "searchKeywords": ["Educational", "Math", "Reading", "Typing", "Logic", "PreK", "Kindergarten", "1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "6th Grade"],
+  "ageRange": ["1+", "2+", "3+", "4+", "5+", "6+", "7+", "8+", "9+", "10+", "11+", "12+", "13+", "14+"], // all grades
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "game",
+  "activityTitle": "Nick Jr.",
+  "description": "Play preschool learning games and watch episodes and videos that feature Nick Jr. shows like Paw Patrol, Blaze and the Monster Machines, Dora, Bubble Guppies, and more.",
+  "url": "https://www.nick.com/nick-jr/nick-jr",
+  "imageURL": "https://www.nickjr.tv/Content/images/nickjr-logo.png",
+  "category": ["educational", "preschool", "game" ],
+  "searchKeywords": ["Educational", "Math", "Reading", "Typing", "Logic", "PreK", "Kindergarten", "1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "6th Grade", "TV Shows", "Games", "Videos", "Episodes", "Nick Jr.", "Paw Patrol", "Blaze and the Monster Machines", "Dora", "Bubble Guppies", "Kids"],
+  "ageRange": ["1+", "2+", "3+", "4+", "5+"], // pre-k to 3rd grade
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "learning",
+  "activityTitle": "AdaptedMind",
+  "description": "AdaptedMind offers a customized online reading curriculum that builds comprehension skills and vocaublary. It will significantly improve your child's reading performance, guaranteed.",
+  "url": "https://www.adaptedmind.com/Math-Worksheets.html?utm_medium=cpc&utm_source=google&campaignid=21334860420&campaign_type=search&placement=g&utm_content=responsivesearchad&adid=707441646925&adset_id=158228692690&utm_term=interactive%20learning&ad_position=&device=c&gad_source=1&gclid=CjwKCAiA-ty8BhA_EiwAkyoa35LcUIB8MZ4fD8NprC7STnyqXfFwBlKvjGXE6YLjMYTpVygegpozghoCloUQAvD_BwE",
+  "imageURL": "https://www.adaptedmind.com/images/logo.png",
+  "category": ["Educational", "Reading", "Comprehension", "Vocabulary", "Curriculum", "Interactive", "Learning"],
+  "searchKeywords": ["Educational", "Reading", "Comprehension", "Vocabulary", "Curriculum", "Interactive", "Learning", "Math", "Worksheets", "Online", "Customized", "Performance", "Guaranteed", "AdaptedMind"],
+  "ageRange": ["1+", "2+", "3+", "4+", "5+", "6+", "7+", "8+", "9+", "10+"],
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "learning",
+  "activityTitle": "Nasa Live",
+  "description": "NASA launches, landings, and events. Watch live broadcasts from NASA Television and NASA's social media channels, and a schedule of upcoming live events including news briefings, launches and landings.",
+  "url": "https://www.nasa.gov/live/",
+  "imageURL": "https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png",
+  "category": ["Educational", "Space", "Science", "Live", "Events"],
+  "searchKeywords": ["Educational", "Space", "Science", "Live", "Events", "NASA", "Launches", "Landings", "Broadcasts", "Television", "Social Media", "News Briefings"],
+  "ageRange": ["8+", "10+", "12+", "13+" , "14+"], // 6th grade and up
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "learning",
+  "activityTitle": "Nasa Live",
+  "description": "NASA launches, landings, and events. Watch live broadcasts from NASA Television and NASA's social media channels, and a schedule of upcoming live events including news briefings, launches and landings.",
+  "url": "https://www.nasa.gov/live/",
+  "imageURL": "https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png",
+  "category": ["Educational", "Space", "Science", "Live", "Events"],
+  "searchKeywords": ["Educational", "Space", "Science", "Live", "Events", "NASA", "Launches", "Landings", "Broadcasts", "Television", "Social Media", "News Briefings"],
+  "ageRange": ["8+", "10+", "12+", "13+" , "14+"], // 6th grade and up
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+},{
+  "activityType": "learning",
+  "activityTitle": "American Museum of Natural History",
+  "description": "The American Museum of Natural History is one of the world's preeminent scientific and cultural institutions. Since its founding in 1869, the Museum has advanced its global mission to discover, interpret, and disseminate information about human cultures, the natural world, and the universe through a wide-ranging program of scientific research, education, and exhibition.",
+  "url": "https://www.amnh.org/explore/ology",
+  "imageURL": "https://www.amnh.org/var/ezflow_site/storage/images/media/amnh/images/explore/ology/ology-logo/ology-logo/1/ology-logo.jpg",
+  "category": ["Educational", "Science", "Museum", "Interactive", "Learning"],
+  "searchKeywords": ["Educational", "Science", "Museum", "Interactive", "Learning", "American Museum of Natural History", "World", "Scientific", "Cultural", "Institutions", "Global", "Mission", "Discover", "Interpret", "Disseminate", "Information", "Human Cultures", "Natural World", "Universe", "Scientific Research", "Education", "Exhibition"],
+  "ageRange": ["8+", "10+", "12+", "13+" , "14+"], // 6th grade and up
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+}, {
+  "activityType": "learning",
+  "activityTitle": "San Diego Zoo",
+  "description": "The San Diego Zoo is a zoo in Balboa Park, San Diego, California, housing more than 12,000 animals of more than 650 species and subspecies. Its parent organization, San Diego Zoo Wildlife Alliance, is one of the largest zoological membership associations in the world.",
+  "url": "https://sdzwildlifeexplorers.org/",
+  "imageURL": "https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png",
+  "category": ["Educational", "Zoo", "Animals", "Conservation", "Learning"],
+  "searchKeywords": ["Educational", "Zoo", "Animals", "Conservation", "Learning", "San Diego Zoo", "Balboa Park", "San Diego", "California", "Housing", "Species", "Subspecies", "Parent Organization", "Wildlife Alliance", "Zoological", "Membership", "Associations"],
+  "ageRange": ["8+", "10+", "12+", "13+" , "14+"], // 6th grade and up
+  "createdBy": "admin" // Replace with the actual username or identifier for the creator
+}, 
+
+]

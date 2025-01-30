@@ -83,7 +83,6 @@ function App() {
     if (userData) {
       if (userData.userType === 'admin') setPageToDisplay('admin')
       if (userData.userType === 'parent') setPageToDisplay('parent')
-      console.log('userData', userData)
     }
   }, [userData])
 
@@ -91,12 +90,6 @@ function App() {
   useEffect(() => {
     if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
   }, [userData])
-
-  useEffect(() => {
-    console.log('pageToDisplay', pageToDisplay)
-    console.log('theme', theme)
-    console.log('activeTheme', activeTheme)
-  }, [pageToDisplay, activeTheme, theme])
 
   //* RENDERING
   return (

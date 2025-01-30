@@ -4,10 +4,15 @@ import './dualList.css'
 
 //CONTEXT IMPORTS
 // pdt -> page to display
+import { ptdContext, editTargetContext } from '../zContextHooks/contextHooks'
 import {
-  ptdContext,
-  editTargetContext,
-} from '../zContextHooks/contextHooks'
+  Box,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material'
 
 const DualList = ({
   dataToList,
@@ -252,30 +257,46 @@ const DualList = ({
     }
   }, [availableOptions, selectedOptions])
 
+  //* RENDER
   return (
     <>
-      {/* edit access games the user has access to */}
-      <div className="dualListOuterWrap">
-        {/* dual listbox title */}
-        <div className="dualListTitle">{dualListTitle}</div>
+      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+        {dualListTitle}
+      </Typography>
 
-        {/* wraps left and right side of list */}
-        <div className="dualListWrapper">
-          {/* available side of dual list */}
-          <div className="availableWraper">
-            <div className="available">Available</div>
-            <ul>{renderAvailable ? renderAvailable : 'Fetching data'}</ul>
-            <button onClick={() => handleAddAll()}>Add All</button>
-          </div>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, p: 2 }}>
+        {/* dual list title */}
 
-          {/* selected side of dual list */}
-          <div className="selectedWraper">
-            <div className="selected">Selected</div>
-            <ul>{renderSelected ? renderSelected : 'Fetching data'}</ul>
-            <button onClick={() => handleRemoveAll()}>Remove All</button>
-          </div>
-        </div>
-      </div>
+        {/* Available list */}
+        <Box sx={{ width: '45%' }}>
+          <Typography variant="subttile1" sx={{ fontWeight: 'bold' }}>
+            Available
+          </Typography>
+          <List>
+            {renderAvailable.length > 0 ? renderAvailable : 'Fetching Data'}
+          </List>
+          <Button variant="contained" color="primary" onClick={handleAddAll}>
+            Add All
+          </Button>
+        </Box>
+
+        {/* Selected List */}
+        <Box sx={{ width: '45%' }}>
+          <Typography variant="subttile1" sx={{ fontWeight: 'bold' }}>
+            Selected
+          </Typography>
+          <List>
+            {renderSelected.length > 0 ? renderSelected : 'Fetching Data'}
+          </List>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleRemoveAll}
+          >
+            Remove All
+          </Button>
+        </Box>
+      </Box>
     </>
   )
 }
