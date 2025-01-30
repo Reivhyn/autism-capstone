@@ -64,7 +64,7 @@ const Landing = () => {
         <Logo />
 
         {/* Site Header */}
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h2" gutterBottom align="center" paddingTop={"2%"}> 
           Welcome To The Imagination Treehouse!
         </Typography>
 
