@@ -264,6 +264,17 @@ const EditActivity = () => {
             </Box>
           </form>
         ) : null}
+
+
+        {pageToDisplay === 'editActivity' ? (
+            <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setPageToDisplay(userData.userType)}
+            >
+            Cancel
+            </Button>
+        ) : null}
       </Box>
     </ThemeProvider>
   )

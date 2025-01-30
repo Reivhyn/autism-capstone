@@ -29,7 +29,6 @@ const Landing = () => {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
-          backgroundColor: "background.default",
           color: "text.primary",
         }}
       >
