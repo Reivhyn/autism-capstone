@@ -4,6 +4,7 @@ import './pleaseLogin.css'
 //CONTEXT IMPORTS
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
+import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
 
 const PleaseLogin = () => {
   //* USESTATE
@@ -14,8 +15,7 @@ const PleaseLogin = () => {
     <>
       <h1>Please Login or Register</h1>
       <div>
-        <button onClick={() => setPageToDisplay('login')}>Login</button>
-        <button onClick={() => setPageToDisplay('register')}>Register</button>
+        <LoginRegisterButton />
         <button onClick={() => setPageToDisplay('landing')}>Home</button>
       </div>
     </>
