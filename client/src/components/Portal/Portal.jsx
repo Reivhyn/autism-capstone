@@ -96,15 +96,16 @@ const Portal = () => {
         page to display is NOT admin or return feching data if it is admin
         */}
         {pageToDisplay === 'admin' && (
-  <div
-    className="portalColumn"
-    style={{
-      backgroundColor: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
-    }}
-  >
-    <h3 style={{ color: theme.palette.primary.main }}>Users</h3>
+  <div 
+  className="portalColumn" 
+  style={{
+    backgroundColor: theme.palette.background.paper, // Keeps MUI theme colors
+    color: theme.palette.text.primary,
+    boxShadow: `0px 4px 6px ${theme.palette.primary.main}`
+  }}
+>
+  <h3 style={{ color: theme.palette.primary.main }}>Users</h3>
+  <div className="portalListWrapper">
     {allUsers ? (
       <PortalList itemsToList={allUsers} listType={'user'} />
     ) : (
@@ -113,20 +114,22 @@ const Portal = () => {
       </p>
     )}
   </div>
+</div>
 )}
         
 {/* If user is a parent, display their children */}
 {/* Show kids list if the user is a parent or admin */}
-{(pageToDisplay === 'parent' || pageToDisplay === 'admin') && (
-  <div
-    className="portalColumn"
-    style={{
-      backgroundColor: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
-    }}
-  >
-    <h3 style={{ color: theme.palette.primary.main }}>Children</h3>
+{(pageToDisplay === 'parent') && (
+  <div 
+  className="portalColumn" 
+  style={{
+    backgroundColor: theme.palette.background.paper, 
+    color: theme.palette.text.primary,
+    boxShadow: `0px 4px 6px ${theme.palette.primary.main}`
+  }}
+>
+  <h3 style={{ color: theme.palette.primary.main }}>Children</h3>
+  <div className="portalListWrapper">
     {kidsOfParent ? (
       <PortalList itemsToList={kidsOfParent} listType={'kids'} />
     ) : (
@@ -135,6 +138,8 @@ const Portal = () => {
       </p>
     )}
   </div>
+</div>
+
 )}
         
         {/* Games Column */}
@@ -152,7 +157,7 @@ const Portal = () => {
             }}
           >
             Games
-          </h3>
+          </h3><div className="portalListWrapper">
           {allActivities ? (
             <PortalList itemsToList={allActivities} listType={'games'} />
           ) : (
@@ -164,7 +169,7 @@ const Portal = () => {
             </p>
           )}
         </div>
-
+</div>
         {/* Learning Activities Column */}
         <div
           className="portalColumn"
@@ -181,6 +186,7 @@ const Portal = () => {
           >
             Learning Activities
           </h3>
+          <div className="portalListWrapper">
           {allActivities ? (
             <PortalList itemsToList={allActivities} listType={'learning'} />
           ) : (
@@ -188,9 +194,10 @@ const Portal = () => {
               className="fetchingData"
               style={{ color: theme.palette.text.secondary }}
             >
-              Fetching data...
-            </p>
+              Fetching data..
+            </p> 
           )}
+        </div>
         </div>
 
         {/* Chat Topics Column */}
@@ -209,6 +216,7 @@ const Portal = () => {
           >
             Chat Topics
           </h3>
+          <div className="portalListWrapper">
           {allChatTopics ? (
             <PortalList itemsToList={allChatTopics} listType={'chatTopics'} />
           ) : (
@@ -220,6 +228,7 @@ const Portal = () => {
             </p>
           )}
         </div>
+      </div>
       </div>
 
       <Footer />

@@ -1,55 +1,56 @@
-/* General Wrapper for Portal Columns */
 .portalGridWrapper {
   display: grid;
-  grid-template-columns: 1fr; /* Start with one column spanning the full width */
-  gap: 1rem; /* Space between columns */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
   padding: 1rem;
-  width: 100%; /* Full width of the page */
-  box-sizing: border-box; /* Include padding and border in the width calculation */
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+/* Portal Column */
 .portalColumn {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  padding: 1rem;
+  background-color: inherit; /* Uses MUI theme */
+  color: inherit;
   border-radius: 8px;
+  padding: 1rem;
+  height: 35vh; /* Shorter height */
+  min-height: 250px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.portalColumn:hover {
-  transform: scale(1.02);
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+/* Scrollable List */
+.portalListWrapper {
+  flex-grow: 1;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding-right: 5px;
 }
 
-.portalColumn h3 {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  transition: color 0.3s ease-in-out;
+/* Invisible Scrollbar */
+.portalListWrapper::-webkit-scrollbar {
+  width: 0px; /* Hides scrollbar */
 }
 
-.portalColumn h3:hover {
-  color: var(--hover-color, #ff4081); /* Default hover color, change as needed */
+.portalListWrapper::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Fully invisible */
 }
 
-.portalColumn p {
-  font-size: 1rem;
-  color: var(--text-secondary, #757575);
-  text-align: center;
-}
-
-.portalColumn p.fetchingData {
-  font-style: italic;
-  color: var(--text-muted, #9e9e9e);
-}
-
-
-/* Adjust columns for larger screens */
-@media (min-width: 768px) {
+/* Responsive Design */
+@media (min-width: 1024px) {
   .portalGridWrapper {
-    grid-template-columns: 1fr 1fr; /* Two columns on medium-sized screens */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 1024px) {
   .portalGridWrapper {
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns on large screens */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portalGridWrapper {
+    grid-template-columns: 1fr;
   }
 }
