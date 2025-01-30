@@ -123,7 +123,9 @@ const EditUser = () => {
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     //delete user user if checkbox is selected
-
+    if(editPassword){
+      if(!handlePasswordCheck()) return // stop submission if validation fails
+    }
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -137,8 +139,7 @@ const EditUser = () => {
       editEmail,
       chatAccess
     )
-    
-    if(!handlePasswordCheck()) return // stop submission if validation fails
+  
     setEditSaved(true)
   }
 
