@@ -42,6 +42,8 @@ import {
   IconButton,
 } from "@mui/material";
 
+// HELPERS IMPORTS
+import { validatePasswordCriteria } from '../zzHelpers/helpers'
 
 const EditUser = () => {
   //* USESTATE
@@ -65,6 +67,7 @@ const EditUser = () => {
   const [userType, setUserType] = useState('kid')
   const [parentUser, setParentUser] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
@@ -91,6 +94,32 @@ const EditUser = () => {
     setUserType(value)
   }
 
+  //validate inputs
+  const handlePasswordCheck = () => {
+    try {
+      validatePasswordCriteria(editPassword);
+    } catch (error) { 
+      setError(error.message);
+      return false;
+    } // Validate the password
+    setError('');
+
+    return true;
+  }
+
+  //validate inputs
+  const validateInputs = () => {
+        setError(''); // Clear any previous errors
+        console.log(editPassword, confirmPassword); // Log the passwords
+        if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
+          console.log('All fields are required.'); // Log the error
+          setError('All fields are required.');
+          return false;
+        }
+        handlePasswordCheck()
+        return true;
+      };
+
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     //delete user user if checkbox is selected
@@ -108,6 +137,8 @@ const EditUser = () => {
       editEmail,
       chatAccess
     )
+    
+    if(!handlePasswordCheck()) return // stop submission if validation fails
     setEditSaved(true)
   }
 
@@ -126,6 +157,7 @@ const EditUser = () => {
       userData._id
     )
 
+    if(!validateInputs()) return // stop submission if validation fails
     setEditSaved(true)
   }
 
@@ -287,6 +319,9 @@ const EditUser = () => {
               }}
             />
           </div>
+
+          {/* error message */}
+          {error && <Typography color="error">{error}</Typography>}
 
           {/* disble log in checkbox */}
           <div>
