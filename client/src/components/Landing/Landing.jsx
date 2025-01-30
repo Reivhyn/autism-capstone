@@ -23,6 +23,7 @@ const Landing = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Box
+      
         sx={{
           display: "flex",
           flexDirection: "column",
