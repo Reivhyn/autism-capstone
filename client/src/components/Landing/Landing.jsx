@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+
 import { ThemeProvider } from "@mui/material/styles";
+
 import {
   Box,
   Button,
@@ -14,10 +16,11 @@ import SchoolIcon from "@mui/icons-material/School";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import ChatIcon from "@mui/icons-material/Chat";
 import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
-import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
+import { darkTheme } from "../zzztheme/themes";
 import Logo from "../Logo/Logo";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import LoginRegisterButton from "../LoginRegisterButton/LoginRegisterButton";
+import { ImPriceTag } from "react-icons/im";
 
 const Landing = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
@@ -27,6 +30,7 @@ const Landing = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Box
+      
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -80,7 +84,7 @@ const Landing = () => {
                 >
                   <SchoolIcon fontSize="inherit" />
                 </IconButton>
-                <Typography variant="h6" color="text.primary">
+                <Typography variant="h6">
                   Learning Activities
                 </Typography>
               </CardContent>

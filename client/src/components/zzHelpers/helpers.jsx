@@ -100,18 +100,7 @@ export function validatePasswordCriteria(password) {
     `The password does not meet the criteria
   it must be ${minLength} characters long,
   have an upper and lower case character
-  a number and symbol
-        ${
-          lengthFail
-            ? 'Your password does not meet length requirements\n'
-            : ''
-        }${
-      upperCaseFail ? 'Your password does not have an uppercase letter\n' : ''
-    }${
-      lowerCaseFail ? 'Your password does not have a lower case letter\n' : ''
-    }${numberFail ? 'Your password does not have a number\n' : ''}${
-      symbolFail ? 'Your password does not have a symbol\n' : ''
-    }`.trim()
+  a number and symbol.`
   )
 }
 

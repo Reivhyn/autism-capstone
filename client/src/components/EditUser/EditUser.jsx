@@ -122,9 +122,8 @@ const EditUser = () => {
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    //delete user user if checkbox is selected
-    if(editPassword){
-      if(!handlePasswordCheck()) return // stop submission if validation fails
+    if(editPassword) {
+      if(!handlePasswordCheck()) return 
     }
     //edit changes if delete user is not selected
     editUser(
@@ -158,7 +157,8 @@ const EditUser = () => {
       userData._id
     )
 
-    if(!validateInputs()) return // stop submission if validation fails
+    if(!validateInputs()) return
+
     setEditSaved(true)
   }
 
@@ -321,9 +321,6 @@ const EditUser = () => {
             />
           </div>
 
-          {/* error message */}
-          {error && <Typography color="error">{error}</Typography>}
-
           {/* disble log in checkbox */}
           <div>
             Disable Login
@@ -336,6 +333,8 @@ const EditUser = () => {
             />
           </div>
 
+            {/* error message */}
+            {error && <Typography color='error'>{error}</Typography>}
           {/* do not show delete user button when adding user 
           or for logged in user */}
           {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') &&

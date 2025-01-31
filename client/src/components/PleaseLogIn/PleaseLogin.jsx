@@ -5,6 +5,7 @@ import './pleaseLogin.css'
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
 import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
+import { Box, Button, Typography } from '@mui/material'
 
 const PleaseLogin = () => {
   //* USESTATE
@@ -13,11 +14,15 @@ const PleaseLogin = () => {
   //* RENDER
   return (
     <>
-      <h1>Please Login or Register</h1>
-      <div>
+      <Typography variant='h2'>Please Login or Register</Typography>
+
+      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', padding: '2rem' }}>
         <LoginRegisterButton />
-        <button onClick={() => setPageToDisplay('landing')}>Home</button>
-      </div>
+        <Button
+          variant='outlined'
+          color='theme.palette.primary.main'
+          onClick={() => setPageToDisplay('landing')}>Home</Button>
+      </Box>
     </>
   )
 }

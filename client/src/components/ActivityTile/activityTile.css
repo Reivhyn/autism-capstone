@@ -35,3 +35,15 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
+.activityDescription {
+  max-height: 100px; /* Adjust the height as needed */
+  overflow-y: auto;  /* Enables vertical scrolling */
+  padding: 8px; /* Optional: Adds some spacing */
+  text-align: center; /* Centers text */
+}
+
+/* Hides scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+.activityDescription::-webkit-scrollbar {
+  display: none;
+}

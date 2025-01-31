@@ -15,7 +15,7 @@ import Footer from '../Footer/Footer';
 import { Container, Typography, Grid, useTheme } from '@mui/material';
 
 // CONTEXT IMPORTS
-import { ptdContext } from '../zContextHooks/contextHooks';
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
 
 // HELPER IMPORTS
 import { runSearch } from '../zzHelpers/helpers';
@@ -28,12 +28,13 @@ const Activities = () => {
   const theme = useTheme(); // Access the theme for consistent styling
   const [pageToDisplay] = useContext(ptdContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const [displayResult, setDisplayResult] = useState(null);
-  const [allActivities, setAllActivities] = useState(null);
+  const [displayResult, setDisplayResult] = useState('');
+  const [allActivities, setAllActivities] = useState('');
+  const [userData, setUserData] = useContext(userDataContext)
 
   const fetchActivities = async () => {
     try {
-      const activities = await getActivities('6775ffb83fecb4f3f4b6e22e'); // Replace with dynamic ID if possible
+      const activities = await getActivities(userData._id); // Replace with dynamic ID if possible
       setAllActivities(activities);
     } catch (error) {
       console.error('Failed to fetch activities:', error);
@@ -58,6 +59,7 @@ const Activities = () => {
     ));
   };
 
+  //* USEEFFECTS
   useEffect(() => {
     if (pageToDisplay === 'games' || pageToDisplay === 'learning') {
       fetchActivities();
@@ -73,6 +75,7 @@ const Activities = () => {
   }, [pageToDisplay, allActivities]);
 
   useEffect(() => {
+    console.log('searchTerm', searchTerm)
     if (allActivities) {
       const targetArray =
         pageToDisplay === 'games'
@@ -81,11 +84,13 @@ const Activities = () => {
 
       if (targetArray) {
         const searchResults = runSearch(targetArray, searchTerm);
+        console.log('searhResults', searchResults)
         setDisplayResult(displayGames(searchResults));
       }
     }
   }, [allActivities, searchTerm, pageToDisplay]);
 
+  //* RENDER
   return (
     <Container
       maxWidth="lg"
@@ -124,15 +129,7 @@ const Activities = () => {
   alignItems="flex-start" /* Align tiles to the top */
   style={{ marginTop: '20px' }}
 >
-  {allActivities &&
-    (pageToDisplay === 'games'
-      ? allActivities.allowedGames
-      : allActivities.allowedLearning
-    ).map((activity, index) => (
-      <Grid item xs={12} sm={6} md={4} lg={3} key={`activity-${index}`}>
-        <ActivityTile tileData={activity} />
-      </Grid>
-    ))}
+{displayResult ? displayResult : 'Loading Activities'}
 </Grid>
 
       <Footer />
