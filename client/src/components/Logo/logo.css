@@ -1,7 +1,6 @@
 img {
-    width: auto;
-    height: 40rem;
+    width: 20rem;
+    height: 20rem;
     margin: 0 auto;
-    border-radius: 2%;
     display: block;
 }
