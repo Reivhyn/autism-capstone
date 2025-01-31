@@ -1,23 +1,19 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
+import { useTheme } from '@mui/material/styles' // Import MUI theme hook
+import { Box, Button, TextField, Typography, Paper } from '@mui/material'
 import './chat.css'
 
-//COMPONENT IMPORTS
+// COMPONENT IMPORTS
 import Banner from '../Banner/Banner'
 import Footer from '../Footer/Footer'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import ChatTopicDropMenu from '../ChatTopicDropMenu/ChatTopicDropMenu'
 
-//CONTEXT IMPORTS
-// pdt -> page to display
+// CONTEXT IMPORTS
 import { ptdContext } from '../zContextHooks/contextHooks'
-import { use } from 'react'
-import { FaSleigh } from 'react-icons/fa'
-import { SiRender } from 'react-icons/si'
 
 const Chat = () => {
   //* USESTATE
-  //determins which page to display
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [prompt, setPrompt] = useState('')
   const [geminiStream, setGeminiStream] = useState('')
@@ -26,25 +22,20 @@ const Chat = () => {
   const [displayLog, setDisplayLog] = useState([])
   const [currentTopic, setCurrentTopic] = useState('')
 
-  //* FETCH
+  //* GET CURRENT THEME
+  const theme = useTheme()
+
+  //* FETCH FUNCTION
   const callGemini = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setGeminiStream('')
+
     try {
-      e.preventDefault()
-
-      setIsLoading(true)
-      setGeminiStream('')
-
       const res = await fetch(`http://127.0.0.1:4000/chat/gemini`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt,
-          history,
-          topic: currentTopic,
-        }),
-
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, history, topic: currentTopic }),
         credentials: 'include',
       })
 
@@ -57,24 +48,18 @@ const Chat = () => {
       while (!done) {
         const { value, done: doneReading } = await reader.read()
         done = doneReading
-        const deccodedChunk = decoder.decode(value, { stream: true })
+        const decodedChunk = decoder.decode(value, { stream: true })
 
-        // break up by lines starting with TEXT
-        const lines = deccodedChunk.split('\n')
+        const lines = decodedChunk.split('\n')
         lines.forEach((line) => {
-          //extract text
           if (line.startsWith('TEXT')) {
-            const chunk = line.replace('TEXT: ', '')
-            streamedText += chunk + '\n'
+            streamedText += line.replace('TEXT: ', '') + '\n'
           }
-
           if (line.startsWith('JSON')) {
-            //get json data and parse
             try {
-              const jsonChunk = line.replace('JSON', '').trim()
-              jsonData = JSON.parse(jsonChunk)
+              jsonData = JSON.parse(line.replace('JSON', '').trim())
             } catch (error) {
-              console.log('error parsing JSON', error)
+              console.log('Error parsing JSON', error)
             }
           }
         })
@@ -82,79 +67,84 @@ const Chat = () => {
         setHistory(jsonData)
       }
     } catch (error) {
-      // if(!res.ok) throw new Error(res.message || 'gemini fetch failed');
       console.log('Streaming error', error)
     } finally {
       setIsLoading(false)
     }
   }
 
-  //* FUNCTIONS
-  const RenderLog = () => {
+  //* RENDER CHAT HISTORY
+ /* useEffect(() => {
     if (history) {
       setDisplayLog(
-        history.reverse().map(
-          (log, i) => {
-            return (
-              <div
-                key={`log${i}`}
-                className={i % 2 === 0 ? 'chatRes' : 'userRes'}
-              >
-                {log.parts[0].text}
-              </div>
-            )
-          },
-          [history]
-        )
+        history
+          .slice()
+          .reverse()
+          .map((log, i) => (
+            <Paper
+              key={`log${i}`}
+              sx={{
+                padding: '10px',
+                backgroundColor: i % 2 === 0 ? theme.palette.background.paper : theme.palette.primary.main,
+                color: theme.palette.text.primary,
+                borderRadius: '8px',
+                marginBottom: '5px',
+              }}
+            >
+              {log.parts[0].text}
+            </Paper>
+          ))
       )
     }
-  }
+  }, [history, theme])*/
 
-  //* USEEFFECT
-  useEffect(() => {
-    if (history) {
-      console.log('history', history)
-      RenderLog()
-    }
-  }, [history])
-
-  //* RENDER
+  //* RENDER COMPONENT
   return (
     <>
       <SiteTitle />
-      <h1>CHAT PAGE</h1>
-      
+      <Typography variant="h1" align="center">Chat Page</Typography>
+
+      {/*<Banner />*/}
       {/* Chat topic drop menu */}
-      <ChatTopicDropMenu
-        currentTopic={currentTopic}
-        setCurrentTopic={setCurrentTopic}
-      />
+      <ChatTopicDropMenu currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />
 
-
-      {/* promt form */}
-      <form action="">
-        <textarea
-          name=""
-          id=""
+      {/* Prompt Form */}
+      <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%', maxWidth: 600, mx: 'auto' }}>
+        <TextField
+          multiline
+          fullWidth
+          variant="outlined"
+          placeholder="Type your message..."
           value={prompt}
-          onChange={(e) => {
-            setPrompt(e.target.value)
+          onChange={(e) => setPrompt(e.target.value)}
+          sx={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderRadius: '8px',
           }}
-        ></textarea>
-        <button
-          onClick={(e) => callGemini(e)}
+        />
+        <Button
+          variant="contained"
+          onClick={callGemini}
           disabled={isLoading || !currentTopic}
+          sx={{
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.text.primary,
+            '&:hover': { backgroundColor: theme.palette.secondary.main },
+          }}
         >
           Ask Gemini
-        </button>
-      </form>
-      {/* History log */}
-      <div className="chatHistoryWrapper">
-        <div className="history">{displayLog ? displayLog : ''}</div>
-        <div className="currentResponce">{geminiStream}</div>
-      </div>
+        </Button>
+      </Box>
 
-      <Banner />
+      {/* Chat History */}
+      <Box className="chatHistoryWrapper" sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}>
+        <Box className="history">{displayLog}</Box>
+        <Paper className="currentResponse" sx={{ padding: 2, backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary }}>
+          {geminiStream}
+        </Paper>
+      </Box>
+
       <Footer />
     </>
   )
