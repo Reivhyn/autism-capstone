@@ -18,6 +18,7 @@ import EditChatTopic from './components/EditChatTopic/EditChatTopic.jsx'
 import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 import PleaseLogin from './components/PleaseLogIn/PleaseLogin.jsx'
 import ThemeDropMenu from './components/ThemeDropMenu/ThemeDropMenu.jsx'
+import Footer from './components/Footer/Footer.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -152,6 +153,9 @@ function App() {
                 {(pageToDisplay === 'editActivity' ||
                   pageToDisplay === 'addGame' ||
                   pageToDisplay === 'addLearning') && <EditActivity />}
+
+                  {/* footer */}
+                  <Footer />
               </editTargetContext.Provider>
             </KidsOfParentContext.Provider>
           </ptdContext.Provider>

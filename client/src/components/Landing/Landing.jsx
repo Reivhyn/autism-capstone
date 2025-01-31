@@ -142,21 +142,7 @@ const Landing = () => {
           </Card>
         </Box>
 
-        {/* Footer */}
-        <Box
-          component="footer"
-          sx={{
-            position: "absolute",
-            bottom: 16,
-            textAlign: "center",
-            width: "100%",
-            color: "text.secondary",
-          }}
-        >
-          <Typography variant="body2">
-            &copy; 2025 Your Site Name. All rights reserved.
-          </Typography>
-        </Box>
+        
       </Box>
     </ThemeProvider>
   );
