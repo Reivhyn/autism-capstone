@@ -8,6 +8,7 @@ import {
   CardActionArea,
   Typography,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -15,10 +16,13 @@ import ChatIcon from "@mui/icons-material/Chat";
 import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
 import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
 import Logo from "../Logo/Logo";
+import SiteTitle from "../SiteTitle/SiteTitle";
+import LoginRegisterButton from "../LoginRegisterButton/LoginRegisterButton";
 
 const Landing = () => {
-  const [, setPageToDisplay] = useContext(ptdContext);
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
   const [userData] = useContext(userDataContext);
+  const theme = useTheme();
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -30,45 +34,25 @@ const Landing = () => {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
-          backgroundColor: "background.default",
-          color: "text.primary",
+          backgroundColor: theme.palette.background.default,
         }}
       >
         {/* Top-right Login and Register Buttons */}
-        {!userData && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: 16,
-              right: 16,
-              display: "flex",
-              gap: 2,
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setPageToDisplay("login")}
-            >
-              Login
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => setPageToDisplay("register")}
-            >
-              Register
-            </Button>
-          </Box>
-        )}
-
+        <Box
+          sx={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+            display: "flex",
+          }}
+        >
+        <LoginRegisterButton />
+        </Box>
         {/* Site Logo */}
         <Logo />
 
         {/* Site Header */}
-        <Typography variant="h2" gutterBottom>
-          Welcome To The Imagination Treehouse!
-        </Typography>
+        <SiteTitle />
 
         {/* Main Cards Section */}
         <Box
@@ -84,7 +68,7 @@ const Landing = () => {
             sx={{
               width: 250,
               textAlign: "center",
-              backgroundColor: "background.paper",
+              backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
@@ -109,7 +93,7 @@ const Landing = () => {
             sx={{
               width: 250,
               textAlign: "center",
-              backgroundColor: "background.paper",
+              backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
@@ -134,7 +118,7 @@ const Landing = () => {
             sx={{
               width: 250,
               textAlign: "center",
-              backgroundColor: "background.paper",
+              backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
