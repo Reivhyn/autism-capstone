@@ -6,7 +6,6 @@ import './portal.css';
 
 // COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle';
-import Footer from '../Footer/Footer';
 import PortalList from '../PortalList/PortalList';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
@@ -231,7 +230,6 @@ const Portal = () => {
       </div>
       </div>
 
-      <Footer />
     </>
   );
 };

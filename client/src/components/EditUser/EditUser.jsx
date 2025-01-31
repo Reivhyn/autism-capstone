@@ -7,7 +7,6 @@ import './editUser.css'
 
 //COMPONENT IMPORTS
 import SiteTitle from '../SiteTitle/SiteTitle'
-import Footer from '../Footer/Footer'
 import LogoutButton from '../LogoutButton/LogoutButton'
 import DualList from '../DualList/DualList'
 
