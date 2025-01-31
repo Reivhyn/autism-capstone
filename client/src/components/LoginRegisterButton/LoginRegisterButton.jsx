@@ -21,7 +21,7 @@ return (
 <>
   {/* Site Title */}
 {!userData && (
-          <Box>
+          <Box  sx={{ display: 'flex', gap: 2 }}>
             <Button
             variant="contained"
             onClick={() => setPageToDisplay("login")}
@@ -38,7 +38,6 @@ return (
             </Button>
           </Box>
         )}
-
 </>
 )
 }

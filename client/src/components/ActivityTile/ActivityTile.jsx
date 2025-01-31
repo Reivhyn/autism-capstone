@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /*
- * This component displays the tiles users can press for games or learning activities.
+* This component displays the tiles users can press for games or learning activities.
  */
 
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
+import './ActivityTile.css'
 
 // CONTEXT IMPORTS
 import { ptdContext } from '../zContextHooks/contextHooks';
@@ -16,10 +17,6 @@ import { Card, CardMedia, CardContent, Typography, Link } from '@mui/material';
 
 const ActivityTile = ({ tileData }) => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-
-  console.log('tileData:', tileData);
-  console.log('titledate url:', tileData.url);
-  console.log('titledate imageURL:', tileData.imageURL);
 
   return (
     <Card 
@@ -50,7 +47,9 @@ const ActivityTile = ({ tileData }) => {
 
         {/* Tile description */}
         <Typography variant="body2" color="text.secondary" textAlign="center">
+          <div className="activityDescription">
           {tileData.description}
+          </div>
         </Typography>
       </CardContent>
       </Link>

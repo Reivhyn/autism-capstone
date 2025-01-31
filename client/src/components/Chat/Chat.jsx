@@ -102,7 +102,7 @@ const Chat = () => {
   return (
     <>
       <SiteTitle />
-      <Typography variant="h1" align="center">Chat Page</Typography>
+      <Typography variant="h4" align="center">Chat Page</Typography>
 
       {/*<Banner />*/}
       {/* Chat topic drop menu */}

@@ -15,10 +15,10 @@ const [inputValue, setInputValue] = useState('');
 const theme = useTheme();
 
   const handleSubmit = (e) => {
-    console.log(e) // Can take out
-    console.log(inputValue) // Can take out
-    e.preventDefault();
-    setSearchTerm(inputValue); // Update search term in parent
+    console.log('this is e', e) // Can take out
+    console.log('this',inputValue) // Can take out
+    e.preventDefault()
+    setSearchTerm(inputValue)
   };
 
   return (
