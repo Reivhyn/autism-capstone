@@ -16,10 +16,7 @@
   margin-bottom: 20px;
 }
 
-.dropdown-container {
-  display: flex; /* Align the dropdowns horizontally */
-  gap: 10px; /* Add space between the dropdown menus */
-}
+
 
 /* Responsiveness for dropMenu & searchBar */
 @media (max-width: 768px) {
