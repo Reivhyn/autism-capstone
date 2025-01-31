@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+
 import { ThemeProvider } from "@mui/material/styles";
+
 import {
   Box,
   Button,
@@ -18,6 +20,7 @@ import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme
 import Logo from "../Logo/Logo";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import LoginRegisterButton from "../LoginRegisterButton/LoginRegisterButton";
+import { ImPriceTag } from "react-icons/im";
 
 const Landing = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
