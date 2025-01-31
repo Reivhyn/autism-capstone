@@ -36,7 +36,7 @@ const Landing = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          maxHeight: "100vh",
           backgroundColor: theme.palette.background.default,
         }}
       >
