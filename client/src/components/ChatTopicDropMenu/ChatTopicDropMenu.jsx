@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useContext, useEffect } from 'react'
 import './chatTopicDropMenu.css'
+import { useTheme } from '@mui/material/styles'
 
 // FETCH IMPORTS
 import { getAllChatTopics } from '../zzzFetches/fetches'
@@ -17,6 +18,8 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   const [userData, setUserData] = useContext(userDataContext)
   const [allowedTopics, setAllowedTopics] = useState('')
   const [displayList, setdisplayList] = useState('')
+
+const theme = useTheme()
 
   //* FUNCTIONS
   //get all topics then get allowed topics
