@@ -98,8 +98,7 @@ export function validatePasswordCriteria(password) {
     symbolFail
   ) throw new Error(
     `The password does not meet the criteria
-  it must be 
-  ${minLength} characters long,
+  it must be ${minLength} characters long,
   have an upper and lower case character
   a number and symbol.`
   )
