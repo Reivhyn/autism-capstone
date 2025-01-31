@@ -40,6 +40,9 @@ const ActivityTile = ({ tileData }) => {
         image={tileData.imageURL}
         alt={`Image for ${tileData.activityTitle}`}
         style={{ objectFit: 'cover' }}
+        onError={(e) => {
+          e.target.src = 'src/assets/SiteLogo.png';
+        }}
       />
       {/* Tile content */}
       <CardContent>
@@ -50,7 +53,9 @@ const ActivityTile = ({ tileData }) => {
 
         {/* Tile description */}
         <Typography variant="body2" color="text.secondary" textAlign="center">
+          <div className='activityDescription'>
           {tileData.description}
+          </div>
         </Typography>
       </CardContent>
       </Link>
