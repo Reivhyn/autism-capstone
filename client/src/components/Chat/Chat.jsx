@@ -145,7 +145,6 @@ const Chat = () => {
         </Paper>
       </Box>
 
-      <Footer />
     </>
   )
 }
