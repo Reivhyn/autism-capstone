@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import './portal.css';
 
 // COMPONENT IMPORTS
@@ -23,6 +22,18 @@ import {
   getAllUsers,
   getAllChatTopics
 } from '../zzzFetches/fetches'
+
+// MUI IMPORTS
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  Typography,
+  IconButton,
+  useTheme,
+} from '@mui/material'
 
 
 const Portal = () => {
@@ -87,7 +98,14 @@ const Portal = () => {
         {`${pageToDisplay.toUpperCase()} PORTAL`}
       </h2>
 
-      <div className="portalGridWrapper">
+      <Box className="portalGridWrapper"   sx={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '1rem',
+    p: '1rem',
+    maxWidth: '1200px',
+    margin: '0 auto',
+  }}>
         {/* if pageToDisplay is admin show all users list
         first ternary function checks to see if page is admin and if needed
         data is present to display the list
@@ -228,7 +246,7 @@ const Portal = () => {
           )}
         </div>
       </div>
-      </div>
+      </Box>
 
     </>
   );
