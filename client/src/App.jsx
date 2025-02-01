@@ -32,7 +32,7 @@ import {
 // MATERIAL-UI IMPORTS
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { LogoutOutlined } from '@mui/icons-material'
+import { Cookie, LogoutOutlined } from '@mui/icons-material'
 import { ThemeContext } from '@emotion/react'
 
 //theme imports
@@ -52,13 +52,21 @@ function App() {
   const [activeTheme, setActiveTheme] = useState('')
 
   //* USESTATES
-  //try to get session data on pageload
+  //try to get session data on pageload and prefered theme
   useEffect(() => {
-    const savedUserData = sessionStorage.getItem('userData')
     try {
+      const savedUserData = sessionStorage.getItem('userData')
       savedUserData === undefined ? '' : setUserData(JSON.parse(savedUserData)) // Default to an empty string if no value is saved
     } catch (error) {
       console.log('parse session storage failed', error)
+    }
+
+    // try to get saved theme
+    try {
+      const savedTheme = localStorage.getItem('themePreference')
+      savedTheme === undefined ? '' : setActiveTheme(JSON.parse(savedTheme))
+    } catch (error) {
+      console.log('parse local storage failed', error)
     }
   }, [])
 
@@ -91,6 +99,11 @@ function App() {
   useEffect(() => {
     if (userData) sessionStorage.setItem('userData', JSON.stringify(userData))
   }, [userData])
+
+  useEffect(() => {
+    if (activeTheme)
+      localStorage.setItem('themePreference', JSON.stringify(activeTheme))
+  }, [activeTheme])
 
   //* RENDERING
   return (
@@ -154,8 +167,8 @@ function App() {
                   pageToDisplay === 'addGame' ||
                   pageToDisplay === 'addLearning') && <EditActivity />}
 
-                  {/* footer */}
-                  <Footer />
+                {/* footer */}
+                <Footer />
               </editTargetContext.Provider>
             </KidsOfParentContext.Provider>
           </ptdContext.Provider>

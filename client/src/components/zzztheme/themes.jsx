@@ -47,19 +47,20 @@ export const evening = createTheme({
 export const moon = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#1e2b4f' }, // Deep blue
-    secondary: { main: '#8b8cd4' }, // Lavender
+    primary: { main: '#2a3e7f' }, // Richer deep blue for better visibility
+    secondary: { main: '#7a8bb8' }, // Softer lavender for better contrast
     background: { default: '#0c162d', paper: '#1e2b4f' }, // Midnight shades
-    text: { primary: '#ffffff', secondary: '#e3d5f7' }, // White for readability
+    text: { primary: '#ffffff', secondary: '#d1c6f7' }, // Light text for contrast
   },
   typography: {
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#ffffff' },
-    h2: { ...baseTypography.h2, color: '#8b8cd4' },
+    h2: { ...baseTypography.h2, color: '#d1c6f7' }, // Soft lavender to match secondary
     h6: { ...baseTypography.h6, color: '#ffffff' },
-    body1: { ...baseTypography.body1, color: '#e3d5f7' },
+    body1: { ...baseTypography.body1, color: '#d1c6f7' }, // Softer color for body text
   },
 });
+
 
 export const synth = createTheme({
   palette: {
@@ -94,17 +95,17 @@ export const synth = createTheme({
 export const day = createTheme({
   palette: {
     mode: 'light',
-    primary: { main: '#FF5722' }, // Orange
-    secondary: { main: '#2196F3' }, // Blue
-    background: { default: '#F5F5F5', paper: '#FFFFFF' }, // Soft off-white
-    text: { primary: '#000000', secondary: '#757575' }, // Black text for contrast
+    primary: { main: '#8C3A0C' }, // Deep burnt orange
+    secondary: { main: '#1976D2' }, // Muted blue for contrast
+    background: { default: '#E3D5C0', paper: '#F2E6D0' }, // Parchment-like colors
+    text: { primary: '#3D2B1F', secondary: '#5C4B3B' }, // Warm brown tones for readability
   },
   typography: {
     ...baseTypography,
-    h1: { ...baseTypography.h1, color: '#FF5722' },
-    h2: { ...baseTypography.h2, color: '#2196F3' },
-    h6: { ...baseTypography.h6, color: '#000000' },
-    body1: { ...baseTypography.body1, color: '#000000' },
+    h1: { ...baseTypography.h1, color: '#8C3A0C' }, // Dark burnt orange for headings
+    h2: { ...baseTypography.h2, color: '#145A8D' }, // Slightly darker blue
+    h6: { ...baseTypography.h6, color: '#3D2B1F' }, // Deep brown for text
+    body1: { ...baseTypography.body1, color: '#3D2B1F' }, // Warm dark brown for better readability
   },
 });
 

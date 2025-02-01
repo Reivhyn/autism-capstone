@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState, useContext, useEffect } from 'react'
-import './chatTopicDropMenu.css'
-import { useTheme } from '@mui/material/styles'
+import React, { useState, useContext, useEffect } from 'react'
 
 // FETCH IMPORTS
 import { getAllChatTopics } from '../zzzFetches/fetches'
@@ -12,15 +10,20 @@ import { userDataContext } from '../zContextHooks/contextHooks'
 // pdt -> page to display
 import { ptdContext } from '../zContextHooks/contextHooks'
 
+// MUI IMPORTS
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+
 const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   //* USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
   const [allowedTopics, setAllowedTopics] = useState('')
   const [displayList, setdisplayList] = useState('')
-
-const theme = useTheme()
-
+  const [anchorEl, setAnchorEl] = React.useState('');
+  const open = Boolean(anchorEl);
+  
   //* FUNCTIONS
   //get all topics then get allowed topics
   const getTopics = async () => {
@@ -33,19 +36,30 @@ const theme = useTheme()
     })
     setAllowedTopics(arr)
   }
+  
+  // handle open for menu
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
+  //handle close for menu 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
   //render drop menu items
   const renderList = () => {
     setdisplayList(
       allowedTopics.map((topic) => {
         return (
-          <div
-            className="chatTopicItem"
-            key={topic._id}
-            onClick={() => setCurrentTopic(topic)}
+          <MenuItem
+          className="chatTopicItem"
+          key={topic._id}
+          onClick={() => {setCurrentTopic(topic) 
+            handleClose()}}
           >
-            {topic.topicTitle} 
-          </div>
+            {topic.topicTitle}
+          </MenuItem>
         )
       })
     )
@@ -68,14 +82,29 @@ const theme = useTheme()
 
   //* RENDER
   return (
-    <div className="dropMenu">
-      <h2>{currentTopic ? currentTopic.topicTitle : 'Choose A Topic'}</h2>
-      <div className="dropContent">
-        {/* button to go home */}
+    <div>
+      <Button
+      variant='outlined'
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        {currentTopic ? currentTopic.topicTitle : 'Choose A Topic'}
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
         {displayList ? displayList : ''}
-      </div>
+      </Menu>
     </div>
   )
 }
-
 export default ChatTopicDropMenu
