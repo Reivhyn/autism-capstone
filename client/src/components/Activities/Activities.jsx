@@ -9,7 +9,6 @@ import SiteTitle from '../SiteTitle/SiteTitle';
 import Banner from '../Banner/Banner';
 import SearchBar from '../SearchBar/SearchBar';
 import ActivityTile from '../ActivityTile/ActivityTile';
-import Footer from '../Footer/Footer';
 
 // Material-UI Imports
 import { Container, Typography, Grid, useTheme } from '@mui/material';
@@ -132,7 +131,6 @@ const Activities = () => {
 {displayResult ? displayResult : 'Loading Activities'}
 </Grid>
 
-      <Footer />
     </Container>
   );
 };
