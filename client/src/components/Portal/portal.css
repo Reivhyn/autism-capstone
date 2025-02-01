@@ -1,29 +1,3 @@
-/* 
-.portalGridWrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-} */
-
-
-/* Scrollable List */
-.portalListWrapper {
-  flex-grow: 1;
-  overflow-y: auto; /* Enables vertical scrolling */
-  padding-right: 5px;
-}
-
-/* Invisible Scrollbar */
-.portalListWrapper::-webkit-scrollbar {
-  width: 0px; /* Hides scrollbar */
-}
-
-.portalListWrapper::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Fully invisible */
-}
 
 /* Responsive Design */
 @media (min-width: 1024px) {
