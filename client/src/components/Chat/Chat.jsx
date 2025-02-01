@@ -74,7 +74,7 @@ const Chat = () => {
   }
 
   //* RENDER CHAT HISTORY
- /* useEffect(() => {
+  useEffect(() => {
     if (history) {
       setDisplayLog(
         history
@@ -96,7 +96,7 @@ const Chat = () => {
           ))
       )
     }
-  }, [history, theme])*/
+  }, [history, theme])
 
   //* RENDER COMPONENT
   return (

@@ -1,80 +1,84 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useContext, useEffect } from 'react'
-import './chatTopicDropMenu.css'
+import { Box, Typography, Paper } from '@mui/material' // Use MUI components
 import { useTheme } from '@mui/material/styles'
+import './chatTopicDropMenu.css'
 
 // FETCH IMPORTS
 import { getAllChatTopics } from '../zzzFetches/fetches'
-import { userDataContext } from '../zContextHooks/contextHooks'
-
-//CONTEXT IMPORTS
-// pdt -> page to display
-import { ptdContext } from '../zContextHooks/contextHooks'
+import { userDataContext, ptdContext } from '../zContextHooks/contextHooks'
 
 const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   //* USESTATE
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData, setUserData] = useContext(userDataContext)
-  const [allowedTopics, setAllowedTopics] = useState('')
-  const [displayList, setdisplayList] = useState('')
+  const [allowedTopics, setAllowedTopics] = useState([])
+  const [displayList, setDisplayList] = useState([])
 
-const theme = useTheme()
+  //* GET CURRENT THEME
+  const theme = useTheme()
 
   //* FUNCTIONS
-  //get all topics then get allowed topics
   const getTopics = async () => {
-    const arr = []
     const allTopics = await getAllChatTopics()
-    allTopics.allChatTopics.forEach((topic) => {
-      if (userData.chatAccess.includes(topic._id)) {
-        arr.push(topic)
-      }
-    })
-    setAllowedTopics(arr)
+    const filteredTopics = allTopics.allChatTopics.filter(topic => 
+      userData.chatAccess.includes(topic._id)
+    )
+    setAllowedTopics(filteredTopics)
   }
 
-  //render drop menu items
   const renderList = () => {
-    setdisplayList(
-      allowedTopics.map((topic) => {
-        return (
-          <div
-            className="chatTopicItem"
-            key={topic._id}
-            onClick={() => setCurrentTopic(topic)}
-          >
-            {topic.topicTitle} 
-          </div>
-        )
-      })
+    setDisplayList(
+      allowedTopics.map((topic) => (
+        <Paper
+          key={topic._id}
+          onClick={() => setCurrentTopic(topic)}
+          sx={{
+            padding: 1,
+            marginBottom: 1,
+            cursor: 'pointer',
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            '&:hover': {
+              backgroundColor: theme.palette.primary.light,
+            },
+          }}
+        >
+          {topic.topicTitle}
+        </Paper>
+      ))
     )
   }
 
   //* USEEFFECT
-  //get topics on component load
   useEffect(() => {
     if (pageToDisplay === 'chat') {
       getTopics()
     }
   }, [pageToDisplay])
 
-  //render list
   useEffect(() => {
-    if (allowedTopics) {
+    if (allowedTopics.length > 0) {
       renderList()
     }
   }, [allowedTopics])
 
   //* RENDER
   return (
-    <div className="dropMenu">
-      <h2>{currentTopic ? currentTopic.topicTitle : 'Choose A Topic'}</h2>
-      <div className="dropContent">
-        {/* button to go home */}
-        {displayList ? displayList : ''}
-      </div>
-    </div>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.background.default,
+        padding: 2,
+        borderRadius: 2,
+        boxShadow: 1,
+      }}
+    >
+      <Typography variant="h6" sx={{ marginBottom: 2 }}>
+        {currentTopic ? currentTopic.topicTitle : 'Choose A Topic'}
+      </Typography>
+      <Box>{displayList}</Box>
+    </Box>
   )
 }
 
