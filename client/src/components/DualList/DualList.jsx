@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
 import './dualList.css'
@@ -12,6 +13,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  useTheme,
 } from '@mui/material'
 
 const DualList = ({
@@ -24,6 +26,7 @@ const DualList = ({
   //* USESTATES
   const [editTarget, setEditTarget] = useContext(editTargetContext)
   const [dualListTitle, setDualListTitle] = useState('')
+  const theme = useTheme()
 
   //set vars for available and selected options
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
@@ -260,43 +263,89 @@ const DualList = ({
   //* RENDER
   return (
     <>
-      <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-        {dualListTitle}
-      </Typography>
+      {/* only show dual list if editing or adding kid */}
+      <div
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.text.primary,
+          boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+        }}
+      >
+        <h3
+          style={{
+            color: theme.palette.secondary.main,
+          }}
+        >
+          {/* dual list title */}
+          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+            {dualListTitle}
+          </Typography>
+        </h3>
 
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, p: 2 }}>
-        {/* dual list title */}
-
-        {/* Available list */}
-        <Box sx={{ width: '45%' }}>
+        {/* dual list title wrap */}
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'space-evenly' }}>
+          {/* available list */}
           <Typography variant="subttile1" sx={{ fontWeight: 'bold' }}>
             Available
           </Typography>
-          <List>
-            {renderAvailable.length > 0 ? renderAvailable : 'Fetching Data'}
-          </List>
-          <Button variant="contained" color="primary" onClick={handleAddAll}>
-            Add All
-          </Button>
-        </Box>
-
-        {/* Selected List */}
-        <Box sx={{ width: '45%' }}>
           <Typography variant="subttile1" sx={{ fontWeight: 'bold' }}>
             Selected
           </Typography>
-          <List>
-            {renderSelected.length > 0 ? renderSelected : 'Fetching Data'}
-          </List>
+          {/* selected list */}
+        </Box>
+
+        {/* dual list left right wrap */}
+        <Box sx={{ p: 1.5 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 2,
+              p: 2,
+              height: '30vh',
+              overflow: 'auto',
+              scrollbarWidth: 'none', // Hide scrollbar for Firefox
+              '&::-webkit-scrollbar': {
+                display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
+              },
+            }}
+          >
+            {/* Available list */}
+            <Box sx={{ width: '45%' }}>
+              <List>{renderAvailable.length > 0 ? renderAvailable : ''}</List>
+            </Box>
+
+            {/* Selected List */}
+            <Box sx={{ width: '45%' }}>
+              <List>{renderSelected.length > 0 ? renderSelected : ''}</List>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* dual list add and remove button wrap */}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            justifyContent: 'space-evenly',
+            paddingBottom: '1vh',
+          }}
+        >
+          {/* add all button */}
+          <Button variant="outlined" color="primary" onClick={handleAddAll}>
+            Add All
+          </Button>
+
+          {/* remove all button */}
           <Button
-            variant="contained"
+            variant="outlined"
             color="secondary"
             onClick={handleRemoveAll}
           >
             Remove All
           </Button>
         </Box>
-      </Box>
+      </div>
     </>
   )
 }

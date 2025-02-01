@@ -1,4 +1,3 @@
-
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
@@ -40,7 +39,8 @@ import {
   CardActionArea,
   Typography,
   IconButton,
-} from "@mui/material";
+  useTheme
+} from '@mui/material'
 
 // HELPERS IMPORTS
 import { validatePasswordCriteria } from '../zzHelpers/helpers'
@@ -54,6 +54,7 @@ const EditUser = () => {
   const [editTarget, setEditTarget] = useContext(editTargetContext)
   const [allUsers, setAllUsers] = useState('')
   const [editSaved, setEditSaved] = useState('')
+  const theme = useTheme()
 
   //userStates pertaining to editing user properties
   const [editFirstName, setEditFirstname] = useState('')
@@ -97,33 +98,41 @@ const EditUser = () => {
   //validate inputs
   const handlePasswordCheck = () => {
     try {
-      validatePasswordCriteria(editPassword);
-    } catch (error) { 
-      setError(error.message);
-      return false;
+      validatePasswordCriteria(editPassword)
+    } catch (error) {
+      setError(error.message)
+      return false
     } // Validate the password
-    setError('');
+    setError('')
 
-    return true;
+    return true
   }
 
   //validate inputs
   const validateInputs = () => {
-        setError(''); // Clear any previous errors
-        console.log(editPassword, confirmPassword); // Log the passwords
-        if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
-          console.log('All fields are required.'); // Log the error
-          setError('All fields are required.');
-          return false;
-        }
-        handlePasswordCheck()
-        return true;
-      };
+    setError('') // Clear any previous errors
+    console.log(editPassword, confirmPassword) // Log the passwords
+    if (
+      !editUserName ||
+      !editFirstName ||
+      !editLastName ||
+      !editEmail ||
+      !editPassword ||
+      !confirmPassword ||
+      !editDateOfBirth
+    ) {
+      console.log('All fields are required.') // Log the error
+      setError('All fields are required.')
+      return false
+    }
+    handlePasswordCheck()
+    return true
+  }
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    if(editPassword) {
-      if(!handlePasswordCheck()) return 
+    if (editPassword) {
+      if (!handlePasswordCheck()) return
     }
     //edit changes if delete user is not selected
     editUser(
@@ -156,7 +165,7 @@ const EditUser = () => {
       userData._id
     )
 
-    if(!validateInputs()) return
+    if (!validateInputs()) return
 
     setEditSaved(true)
   }
@@ -332,8 +341,8 @@ const EditUser = () => {
             />
           </div>
 
-            {/* error message */}
-            {error && <Typography color='error'>{error}</Typography>}
+          {/* error message */}
+          {error && <Typography color="error">{error}</Typography>}
           {/* do not show delete user button when adding user 
           or for logged in user */}
           {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') &&
@@ -404,13 +413,8 @@ const EditUser = () => {
         ''
       )}
 
-      {/* only show dual list if editing or adding kid */}
 
-     {/* this is start of new */}
-     {/* this is END of new */}
-
-
-      {/* games duallist */} 
+      {/* games duallist */}
       {allActivities &&
       (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
         <DualList

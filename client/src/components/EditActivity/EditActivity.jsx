@@ -240,7 +240,7 @@ const EditActivity = () => {
               }}
             >
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 disabled={
                   (pageToDisplay === 'addLearning' ||
@@ -254,27 +254,21 @@ const EditActivity = () => {
               >
                 Save
               </Button>
-              <Button
+
+            {pageToDisplay === 'editActivity' ? (
+                <Button
                 variant="outlined"
                 color="secondary"
                 onClick={() => setPageToDisplay(userData.userType)}
-              >
+                >
                 Cancel
-              </Button>
+                </Button>
+            ) : null}
             </Box>
           </form>
         ) : null}
 
 
-        {pageToDisplay === 'editActivity' ? (
-            <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => setPageToDisplay(userData.userType)}
-            >
-            Cancel
-            </Button>
-        ) : null}
       </Box>
     </ThemeProvider>
   )
