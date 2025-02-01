@@ -147,7 +147,7 @@ const PortalList = ({ itemsToList, listType }) => {
     <Box className="portalListWrap">
       <Box
         sx={{
-          height: '50vh', // Shorter height
+          height: '49vh', // Shorter height
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
@@ -164,7 +164,7 @@ const PortalList = ({ itemsToList, listType }) => {
         <Button
           variant="outlined"
           color="primary"
-          sx={{ display: 'sticky' }}
+          sx={{ display: 'sticky',  marginBottom: "1vh"}}
           onClick={handleAddClick}
         >
           Add
