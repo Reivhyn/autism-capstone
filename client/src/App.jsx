@@ -73,13 +73,13 @@ function App() {
   //* FUNCTIONS
   const theme = useMemo(() => {
     switch (activeTheme) {
-      case 'evening':
+      case 'Evening':
         return evening
-      case 'moon':
+      case 'Moon':
         return moon
-      case 'synth':
+      case 'Synth':
         return synth
-      case 'day':
+      case 'Day':
         return day
       default:
         return darkTheme

@@ -16,7 +16,7 @@ const ThemeDropMenu = () => {
   const open = Boolean(anchorEl)
 
   //array that has names of all themes
-  const themeStringNamesArr = ['dark', 'evening', 'moon', 'synth', 'day']
+  const themeStringNamesArr = ['Dark', 'Evening', 'Moon', 'Synth', 'Day']
 
   //* FUNCTIONS
   // handle open for menu
