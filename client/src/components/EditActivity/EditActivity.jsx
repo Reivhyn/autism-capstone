@@ -130,29 +130,28 @@ const EditActivity = () => {
         }}
       >
         <Typography variant="h5" color="text.primary" gutterBottom>
-          {pageToDisplay === 'editActivity' 
-            ? `Editing ${editTarget.activityTitle}`
+          {pageToDisplay === 'editActivity'
+            ? (userData._id === editTarget.createdBy || userData.userType === 'admin')
+              ? `Editing: ${editTarget.activityTitle}`
+              : editTarget.activityTitle
             : `Add New ${activityType}`}
         </Typography>
+
 
         <Box sx={{ marginBottom: 2 }}>
           {pageToDisplay === 'editActivity'  ? (
           <>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            Current Data:
-          </Typography>
-          <Typography variant="body2">
-            Name: {editTarget.activityTitle}
-          </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" margin={2}>
             Description: {editTarget.description}
           </Typography>
-          <Typography variant="body2">URL: {editTarget.url}</Typography>
-          <Typography variant="body2">
+          <Typography variant="body3" margin={2}>
+            URL: {editTarget.url}
+            </Typography>
+          <Typography variant="body2" margin={2}>
             Category: {editTarget.category}
           </Typography>
-          <Typography variant="body2">
-            Search Keywords: {editTarget.ageRange}
+          <Typography variant="body3" margin={2}>
+            Search Keywords: {editTarget.searchKeywords}
           </Typography>
           </>
           ) : null
@@ -171,6 +170,7 @@ const EditActivity = () => {
               margin="normal"
               value={editActivityTitle}
               onChange={(e) => seteditActivityTitle(e.target.value)}
+              required={pageToDisplay === 'addLearning' || pageToDisplay === 'addGame'}
             />
 
             <TextField
@@ -180,24 +180,7 @@ const EditActivity = () => {
               margin="normal"
               value={editDescription}
               onChange={(e) => seteditDescription(e.target.value)}
-            />
-
-            <TextField
-              label="URL"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editurl}
-              onChange={(e) => setediturl(e.target.value)}
-            />
-
-            <TextField
-              label="Image URL"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editImageURL}
-              onChange={(e) => seteditImageURL(e.target.value)}
+              required={pageToDisplay === 'addLearning' || pageToDisplay === 'addGame'}
             />
 
             <TextField
@@ -207,6 +190,7 @@ const EditActivity = () => {
               margin="normal"
               value={editCategory}
               onChange={(e) => seteditCategory(e.target.value)}
+              required={pageToDisplay === 'addLearning' || pageToDisplay === 'addGame'}
             />
 
             <TextField
@@ -216,6 +200,26 @@ const EditActivity = () => {
               margin="normal"
               value={editSearchKeywords}
               onChange={(e) => seteditSearchKeywords(e.target.value)}
+              required={pageToDisplay === 'addLearning' || pageToDisplay === 'addGame'}
+            />
+
+            <TextField
+              label="URL"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={editurl}
+              onChange={(e) => setediturl(e.target.value)}
+              required={pageToDisplay === 'addLearning' || pageToDisplay === 'addGame'}
+            />
+
+            <TextField
+              label="Image URL"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={editImageURL}
+              onChange={(e) => seteditImageURL(e.target.value)}
             />
 
             <TextField
