@@ -4,7 +4,7 @@ const baseTypography = {
   fontFamily: 'Roboto, Arial, sans-serif',
   h1: { fontSize: '2rem', fontWeight: 700 },
   h2: { fontSize: '1.75rem', fontWeight: 600 },
-  h6: { fontSize: '1.25rem', fontWeight: 500 },
+  h6: { fontSize: '1.25rem', fontWeight: 400 },
   body1: { fontSize: '1rem', fontWeight: 400 },
   body2: { fontSize: '0.875rem', fontWeight: 400 },
   button: { textTransform: 'none', fontWeight: 500 },
@@ -22,7 +22,7 @@ export const darkTheme = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#A3C9A8' },
     h2: { ...baseTypography.h2, color: '#E7B8A5' },
-    h6: { ...baseTypography.h6, color: '#FFFFFF' },
+    h6: { ...baseTypography.p, color: '#FF5722' },
     body1: { ...baseTypography.body1, color: '#FFFFFF' },
   },
 });
@@ -39,7 +39,6 @@ export const evening = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#F5F5F5' },
     h2: { ...baseTypography.h2, color: '#C0C0C0' },
-    h6: { ...baseTypography.h6, color: '#F5F5F5' },
     body1: { ...baseTypography.body1, color: '#DADADA' },
   },
 });
@@ -56,7 +55,6 @@ export const moon = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#ffffff' },
     h2: { ...baseTypography.h2, color: '#8b8cd4' },
-    h6: { ...baseTypography.h6, color: '#ffffff' },
     body1: { ...baseTypography.body1, color: '#e3d5f7' },
   },
 });
@@ -73,7 +71,6 @@ export const synth = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#ff6ec7' },
     h2: { ...baseTypography.h2, color: '#6e6eff' },
-    h6: { ...baseTypography.h6, color: '#d1e3ff' },
     body1: { ...baseTypography.body1, color: '#d1e3ff' },
   },
   components: {

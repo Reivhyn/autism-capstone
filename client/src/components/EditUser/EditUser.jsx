@@ -39,6 +39,11 @@ import {
   CardActionArea,
   Typography,
   IconButton,
+  ThemeProvider,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  useTheme
 } from "@mui/material";
 
 // HELPERS IMPORTS
@@ -52,7 +57,9 @@ const EditUser = () => {
   const [allActivities, setAllActivities] = useState('')
   const [editTarget, setEditTarget] = useContext(editTargetContext)
   const [allUsers, setAllUsers] = useState('')
-  const [editSaved, setEditSaved] = useState('')
+  const [editSaved, setEditSaved] = useState('') 
+  const theme = useTheme()
+
 
   //userStates pertaining to editing user properties
   const [editFirstName, setEditFirstname] = useState('')
@@ -216,244 +223,281 @@ const EditUser = () => {
 
   return (
     <>
-      <div>
-        {/* show weather adding new user or editing user */}
-        {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
-          ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
-          : userData.userType === 'admin'
-          ? 'Add New User'
-          : 'Add New Child'}
-      </div>
-      {/* form for editing user properties */}
-      <div className="formWrapper">
-        <form action="">
-          {/* firstName field */}
-          <div>
-            First Name
-            <input
-              type="text"
-              value={editFirstName}
-              onChange={(e) => {
-                setEditFirstname(e.target.value)
-              }}
-            />
-          </div>
 
-          {/* laastName field */}
-          <div>
-            Last Name
-            <input
-              type="text"
-              value={editLastName}
-              onChange={(e) => {
-                setEditLastName(e.target.value)
-              }}
-            />
-          </div>
-
-          {/* DOB field */}
-          <div>
-            Date of Birth
-            <input
-              type="date"
-              value={editDateOfBirth}
-              onChange={(e) => {
-                setEditDateOfBirth(e.target.value)
-              }}
-            />
-          </div>
-
-          {/* userName field */}
-          <div>
-            UserName
-            <input
-              type="text"
-              value={editUserName}
-              onChange={(e) => {
-                setEditUserName(e.target.value)
-              }}
-            />
-          </div>
-
-          {/* email field */}
-          <div>
-            Email
-            <input
-              type="email"
-              value={editEmail}
-              onChange={(e) => {
-                setEditEmail(e.target.value)
-              }}
-            />
-          </div>
-
-          {/* password field */}
-          <div>
-            Password
-            <input
-              type="password"
-              value={editPassword}
-              onChange={(e) => {
-                setEditPassword(e.target.value)
-              }}
-            />
-          </div>
-
-          <div>
-            {confirmPassword && editPassword
-              ? confirmPassword !== editPassword
-                ? 'Passwords do not match'
-                : ''
-              : ''}
-          </div>
-
-          {/* confirm password field */}
-          <div>
-            Confirm Password
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value)
-              }}
-            />
-          </div>
-
-          {/* disble log in checkbox */}
-          <div>
-            Disable Login
-            <input
-              type="checkbox"
-              checked={editDisableLogin}
-              onChange={(e) => {
-                setEditDisableLogin(e.target.checked)
-              }}
-            />
-          </div>
-
-            {/* error message */}
-            {error && <Typography color='error'>{error}</Typography>}
-          {/* do not show delete user button when adding user 
-          or for logged in user */}
-          {(pageToDisplay === 'editkid' || pageToDisplay === 'editUser') &&
-          userData._id !== editTarget._id ? (
-            <div>
-              Delete {`${editTarget.firstName} ${editTarget.lastName}`}
-              <input
-                type="checkbox"
-                checked={editDeleteUser}
-                onChange={() => {
-                  setEditDeleteUser(!editDeleteUser)
-                }}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-        </form>
-      </div>
-
-      {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
-        <>
-          <div>User Type</div>
-
-          <div className="userTypeCheckBoxWrap">
-            {/* child checkbox */}
-            <div className="buttonAndTitleWrap">
-              <div>Child</div>
-              <input
-                type="checkbox"
-                checked={checkedBox === 'kid' || pageToDisplay === 'addKid'}
-                onChange={() => handleCheck('kid')}
-              />
-            </div>
-
-            {/* display parent checkbox if page to display is admin */}
-            {/* parent checkbox */}
-            {pageToDisplay === 'addUser' ? (
-              <div className="buttonAndTitleWrap">
-                <div>Parent</div>
-                <input
-                  type="checkbox"
-                  checked={checkedBox === 'parent'}
-                  onChange={() => handleCheck('parent')}
+    <ThemeProvider theme={theme}>
+          {/* Form Box */}
+          <Box
+            sx={{
+              maxWidth: 600,
+              margin: '0 auto',
+              padding: 4,
+              backgroundColor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h5" color="text.primary" gutterBottom>
+              {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
+                ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
+                : userData.userType === 'admin'
+                ? `Add New User`
+                : `Add New Child`}
+            </Typography>
+    
+            <Box sx={{ marginBottom: 2 }}>
+              {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
+                <>
+                <Typography variant="body1" color="text.secondary" gutterBottom>
+                Current Data:
+              </Typography>
+              <Typography variant="body2">
+                Date of Birth: {editTarget.dob.trim().split('T')[0]}
+              </Typography>
+              <Typography variant="body2">
+                UserName: {editTarget.userName}
+              </Typography>
+              <Typography variant="body2">
+                Email: {editTarget.email}
+              </Typography>
+              </>) : ('')}
+            </Box>
+    
+            
+              <form>
+                <TextField
+                  label="First Name"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editFirstName}
+                  onChange={(e) => setEditFirstname(e.target.value)}
                 />
-              </div>
+    
+                <TextField
+                  label="Last Name"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editLastName}
+                  onChange={(e) => setEditLastName(e.target.value)}
+                />
+    
+                <TextField
+                  label="Date of Birth"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editDateOfBirth}
+                  onChange={(e) => setEditDateOfBirth(e.target.value)}
+                />
+    
+                <TextField
+                  label="UserName"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editUserName}
+                  onChange={(e) => setEditUserName(e.target.value)}
+                />
+    
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editEmail}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                />
+    
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editPassword}
+                  onChange={(e) => setEditPassword(e.target.value)}
+                />
+    
+                {/* Display an error message if the passwords do not match */}
+                <TextField
+                  label="Confirm Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+
+                {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={editDeleteUser}
+                        onChange={(e) => setEditDeleteUser(e.target.checked)}
+                      />
+                    }
+                    label="Delete User"
+                  />
+                ) : (
+                  ''
+                )}
+              </form>
+                {/* check boxes */}
+                {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
+                  <>
+                  {userData.userType === 'admin' ? (
+                    <>
+                        <FormControlLabel
+                        control={
+                          <Checkbox
+                          checked={userType === 'admin'}
+                          onChange={() => handleCheck('admin')}
+                          />
+                        }
+                        label="Admin"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                          checked={userType === 'parent'}
+                          onChange={() => handleCheck('parent')}
+                          />
+                        }
+                        label="Parent"
+                      />
+                      <FormControlLabel
+                      control={
+                        <Checkbox
+                        checked={userType === 'kid'}
+                        onChange={() => handleCheck('kid')}
+                        />
+                      }
+                      label="Kid"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={editDisableLogin}
+                          onChange={(e) => setEditDisableLogin(e.target.checked)}
+                        />
+                      }
+                      label="Disable Login"
+                    />
+                    </>
+                  ) : (
+                    ''
+                  )}
+                  </>
+                ) : ('')}
+                
+          </Box>
+          {/* dual list box */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: 2,
+            }}
+          >
+            {allActivities &&
+            (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+              <DualList
+                dataToList={allActivities}
+                listType="games"
+                gamesAccess={gamesAccess}
+                setGamesAccess={setGamesAccess}
+              />
+            ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+              'fetching data'
             ) : (
               ''
             )}
 
-            {/* display admin checkbox if page to display is admin */}
-            {/* admin checkbox */}
-            {pageToDisplay === 'addUser' ? (
-              <div className="buttonAndTitleWrap">
-                <div>Admin</div>
-                <input
-                  type="checkbox"
-                  checked={checkedBox === 'admin'}
-                  onChange={() => handleCheck('admin')}
-                />
-              </div>
+            {allActivities &&
+            (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+              <DualList
+                dataToList={allActivities}
+                listType="learning"
+                learingAccess={learingAccess}
+                setLearningAccess={setLearningAccess}
+              />
+            ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+              'fetching data'
             ) : (
               ''
             )}
-          </div>
-        </>
-      ) : (
-        ''
-      )}
 
-      {/* only show dual list if editing or adding kid */}
+            {allChatTopics &&
+            (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+              <DualList
+                dataToList={allChatTopics}
+                listType="chatTopics"
+                chatAccess={chatAccess}
+                setChatAccess={setChatAccess}
+              />
+            ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+              'fetching data'
+            ) : (
+              ''
+            )}
 
-     {/* this is start of new */}
-     {/* this is END of new */}
+
+          </Box>
 
 
-      {/* games duallist */} 
-      {allActivities &&
-      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
-        <DualList
-          dataToList={allActivities}
-          listType="games"
-          gamesAccess={gamesAccess}
-          setGamesAccess={setGamesAccess}
-        />
-      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
-        'fetching data'
-      ) : (
-        ''
-      )}
+                <Box
+                  sx={{
+                    display: 'sticky',
+                    bottom: 0,
+                    padding: 2,
 
-      {/* learning duallist */}
-      {allActivities &&
-      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
-        <DualList
-          dataToList={allActivities}
-          listType="learning"
-          learingAccess={learingAccess}
-          setLearningAccess={setLearningAccess}
-        />
-      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
-        'fetching data'
-      ) : (
-        ''
-      )}
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    disabled={
+                      (pageToDisplay === 'addUser' &&
+                        (!editFirstName ||
+                          !editLastName ||
+                          !editDateOfBirth ||
+                          !editPassword)) ||
+                      confirmPassword !== editPassword
+                    }
+                    onClick={() => handleSave()}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => setPageToDisplay(userData.userType)}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+        </ThemeProvider>
+    
 
-      {/* chat topics duallist */}
-      {allChatTopics &&
-      (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
-        <DualList
-          dataToList={allChatTopics}
-          listType="chatTopics"
-          chatAccess={chatAccess}
-          setChatAccess={setChatAccess}
-        />
-      ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
-        'fetching data'
-      ) : (
-        ''
-      )}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+ 
       <div className="saveCancelButtons">
         {/* Save button */}
         <button
