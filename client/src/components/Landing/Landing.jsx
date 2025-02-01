@@ -29,7 +29,7 @@ const Landing = () => {
   const theme = useTheme();
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Box
       
         sx={{
@@ -110,7 +110,7 @@ const Landing = () => {
                 >
                   <SportsEsportsIcon fontSize="inherit" />
                 </IconButton>
-                <Typography variant="h6" color="text.primary">
+                <Typography variant="h6" >
                   Games
                 </Typography>
               </CardContent>
@@ -135,7 +135,7 @@ const Landing = () => {
                 >
                   <ChatIcon fontSize="inherit" />
                 </IconButton>
-                <Typography variant="h6" color="text.primary">
+                <Typography variant="h6" >
                   Chat
                 </Typography>
               </CardContent>

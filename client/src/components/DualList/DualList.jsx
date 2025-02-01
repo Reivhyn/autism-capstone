@@ -302,6 +302,7 @@ const DualList = ({
               flexDirection: 'row',
               gap: 2,
               p: 2,
+              width: '10vw',
               height: '30vh',
               overflow: 'auto',
               scrollbarWidth: 'none', // Hide scrollbar for Firefox

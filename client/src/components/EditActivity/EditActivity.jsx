@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   TextField,
   Typography,
+  useTheme
 } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { darkTheme } from '../zzztheme/themes.jsx'
@@ -34,6 +35,7 @@ const EditActivity = () => {
   const [userData, setUserData] = useContext(userDataContext)
   const [editSaved, setEditSaved] = useState(false)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
+  const theme = useTheme()
 
   // States for editing activity
   const [editActivityType, seteditActivityType] = useState('')
@@ -116,7 +118,7 @@ const EditActivity = () => {
     return <h1>Changes Saved</h1>
   }
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Box
         sx={{
           maxWidth: 600,
@@ -128,12 +130,14 @@ const EditActivity = () => {
         }}
       >
         <Typography variant="h5" color="text.primary" gutterBottom>
-          {pageToDisplay === 'editActivity'
+          {pageToDisplay === 'editActivity' 
             ? `Editing ${editTarget.activityTitle}`
             : `Add New ${activityType}`}
         </Typography>
 
         <Box sx={{ marginBottom: 2 }}>
+          {pageToDisplay === 'editActivity'  ? (
+          <>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Current Data:
           </Typography>
@@ -150,6 +154,9 @@ const EditActivity = () => {
           <Typography variant="body2">
             Search Keywords: {editTarget.ageRange}
           </Typography>
+          </>
+          ) : null
+          }
         </Box>
 
         {userData._id === editTarget.createdBy ||
@@ -232,14 +239,25 @@ const EditActivity = () => {
               />
             )}
 
-            <Box
+            
+          </form>
+        ) : null}
+                
+              
+                <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 marginTop: 2,
+                ...(pageToDisplay === 'addLearning' || pageToDisplay === 'addGame' || (pageToDisplay === 'editActivity' && (userData.userType === 'admin' || userData._id === editTarget.createdBy)) 
+                  ? { display: 'flex' } 
+                  : { display: 'absolute' }),
               }}
-            >
-              <Button
+              >
+              {/* Save and Cancel Buttons */} 
+              { (pageToDisplay === 'addLearning' || pageToDisplay === 'addGame') || (pageToDisplay === 'editActivity'  && (userData.userType === 'admin' || userData._id === editTarget.createdBy)) ? (
+                <>
+                <Button
                 variant="outlined"
                 color="primary"
                 disabled={
@@ -254,8 +272,10 @@ const EditActivity = () => {
               >
                 Save
               </Button>
+                </>
+              ) 
+              : null}
 
-            {pageToDisplay === 'editActivity' ? (
                 <Button
                 variant="outlined"
                 color="secondary"
@@ -263,12 +283,7 @@ const EditActivity = () => {
                 >
                 Cancel
                 </Button>
-            ) : null}
             </Box>
-          </form>
-        ) : null}
-
-
       </Box>
     </ThemeProvider>
   )
