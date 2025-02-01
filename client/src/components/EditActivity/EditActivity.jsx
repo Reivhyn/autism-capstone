@@ -130,13 +130,13 @@ const EditActivity = () => {
         }}
       >
         <Typography variant="h5" color="text.primary" gutterBottom>
-          {pageToDisplay === 'editActivity'
+          {pageToDisplay === 'editActivity' 
             ? `Editing ${editTarget.activityTitle}`
             : `Add New ${activityType}`}
         </Typography>
 
         <Box sx={{ marginBottom: 2 }}>
-          {pageToDisplay === 'editActivity' ? (
+          {pageToDisplay === 'editActivity'  ? (
           <>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Current Data:
@@ -239,13 +239,39 @@ const EditActivity = () => {
               />
             )}
 
-            <Box
+            
+          </form>
+        ) : null}
+                
+                <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 marginTop: 2,
               }}
             >
+              {/* Save and Cancel Buttons */} 
+              {pageToDisplay === 'editActivity'  && (userData.userType === 'admin' || userData._id === editTarget.createdBy) || pageToDisplay === 'addLearning' || pageToDisplay === 'addLearning' ? (
+                <>
+                <Button
+                variant="outlined"
+                color="primary"
+                disabled={
+                  (pageToDisplay === 'addLearning' ||
+                    pageToDisplay === 'addGame') &&
+                  (!editActivityTitle ||
+                    !editurl ||
+                    !editCategory ||
+                    !editSearchKeywords)
+                }
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+                </>
+              ) 
+              : null}
+
               <Button
                 variant="outlined"
                 color="primary"
@@ -262,7 +288,6 @@ const EditActivity = () => {
                 Save
               </Button>
 
-            {pageToDisplay === 'editActivity' ? (
                 <Button
                 variant="outlined"
                 color="secondary"
@@ -270,12 +295,7 @@ const EditActivity = () => {
                 >
                 Cancel
                 </Button>
-            ) : null}
             </Box>
-          </form>
-        ) : null}
-
-
       </Box>
     </ThemeProvider>
   )

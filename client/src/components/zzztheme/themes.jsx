@@ -25,6 +25,20 @@ export const darkTheme = createTheme({
     h6: { ...baseTypography.p, color: '#FF5722' },
     body1: { ...baseTypography.body1, color: '#FFFFFF' },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'theme.palette.primary.main',
+          color: 'theme.palette.text.primary',
+          borderRadius: '8px',
+          padding: '10px 20px',
+          '&:hover': { backgroundColor: '#4A4A4A' },
+        },
+      },
+    },
+  },
+  
 });
 
 export const evening = createTheme({
@@ -59,6 +73,7 @@ export const moon = createTheme({
   },
 });
 
+// ! change color code back on dark mode
 export const synth = createTheme({
   palette: {
     mode: 'dark',
