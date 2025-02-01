@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
-import './portalList.css'
+
 
 // MUI  IMPORTS
 import {
@@ -33,13 +33,57 @@ const PortalList = ({ itemsToList, listType }) => {
   const [userData] = useContext(userDataContext)
 
   //* Functions
+
+  //elemnt for each map()
+  const element = (item, textObject, newPage) => {
+    return (
+      <Box
+        sx={{
+          padding: '0.4vh',
+          margin: '1vh',
+          borderRadius: 2,
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          transition:
+            'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+          '&:hover': {
+            backgroundColor: theme.palette.action.hover,
+            transform: 'scale(1.05)',
+            boxShadow: theme.shadows[4],
+          },
+        }}
+        key={item._id}
+        className="portalListItem"
+        onClick={() => {
+          setEditTarget(item)
+          setPageToDisplay(newPage)
+        }}
+      >
+        {textObject}
+      </Box>
+    )
+  }
+
   const setUpList = () => {
     if (listType === 'user') {
       setDisplayList(
         itemsToList.allUsers.map((item) => (
-          <div
+          <Box
             key={item._id}
-            className="portalListItem"
+            sx={{
+              padding: '0.4vh',
+              margin: '1vh',
+              borderRadius: 2,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              transition:
+                'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+                transform: 'scale(1.05)',
+                boxShadow: theme.shadows[4],
+              },
+            }}
             onClick={() => {
               setEditTarget(item)
               item.userType === 'kid'
@@ -48,86 +92,24 @@ const PortalList = ({ itemsToList, listType }) => {
             }}
           >
             {`${item.firstName} ${item.lastName} (${item.userName})`}
-          </div>
+          </Box>
         ))
       )
     } else if (listType === 'kids') {
       setDisplayList(
-        itemsToList.foundKidsOfParent.map((item) => (
-          <div
-            key={item._id}
-            className="portalListItem"
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editKid')
-            }}
-          >
-            {`${item.firstName} ${item.lastName} (${item.userName})`}
-          </div>
-        ))
+        itemsToList.foundKidsOfParent.map((item) => element(item, `${item.firstName} ${item.lastName} (${item.userName})`, 'editKid'))
       )
     } else if (listType === 'games') {
       setDisplayList(
-        itemsToList.allGames.map((item) => (
-          <div
-            key={item._id}
-            className="portalListItem"
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editActivity')
-            }}
-          >
-            {item.activityTitle}
-          </div>
-        ))
+        itemsToList.allGames.map((item) => element(item, item.activityTitle, 'editActivity'))
       )
     } else if (listType === 'learning') {
       setDisplayList(
-        itemsToList.allLearning.map((item, i) => (
-          <div
-            key={`item${i}`}
-            className="portalListItem"
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editActivity')
-            }}
-          >
-            {item.activityTitle}
-          </div>
-        ))
+        itemsToList.allLearning.map((item, i) => element(item, item.activityTitle, 'editActivity'))
       )
     } else if (listType === 'chatTopics') {
       setDisplayList(
-        itemsToList.allChatTopics.map((item) => (
-          <Box
-          sx={{
-            // display: 'flex',
-            // alignItems: 'center',
-            // justifyContent: 'center',
-            padding: '0.4vh',
-            margin: '1vh',
-            borderRadius: 2,
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-            '&:hover': {
-              backgroundColor: theme => theme.palette.action.hover,
-              transform: 'scale(1.05)',
-              boxShadow: theme.shadows[4],
-            },
-          }}
-            key={item._id}
-            className="portalListItem"
-            onClick={() => {
-              setEditTarget(item)
-              setPageToDisplay('editChatTopic')
-            }}
-          >
-            {item.topicTitle}
-          </Box>
-        ))
+        itemsToList.allChatTopics.map((item) => element(item, item.topicTitle, 'editChatTopic'))
       )
     }
   }
@@ -172,9 +154,9 @@ const PortalList = ({ itemsToList, listType }) => {
           flexDirection: 'column',
           marginBottom: '.5vw',
           scrollbarWidth: 'none', // Hide scrollbar for Firefox
-              '&::-webkit-scrollbar': {
-                display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
-              },
+          '&::-webkit-scrollbar': {
+            display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
+          },
         }}
       >
         {displayList.length > 0 ? displayList : 'No items to display'}
@@ -183,7 +165,7 @@ const PortalList = ({ itemsToList, listType }) => {
         <Button
           variant="outlined"
           color="primary"
-          sx={{ display: 'sticky',  marginBottom: "1vh"}}
+          sx={{ display: 'sticky', marginBottom: '1vh' }}
           onClick={handleAddClick}
         >
           Add
