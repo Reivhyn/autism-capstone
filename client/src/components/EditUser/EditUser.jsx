@@ -43,7 +43,9 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  useTheme
+  useTheme,
+  Input,
+  InputAdornment,
 } from "@mui/material";
 
 // HELPERS IMPORTS
@@ -102,12 +104,19 @@ const EditUser = () => {
 
   //validate inputs
   const handlePasswordCheck = () => {
+    if(!editPassword) return true
+    setError(''); // Clear any previous errors
     try {
       validatePasswordCriteria(editPassword);
     } catch (error) { 
       setError(error.message);
       return false;
     } // Validate the password
+    if (editPassword !== confirmPassword) {
+      setError('Passwords do not match.');
+      return false;
+    } // Check if the passwords match
+
     setError('');
 
     return true;
@@ -122,15 +131,13 @@ const EditUser = () => {
           setError('All fields are required.');
           return false;
         }
-        handlePasswordCheck()
+        if(!handlePasswordCheck()) return false
         return true;
       };
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
-    if(editPassword) {
-      if(!handlePasswordCheck()) return 
-    }
+    if(editPassword && !handlePasswordCheck()) return //check password criteria
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -149,6 +156,7 @@ const EditUser = () => {
 
   // creates new user when save button is pressed
   const callCreateNewUser = () => {
+    if(!validateInputs()) return
     addNewUser(
       editFirstName,
       editLastName,
@@ -162,7 +170,6 @@ const EditUser = () => {
       userData._id
     )
 
-    if(!validateInputs()) return
 
     setEditSaved(true)
   }
@@ -271,6 +278,7 @@ const EditUser = () => {
                   margin="normal"
                   value={editFirstName}
                   onChange={(e) => setEditFirstname(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
                 />
     
                 <TextField
@@ -280,24 +288,33 @@ const EditUser = () => {
                   margin="normal"
                   value={editLastName}
                   onChange={(e) => setEditLastName(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+
                 />
-    
+
+              <TextField
+                label="Date of Birth"
+                type="date"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={editDateOfBirth}
+                onChange={(e) => setEditDateOfBirth(e.target.value)}
+                InputLabelProps={{
+                  shrink: true, // Ensures label does not overlap the value
+                }}
+                required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+
+              />
+
                 <TextField
-                  label="Date of Birth"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={editDateOfBirth}
-                  onChange={(e) => setEditDateOfBirth(e.target.value)}
-                />
-    
-                <TextField
-                  label="UserName"
+                  label="Username"
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   value={editUserName}
                   onChange={(e) => setEditUserName(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
                 />
     
                 <TextField
@@ -307,6 +324,8 @@ const EditUser = () => {
                   margin="normal"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+
                 />
     
                 <TextField
@@ -316,6 +335,8 @@ const EditUser = () => {
                   margin="normal"
                   value={editPassword}
                   onChange={(e) => setEditPassword(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+
                 />
     
                 {/* Display an error message if the passwords do not match */}
@@ -326,7 +347,11 @@ const EditUser = () => {
                   margin="normal"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid' || editPassword}
+
                 />
+
+                {error && <Typography color="error">{error}</Typography>}
 
                 {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
                   <FormControlLabel
