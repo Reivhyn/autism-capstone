@@ -10,13 +10,13 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        position: 'fixed',
-        bottom: 10,
-        left: 0,
-        width: '100%',
-        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 2,
         backgroundColor: theme.palette.background.default,
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
       }}
     >
       <Typography variant="body2" sx={{ margin: 0 }}>

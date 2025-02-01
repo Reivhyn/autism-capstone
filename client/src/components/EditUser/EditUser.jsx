@@ -75,7 +75,7 @@ const EditUser = () => {
   const [userType, setUserType] = useState('kid')
   const [parentUser, setParentUser] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState({}); // Initialize the error state as an empty object
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
@@ -105,35 +105,63 @@ const EditUser = () => {
   //validate inputs
   const handlePasswordCheck = () => {
     if(!editPassword) return true
-    setError(''); // Clear any previous errors
+    setErrors(''); // Clear any previous errors
     try {
       validatePasswordCriteria(editPassword);
     } catch (error) { 
-      setError(error.message);
+      setErrors(error.message);
       return false;
     } // Validate the password
     if (editPassword !== confirmPassword) {
-      setError('Passwords do not match.');
+      setErrors('Passwords do not match.');
       return false;
     } // Check if the passwords match
 
-    setError('');
+    setErrors('');
 
     return true;
   }
 
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   //validate inputs
   const validateInputs = () => {
-        setError(''); // Clear any previous errors
-        console.log(editPassword, confirmPassword); // Log the passwords
-        if (!editUserName || !editFirstName || !editLastName || !editEmail || !editPassword || !confirmPassword || !editDateOfBirth) {
-          console.log('All fields are required.'); // Log the error
-          setError('All fields are required.');
-          return false;
-        }
-        if(!handlePasswordCheck()) return false
-        return true;
-      };
+    let newErrors = {}; // Initialize error object
+  
+    if (!editFirstName) newErrors.firstName = "First Name is required.";
+    if (!editLastName) newErrors.lastName = "Last Name is required.";
+    if (!editDateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
+    if (!editUserName) newErrors.userName = "Username is required.";
+    if (!editEmail) {
+      newErrors.email = "Email is required.";
+    } else if (!validateEmail(editEmail)) {
+      newErrors.email = "Invalid email format.";
+    }
+  
+    if (!editPassword) {
+      newErrors.password = "Password is required.";
+    } else {
+      try {
+        validatePasswordCriteria(editPassword);
+      } catch (error) {
+        newErrors.password = error.message;
+      }
+    }
+
+    if(!confirmPassword) newErrors.confirmPassword = "Confirm Password is required.";
+  
+    if (editPassword !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+  
+    setErrors(newErrors); // Update errors state
+  
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+  
 
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
@@ -157,7 +185,7 @@ const EditUser = () => {
 
   // creates new user when save button is pressed
   const callCreateNewUser = () => {
-    if(!validateInputs()) return
+    if(!validateInputs()) return 
     addNewUser(
       editFirstName,
       editLastName,
@@ -280,6 +308,9 @@ const EditUser = () => {
                   value={editFirstName}
                   onChange={(e) => setEditFirstname(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+                  error= {!!errors.firstName} // Display an error message if the first name is invalid
+                  helperText = {errors.firstName && errors.firstName}
+                  
                 />
     
                 <TextField
@@ -290,7 +321,8 @@ const EditUser = () => {
                   value={editLastName}
                   onChange={(e) => setEditLastName(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-
+                  error= {!!errors.lastName} // Display an error message if the last name is invalid
+                  helperText = {errors.lastName && errors.lastName}
                 />
 
               <TextField
@@ -305,7 +337,8 @@ const EditUser = () => {
                   shrink: true, // Ensures label does not overlap the value
                 }}
                 required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-
+                error= {!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
+                helperText = {errors.dateOfBirth && errors.dateOfBirth}
               />
 
                 <TextField
@@ -316,17 +349,21 @@ const EditUser = () => {
                   value={editUserName}
                   onChange={(e) => setEditUserName(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+                  error= {!!errors.userName} // Display an error message if the username is invalid
+                  helperText = {errors.userName && errors.userName}
                 />
     
                 <TextField
                   label="Email"
+                  type= "email"
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-
+                  error= {!!errors.email} // Display an error message if the email is invalid
+                  helperText = {errors.email && errors.email}
                 />
     
                 <TextField
@@ -337,7 +374,8 @@ const EditUser = () => {
                   value={editPassword}
                   onChange={(e) => setEditPassword(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-
+                  error= {!!errors.password} // Display an error message if the password is invalid
+                  helperText = {errors.password && errors.password}
                 />
     
                 {/* Display an error message if the passwords do not match */}
@@ -347,12 +385,21 @@ const EditUser = () => {
                   fullWidth
                   margin="normal"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid' || editPassword}
-
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    
+                    // Validate password match as the user types
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      confirmPassword: e.target.value !== editPassword ? "Passwords do not match." : "",
+                    }));
+                  }}
+                  required={pageToDisplay === "addUser" || pageToDisplay === "addKid" || editPassword}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword}
                 />
 
-                {error && <Typography color="error">{error}</Typography>}
+
 
                 {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
                   <FormControlLabel
