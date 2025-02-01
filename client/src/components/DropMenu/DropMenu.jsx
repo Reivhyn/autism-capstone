@@ -28,16 +28,12 @@ const DropMenu = () => {
   return (
     <div className="dropMenu">
       <Button
+      variant='outlined'
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
         startIcon={<MenuIcon />}
         sx={{
-          backgroundColor: theme.palette.primary.main, // Light green button
-          color: theme.palette.background.default, // Contrast dark text
-          '&:hover': {
-            backgroundColor: theme.palette.secondary.main, // Peach on hover
-          },
           padding: '10px 20px',
           borderRadius: '8px',
         }}

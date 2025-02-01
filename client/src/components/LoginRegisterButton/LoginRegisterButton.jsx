@@ -25,7 +25,6 @@ export default function LoginRegisterButton() {
           <Button
             variant="outlined"
             color="theme.palette.primary.main"
-            backgroundColor="theme.palette.primary.main"
             onClick={() => setPageToDisplay('login')}
           >
             Login
@@ -33,7 +32,6 @@ export default function LoginRegisterButton() {
           <Button
             variant="outlined"
             color="theme.palette.primary.main"
-            backgroundColor="theme.palette.primary.main"
             onClick={() => setPageToDisplay('register')}
           >
             Register

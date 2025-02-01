@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext } from "react";
+import React, { useContext } from 'react'
 
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from '@mui/material/styles'
 
 import {
   Box,
@@ -12,58 +12,58 @@ import {
   Typography,
   IconButton,
   useTheme,
-} from "@mui/material";
-import SchoolIcon from "@mui/icons-material/School";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import ChatIcon from "@mui/icons-material/Chat";
-import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
-import { darkTheme } from "../zzztheme/themes";
-import Logo from "../Logo/Logo";
-import SiteTitle from "../SiteTitle/SiteTitle";
-import LoginRegisterButton from "../LoginRegisterButton/LoginRegisterButton";
-import { ImPriceTag } from "react-icons/im";
+} from '@mui/material'
+import SchoolIcon from '@mui/icons-material/School'
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
+import ChatIcon from '@mui/icons-material/Chat'
+import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
+import { darkTheme } from '../zzztheme/themes'
+import Logo from '../Logo/Logo'
+import SiteTitle from '../SiteTitle/SiteTitle'
+import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
+import { ImPriceTag } from 'react-icons/im'
 
 const Landing = () => {
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [userData] = useContext(userDataContext);
-  const theme = useTheme();
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [userData] = useContext(userDataContext)
+  const theme = useTheme()
 
   return (
     <ThemeProvider theme={theme}>
       <Box
-      
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
           backgroundColor: theme.palette.background.default,
         }}
       >
         {/* Top-right Login and Register Buttons */}
         <Box
           sx={{
-            position: "absolute",
+            position: 'absolute',
             top: 16,
             right: 16,
-            display: "flex",
+            display: 'flex',
           }}
         >
-        <LoginRegisterButton />
+          <LoginRegisterButton />
         </Box>
-        {/* Site Logo */}
-        <Logo />
 
         {/* Site Header */}
         <SiteTitle />
+        
+        {/* Site Logo */}
+        <Logo/>
 
         {/* Main Cards Section */}
         <Box
           sx={{
-            display: "flex",
+            display: 'flex',
             gap: 4,
-            justifyContent: "center",
+            justifyContent: 'center',
             marginTop: 4,
           }}
         >
@@ -71,23 +71,18 @@ const Landing = () => {
           <Card
             sx={{
               width: 250,
-              textAlign: "center",
+              textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
           >
-            <CardActionArea onClick={() => setPageToDisplay("learning")}>
+            <CardActionArea onClick={() => setPageToDisplay('learning')}>
               <CardContent>
-                <IconButton
-                  sx={{ fontSize: "3rem", color: "#A3C9A8" }}
-                  disableRipple
-                >
+                <Box sx={{ fontSize: '3rem', color: theme.palette.secondary.main }}>
                   <SchoolIcon fontSize="inherit" />
-                </IconButton>
-                <Typography variant="h6">
-                  Learning Activities
-                </Typography>
+                </Box>
+                <Typography variant="h6">Learning Activities</Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -96,23 +91,18 @@ const Landing = () => {
           <Card
             sx={{
               width: 250,
-              textAlign: "center",
+              textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
           >
-            <CardActionArea onClick={() => setPageToDisplay("games")}>
+            <CardActionArea onClick={() => setPageToDisplay('games')}>
               <CardContent>
-                <IconButton
-                  sx={{ fontSize: "3rem", color: "#E7B8A5" }}
-                  disableRipple
-                >
+                <Box sx={{ fontSize: '3rem', color: theme.palette.primary.main }}>
                   <SportsEsportsIcon fontSize="inherit" />
-                </IconButton>
-                <Typography variant="h6" >
-                  Games
-                </Typography>
+                </Box>
+                <Typography variant="h6">Games</Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -121,32 +111,25 @@ const Landing = () => {
           <Card
             sx={{
               width: 250,
-              textAlign: "center",
+              textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
             }}
           >
-            <CardActionArea onClick={() => setPageToDisplay("chat")}>
+            <CardActionArea onClick={() => setPageToDisplay('chat')}>
               <CardContent>
-                <IconButton
-                  sx={{ fontSize: "3rem", color: "#DD5E56" }}
-                  disableRipple
-                >
+                <Box sx={{ fontSize: '3rem', color: theme.palette.secondary.main }}>
                   <ChatIcon fontSize="inherit" />
-                </IconButton>
-                <Typography variant="h6" >
-                  Chat
-                </Typography>
+                </Box>
+                <Typography variant="h6">Chat</Typography>
               </CardContent>
             </CardActionArea>
           </Card>
         </Box>
-
-        
       </Box>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing
