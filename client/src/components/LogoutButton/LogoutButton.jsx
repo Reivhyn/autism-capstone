@@ -13,21 +13,13 @@ const LogoutButton = () => {
 
   return (
     <Button
+    variant='outlined'
       onClick={logout}
       sx={{
         position: 'absolute',
         right: '10px',
         top: '10px',
         padding: '10px 20px',
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-        borderRadius: '12px',
-        fontSize: '13px',
-        zIndex: 1000,
-        transition: 'background-color 0.3s ease',
-        '&:hover': {
-          backgroundColor: theme.palette.primary.dark,
-        },
       }}
     >
       Logout
