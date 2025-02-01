@@ -283,16 +283,13 @@ const EditUser = () => {
             <Box sx={{ marginBottom: 2 }}>
               {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
                 <>
-                <Typography variant="body1" color="text.secondary" gutterBottom>
-                Current Data:
-              </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" margin={1}>
                 Date of Birth: {editTarget.dob.trim().split('T')[0]}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body3" margin={1}>
                 UserName: {editTarget.userName}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" margin={1}>
                 Email: {editTarget.email}
               </Typography>
               </>) : ('')}
@@ -399,21 +396,39 @@ const EditUser = () => {
                   helperText={errors.confirmPassword}
                 />
 
-
-
-                {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: 2,
+                    }}
+                    >
+                      
+                      {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
+                        <>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={editDeleteUser}
+                            onChange={(e) => setEditDeleteUser(e.target.checked)}
+                          />
+                        }
+                        label="Delete User"
+                        />
+                        </>
+                      ) : (
+                        ''
+                      )}
                   <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={editDeleteUser}
-                        onChange={(e) => setEditDeleteUser(e.target.checked)}
-                      />
-                    }
-                    label="Delete User"
-                  />
-                ) : (
-                  ''
-                )}
+                      control={
+                        <Checkbox
+                          checked={editDisableLogin}
+                          onChange={(e) => setEditDisableLogin(e.target.checked)}
+                        />
+                      }
+                      label="Disable Login"
+                    />
+                  </Box>
               </form>
                 {/* check boxes */}
                 {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
@@ -446,15 +461,6 @@ const EditUser = () => {
                         />
                       }
                       label="Kid"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={editDisableLogin}
-                          onChange={(e) => setEditDisableLogin(e.target.checked)}
-                        />
-                      }
-                      label="Disable Login"
                     />
                     </>
                   ) : (

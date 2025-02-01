@@ -115,14 +115,17 @@ function App() {
             <KidsOfParentContext.Provider
               value={[kidsOfParent, setKidsOfParent]}
             >
+
+
+              {/* theme frop menu */}
+              <ThemeDropMenu />
+
               {/* please log in - shoews if trying to access other sights without login */}
               {pageToDisplay !== 'landing' &&
                 pageToDisplay !== 'login' &&
                 pageToDisplay !== 'register' &&
                 !userData && <PleaseLogin />}
 
-              {/* theme frop menu */}
-              <ThemeDropMenu />
 
               <editTargetContext.Provider value={[editTarget, setEditTarget]}>
                 {/* Conditionally Render DropMenu */}

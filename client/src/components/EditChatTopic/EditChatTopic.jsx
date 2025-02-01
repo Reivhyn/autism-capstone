@@ -50,6 +50,7 @@ const EditChatTopic = () => {
   const [editTopicTitle, setEditTopicTitle] = useState('')
   const [editDescription, setEditDescription] = useState('')
   const [editDeleteTopic, setEditDeleteTopic] = useState(false)
+  const [errors, setErrors] = useState({})
 
   //* FUNCTIONS
 
@@ -91,7 +92,7 @@ const EditChatTopic = () => {
   if (editSaved) {
     return <h1>Changes Saved</h1>
   }
-
+console.log('userData', userData)
   return (
     <>
     <ThemeProvider theme={theme}>
@@ -108,20 +109,19 @@ const EditChatTopic = () => {
           >
             <Typography variant="h5" color="text.primary" gutterBottom>
               {pageToDisplay === 'editChatTopic'
-                ? `Editing ${editTarget.topicTitlee}`
+                ? (userData.userType === 'admin' || userData._id === editTarget.createdBy)
+                  ? `Editing: ${editTarget.topicTitle}`
+                  : editTarget.topicTitle
                 : `Add New Chat Topic`}
             </Typography>
     
             <Box sx={{ marginBottom: 2 }}>
               {pageToDisplay === 'editChatTopic' ? (
                 <>
-                <Typography variant="body1" color="text.secondary" gutterBottom>
-                Current Data:
-              </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" margin={2}>
                 Title: {editTarget.topicTitle}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body3" margin={2}>
                 Description: {editTarget.description}
               </Typography>
               </>) : ('')}
@@ -139,6 +139,7 @@ const EditChatTopic = () => {
                   value={editTopicTitle}
                   onChange={(e) => setEditTopicTitle(e.target.value)}
                   required= {pageToDisplay === 'addChatTopic'}
+                  error={errors.editTopicTitle}
                 />
     
                 <TextField
@@ -152,15 +153,16 @@ const EditChatTopic = () => {
                 />
 
                 <Typography variant="body1" color="text.secondary" gutterBottom>
-                System Instruction : Give instructuions the the chat bot the more
+                Description Instruction : Give instructuions the the chat bot the more
               specific the more precice it will follow the instructions ex: 'You
               are a cat. Your name is Neko' Or ' You are a teacher you teach
               about American history, all other subjects are forbidden. The chat
               bot will automaticaly check the age of the child and present it in
-              an apprpriate manner for them
+              an apprpriate manner for them.
               </Typography>
 
-                {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
+                {/* Delete User Checkbox */}
+                {pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy ) ? (
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -168,11 +170,9 @@ const EditChatTopic = () => {
                         onChange={(e) => setEditDeleteTopic(e.target.checked)}
                       />
                     }
-                    label="Delete User"
-                  />
-                ) : (
-                  ''
-                )}
+                    label="Delete Chat Topic"
+                    />
+                ) : ('')}
               </form>
             ) : ('')}
 
