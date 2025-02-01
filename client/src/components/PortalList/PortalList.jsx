@@ -104,19 +104,19 @@ const PortalList = ({ itemsToList, listType }) => {
             // display: 'flex',
             // alignItems: 'center',
             // justifyContent: 'center',
-            // padding: '0.4vh',
-            // margin: '1vh',
-            // borderRadius: 2, // 8px border radius (based on theme spacing)
-            // fontSize: '1rem',
-            // fontWeight: 'bold',
-            // textAlign: 'center',
-            // cursor: 'pointer',
-            // transition: 'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-            // '&:hover': {
-            //   backgroundColor: theme => theme.palette.action.hover,
-            //   transform: 'scale(1.05)',
-            //   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-            // },
+            padding: '0.4vh',
+            margin: '1vh',
+            borderRadius: 2,
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+            '&:hover': {
+              backgroundColor: theme => theme.palette.action.hover,
+              transform: 'scale(1.05)',
+              boxShadow: theme.shadows[4],
+            },
           }}
             key={item._id}
             className="portalListItem"
