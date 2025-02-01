@@ -17,7 +17,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import ChatIcon from "@mui/icons-material/Chat";
 import { ptdContext, userDataContext } from "../zContextHooks/contextHooks";
-import { darkTheme } from "../zzztheme/themes"; // Adjust the path to your theme file
+import { darkTheme } from "../zzztheme/themes";
 import Logo from "../Logo/Logo";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import LoginRegisterButton from "../LoginRegisterButton/LoginRegisterButton";
@@ -37,7 +37,7 @@ const Landing = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          maxHeight: "100vh",
+          height: "100vh",
           backgroundColor: theme.palette.background.default,
         }}
       >
@@ -85,7 +85,7 @@ const Landing = () => {
                 >
                   <SchoolIcon fontSize="inherit" />
                 </IconButton>
-                <Typography variant="h6" color="text.primary">
+                <Typography variant="h6">
                   Learning Activities
                 </Typography>
               </CardContent>
