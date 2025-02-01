@@ -19,6 +19,24 @@ import {
 } from '../zzzFetches/fetches'
 import { CheckBox } from '@mui/icons-material'
 
+// MUI IMPORTS
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  Typography,
+  IconButton,
+  ThemeProvider,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  useTheme,
+  Input,
+  InputAdornment,
+} from "@mui/material";
+
 const EditChatTopic = () => {
   //* USESTATE
   //determins which page to display
@@ -26,6 +44,7 @@ const EditChatTopic = () => {
   const [userData, setUserData] = useContext(userDataContext)
   const [editTarget, setEditTarget] = useContext(editTargetContext)
   const [editSaved, setEditSaved] = useState('')
+  const theme = useTheme()
 
   //userStates pertaining to editing chat fields
   const [editTopicTitle, setEditTopicTitle] = useState('')
@@ -75,98 +94,142 @@ const EditChatTopic = () => {
 
   return (
     <>
-      {/* title being edited */}
-      <div>
-        {pageToDisplay === 'editChatTopic'
-          ? `Editing ${editTarget.topicTitle}`
-          : `Add New Chat Topic`}
-      </div>
+    <ThemeProvider theme={theme}>
+          {/* Form Box */}
+          <Box
+            sx={{
+              maxWidth: 600,
+              margin: '0 auto',
+              padding: 4,
+              backgroundColor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h5" color="text.primary" gutterBottom>
+              {pageToDisplay === 'editChatTopic'
+                ? `Editing ${editTarget.topicTitlee}`
+                : `Add New Chat Topic`}
+            </Typography>
+    
+            <Box sx={{ marginBottom: 2 }}>
+              {pageToDisplay === 'editChatTopic' ? (
+                <>
+                <Typography variant="body1" color="text.secondary" gutterBottom>
+                Current Data:
+              </Typography>
+              <Typography variant="body2">
+                Title: {editTarget.topicTitle}
+              </Typography>
+              <Typography variant="body2">
+                Description: {editTarget.description}
+              </Typography>
+              </>) : ('')}
+            </Box>
+    
+              {/* Form */}
+              {pageToDisplay=== 'addChatTopic' || pageToDisplay === 'editChatTopic' && userData.userType==='admin' ? (
+              <form>
 
-      {/* current data */}
-      <div className="currentData">
-        <div>Current Title: {editTarget.topicTitle}</div>
-        <div>Current Description: {editTarget.description}</div>
-        <div>Current Age Range: {editTarget.ageRage}</div>
-      </div>
+                <TextField
+                  label="Topic Title"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editTopicTitle}
+                  onChange={(e) => setEditTopicTitle(e.target.value)}
+                  required= {pageToDisplay === 'addChatTopic'}
+                />
+    
+                <TextField
+                  label="Description"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                  required= {pageToDisplay === 'addChatTopic'}
+                />
 
-      {/* only show editing features when the user created the item */}
-      {userData._id === editTarget.createdBy ||
-      userData.userType === 'admin' ||
-      pageToDisplay === 'addChatTopic' ? (
-        <>
-          <div className="editTopicFieldsWrapper">
-            {/* TopicTitle field */}
-            <input
-              type="text"
-              placeholder="Topic Title"
-              value={editTopicTitle}
-              onChange={(e) => setEditTopicTitle(e.target.value)}
-            />
-
-            {/* instructions to the user on how to fill out the page */}
-            <div>
-              System Instruction : give instructuions the the chat bot the more
+                <Typography variant="body1" color="text.secondary" gutterBottom>
+                System Instruction : Give instructuions the the chat bot the more
               specific the more precice it will follow the instructions ex: 'You
               are a cat. Your name is Neko' Or ' You are a teacher you teach
               about American history, all other subjects are forbidden. The chat
               bot will automaticaly check the age of the child and present it in
               an apprpriate manner for them
-            </div>
+              </Typography>
 
-            {/* Description Filed */}
-            <textarea
-              type="text"
-              placeholder=""
-              value={editDescription}
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
-          </div>
+                {(pageToDisplay === 'editUser' || pageToDisplay === 'editKid') && userData._id !== editTarget._id ? (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={editDeleteTopic}
+                        onChange={(e) => setEditDeleteTopic(e.target.checked)}
+                      />
+                    }
+                    label="Delete User"
+                  />
+                ) : (
+                  ''
+                )}
+              </form>
+            ) : ('')}
 
-          {/* delete topic check box */}
-          {pageToDisplay === 'editChatTopic' ? (
-            <div className="deleteTopicWrap">
-              <div>{`Delete ${editTarget.topicTitle} Topic`}</div>
-              <input
-                type="CheckBox"
-                onChange={() => {
-                  setEditDeleteTopic(!editDeleteTopic)
-                }}
-              />
-            </div>
-          ) : (
-            ''
-          )}
-        </>
-      ) : (
-        ''
-      )}
 
-      <div className="editTopicButtonsWrapper">
-        {/* only show save button when user is admin or created item */}
-        {userData._id === editTarget.createdBy ||
-        userData.userType === 'admin' ||
-        pageToDisplay === 'addChatTopic' ? (
-          <>
-            {/* Save button */}
-            <button
-              disabled={
-                pageToDisplay === 'addChatTopic' &&
-                (!editTopicTitle || !editDescription)
-              }
-              onClick={() => handleSave()}
-            >
-              Save
-            </button>
-          </>
-        ) : (
-          ''
-        )}
+<Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginTop: 2,
+                    ...(pageToDisplay === 'addChatTopic' || (pageToDisplay==='editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy))
+                      ? { display: 'flex' }
+                      : { display: 'absolute' }),
+                  }}
+                >
+                  {/* Save and Cancel Buttons */}
+                  {pageToDisplay === 'addChatTopic' || (pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy)) ? (
+                    <>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    disabled={
+                      (pageToDisplay === 'addChatTopic' &&
+                        (
+                          !editDescription ||
+                          !editTopicTitle 
+                          )) 
+                    }
+                    onClick={() => handleSave()}
+                  >
+                    Save
+                  </Button>
+                  </>
+                  ) : null}
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => setPageToDisplay(userData.userType)}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
 
-        {/* cancel button */}
-        <button onClick={() => setPageToDisplay(userData.userType)}>
-          Cancel
-        </button>
-      </div>
+          </Box>
+
+
+
+
+
+                
+        </ThemeProvider>
+
+
+
+
+
+
+    
     </>
   )
 }
