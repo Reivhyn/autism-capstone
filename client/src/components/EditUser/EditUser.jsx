@@ -397,6 +397,7 @@ const EditUser = () => {
               display: 'flex',
               justifyContent: 'space-between',
               marginTop: 2,
+              gap: 2,
             }}
           >
             {allActivities &&
@@ -447,10 +448,10 @@ const EditUser = () => {
 
                 <Box
                   sx={{
-                    display: 'sticky',
-                    bottom: 0,
-                    padding: 2,
-
+                    display: 'flex',
+                    marginTop: 2,
+                    justifyContent: 'center',
+                    gap: 2,
                   }}
                 >
                   <Button
@@ -478,45 +479,6 @@ const EditUser = () => {
                 </Box>
         </ThemeProvider>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
- 
-      <div className="saveCancelButtons">
-        {/* Save button */}
-        <button
-          disabled={
-            (pageToDisplay === 'addUser' &&
-              (!editFirstName ||
-                !editLastName ||
-                !editDateOfBirth ||
-                !editPassword)) ||
-            confirmPassword !== editPassword
-          }
-          onClick={() => handleSave()}
-        >
-          Save
-        </button>
-
-        {/* cancel button */}
-        <button onClick={() => hangleCancelButton()}>Cancel</button>
-      </div>
     </>
   )
 }

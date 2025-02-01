@@ -115,7 +115,7 @@ const Portal = () => {
   </div>
 </div>
 )}
-        
+
 {/* If user is a parent, display their children */}
 {/* Show kids list if the user is a parent or admin */}
 {(pageToDisplay === 'parent') && (
