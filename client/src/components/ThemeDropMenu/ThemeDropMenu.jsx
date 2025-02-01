@@ -1,19 +1,33 @@
-import { useState, useContext, useEffect } from 'react'
-import './themDropMenu.css'
+import React, { useState, useContext, useEffect } from 'react'
 
-// MATERIAL-UI IMPORTS
+//CONTEXT IMPORTS
 import { activeThemeContext } from '../zContextHooks/contextHooks'
+
+// MUI IMPORTS
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 const ThemeDropMenu = () => {
   //* USESTATE
   const [displayList, setdisplayList] = useState('')
   const [activeTheme, setActiveTheme] = useContext(activeThemeContext)
+  const [anchorEl, setAnchorEl] = React.useState('')
+  const open = Boolean(anchorEl)
 
   //array that has names of all themes
   const themeStringNamesArr = ['dark', 'evening', 'moon', 'synth', 'day']
 
+  //* FUNCTIONS
+  // handle open for menu
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
 
-
+  //handle close for menu
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   //* USEEFFECT
 
@@ -22,28 +36,54 @@ const ThemeDropMenu = () => {
     setdisplayList(
       themeStringNamesArr.map((theme) => {
         return (
-          <div
+          <MenuItem
             className="themeNames"
             key={theme}
-            onClick={() => setActiveTheme(theme)}
+            onClick={() => {
+              setActiveTheme(theme)
+              handleClose()
+            }}
           >
             {theme}
-          </div>
+          </MenuItem>
         )
       })
     )
-  },[])
+  }, [])
 
   //* RENDER
   return (
-    <div className="dropMenu">
-      <div>THEME: {activeTheme}</div>
-      <div className="dropContent">
-        {/* button to go home */}
-        {displayList ? displayList : 'test'}
-      </div>
+    <div>
+      <Button
+        variant="outlined"
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        THEME: {activeTheme ? activeTheme : 'Dark'}
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        {displayList ? displayList : 'No Themes Found'}
+      </Menu>
     </div>
   )
 }
 
+// <div className="dropMenu">
+//   <div>THEME: {activeTheme}</div>
+//   <div className="dropContent">
+//     {/* button to go home */}
+//     {displayList ? displayList : 'test'}
+//   </div>
+// </div>
 export default ThemeDropMenu

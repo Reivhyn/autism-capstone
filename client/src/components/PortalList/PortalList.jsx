@@ -13,6 +13,7 @@ import {
   Typography,
   IconButton,
   useTheme,
+  darken,
 } from '@mui/material'
 
 // CONTEXT IMPORTS
@@ -98,7 +99,25 @@ const PortalList = ({ itemsToList, listType }) => {
     } else if (listType === 'chatTopics') {
       setDisplayList(
         itemsToList.allChatTopics.map((item) => (
-          <div
+          <Box
+          sx={{
+            // display: 'flex',
+            // alignItems: 'center',
+            // justifyContent: 'center',
+            // padding: '0.4vh',
+            // margin: '1vh',
+            // borderRadius: 2, // 8px border radius (based on theme spacing)
+            // fontSize: '1rem',
+            // fontWeight: 'bold',
+            // textAlign: 'center',
+            // cursor: 'pointer',
+            // transition: 'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+            // '&:hover': {
+            //   backgroundColor: theme => theme.palette.action.hover,
+            //   transform: 'scale(1.05)',
+            //   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            // },
+          }}
             key={item._id}
             className="portalListItem"
             onClick={() => {
@@ -107,7 +126,7 @@ const PortalList = ({ itemsToList, listType }) => {
             }}
           >
             {item.topicTitle}
-          </div>
+          </Box>
         ))
       )
     }
@@ -147,7 +166,7 @@ const PortalList = ({ itemsToList, listType }) => {
     <Box className="portalListWrap">
       <Box
         sx={{
-          height: '49vh', // Shorter height
+          height: '48vh', // Shorter height
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',

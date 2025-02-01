@@ -1,6 +1,16 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles' // Import MUI theme hook
-import { Box, Button, TextField, Typography, Paper } from '@mui/material'
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Paper,
+  InputAdornment,
+  IconButton,
+} from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
 import './chat.css'
 
 // COMPONENT IMPORTS
@@ -22,12 +32,23 @@ const Chat = () => {
   const [displayLog, setDisplayLog] = useState([])
   const [currentTopic, setCurrentTopic] = useState('')
 
+  //* FUNCTIONS
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') callGemini()
+  }
+
   //* GET CURRENT THEME
   const theme = useTheme()
 
   //* FETCH FUNCTION
   const callGemini = async (e) => {
     e.preventDefault()
+    
+    if (!history){
+      setHistory(prompt)
+    }
+
+
     setIsLoading(true)
     setGeminiStream('')
 
@@ -74,18 +95,22 @@ const Chat = () => {
   }
 
   //* RENDER CHAT HISTORY
- /* useEffect(() => {
-    if (history) {
+  useEffect(() => {
+    /* do not show most recent message to avoid duplicate gemini response */
+    if (history && history.length < 1) {
       setDisplayLog(
         history
-          .slice()
+          .slice(0,-1)
           .reverse()
           .map((log, i) => (
             <Paper
               key={`log${i}`}
               sx={{
                 padding: '10px',
-                backgroundColor: i % 2 === 0 ? theme.palette.background.paper : theme.palette.primary.main,
+                backgroundColor:
+                  i % 2 === 0
+                    ? theme.palette.background.paper
+                    : theme.palette.primary.main,
                 color: theme.palette.text.primary,
                 borderRadius: '8px',
                 marginBottom: '5px',
@@ -95,26 +120,70 @@ const Chat = () => {
             </Paper>
           ))
       )
+      return
     }
-  }, [history, theme])*/
+
+    /* do not run logic to remove most recent message when chat history has just begun */
+    if (history) {
+      setDisplayLog(
+        history
+          .slice(0,-1)
+          .reverse()
+          .map((log, i) => (
+            <Paper
+              key={`log${i}`}
+              sx={{
+                padding: '10px',
+                backgroundColor:
+                  i % 2 === 0
+                    ? theme.palette.background.paper
+                    : theme.palette.primary.main,
+                color: theme.palette.text.primary,
+                borderRadius: '8px',
+                marginBottom: '5px',
+              }}
+            >
+              {log.parts[0].text}
+            </Paper>
+          ))
+      )
+      return
+    }
+  }, [history])
 
   //* RENDER COMPONENT
   return (
     <>
       <SiteTitle />
-      <Typography variant="h4" align="center">Chat Page</Typography>
+      <Typography variant="h4" align="center">
+        Chat Page
+      </Typography>
 
       {/*<Banner />*/}
       {/* Chat topic drop menu */}
-      <ChatTopicDropMenu currentTopic={currentTopic} setCurrentTopic={setCurrentTopic} />
+      <ChatTopicDropMenu
+        currentTopic={currentTopic}
+        setCurrentTopic={setCurrentTopic}
+      />
 
       {/* Prompt Form */}
-      <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%', maxWidth: 600, mx: 'auto' }}>
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          width: '100%',
+          maxWidth: 600,
+          mx: 'auto',
+        }}
+      >
         <TextField
           multiline
           fullWidth
           variant="outlined"
-          placeholder="Type your message..."
+          placeholder="Type your message...!!!"
+          onKeyDown={(e) => handleKeyDown(e)}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           sx={{
@@ -122,29 +191,41 @@ const Chat = () => {
             color: theme.palette.text.primary,
             borderRadius: '8px',
           }}
-        />
-        <Button
-          variant="contained"
-          onClick={callGemini}
-          disabled={isLoading || !currentTopic}
-          sx={{
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.text.primary,
-            '&:hover': { backgroundColor: theme.palette.secondary.main },
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={callGemini}
+                  sx={{
+                    color: theme.palette.primary.main,
+                  }}
+                >
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
-        >
-          Ask Gemini
-        </Button>
+        />
       </Box>
 
       {/* Chat History */}
-      <Box className="chatHistoryWrapper" sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}>
-        <Box className="history">{displayLog}</Box>
-        <Paper className="currentResponse" sx={{ padding: 2, backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary }}>
-          {geminiStream}
-        </Paper>
-      </Box>
+      
+      <Box
+        className="chatHistoryWrapper"
+        sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}
+      >
+        {/* Gemini incoming responce stream */}
+        <Box  sx={{
+                padding: '10px',
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.text.primary,
+                borderRadius: '8px',
+                marginBottom: '5px',
+              }}>{geminiStream}</Box>
 
+        {/* past chat log */}
+        <Box className="history">{displayLog}</Box>
+      </Box>
     </>
   )
 }
