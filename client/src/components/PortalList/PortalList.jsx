@@ -1,18 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import './portalList.css';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import React, { useContext, useEffect, useState } from 'react'
+import './portalList.css'
+
+// MUI  IMPORTS
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  Typography,
+  IconButton,
+  useTheme,
+} from '@mui/material'
 
 // CONTEXT IMPORTS
-import { ptdContext, editTargetContext, userDataContext,} from '../zContextHooks/contextHooks';
+import {
+  ptdContext,
+  editTargetContext,
+  userDataContext,
+} from '../zContextHooks/contextHooks'
 
 const PortalList = ({ itemsToList, listType }) => {
   //* State and Context
   const theme = useTheme()
-  const [listTitle, setListTitle] = useState('');
-  const [displayList, setDisplayList] = useState('');
-  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
-  const [editTarget, setEditTarget] = useContext(editTargetContext);
-  const [userData] = useContext(userDataContext);
+  const [listTitle, setListTitle] = useState('')
+  const [displayList, setDisplayList] = useState('')
+  const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
+  const [editTarget, setEditTarget] = useContext(editTargetContext)
+  const [userData] = useContext(userDataContext)
 
   //* Functions
   const setUpList = () => {
@@ -23,16 +40,16 @@ const PortalList = ({ itemsToList, listType }) => {
             key={item._id}
             className="portalListItem"
             onClick={() => {
-              setEditTarget(item);
+              setEditTarget(item)
               item.userType === 'kid'
                 ? setPageToDisplay('editKid')
-                : setPageToDisplay('editUser');
+                : setPageToDisplay('editUser')
             }}
           >
             {`${item.firstName} ${item.lastName} (${item.userName})`}
           </div>
         ))
-      );
+      )
     } else if (listType === 'kids') {
       setDisplayList(
         itemsToList.foundKidsOfParent.map((item) => (
@@ -40,14 +57,14 @@ const PortalList = ({ itemsToList, listType }) => {
             key={item._id}
             className="portalListItem"
             onClick={() => {
-              setEditTarget(item);
-              setPageToDisplay('editKid');
+              setEditTarget(item)
+              setPageToDisplay('editKid')
             }}
           >
             {`${item.firstName} ${item.lastName} (${item.userName})`}
           </div>
         ))
-      );
+      )
     } else if (listType === 'games') {
       setDisplayList(
         itemsToList.allGames.map((item) => (
@@ -55,14 +72,14 @@ const PortalList = ({ itemsToList, listType }) => {
             key={item._id}
             className="portalListItem"
             onClick={() => {
-              setEditTarget(item);
-              setPageToDisplay('editActivity');
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
             }}
           >
             {item.activityTitle}
           </div>
         ))
-      );
+      )
     } else if (listType === 'learning') {
       setDisplayList(
         itemsToList.allLearning.map((item, i) => (
@@ -70,14 +87,14 @@ const PortalList = ({ itemsToList, listType }) => {
             key={`item${i}`}
             className="portalListItem"
             onClick={() => {
-              setEditTarget(item);
-              setPageToDisplay('editActivity');
+              setEditTarget(item)
+              setPageToDisplay('editActivity')
             }}
           >
             {item.activityTitle}
           </div>
         ))
-      );
+      )
     } else if (listType === 'chatTopics') {
       setDisplayList(
         itemsToList.allChatTopics.map((item) => (
@@ -85,18 +102,17 @@ const PortalList = ({ itemsToList, listType }) => {
             key={item._id}
             className="portalListItem"
             onClick={() => {
-              setEditTarget(item);
-              setPageToDisplay('editChatTopic');
+              setEditTarget(item)
+              setPageToDisplay('editChatTopic')
             }}
           >
             {item.topicTitle}
           </div>
         ))
-      );
+      )
     }
-  };
-  ;
-/* Titles for List */
+  }
+  /* Titles for List */
   const assignListTitle = () => {
     const titles = {
       user: 'Users',
@@ -105,9 +121,9 @@ const PortalList = ({ itemsToList, listType }) => {
       learning: 'Learning Activities',
       chatTopics: 'Chat Topics',
       reporting: 'Reporting',
-    };
-    setListTitle(titles[listType] || 'List');
-  };
+    }
+    setListTitle(titles[listType] || 'List')
+  }
 
   const handleAddClick = () => {
     const addPages = {
@@ -116,29 +132,46 @@ const PortalList = ({ itemsToList, listType }) => {
       games: 'addGame',
       learning: 'addLearning',
       chatTopics: 'addChatTopic',
-    };
-    setPageToDisplay(addPages[listType] || '');
-  };
+    }
+    setPageToDisplay(addPages[listType] || '')
+  }
 
   //* Effects
   useEffect(() => {
-    setUpList();
-    assignListTitle();
-  }, [itemsToList, listType]); // Ensure `listType` is included in dependencies
+    setUpList()
+    assignListTitle()
+  }, [itemsToList, listType]) // Ensure `listType` is included in dependencies
 
   //* Render
   return (
-    <div className="portalListWrap">
-      
-      <div className="portalList">
+    <Box className="portalListWrap">
+      <Box
+        sx={{
+          height: '50vh', // Shorter height
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          marginBottom: '.5vw',
+          scrollbarWidth: 'none', // Hide scrollbar for Firefox
+              '&::-webkit-scrollbar': {
+                display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
+              },
+        }}
+      >
         {displayList.length > 0 ? displayList : 'No items to display'}
-      </div>
+      </Box>
       {listType !== 'reporting' && (
-        <button onClick={handleAddClick}>Add</button>
+        <Button
+          variant="outlined"
+          color="primary"
+          sx={{ display: 'sticky' }}
+          onClick={handleAddClick}
+        >
+          Add
+        </Button>
       )}
-    </div>
-    
-  );
-};
+    </Box>
+  )
+}
 
-export default PortalList;
+export default PortalList
