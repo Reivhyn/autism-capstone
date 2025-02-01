@@ -243,15 +243,19 @@ const EditActivity = () => {
           </form>
         ) : null}
                 
+              
                 <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 marginTop: 2,
+                ...(pageToDisplay === 'addLearning' || pageToDisplay === 'addGame' || (pageToDisplay === 'editActivity' && (userData.userType === 'admin' || userData._id === editTarget.createdBy)) 
+                  ? { display: 'flex' } 
+                  : { display: 'absolute' }),
               }}
-            >
+              >
               {/* Save and Cancel Buttons */} 
-              {pageToDisplay === 'editActivity'  && (userData.userType === 'admin' || userData._id === editTarget.createdBy) || pageToDisplay === 'addLearning' || pageToDisplay === 'addLearning' ? (
+              { (pageToDisplay === 'addLearning' || pageToDisplay === 'addGame') || (pageToDisplay === 'editActivity'  && (userData.userType === 'admin' || userData._id === editTarget.createdBy)) ? (
                 <>
                 <Button
                 variant="outlined"
@@ -271,22 +275,6 @@ const EditActivity = () => {
                 </>
               ) 
               : null}
-
-              <Button
-                variant="outlined"
-                color="primary"
-                disabled={
-                  (pageToDisplay === 'addLearning' ||
-                    pageToDisplay === 'addGame') &&
-                  (!editActivityTitle ||
-                    !editurl ||
-                    !editCategory ||
-                    !editSearchKeywords)
-                }
-                onClick={handleSave}
-              >
-                Save
-              </Button>
 
                 <Button
                 variant="outlined"
