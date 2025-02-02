@@ -306,8 +306,10 @@ const DualList = ({
               '&::-webkit-scrollbar': {
                 display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
               },
-
-            }}
+              '@media (max-width: 320px)': {
+                flexDirection: 'column',  // Adjust width for small devices
+              }
+              }}
           >
             {/* Available list */}
             <Box sx={{ width: '45%' }}>
