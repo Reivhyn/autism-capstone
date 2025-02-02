@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
 
-
 // MUI  IMPORTS
 import {
   Box,
@@ -42,7 +41,10 @@ const PortalList = ({ itemsToList, listType }) => {
           padding: '0.4vh',
           margin: '1vh',
           borderRadius: 2,
-          fontWeight: 'bold',
+          fontWeight:
+            userData.userType === 'parent' && userData._id === item.createdBy
+              ? 'bold'
+              : 'normal',
           cursor: 'pointer',
           transition:
             'background-color 0.3s, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
@@ -97,19 +99,31 @@ const PortalList = ({ itemsToList, listType }) => {
       )
     } else if (listType === 'kids') {
       setDisplayList(
-        itemsToList.foundKidsOfParent.map((item) => element(item, `${item.firstName} ${item.lastName} (${item.userName})`, 'editKid'))
+        itemsToList.foundKidsOfParent.map((item) =>
+          element(
+            item,
+            `${item.firstName} ${item.lastName} (${item.userName})`,
+            'editKid'
+          )
+        )
       )
     } else if (listType === 'games') {
       setDisplayList(
-        itemsToList.allGames.map((item) => element(item, item.activityTitle, 'editActivity'))
+        itemsToList.allGames.map((item) =>
+          element(item, item.activityTitle, 'editActivity')
+        )
       )
     } else if (listType === 'learning') {
       setDisplayList(
-        itemsToList.allLearning.map((item, i) => element(item, item.activityTitle, 'editActivity'))
+        itemsToList.allLearning.map((item, i) =>
+          element(item, item.activityTitle, 'editActivity')
+        )
       )
     } else if (listType === 'chatTopics') {
       setDisplayList(
-        itemsToList.allChatTopics.map((item) => element(item, item.topicTitle, 'editChatTopic'))
+        itemsToList.allChatTopics.map((item) =>
+          element(item, item.topicTitle, 'editChatTopic')
+        )
       )
     }
   }
@@ -164,8 +178,11 @@ const PortalList = ({ itemsToList, listType }) => {
       {listType !== 'reporting' && (
         <Button
           variant="outlined"
-          color="primary"
-          sx={{ display: 'sticky', marginBottom: '1vh' }}
+          sx={{
+            display: 'sticky',
+            marginBottom: '1vh',
+            color: theme.palette.secondary.main,
+          }}
           onClick={handleAddClick}
         >
           Add

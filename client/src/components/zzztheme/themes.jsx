@@ -47,7 +47,7 @@ export const darkTheme = createTheme({
 export const evening = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#494E6B' },
+    primary: { main: '#c35b1d' },
     secondary: { main: '#985E6D' },
     background: { default: '#192231', paper: '#3A3F58' },
     text: { primary: '#F5F5F5', secondary: '#C0C0C0' },
