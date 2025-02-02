@@ -24,6 +24,10 @@ const ActivityTile = ({ tileData }) => {
       sx={{
         width: '100%', 
         maxWidth: 300, 
+        height: 500,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         margin: 'auto',
         boxShadow: 3,
         borderRadius: 2,
