@@ -33,10 +33,11 @@ const Login = () => {
   const loginUser = async () => {
     try {
       const data = await logIn(userName, password);
-      setUserData(data);
       if (!data) {
         setError('Invalid username or password.');
+        return;
       }
+      setUserData(data);
     } catch (error) {
       console.error('Error during login:', error); // Logs the error in the console
 

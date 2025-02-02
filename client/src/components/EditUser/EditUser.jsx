@@ -279,22 +279,25 @@ const EditUser = () => {
           </Typography>
 
           <Box sx={{ marginBottom: 2 }}>
-            {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
-              <>
-                <Typography variant="body2" margin={1}>
-                  Date of Birth: {editTarget.dob.trim().split('T')[0]}
-                </Typography>
-                <Typography variant="body3" margin={1}>
-                  UserName: {editTarget.userName}
-                </Typography>
-                <Typography variant="body2" margin={1}>
-                  Email: {editTarget.email}
-                </Typography>
-              </>
-            ) : (
-              ''
-            )}
-          </Box>
+              {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
+                <>
+                  {[
+                    { label: 'Date of Birth', value: new Date (editTarget.dob.trim().split('T')[0]).toLocaleDateString('en-US'), variant: 'body2' },
+                    { label: 'Username', value: editTarget.userName, variant: 'body3' },
+                    { label: 'Email', value: editTarget.email, variant: 'body2' },
+                  ].map(({ label, value, variant }) => (
+                    <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+                      <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
+                        {label}:
+                      </Typography>{' '}
+                      <Typography component="span" variant={variant} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
+                      <p>{value}</p>
+                      </Typography>
+                    </Typography>
+                  ))}
+                </>
+              )}
+            </Box>
 
           <form>
             <TextField
