@@ -17,11 +17,9 @@ import SchoolIcon from '@mui/icons-material/School'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
 import ChatIcon from '@mui/icons-material/Chat'
 import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
-import { darkTheme } from '../zzztheme/themes'
 import Logo from '../Logo/Logo'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
-import { ImPriceTag } from 'react-icons/im'
 
 const Landing = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
