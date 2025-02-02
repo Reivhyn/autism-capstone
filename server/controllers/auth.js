@@ -96,7 +96,7 @@ router.post('/login', async (req, res) => {
       .select('+password')
 
     //if not found throw errror
-    if (!foundUser) throw new Error('invalid username or password 1')
+    if (!foundUser) throw new Error('Invalid username or password')
 
     //verify password
     const passwordVerified = await bcrypt.compare(
