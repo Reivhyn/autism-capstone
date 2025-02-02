@@ -522,9 +522,12 @@ console.log('allUsers', allUsers)
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, horizontal on larger
+            justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens
+            alignItems: { xs: 'center', sm: 'flex-start' }, // Align properly when stacked
             marginTop: 2,
             gap: 2,
+            width: '100%',
           }}
         >
           {allActivities &&
@@ -534,6 +537,10 @@ console.log('allUsers', allUsers)
               listType="games"
               gamesAccess={gamesAccess}
               setGamesAccess={setGamesAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -548,6 +555,10 @@ console.log('allUsers', allUsers)
               listType="learning"
               learingAccess={learingAccess}
               setLearningAccess={setLearningAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -562,6 +573,10 @@ console.log('allUsers', allUsers)
               listType="chatTopics"
               chatAccess={chatAccess}
               setChatAccess={setChatAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -573,9 +588,11 @@ console.log('allUsers', allUsers)
         <Box
           sx={{
             display: 'flex',
-            marginTop: 2,
+            flexDirection: { xs: 'column', sm: 'row' }, // Stack buttons on mobile, horizontal on larger screens
             justifyContent: 'center',
             gap: 2,
+            marginTop: 2,
+            width: '100%',
           }}
         >
           <Button
