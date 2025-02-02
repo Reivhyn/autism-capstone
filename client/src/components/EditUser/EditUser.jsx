@@ -125,25 +125,14 @@ const EditUser = () => {
     return re.test(email)
   }
 
-  const isUsernameTaken = (username) => {
-    if (!Array.isArray(allUsers)) return false; // Ensure allUsers is an array before calling .some()
-    return allUsers.some(user => user?.userName?.toLowerCase() === username.toLowerCase());
-  };
-  
-console.log('allUsers', allUsers)
   //validate inputs
   const validateInputs = () => {
-    let newErrors = {}; // Initialize error object
-  
-    if (!editFirstName) newErrors.firstName = "First Name is required.";
-    if (!editLastName) newErrors.lastName = "Last Name is required.";
-    if (!editDateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
-    if (!editUserName) {
-      newErrors.userName = "Username is required.";
-    } else if (isUsernameTaken(editUserName)) {
-      newErrors.userName = "Username already exists. Please choose a different one.";
-    }
-    
+    let newErrors = {} // Initialize error object
+
+    if (!editFirstName) newErrors.firstName = 'First Name is required.'
+    if (!editLastName) newErrors.lastName = 'Last Name is required.'
+    if (!editDateOfBirth) newErrors.dateOfBirth = 'Date of Birth is required.'
+    if (!editUserName) newErrors.userName = 'Username is required.'
     if (!editEmail) {
       newErrors.email = 'Email is required.'
     } else if (!validateEmail(editEmail)) {
@@ -175,7 +164,6 @@ console.log('allUsers', allUsers)
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     if (editPassword && !handlePasswordCheck()) return //check password criteria
-    if (isUsernameTaken(editUserName)) return //check if username is taken
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -229,10 +217,6 @@ console.log('allUsers', allUsers)
     callEditUser()
   }
 
-  // handle cancel button
-  const hangleCancelButton = () => {
-    setPageToDisplay(userData.userType)
-  }
 
   //* USEEFFECT
   //get all data when page is loaded
@@ -246,15 +230,6 @@ console.log('allUsers', allUsers)
       fetchAllData()
   }, [pageToDisplay])
 
-  //fetch all users when page is loaded
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const users = await getAllUsers(); // Ensure this returns an array
-      setAllUsers(users);
-    };
-    fetchUsers();
-  }, []);
-  
   // check for enabbled or disabled status on page load
   useEffect(() => {
     if (pageToDisplay === 'editUser' || pageToDisplay === 'editKid')
@@ -303,7 +278,6 @@ console.log('allUsers', allUsers)
               : `Add New Child`}
           </Typography>
 
-
           <Box sx={{ marginBottom: 2 }}>
               {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
                 <>
@@ -334,7 +308,7 @@ console.log('allUsers', allUsers)
               value={editFirstName}
               onChange={(e) => setEditFirstname(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.firstName} // Display an error message if the first name is invalid
               helperText={errors.firstName && errors.firstName}
@@ -348,7 +322,7 @@ console.log('allUsers', allUsers)
               value={editLastName}
               onChange={(e) => setEditLastName(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.lastName} // Display an error message if the last name is invalid
               helperText={errors.lastName && errors.lastName}
@@ -366,7 +340,7 @@ console.log('allUsers', allUsers)
                 shrink: true, // Ensures label does not overlap the value
               }}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
               helperText={errors.dateOfBirth && errors.dateOfBirth}
@@ -378,18 +352,13 @@ console.log('allUsers', allUsers)
               fullWidth
               margin="normal"
               value={editUserName}
-              onChange={(e) => {
-                setEditUserName(e.target.value);
-                setErrors((prevErrors) => ({
-                  ...prevErrors,
-                  userName: isUsernameTaken(e.target.value) ? "Username already exists. Please choose a different one." : "",
-                }));
-              }}
-              required={pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-              error={!!errors.userName}
-              helperText={errors.userName}
+              onChange={(e) => setEditUserName(e.target.value)}
+              required={
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+              }
+              error={!!errors.userName} // Display an error message if the username is invalid
+              helperText={errors.userName && errors.userName}
             />
-
 
             <TextField
               label="Email"
@@ -400,7 +369,7 @@ console.log('allUsers', allUsers)
               value={editEmail}
               onChange={(e) => setEditEmail(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.email} // Display an error message if the email is invalid
               helperText={errors.email && errors.email}
@@ -415,7 +384,7 @@ console.log('allUsers', allUsers)
               value={editPassword}
               onChange={(e) => setEditPassword(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.password} // Display an error message if the password is invalid
               helperText={errors.password && errors.password}
@@ -442,9 +411,11 @@ console.log('allUsers', allUsers)
                 }))
               }}
               required={
-                pageToDisplay === 'addUser' ||
-                pageToDisplay === 'addKid' ||
-                editPassword
+                !!(
+                  pageToDisplay === 'addUser' ||
+                  pageToDisplay === 'addKid' ||
+                  editPassword
+                )
               }
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword}
@@ -462,7 +433,7 @@ console.log('allUsers', allUsers)
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={editDeleteUser}
+                        checked={!!editDeleteUser}
                         onChange={(e) => setEditDeleteUser(e.target.checked)}
                       />
                     }
@@ -475,11 +446,11 @@ console.log('allUsers', allUsers)
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={editDisableLogin}
+                    checked={!!editDisableLogin}
                     onChange={(e) => setEditDisableLogin(e.target.checked)}
                   />
                 }
-                label={'Disable Login'}
+                label="Disable Login"
               />
             </Box>
           </form>

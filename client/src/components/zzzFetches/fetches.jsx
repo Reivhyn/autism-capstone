@@ -182,7 +182,7 @@ export async function editUser(
         ...(dob && { dob }),
         ...(userName && { userName }),
         ...(password && { password }),
-        ...(disabled && { disabled }),
+        disabled,
         ...(activitiesAccess && { activitiesAccess }),
         ...(email && { email }),
         ...(chatAccess && { chatAccess }),
@@ -260,7 +260,7 @@ export async function addNewUser(
         ...(activitiesAccess &&
           userType === 'kid' && { activitiesAccess: activitiesAccess }),
         ...(parentUser && userType === 'kid' && { parentUser }),
-        ...(disabled && { disabled }),
+        disabled,
         portalReg: true,
       }),
 
@@ -423,11 +423,7 @@ export async function getAllChatTopics() {
 }
 
 //edit chat topic
-export async function editChatTopic(
-  id,
-  topicTitle,
-  description,
-) {
+export async function editChatTopic(id, topicTitle, description) {
   try {
     const res = await fetch(
       `http://127.0.0.1:4000/chatTopics/updateChatTopic`,
@@ -467,7 +463,7 @@ export async function addChatTopic(topicTitle, description, createdBy) {
       body: JSON.stringify({
         topicTitle: topicTitle,
         description: description,
-        createdBy : createdBy
+        createdBy: createdBy,
       }),
       credentials: 'include',
     })
