@@ -11,12 +11,13 @@ import './ActivityTile.css'
 import { ptdContext } from '../zContextHooks/contextHooks';
 
 // MATERIAL-UI Imports
-import { Card, CardMedia, CardContent, Typography, Link } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Link, useTheme } from '@mui/material';
 
 
 
 const ActivityTile = ({ tileData }) => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext);
+  const theme = useTheme();
 
   return (
     <Card 
@@ -31,6 +32,11 @@ const ActivityTile = ({ tileData }) => {
         margin: 'auto',
         boxShadow: 3,
         borderRadius: 2,
+        '&:hover': {
+          boxShadow: 5,
+          cursor: 'pointer',
+          backgroundColor: '#f0f0f0',
+        },
       }}
     >
       <Link href={tileData.url} underline='none' target='_blank' rel='noreferrer'>

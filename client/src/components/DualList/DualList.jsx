@@ -306,6 +306,7 @@ const DualList = ({
               '&::-webkit-scrollbar': {
                 display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
               },
+
             }}
           >
             {/* Available list */}
