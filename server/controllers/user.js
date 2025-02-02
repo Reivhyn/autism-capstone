@@ -34,6 +34,7 @@ router.put('/updateUser', async (req, res) => {
     const updatedEntry = await userSchema.findByIdAndUpdate(id, updateValues, {
       returnDocument: 'after',
     })
+
     res.status(200).json({
       message: `Modified`,
       originalDocument: foundEntry,

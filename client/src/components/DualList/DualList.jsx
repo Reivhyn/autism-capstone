@@ -271,16 +271,13 @@ const DualList = ({
           boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
         }}
       >
-        <h3
-          style={{
-            color: theme.palette.secondary.main,
-          }}
+        {/* dual list title */}
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: 'bold', color: theme.palette.secondary.main }}
         >
-          {/* dual list title */}
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            {dualListTitle}
-          </Typography>
-        </h3>
+          {dualListTitle}
+        </Typography>
 
         {/* dual list title wrap */}
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'space-evenly' }}>

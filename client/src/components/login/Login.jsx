@@ -33,13 +33,11 @@ const Login = () => {
   const loginUser = async () => {
     try {
       const data = await logIn(userName, password);
-      setUserData(data);
-      if (!data) {
-        setError('Invalid username or password.');
-      }
-    } catch (error) {
-      console.error('Error during login:', error); // Logs the error in the console
 
+      setUserData(data);
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError(error.message)
     }
   };
 
@@ -89,7 +87,7 @@ const Login = () => {
             onKeyDown={(e) => handleKeyDown(e)}
             onChange={(e) => setUserName(e.target.value)}
             error={!!error}
-            helperText={error && 'Invalid username or password.'}
+            helperText={error && error}
           />
           <TextField
             required

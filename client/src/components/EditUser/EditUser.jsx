@@ -125,21 +125,14 @@ const EditUser = () => {
     return re.test(email)
   }
 
-  const isUsernameTaken = (username) => {
-    if (!Array.isArray(allUsers)) return false; // Ensure allUsers is an array before calling .some()
-    return allUsers.some(user => user?.userName?.toLowerCase() === username.toLowerCase());
-  };
-  
-console.log('allUsers', allUsers)
   //validate inputs
   const validateInputs = () => {
-    let newErrors = {}; // Initialize error object
-  
-    if (!editFirstName) newErrors.firstName = "First Name is required.";
-    if (!editLastName) newErrors.lastName = "Last Name is required.";
-    if (!editDateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
-    if (!editUserName) newErrors.userName = "Username is required.";
-    
+    let newErrors = {} // Initialize error object
+
+    if (!editFirstName) newErrors.firstName = 'First Name is required.'
+    if (!editLastName) newErrors.lastName = 'Last Name is required.'
+    if (!editDateOfBirth) newErrors.dateOfBirth = 'Date of Birth is required.'
+    if (!editUserName) newErrors.userName = 'Username is required.'
     if (!editEmail) {
       newErrors.email = 'Email is required.'
     } else if (!validateEmail(editEmail)) {
@@ -284,7 +277,6 @@ console.log('allUsers', allUsers)
               ? `Add New User`
               : `Add New Child`}
           </Typography>
-
 
           <Box sx={{ marginBottom: 2 }}>
               {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
@@ -444,7 +436,7 @@ console.log('allUsers', allUsers)
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={editDeleteUser}
+                        checked={!!editDeleteUser}
                         onChange={(e) => setEditDeleteUser(e.target.checked)}
                       />
                     }
@@ -457,11 +449,11 @@ console.log('allUsers', allUsers)
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={editDisableLogin}
+                    checked={!!editDisableLogin}
                     onChange={(e) => setEditDisableLogin(e.target.checked)}
                   />
                 }
-                label={'Disable Login'}
+                label="Disable Login"
               />
             </Box>
           </form>

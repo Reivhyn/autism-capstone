@@ -229,7 +229,7 @@ const Chat = () => {
             <Box
               sx={{
                 padding: '10px',
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.primary.main,
                 color: theme.palette.text.primary,
                 borderRadius: '8px',
                 marginBottom: '5px',
