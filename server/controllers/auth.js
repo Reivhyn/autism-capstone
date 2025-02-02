@@ -3,7 +3,6 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-
 //SCHEMA IMPORT
 const userSchema = require('../models/userSchema')
 
@@ -23,30 +22,26 @@ const { LuClock10 } = require('react-icons/lu')
 const SALT = Number(process.env.SALT)
 const JWT_KEY = process.env.JWT_KEY
 
-
-
 //register new user
 router.post('/register', async (req, res) => {
   try {
     console.log('register new user endpoint hit') //TODO REMOVE IN FINAL
-    
-    
+
     deconstructUser(req.body)
-    
+
     //create new user
     const newUser = new userSchema(req.body)
-    
+
     validatePasswordCriteria(newUser.password)
-    
+
     //hash user passprd
     newUser.password = bcrypt.hashSync(newUser.password, SALT)
 
-    
     //save user
     await newUser.save()
 
-    const {password,  ...userData} = newUser._doc
-    
+    const { password, ...userData } = newUser._doc
+
     //generate token
     const token = jwt.sign(
       //payload
@@ -56,7 +51,7 @@ router.post('/register', async (req, res) => {
       //epiration
       { expiresIn: '24 hours' } // need to impliment a token refresh sytem instead
     )
-    
+
     //if this is called in the parent or admin portal on the front end do not issue token
     if (req.body.portalReg) {
       return res.status(200).json({
@@ -64,18 +59,18 @@ router.post('/register', async (req, res) => {
         ...userData,
       })
     }
-    
+
     return res
-    .status(200)
-    .cookie('authToken', token, {
-      maxAge: 1000 * 60 * 60,
-      sameSite: 'Strict',
-      secure: false,
-    })
-    .json({
-      message: `new ${newUser.userType} user created`,
-      ...userData,
-    })
+      .status(200)
+      .cookie('authToken', token, {
+        maxAge: 1000 * 60 * 60,
+        sameSite: 'Strict',
+        secure: false,
+      })
+      .json({
+        message: `new ${newUser.userType} user created`,
+        ...userData,
+      })
   } catch (error) {
     return res.status(500).json({
       message: `${error}`,
@@ -94,9 +89,11 @@ router.post('/login', async (req, res) => {
     const userPassword = req.body.password
 
     //look for user. case insensitive
-    const foundUser = await userSchema.findOne({
-      userName: { $regex: userName, $options: 'i' },
-    }).select('+password') //4
+    const foundUser = await userSchema
+      .findOne({
+        userName: { $regex: userName, $options: 'i' },
+      })
+      .select('+password') //4
 
     //if not found throw errror
     if (!foundUser) throw new Error('invalid username or password 1')
@@ -108,10 +105,13 @@ router.post('/login', async (req, res) => {
     )
 
     //throw error if password invalid
-    if (!passwordVerified) throw new Error('invalid username or password')
+    if (!passwordVerified) throw new Error('Invalid username or password')
 
-    //remove password from res 
-    const {password,  ...userData} = foundUser._doc
+    //if user is diabled throw error
+    if (foundUser.disabled) throw new Error('This user has been disabled')
+
+    //remove password from res
+    const { password, ...userData } = foundUser._doc
 
     //generate token
     const token = jwt.sign(
@@ -120,7 +120,7 @@ router.post('/login', async (req, res) => {
       //token key
       JWT_KEY,
       //epiration
-      { expiresIn: '24 hours' }// need to impliment a token refresh sytem instead
+      { expiresIn: '24 hours' } // need to impliment a token refresh sytem instead
     )
 
     return res
