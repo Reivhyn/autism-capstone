@@ -25,22 +25,28 @@ export default function LoginRegisterButton() {
     <>
 
       {/* Site Title */}
-      {!userData && (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' , gap: 2 }}>
-          <Button
+        <Box sx={{ display: 'flex', gap: 2 }}>
+        <ThemeDropMenu />
+        <DropMenu />
+        {!userData && (
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
             variant="outlined"
+            
             onClick={() => setPageToDisplay('login')}
-          >
-            Login
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => setPageToDisplay('register')}
-          >
-            Register
-          </Button>
+            >
+              Login
+            </Button>
+            <Button
+              variant="outlined"
+              color="theme.palette.primary.main"
+              onClick={() => setPageToDisplay('register')}
+            >
+              Register
+            </Button>
+          </Box>
+        )}
         </Box>
-      )}
     </>
   )
 }

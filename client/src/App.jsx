@@ -19,6 +19,7 @@ import LogoutButton from './components/LogoutButton/LogoutButton.jsx'
 import PleaseLogin from './components/PleaseLogIn/PleaseLogin.jsx'
 import ThemeDropMenu from './components/ThemeDropMenu/ThemeDropMenu.jsx'
 import Footer from './components/Footer/Footer.jsx'
+import LoginRegisterButton from './components/LoginRegisterButton/LoginRegisterButton.jsx'
 
 // CONTEXT IMPORTS
 import {
@@ -43,6 +44,7 @@ import {
   synth,
   day,
 } from './components/zzztheme/themes.jsx'
+import { Box } from '@mui/material'
 
 function App() {
   const [pageToDisplay, setPageToDisplay] = useState('landing')
@@ -73,13 +75,13 @@ function App() {
   //* FUNCTIONS
   const theme = useMemo(() => {
     switch (activeTheme) {
-      case 'evening':
+      case 'Evening':
         return evening
-      case 'moon':
+      case 'Moon':
         return moon
-      case 'synth':
+      case 'Synth':
         return synth
-      case 'day':
+      case 'Day':
         return day
       default:
         return darkTheme
@@ -115,26 +117,44 @@ function App() {
             <KidsOfParentContext.Provider
               value={[kidsOfParent, setKidsOfParent]}
             >
+                
+                {/*//*  Header */}
 
 
-              {/* theme frop menu */}
-              <ThemeDropMenu />
+                {/*//*  Header */}
+{/*//*  Header */}
+<Box sx={{ display: 'flex',  alignItems: 'center',  gap:2,   ...(pageToDisplay === 'login' || pageToDisplay === 'register') 
+    ? { justifyContent: 'center' }
+    : { justifyContent: 'space-between' }  }}>
+  
+  {/* Left Side - Drop Menus */}
+  <Box sx={{ display: 'flex', gap: 2,
 
-              {/* please log in - shoews if trying to access other sights without login */}
-              {pageToDisplay !== 'landing' &&
+}}>
+    <ThemeDropMenu />
+    {['learning', 'games', 'chat'].includes(pageToDisplay) && userData && <DropMenu />}
+  </Box>
+
+  {/* Right Side - Login/Register/Logout Buttons */}
+  <Box sx={{ display: 'flex', gap: 2 }}>
+    {(pageToDisplay !== 'login' && pageToDisplay !== 'register') && !userData && (
+      <LoginRegisterButton />
+    )}
+    {userData && <LogoutButton />}
+  </Box>
+
+</Box>
+{/* End of Header */}
+<editTargetContext.Provider value={[editTarget, setEditTarget]}>
+
+{/*end of header */}
+
+            {/* please log in - shoews if trying to access other sights without login */}
+            {pageToDisplay !== 'landing' &&
                 pageToDisplay !== 'login' &&
                 pageToDisplay !== 'register' &&
                 !userData && <PleaseLogin />}
-
-
-              <editTargetContext.Provider value={[editTarget, setEditTarget]}>
-                {/* Conditionally Render DropMenu */}
-                {['learning', 'games', 'chat'].includes(pageToDisplay) &&
-                  userData && <DropMenu />}
-
-                {/* render logout button once logged in */}
-                {userData ? <LogoutButton /> : ''}
-
+                
                 {/*//*  Page Rendering */}
                 {/* login page */}
                 {pageToDisplay === 'login' && <Login />}

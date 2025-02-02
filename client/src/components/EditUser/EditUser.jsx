@@ -368,6 +368,7 @@ const EditUser = () => {
                   variant="outlined"
                   fullWidth
                   margin="normal"
+                  type='password'
                   value={editPassword}
                   onChange={(e) => setEditPassword(e.target.value)}
                   required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
@@ -380,6 +381,7 @@ const EditUser = () => {
                   label="Confirm Password"
                   variant="outlined"
                   fullWidth
+                  type='password'
                   margin="normal"
                   value={confirmPassword}
                   onChange={(e) => {

@@ -15,12 +15,6 @@ const LogoutButton = () => {
     <Button
     variant='outlined'
       onClick={logout}
-      sx={{
-        position: 'absolute',
-        right: '10px',
-        top: '10px',
-        padding: '10px 20px',
-      }}
     >
       Logout
     </Button>
