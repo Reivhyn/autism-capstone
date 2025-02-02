@@ -8,15 +8,6 @@
   }  
 }
 
-.cateSearch-container {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-
 
 /* Responsiveness for dropMenu & searchBar */
 @media (max-width: 768px) {

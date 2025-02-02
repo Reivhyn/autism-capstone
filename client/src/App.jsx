@@ -119,7 +119,7 @@ function App() {
             >
 
 {/*//*  Header */}
-<Box sx={{ display: 'flex',  alignItems: 'center',  gap:2, margin:'5vh',   ...(pageToDisplay === 'login' || pageToDisplay === 'register') 
+<Box sx={{ display: 'flex',  alignItems: 'center',  gap:2, marginBottom:'3vh',   ...(pageToDisplay === 'login' || pageToDisplay === 'register') 
     ? { justifyContent: 'center' }
     : { justifyContent: 'space-between' }  }}>
   
