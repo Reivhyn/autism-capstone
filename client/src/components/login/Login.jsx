@@ -37,7 +37,6 @@ const Login = () => {
       setUserData(data);
     } catch (error) {
       console.error('Error during login:', error);
-
       setError(error.message)
     }
   };
