@@ -74,7 +74,7 @@ export async function logIn(userName, password) {
     return loginData
   } catch (error) {
     console.log(error)
-    return error
+    throw error
   }
 }
 
