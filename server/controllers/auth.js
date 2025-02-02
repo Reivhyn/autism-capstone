@@ -92,7 +92,7 @@ router.post('/login', async (req, res) => {
       .findOne({
         userName: { $regex: userName, $options: 'i' },
       })
-      .select('+password') //4
+      .select('+password')
 
     //if not found throw errror
     if (!foundUser) throw new Error('invalid username or password 1')
