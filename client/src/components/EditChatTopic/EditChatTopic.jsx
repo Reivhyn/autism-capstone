@@ -170,21 +170,21 @@ console.log('userData', userData)
               an apprpriate manner for them.
               </Typography>
 
-                {/* Delete User Checkbox */}
-                {pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy ) ? (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={editDeleteTopic}
-                        onChange={(e) => setEditDeleteTopic(e.target.checked)}
-                      />
-                    }
+
+              </form>
+            ) : ('')}
+            {/* Delete User Checkbox */}
+            {pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy ) ? (
+            <FormControlLabel
+              control={
+              <Checkbox
+                checked={editDeleteTopic}
+                onChange={(e) => setEditDeleteTopic(e.target.checked)}
+                />
+                }
                     label="Delete Chat Topic"
                     />
                 ) : ('')}
-              </form>
-            ) : ('')}
-
 
 <Box
                   sx={{
