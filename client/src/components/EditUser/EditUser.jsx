@@ -175,6 +175,7 @@ console.log('allUsers', allUsers)
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     if (editPassword && !handlePasswordCheck()) return //check password criteria
+    if (!isUsernameTaken(editUserName)) return //check if username is taken
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -377,13 +378,14 @@ console.log('allUsers', allUsers)
               fullWidth
               margin="normal"
               value={editUserName}
-              onChange={(e) => setEditUserName(e.target.value)}
-              required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
-              }
-              error={!!errors.userName} // Display an error message if the username is invalid
-              helperText={errors.userName && errors.userName}
+              onChange={(e) => {
+                setEditUserName(e.target.value);
+              }}
+              required={pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+              error={!!errors.userName}
+              helperText={errors.userName}
             />
+
 
             <TextField
               label="Email"
