@@ -102,7 +102,7 @@ const Login = () => {
             error={!!error}
           />
           <Button
-            variant="contained"
+            variant="outlined"
             fullWidth
             onClick={() => loginUser()}
           >

@@ -14,7 +14,6 @@ const { deconstructUser } = require('../helpers/deconstructUser')
 const {
   validatePasswordCriteria,
 } = require('../helpers/validatePasswordCriteria')
-const { LuClock10 } = require('react-icons/lu')
 
 //checks other schema for existing email or username
 

@@ -97,14 +97,13 @@ const Portal = () => {
       <Box
         className="portalGridWrapper"
         sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '1rem',
           p: '1rem',
           maxWidth: '1200px',
           margin: '0 auto',
         }}
       >
+          
         {/* if pageToDisplay is admin show all users list
         first ternary function checks to see if page is admin and if needed
         data is present to display the list

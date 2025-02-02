@@ -1,27 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from 'react'
-
 import { ThemeProvider } from '@mui/material/styles'
-
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardActionArea,
-  Typography,
-  IconButton,
-  useTheme,
-} from '@mui/material'
+import { Box, Card, CardContent, CardActionArea, Typography, useTheme } from '@mui/material'
 import SchoolIcon from '@mui/icons-material/School'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
 import ChatIcon from '@mui/icons-material/Chat'
 import { ptdContext, userDataContext } from '../zContextHooks/contextHooks'
+import { darkTheme } from '../zzztheme/themes'
 import Logo from '../Logo/Logo'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
-
-
 
 const Landing = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
@@ -34,35 +22,45 @@ const Landing = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: 'center',  
+          justifyContent: 'center',  
+          minHeight: '100vh',  
           backgroundColor: theme.palette.background.default,
+          padding: 2,
+          width: '100%',  // Ensure it takes full width
+          boxSizing: 'border-box',  // Include padding in width calculations
         }}
       >
-
         {/* Site Header */}
         <SiteTitle />
-        
+
         {/* Site Logo */}
-        <Logo/>
+        <Logo />
 
         {/* Main Cards Section */}
         <Box
           sx={{
             display: 'flex',
-            gap: 4,
+            gap: 2,
             justifyContent: 'center',
-            marginTop: 4,
+            flexWrap: 'wrap',  // Allow cards to wrap on smaller screens
+            width: '100%',
+            marginTop: 2,
+            padding: 1,  // Add some padding for better spacing
           }}
         >
           {/* Learning Activities Card */}
           <Card
             sx={{
-              width: 250,
+              width: '200px',  // Adjust card width for smaller screens
               textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
+              marginBottom: 2,
+              '@media (max-width: 320px)': {
+                width: '90%',  // For very small screens like 320px, reduce card size
+              },
             }}
           >
             <CardActionArea onClick={() => setPageToDisplay('learning')}>
@@ -78,11 +76,15 @@ const Landing = () => {
           {/* Games Card */}
           <Card
             sx={{
-              width: 250,
+              width: '200px',
               textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
+              marginBottom: 2,
+              '@media (max-width: 320px)': {
+                width: '90%',  // Adjust width for small devices
+              },
             }}
           >
             <CardActionArea onClick={() => setPageToDisplay('games')}>
@@ -98,11 +100,15 @@ const Landing = () => {
           {/* Chat Card */}
           <Card
             sx={{
-              width: 250,
+              width: '200px',
               textAlign: 'center',
               backgroundColor: theme.palette.background.paper,
               boxShadow: 3,
               borderRadius: 2,
+              marginBottom: 2,
+              '@media (max-width: 320px)': {
+                width: '90%',  // Adjust width for small devices
+              },
             }}
           >
             <CardActionArea onClick={() => setPageToDisplay('chat')}>
