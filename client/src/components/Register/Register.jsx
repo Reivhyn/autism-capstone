@@ -35,13 +35,13 @@ const Register = () => {
   const [dob, setDob] = useState('1900-01-01');
   const [userType, setUserType] = useState('parent');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
 
 
   //* FUNCTIONS
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(''); // Clear any previous errors
+    setErrors(''); // Clear any previous errors
     if (!validateInputs()) {
       return; // stop submission if validation fails
     }
@@ -63,25 +63,47 @@ const Register = () => {
       console.error('Registration failed:', error);
     }
   }
+
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   
     // Checks that inputs are valid
     const validateInputs = () => {
+      let newErrors = {};
       console.log(password, confirmPassword); // Log the passwords
-      if (!username || !firstName || !lastName || !email || !password || !confirmPassword) {
-        console.log('All fields are required.'); // Log the error
-        setError('All fields are required.');
-        return false;
-      }
+if (!firstName) newErrors.firstName = "First Name is required.";
+    if (!lastName) newErrors.lastName = "Last Name is required.";
+    if (!dob) newErrors.dateOfBirth = "Date of Birth is required.";
+    if (!username) newErrors.userName = "Username is required.";
+    if (!email) {
+      newErrors.email = "Email is required.";
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Invalid email format.";
+    }
+  
+    if (!password) {
+      newErrors.password = "Password is required.";
+    } else {
       try {
         validatePasswordCriteria(password);
-      } catch (error) { 
-        setError(error.message);
-        return false;
-      } // Validate the password
-      setError('');
+      } catch (error) {
+        newErrors.password = error.message;
+      }
+    }
+
+    if(!confirmPassword) newErrors.confirmPassword = "Confirm Password is required.";
   
-      return true;
-    };
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+    }
+  
+    setErrors(newErrors); // Update errors state
+  
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
 
     //* USEEFFECTS
     useEffect(() => {
@@ -108,6 +130,8 @@ const Register = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               label="Username"
+              error={!!errors.userName}
+              helperText={errors.userName}
             />
             <TextField
               required
@@ -116,6 +140,8 @@ const Register = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               label="First Name"
+              error={!!errors.firstName}
+              helperText={errors.firstName}
             />
             <TextField
               required
@@ -124,6 +150,8 @@ const Register = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               label="Last Name"
+              error={!!errors.lastName}
+              helperText={errors.lastName}
             />
             <TextField
               required
@@ -133,6 +161,8 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               label="Email"
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               required
@@ -142,29 +172,35 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               label="Password"
+              error={!!errors.password}
+              helperText={errors.password}
             />
 
-          <div>
-            {confirmPassword && password
-              ? confirmPassword !== password
-                ? 'Passwords do not match'
-                : ''
-              : ''}
-          </div>
 
-            <TextField
-              required
-              fullWidth
-              placeholder="Confirm Password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              label="Confirm Password"
-            />
+                {/* Display an error message if the passwords do not match */}
+                <TextField
+                  label="Confirm Password"
+                  required
+                  variant="outlined"
+                  fullWidth
+                  type='password'
+                  margin="normal"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    
+                    // Validate password match as the user types
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      confirmPassword: e.target.value !== password ? "Passwords do not match." : "",
+                    }));
+                  }}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword}
+                />
   
-            {error && <Typography color="error" textAlign="center">{error}</Typography>}
   
-            <Button type="submit" fullWidth variant="contained">
+            <Button type="submit" fullWidth variant="outlined">
               Sign Up
             </Button>
             <Button
