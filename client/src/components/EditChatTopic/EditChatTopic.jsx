@@ -124,10 +124,10 @@ console.log('userData', userData)
                     { label: 'Description', value: editTarget.description, variant: 'body3' },
                   ].map(({ label, value, variant }) => (
                     <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
-                      <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
+                      <Typography component="span" variant={'body2'} sx={{ fontWeight: 'bold', display: 'inline' }}>
                         {label}:
                       </Typography>{' '}
-                      <Typography component="span" variant={variant} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
+                      <Typography component="span" variant={'body1'} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
                       <p>{value}</p>
                       </Typography>
                     </Typography>
@@ -137,7 +137,7 @@ console.log('userData', userData)
             </Box>
     
               {/* Form */}
-              {pageToDisplay=== 'addChatTopic' || pageToDisplay === 'editChatTopic' && userData.userType==='admin' ? (
+              {pageToDisplay=== 'addChatTopic' || (pageToDisplay === 'editChatTopic' && (userData.userType==='admin' || userData._id === editTarget.createdBy) ) ? (
               <form>
 
                 <TextField
@@ -170,21 +170,21 @@ console.log('userData', userData)
               an apprpriate manner for them.
               </Typography>
 
+              {/* Delete User Checkbox */}
+              {pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy ) ? (
+              <FormControlLabel
+                control={
+                <Checkbox
+                  checked={editDeleteTopic}
+                  onChange={(e) => setEditDeleteTopic(e.target.checked)}
+                  />
+                  }
+                      label="Delete Chat Topic"
+                      />
+                  ) : ('')}
 
               </form>
             ) : ('')}
-            {/* Delete User Checkbox */}
-            {pageToDisplay === 'editChatTopic' && (userData.userType === 'admin' || userData._id === editTarget.createdBy ) ? (
-            <FormControlLabel
-              control={
-              <Checkbox
-                checked={editDeleteTopic}
-                onChange={(e) => setEditDeleteTopic(e.target.checked)}
-                />
-                }
-                    label="Delete Chat Topic"
-                    />
-                ) : ('')}
 
 <Box
                   sx={{
