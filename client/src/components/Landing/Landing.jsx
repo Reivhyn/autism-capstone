@@ -24,7 +24,7 @@ const Landing = () => {
           flexDirection: 'column',
           alignItems: 'center',  
           justifyContent: 'center',  
-          minHeight: '100vh',  
+          minHeight: '80vh',  
           backgroundColor: theme.palette.background.default,
           padding: 2,
           width: '100%',  // Ensure it takes full width

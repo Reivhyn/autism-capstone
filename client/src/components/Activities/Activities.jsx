@@ -102,16 +102,7 @@ const Activities = () => {
       }}
     >
       <SiteTitle />
-      <Typography
-        variant="h4"
-        gutterBottom
-        style={{
-          marginBottom: '20px',
-          color: theme.palette.primary.main, // Light green for title
-        }}
-      >
-        {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
-      </Typography>
+      
       <Banner />
       
       {/* Container for Category Menu and Search Bar to be aligned */}

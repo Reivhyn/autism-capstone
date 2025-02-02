@@ -14,7 +14,7 @@ const Footer = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 2,
+        paddingTop: 2,
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
       }}

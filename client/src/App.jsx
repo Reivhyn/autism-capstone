@@ -117,11 +117,7 @@ function App() {
             <KidsOfParentContext.Provider
               value={[kidsOfParent, setKidsOfParent]}
             >
-                
-                {/*//*  Header */}
 
-
-                {/*//*  Header */}
 {/*//*  Header */}
 <Box sx={{ display: 'flex',  alignItems: 'center',  gap:2,   ...(pageToDisplay === 'login' || pageToDisplay === 'register') 
     ? { justifyContent: 'center' }

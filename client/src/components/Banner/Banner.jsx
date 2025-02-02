@@ -18,13 +18,13 @@ const Banner = () => {
       return 'Fun or learning your adventure starts here!';
     }
     if (pageToDisplay === 'learning') {
-      return 'Welcome to the learning page! Select an activity.';
+      return 'You can find learning activities here!';
     }
     if (pageToDisplay === 'games') {
-      return 'Welcome to the games page! Select a game';
+      return 'You can find games to play here!';
     }
     if (pageToDisplay === 'chat') {
-      return 'Say hi to our chat bot.';
+      return 'Say hi to our chat bot!';
     }
     return 'Welcome to our site';
   };
