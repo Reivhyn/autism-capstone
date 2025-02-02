@@ -217,7 +217,6 @@ const EditUser = () => {
     callEditUser()
   }
 
-
   //* USEEFFECT
   //get all data when page is loaded
   useEffect(() => {
@@ -230,6 +229,7 @@ const EditUser = () => {
       fetchAllData()
   }, [pageToDisplay])
 
+  
   // check for enabbled or disabled status on page load
   useEffect(() => {
     if (pageToDisplay === 'editUser' || pageToDisplay === 'editKid')
@@ -264,7 +264,7 @@ const EditUser = () => {
           sx={{
             maxWidth: 600,
             margin: '0 auto',
-            padding: 4,
+            padding: 3,
             backgroundColor: 'background.paper',
             borderRadius: 2,
             boxShadow: 3,
@@ -299,6 +299,7 @@ const EditUser = () => {
               )}
             </Box>
 
+
           <form>
             <TextField
               label="First Name"
@@ -313,7 +314,7 @@ const EditUser = () => {
               error={!!errors.firstName} // Display an error message if the first name is invalid
               helperText={errors.firstName && errors.firstName}
             />
-
+            
             <TextField
               label="Last Name"
               variant="outlined"
@@ -421,6 +422,8 @@ const EditUser = () => {
               helperText={errors.confirmPassword}
             />
 
+
+
             <Box
               sx={{
                 display: 'flex',
@@ -499,9 +502,12 @@ const EditUser = () => {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, horizontal on larger
+            justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens
+            alignItems: { xs: 'center', sm: 'flex-start' }, // Align properly when stacked
             marginTop: 2,
             gap: 2,
+            width: '100%',
           }}
         >
           {allActivities &&
@@ -511,6 +517,10 @@ const EditUser = () => {
               listType="games"
               gamesAccess={gamesAccess}
               setGamesAccess={setGamesAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -525,6 +535,10 @@ const EditUser = () => {
               listType="learning"
               learingAccess={learingAccess}
               setLearningAccess={setLearningAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -539,6 +553,10 @@ const EditUser = () => {
               listType="chatTopics"
               chatAccess={chatAccess}
               setChatAccess={setChatAccess}
+              sx={{
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+              }}
             />
           ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
             'fetching data'
@@ -550,9 +568,11 @@ const EditUser = () => {
         <Box
           sx={{
             display: 'flex',
-            marginTop: 2,
+            flexDirection: { xs: 'column', sm: 'row' }, // Stack buttons on mobile, horizontal on larger screens
             justifyContent: 'center',
             gap: 2,
+            marginTop: 2,
+            width: '100%',
           }}
         >
           <Button
