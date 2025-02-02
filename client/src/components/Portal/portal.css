@@ -1,21 +1,56 @@
+/* Wrapper for Portal Columns */
+.portalGridWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ensures responsive columns */
+  gap: 1rem; /* Space between columns */
+  padding: 1rem;
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Prevents stretching too wide */
+  margin: 0 auto; /* Centers the grid */
+  box-sizing: border-box;
+}
 
-/* Responsive Design */
+.portalColumn {
+  border-radius: 20px;
+  background-color: var(--mui-background-paper, #fff); /* MUI Theme Support */
+  color: var(--mui-text-primary, #000);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  min-width: 280px; /* Prevents columns from becoming too narrow */
+}
+
+/* 🔹 Mobile (smallest screens 320px) */
+@media (max-width: 480px) {
+  .portalGridWrapper {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center content */
+  }
+
+  .portalColumn {
+    width: 90%; /* Ensure it takes up most of the screen */
+    min-width: unset; /* Allow full flexibility */
+  }
+}
+
+/* 🔹 Tablet (medium screens) */
+@media (min-width: 768px) {
+  .portalGridWrapper {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on medium-sized screens */
+  }
+}
+
+/* 🔹 Large Screens (desktops) */
 @media (min-width: 1024px) {
   .portalGridWrapper {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Three columns on large screens */
   }
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 1440px) {
   .portalGridWrapper {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Four columns on extra-large screens */
   }
 }
-
-@media (max-width: 600px) {
-  .portalGridWrapper {
-    grid-template-columns: 1fr;
-  }
-}
-
 
