@@ -114,17 +114,26 @@ console.log('userData', userData)
                   : editTarget.topicTitle
                 : `Add New Chat Topic`}
             </Typography>
-    
+
+            
             <Box sx={{ marginBottom: 2 }}>
-              {pageToDisplay === 'editChatTopic' ? (
+              {pageToDisplay === 'editChatTopic' && (
                 <>
-              <Typography variant="body2" margin={2}>
-                Title: {editTarget.topicTitle}
-              </Typography>
-              <Typography variant="body3" margin={2}>
-                Description: {editTarget.description}
-              </Typography>
-              </>) : ('')}
+                  {[
+                    { label: 'Title', value: editTarget.topicTitle, variant: 'body2' },
+                    { label: 'Description', value: editTarget.description, variant: 'body3' },
+                  ].map(({ label, value, variant }) => (
+                    <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+                      <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
+                        {label}:
+                      </Typography>{' '}
+                      <Typography component="span" variant={variant} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
+                      <p>{value}</p>
+                      </Typography>
+                    </Typography>
+                  ))}
+                </>
+              )}
             </Box>
     
               {/* Form */}
