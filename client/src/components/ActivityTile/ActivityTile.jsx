@@ -32,11 +32,6 @@ const ActivityTile = ({ tileData }) => {
         margin: 'auto',
         boxShadow: 3,
         borderRadius: 2,
-        '&:hover': {
-          boxShadow: 5,
-          cursor: 'pointer',
-          backgroundColor: '#f0f0f0',
-        },
       }}
     >
       <Link href={tileData.url} underline='none' target='_blank' rel='noreferrer'>
