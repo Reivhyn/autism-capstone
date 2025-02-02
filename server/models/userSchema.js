@@ -26,7 +26,7 @@ const User = new mongoose.Schema(
     activitiesAccess: { type: Array },
 
     // if the kid is disable they should not be able to log in
-    disabled: { type: Boolean },
+    disabled: { type: Boolean},
     /* 
       contains the id of activities the user has access to
       if it contains all then all gmaes and activities are available

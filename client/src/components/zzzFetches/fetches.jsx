@@ -244,6 +244,7 @@ export async function addNewUser(
   parentUser
 ) {
   try {
+    disabled = !!disabled
     const res = await fetch(`http://127.0.0.1:4000/auth/register`, {
       method: 'POST',
       headers: {
