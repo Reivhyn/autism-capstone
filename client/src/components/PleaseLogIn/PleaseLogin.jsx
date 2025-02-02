@@ -14,15 +14,8 @@ const PleaseLogin = () => {
   //* RENDER
   return (
     <>
-      <Typography variant='h2'>Please Login or Register</Typography>
+      <Typography variant='h2' margin={2} marginTop={4}>Please Login or Register</Typography>
 
-      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', padding: '2rem' }}>
-        <LoginRegisterButton />
-        <Button
-          variant='outlined'
-          color='theme.palette.primary.main'
-          onClick={() => setPageToDisplay('landing')}>Home</Button>
-      </Box>
     </>
   )
 }

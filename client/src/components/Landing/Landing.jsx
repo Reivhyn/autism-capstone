@@ -21,6 +21,8 @@ import Logo from '../Logo/Logo'
 import SiteTitle from '../SiteTitle/SiteTitle'
 import LoginRegisterButton from '../LoginRegisterButton/LoginRegisterButton'
 
+
+
 const Landing = () => {
   const [pageToDisplay, setPageToDisplay] = useContext(ptdContext)
   const [userData] = useContext(userDataContext)
@@ -37,17 +39,6 @@ const Landing = () => {
           backgroundColor: theme.palette.background.default,
         }}
       >
-        {/* Top-right Login and Register Buttons */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 16,
-            right: 16,
-            display: 'flex',
-          }}
-        >
-          <LoginRegisterButton />
-        </Box>
 
         {/* Site Header */}
         <SiteTitle />
