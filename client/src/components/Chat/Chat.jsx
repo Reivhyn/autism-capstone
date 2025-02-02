@@ -34,7 +34,10 @@ const Chat = () => {
 
   //* FUNCTIONS
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') callGemini()
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      callGemini(e)
+    }
   }
 
   //* GET CURRENT THEME
@@ -44,10 +47,14 @@ const Chat = () => {
   const callGemini = async (e) => {
     e.preventDefault()
     
-    if (!history){
-      setHistory(prompt)
-    }
+    //new temp promt varriable to pass to function so text area can be cleared
+    const tempPrompt = prompt
 
+    setPrompt('')
+
+    if (!history) {
+      setHistory(tempPrompt)
+    }
 
     setIsLoading(true)
     setGeminiStream('')
@@ -100,7 +107,7 @@ const Chat = () => {
     if (history && history.length < 1) {
       setDisplayLog(
         history
-          .slice(0,-1)
+          .slice(0, -1)
           .reverse()
           .map((log, i) => (
             <Paper
@@ -127,7 +134,7 @@ const Chat = () => {
     if (history) {
       setDisplayLog(
         history
-          .slice(0,-1)
+          .slice(0, -1)
           .reverse()
           .map((log, i) => (
             <Paper
@@ -182,22 +189,25 @@ const Chat = () => {
           multiline
           fullWidth
           variant="outlined"
-          placeholder="Type your message...!!!"
+          placeholder="Type your message..."
           onKeyDown={(e) => handleKeyDown(e)}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           sx={{
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.text.primary,
-            borderRadius: '8px',
           }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
+                  disabled={!currentTopic || !prompt}
                   onClick={callGemini}
                   sx={{
-                    color: theme.palette.primary.main,
+                    color:
+                      !currentTopic || !prompt
+                        ? theme.palette.action.disabled // Lighter color when disabled
+                        : theme.palette.primary.main, // Normal color when enabled
                   }}
                 >
                   <SendIcon />
@@ -209,23 +219,32 @@ const Chat = () => {
       </Box>
 
       {/* Chat History */}
-      
-      <Box
-        className="chatHistoryWrapper"
-        sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}
-      >
-        {/* Gemini incoming responce stream */}
-        <Box  sx={{
+      {history.length !== 0 ? (
+        <>
+          <Box
+            className="chatHistoryWrapper"
+            sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}
+          >
+            {/* Gemini incoming responce stream */}
+            <Box
+              sx={{
                 padding: '10px',
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.primary,
                 borderRadius: '8px',
                 marginBottom: '5px',
-              }}>{geminiStream}</Box>
+              }}
+            >
+              {geminiStream}
+            </Box>
 
-        {/* past chat log */}
-        <Box className="history">{displayLog}</Box>
-      </Box>
+            {/* past chat log */}
+            <Box className="history">{displayLog}</Box>
+          </Box>
+        </>
+      ) : (
+        ''
+      )}
     </>
   )
 }

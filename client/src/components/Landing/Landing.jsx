@@ -38,7 +38,6 @@ const Landing = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100vh',
           backgroundColor: theme.palette.background.default,
         }}
       >
@@ -90,7 +89,7 @@ const Landing = () => {
           >
             <CardActionArea onClick={() => setPageToDisplay('games')}>
               <CardContent>
-                <Box sx={{ fontSize: '3rem', color: theme.palette.primary.main }}>
+                <Box sx={{ fontSize: '3rem', color: theme.palette.secondary.main }}>
                   <SportsEsportsIcon fontSize="inherit" />
                 </Box>
                 <Typography variant="h6">Games</Typography>

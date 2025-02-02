@@ -124,8 +124,9 @@ const Activities = () => {
       <Grid
   container
   spacing={3}
+  gap={4}
   justifyContent="center" /* Center tiles horizontally */
-  alignItems="flex-start" /* Align tiles to the top */
+  alignItems="stretch" /* Align tiles to the top */
   style={{ marginTop: '20px' }}
 >
 {displayResult ? displayResult : 'Loading Activities'}

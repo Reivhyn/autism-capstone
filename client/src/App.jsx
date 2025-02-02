@@ -42,7 +42,7 @@ import {
   evening,
   moon,
   synth,
-  day,
+  parchment,
 } from './components/zzztheme/themes.jsx'
 import { Box } from '@mui/material'
 
@@ -81,8 +81,8 @@ function App() {
         return moon
       case 'Synth':
         return synth
-      case 'Day':
-        return day
+      case 'Parchment':
+        return parchment
       default:
         return darkTheme
     }

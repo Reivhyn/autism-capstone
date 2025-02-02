@@ -56,6 +56,7 @@ export const evening = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#F5F5F5' },
     h2: { ...baseTypography.h2, color: '#C0C0C0' },
+    h6: { fontSize: '1.25rem', fontWeight: 400, color: '#C0C0C0' },
     body1: { ...baseTypography.body1, color: '#DADADA' },
     body2: { ...baseTypography.body2, color: '#C0C0C0' },
     body3: { ...baseTypography.body3, color: '#F5F5F5' },
@@ -93,18 +94,19 @@ export const synth = createTheme({
     ...baseTypography,
     h1: { ...baseTypography.h1, color: '#ff6ec7' },
     h2: { ...baseTypography.h2, color: '#6e6eff' },
+    h6: { fontSize: '1.25rem', fontWeight: 400, color: '#6e6eff' },
     body1: { ...baseTypography.body1, color: '#d1e3ff' },
     body2: { ...baseTypography.body2, color: '#a9b8d4' },
     body3: { ...baseTypography.body3, color: '#d1e3ff' },
   },
 });
 
-export const day = createTheme({
+export const parchment = createTheme({
   palette: {
     mode: 'light',
     primary: { main: '#8C3A0C' },
-    secondary: { main: '#1976D2' },
-    background: { default: '#E3D5C0', paper: '#F2E6D0' },
+    secondary: { main: '#326BBB' },
+    background: { default: '#f7f1e9', paper: '#F2E6D0' },
     text: { primary: '#3D2B1F', secondary: '#5C4B3B' },
   },
   typography: {
