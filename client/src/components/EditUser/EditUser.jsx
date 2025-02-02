@@ -175,7 +175,7 @@ console.log('allUsers', allUsers)
   //saves changes to existing user when save button is pressed
   const callEditUser = () => {
     if (editPassword && !handlePasswordCheck()) return //check password criteria
-    if (!isUsernameTaken(editUserName)) return //check if username is taken
+    if (isUsernameTaken(editUserName)) return //check if username is taken
     //edit changes if delete user is not selected
     editUser(
       editTarget._id,
@@ -380,6 +380,10 @@ console.log('allUsers', allUsers)
               value={editUserName}
               onChange={(e) => {
                 setEditUserName(e.target.value);
+                setErrors((prevErrors) => ({
+                  ...prevErrors,
+                  userName: isUsernameTaken(e.target.value) ? "Username already exists. Please choose a different one." : "",
+                }));
               }}
               required={pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
               error={!!errors.userName}
