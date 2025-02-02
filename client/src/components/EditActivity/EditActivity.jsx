@@ -50,6 +50,8 @@ const EditActivity = () => {
   const [activityType, setActivityType] = useState('')
   const [ageRange, setAgeRange] = useState('')
 
+
+
   //* FUNCTIONS
   const callEditActivity = () => {
     editActivity(
@@ -112,13 +114,14 @@ const EditActivity = () => {
     }
   }, [editSaved])
 
-  //* RETURN
-  // feedback message when changes are saved
-  if (editSaved) {
-    return <h1>Changes Saved</h1>
-  }
-  return (
-    <ThemeProvider theme={theme}>
+
+    //* RETURN
+    // feedback message when changes are saved
+    if (editSaved) {
+      return <h1>Changes Saved</h1>
+    }
+    return (
+      <ThemeProvider theme={theme}>
       <Box
         sx={{
           maxWidth: 600,
@@ -139,24 +142,29 @@ const EditActivity = () => {
 
 
         <Box sx={{ marginBottom: 2 }}>
-          {pageToDisplay === 'editActivity'  ? (
-          <>
-          <Typography variant="body2" margin={2}>
-            Description: {editTarget.description}
+  {pageToDisplay === 'editActivity' && (
+    <>
+      {[
+        { label: 'Description', value: editTarget.description, variant: 'body2' },
+        { label: 'URL', value: editTarget.url, variant: 'body3' },
+        { label: 'Image URL', value: editTarget.imageURL, variant: 'body2' },
+        { label: 'Category', value: editTarget.category.join(', '), variant: 'body3' },
+        { label: 'Search Keywords', value: editTarget.searchKeywords.join(', '), variant: 'body2' },
+      ].map(({ label, value, variant }) => (
+        <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+          <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
+            {label}:
+          </Typography>{' '}
+          <Typography component="span" variant={variant} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
+          <p>{value}</p>
           </Typography>
-          <Typography variant="body3" margin={2}>
-            URL: {editTarget.url}
-            </Typography>
-          <Typography variant="body2" margin={2}>
-            Category: {editTarget.category}
-          </Typography>
-          <Typography variant="body3" margin={2}>
-            Search Keywords: {editTarget.searchKeywords}
-          </Typography>
-          </>
-          ) : null
-          }
-        </Box>
+        </Typography>
+      ))}
+    </>
+  )}
+</Box>
+
+
 
         {userData._id === editTarget.createdBy ||
         userData.userType === 'admin' ||

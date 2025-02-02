@@ -7,8 +7,8 @@ const baseTypography = {
   h6: { fontSize: '1.25rem', fontWeight: 400 },
   h3: { fontSize: '1.5rem', fontWeight: 500 },
   body1: { fontSize: '1rem', fontWeight: 400 },
-  body2: { fontSize: '0.875rem', fontWeight: 'bold'},
-  body3: { fontSize: '0.85rem', fontWeight: 'bold' },
+  body2: { fontSize: '0.875rem', fontWeight: 500},
+  body3: { fontSize: '0.85rem', fontWeight: 500 },
   button: { textTransform: 'none', fontWeight: 500 },
 };
 
@@ -106,7 +106,7 @@ export const parchment = createTheme({
     mode: 'light',
     primary: { main: '#8C3A0C' },
     secondary: { main: '#326BBB' },
-    background: { default: '#f7f1e9', paper: '#F2E6D0' },
+    background: { default: '#F2E6D0', paper: '#f7f1e9' },
     text: { primary: '#3D2B1F', secondary: '#5C4B3B' },
   },
   typography: {
