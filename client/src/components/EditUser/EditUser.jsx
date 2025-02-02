@@ -128,10 +128,11 @@ const EditUser = () => {
   }
 
   const isUsernameTaken = (username) => {
-    return allUsers?.some(user => user.userName.toLowerCase() === username.toLowerCase());
+    if (!Array.isArray(allUsers)) return false; // Ensure allUsers is an array before calling .some()
+    return allUsers.some(user => user?.userName?.toLowerCase() === username.toLowerCase());
   };
   
-
+console.log('allUsers', allUsers)
   //validate inputs
   const validateInputs = () => {
     let newErrors = {}; // Initialize error object
@@ -139,7 +140,11 @@ const EditUser = () => {
     if (!editFirstName) newErrors.firstName = "First Name is required.";
     if (!editLastName) newErrors.lastName = "Last Name is required.";
     if (!editDateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
-    if (!editUserName) newErrors.userName = "Username is required.";
+    if (!editUserName) {
+      newErrors.userName = "Username is required.";
+    } else if (isUsernameTaken(editUserName)) {
+      newErrors.userName = "Username already exists. Please choose a different one.";
+    }
     
     if (!editEmail) {
       newErrors.email = "Email is required.";
@@ -242,6 +247,16 @@ const EditUser = () => {
     )
       fetchAllData()
   }, [pageToDisplay])
+
+  //fetch all users when page is loaded
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const users = await getAllUsers(); // Ensure this returns an array
+      setAllUsers(users);
+    };
+    fetchUsers();
+  }, []);
+  
 
   //update learning access when its updated on the dual list
   useEffect(() => {
@@ -349,17 +364,24 @@ const EditUser = () => {
                 helperText = {errors.dateOfBirth && errors.dateOfBirth}
               />
 
-                <TextField
+              <TextField
                   label="Username"
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   value={editUserName}
-                  onChange={(e) => setEditUserName(e.target.value)}
-                  required= {pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
-                  error= {!!errors.userName} // Display an error message if the username is invalid
-                  helperText = {errors.userName && errors.userName}
+                  onChange={(e) => {
+                    setEditUserName(e.target.value);
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      userName: isUsernameTaken(e.target.value) ? "Username already exists. Please choose a different one." : "",
+                    }));
+                  }}
+                  required={pageToDisplay === 'addUser' || pageToDisplay === 'addKid'}
+                  error={!!errors.userName}
+                  helperText={errors.userName}
                 />
+
     
                 <TextField
                   label="Email"
