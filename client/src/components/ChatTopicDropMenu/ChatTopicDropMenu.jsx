@@ -102,7 +102,7 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {displayList ? displayList : ''}
+        {displayList ? displayList : 'No topics available.'}
       </Menu>
     </div>
   )

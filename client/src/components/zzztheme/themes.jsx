@@ -61,6 +61,19 @@ export const evening = createTheme({
     body2: { ...baseTypography.body2, color: '#C0C0C0' },
     body3: { ...baseTypography.body3, color: '#F5F5F5' },
   },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: (theme) => theme.palette.primary.main,
+          color: (theme) => theme.palette.text.primary,
+          borderRadius: '8px',
+          padding: '10px 20px',
+        },
+      },
+    },
+  },
 });
 
 export const moon = createTheme({
@@ -79,6 +92,19 @@ export const moon = createTheme({
     body1: { ...baseTypography.body1, color: '#d1c6f7' },
     body2: { ...baseTypography.body2, color: '#d1c6f7' },
     body3: { ...baseTypography.body3, color: '#ffffff' },
+  },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: (theme) => theme.palette.primary.main,
+          color: (theme) => theme.palette.text.primary,
+          borderRadius: '8px',
+          padding: '10px 20px',
+        },
+      },
+    },
   },
 });
 
@@ -99,6 +125,19 @@ export const synth = createTheme({
     body2: { ...baseTypography.body2, color: '#a9b8d4' },
     body3: { ...baseTypography.body3, color: '#d1e3ff' },
   },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: (theme) => theme.palette.primary.main,
+          color: (theme) => theme.palette.text.primary,
+          borderRadius: '8px',
+          padding: '10px 20px',
+        },
+      },
+    },
+  },
 });
 
 export const parchment = createTheme({
@@ -117,5 +156,18 @@ export const parchment = createTheme({
     body1: { ...baseTypography.body1, color: '#3D2B1F' },
     body2: { ...baseTypography.body2, color: '#5C4B3B' },
     body3: { ...baseTypography.body3, color: '#3D2B1F' },
+  },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: (theme) => theme.palette.primary.main,
+          color: (theme) => theme.palette.text.primary,
+          borderRadius: '8px',
+          padding: '10px 20px',
+        },
+      },
+    },
   },
 });

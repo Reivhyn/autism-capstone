@@ -162,7 +162,7 @@ const PortalList = ({ itemsToList, listType }) => {
     <Box className="portalListWrap">
       <Box
         sx={{
-          height: '48vh', // Shorter height
+          maxHeight: '35vh', // Shorter height
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',

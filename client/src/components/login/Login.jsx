@@ -72,7 +72,7 @@ const Login = () => {
   }
 
   return (
-    <Stack sx={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', padding: 2 }}>
+    <Stack sx={{justifyContent: 'center', alignItems: 'center', padding: 2 }}>
       <CssBaseline />
       <Card sx={{ padding: 4, width: '100%', maxWidth: 400, boxShadow: 3 }}>
         <Typography component="h1" variant="h5" textAlign="center" gutterBottom>

@@ -23,7 +23,7 @@ router.post('/gemini', async (req, res) => {
     const genAI = new GoogleGenerativeAI(GEMINI)
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
-      systemInstruction: `${description}. The material and presentation should be appropriate for someone born on ${dob} `
+      systemInstruction: `Your first response you should include an introduction of yourself. ${description}. The material and presentation should be appropriate for someone born on ${dob} `
     })
 
     //start chat

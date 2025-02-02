@@ -11,7 +11,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import ActivityTile from '../ActivityTile/ActivityTile';
 
 // Material-UI Imports
-import { Container, Typography, Grid, useTheme } from '@mui/material';
+import { Container, Typography, Grid, useTheme, Box} from '@mui/material';
 
 // CONTEXT IMPORTS
 import { ptdContext, userDataContext } from '../zContextHooks/contextHooks';
@@ -102,32 +102,21 @@ const Activities = () => {
       }}
     >
       <SiteTitle />
-      <Typography
-        variant="h4"
-        gutterBottom
-        style={{
-          marginBottom: '20px',
-          color: theme.palette.primary.main, // Light green for title
-        }}
-      >
-        {pageToDisplay ? `${pageToDisplay.toUpperCase()} PAGE` : 'Loading'}
-      </Typography>
+      
       <Banner />
       
       {/* Container for Category Menu and Search Bar to be aligned */}
-      <div className="cateSearch-container">
-        <div className="searchbar-container">
+      <Box className="cateSearch-container" sx={{marginBottom: '2vh'}}>
           <SearchBar setSearchTerm={setSearchTerm} />
-      </div> 
-      </div>
+      </Box>
 
       <Grid
   container
-  spacing={3}
+  spacing={0}
   gap={4}
   justifyContent="center" /* Center tiles horizontally */
   alignItems="stretch" /* Align tiles to the top */
-  style={{ marginTop: '20px' }}
+  style={{ marginTop: '2' }}
 >
 {displayResult ? displayResult : 'Loading Activities'}
 </Grid>

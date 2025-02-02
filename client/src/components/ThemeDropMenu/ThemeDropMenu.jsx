@@ -80,12 +80,4 @@ const ThemeDropMenu = () => {
     </div>
   )
 }
-
-// <div className="dropMenu">
-//   <div>THEME: {activeTheme}</div>
-//   <div className="dropContent">
-//     {/* button to go home */}
-//     {displayList ? displayList : 'test'}
-//   </div>
-// </div>
 export default ThemeDropMenu

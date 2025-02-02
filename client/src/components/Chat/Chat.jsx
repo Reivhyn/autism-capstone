@@ -9,6 +9,7 @@ import {
   Paper,
   InputAdornment,
   IconButton,
+  Container,
 } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import './chat.css'
@@ -46,7 +47,7 @@ const Chat = () => {
   //* FETCH FUNCTION
   const callGemini = async (e) => {
     e.preventDefault()
-    
+
     //new temp promt varriable to pass to function so text area can be cleared
     const tempPrompt = prompt
 
@@ -160,18 +161,33 @@ const Chat = () => {
 
   //* RENDER COMPONENT
   return (
-    <>
+    <Container
+    maxWidth="lg"
+    style={{
+      padding: '20px',
+      backgroundColor: theme.palette.background.default, // Dark navy/teal background
+      color: theme.palette.text.primary, // White text
+      borderRadius: '8px',
+      boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)', // Subtle shadow
+    }}
+    >
       <SiteTitle />
-      <Typography variant="h4" align="center">
-        Chat Page
-      </Typography>
 
-      {/*<Banner />*/}
+      <Box sx={{display: 'flex', justifyContent: "flex-start"}}>
+      <Banner />
       {/* Chat topic drop menu */}
+      
+      {/* box for drop menu */}
+      <Box
+      sx={{transform: 'translateY(25%)'}}
+      >
       <ChatTopicDropMenu
         currentTopic={currentTopic}
         setCurrentTopic={setCurrentTopic}
       />
+      </Box>
+      </Box>
+
 
       {/* Prompt Form */}
       <Box
@@ -219,33 +235,29 @@ const Chat = () => {
       </Box>
 
       {/* Chat History */}
-      {history.length !== 0 ? (
-        <>
+      <>
+        <Box
+          className="chatHistoryWrapper"
+          sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}
+        >
+          {/* Gemini incoming responce stream */}
           <Box
-            className="chatHistoryWrapper"
-            sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}
+            sx={{
+              padding: '10px',
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.text.primary,
+              borderRadius: '8px',
+              marginBottom: '5px',
+            }}
           >
-            {/* Gemini incoming responce stream */}
-            <Box
-              sx={{
-                padding: '10px',
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.text.primary,
-                borderRadius: '8px',
-                marginBottom: '5px',
-              }}
-            >
-              {geminiStream}
-            </Box>
-
-            {/* past chat log */}
-            <Box className="history">{displayLog}</Box>
+            {geminiStream}
           </Box>
-        </>
-      ) : (
-        ''
-      )}
-    </>
+
+          {/* past chat log */}
+          <Box className="history">{displayLog}</Box>
+        </Box>
+      </>
+    </Container>
   )
 }
 
