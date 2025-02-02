@@ -20,7 +20,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2" sx={{ margin: 0 }}>
-        &copy; {currentYear} Your Site Name. All rights reserved.
+        &copy; {currentYear} Imagination Treehouse. All rights reserved.
       </Typography>
     </Box>
   );

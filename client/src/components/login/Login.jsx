@@ -111,13 +111,13 @@ const Login = () => {
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
           <Button
-            variant="text"
+            variant="outlined"
             onClick={() => changePage(setPageToDisplay, 'register')}
           >
             Register
           </Button>
           <Button
-            variant="text"
+            variant="outlined"
             onClick={() => changePage(setPageToDisplay, 'landing')}
           >
             Back
