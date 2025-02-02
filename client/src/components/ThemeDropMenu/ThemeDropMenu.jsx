@@ -7,6 +7,7 @@ import { activeThemeContext } from '../zContextHooks/contextHooks'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const ThemeDropMenu = () => {
   //* USESTATE
@@ -59,10 +60,11 @@ const ThemeDropMenu = () => {
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
+        startIcon={<MenuIcon />}
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        THEME: {activeTheme ? activeTheme : 'Dark'}
+        Theme: {activeTheme ? activeTheme : 'Dark'}
       </Button>
       <Menu
         id="basic-menu"
