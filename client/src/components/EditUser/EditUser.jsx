@@ -138,11 +138,7 @@ console.log('allUsers', allUsers)
     if (!editFirstName) newErrors.firstName = "First Name is required.";
     if (!editLastName) newErrors.lastName = "Last Name is required.";
     if (!editDateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
-    if (!editUserName) {
-      newErrors.userName = "Username is required.";
-    } else if (isUsernameTaken(editUserName)) {
-      newErrors.userName = "Username already exists. Please choose a different one.";
-    }
+    if (!editUserName) newErrors.userName = "Username is required.";
     
     if (!editEmail) {
       newErrors.email = 'Email is required.'
@@ -228,11 +224,6 @@ console.log('allUsers', allUsers)
     callEditUser()
   }
 
-  // handle cancel button
-  const hangleCancelButton = () => {
-    setPageToDisplay(userData.userType)
-  }
-
   //* USEEFFECT
   //get all data when page is loaded
   useEffect(() => {
@@ -245,14 +236,6 @@ console.log('allUsers', allUsers)
       fetchAllData()
   }, [pageToDisplay])
 
-  //fetch all users when page is loaded
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const users = await getAllUsers(); // Ensure this returns an array
-      setAllUsers(users);
-    };
-    fetchUsers();
-  }, []);
   
   // check for enabbled or disabled status on page load
   useEffect(() => {
@@ -288,7 +271,7 @@ console.log('allUsers', allUsers)
           sx={{
             maxWidth: 600,
             margin: '0 auto',
-            padding: 4,
+            padding: 3,
             backgroundColor: 'background.paper',
             borderRadius: 2,
             boxShadow: 3,
@@ -324,6 +307,7 @@ console.log('allUsers', allUsers)
               )}
             </Box>
 
+
           <form>
             <TextField
               label="First Name"
@@ -333,12 +317,12 @@ console.log('allUsers', allUsers)
               value={editFirstName}
               onChange={(e) => setEditFirstname(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.firstName} // Display an error message if the first name is invalid
               helperText={errors.firstName && errors.firstName}
             />
-
+            
             <TextField
               label="Last Name"
               variant="outlined"
@@ -347,7 +331,7 @@ console.log('allUsers', allUsers)
               value={editLastName}
               onChange={(e) => setEditLastName(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.lastName} // Display an error message if the last name is invalid
               helperText={errors.lastName && errors.lastName}
@@ -365,7 +349,7 @@ console.log('allUsers', allUsers)
                 shrink: true, // Ensures label does not overlap the value
               }}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
               helperText={errors.dateOfBirth && errors.dateOfBirth}
@@ -379,7 +363,7 @@ console.log('allUsers', allUsers)
               value={editUserName}
               onChange={(e) => setEditUserName(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.userName} // Display an error message if the username is invalid
               helperText={errors.userName && errors.userName}
@@ -394,7 +378,7 @@ console.log('allUsers', allUsers)
               value={editEmail}
               onChange={(e) => setEditEmail(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.email} // Display an error message if the email is invalid
               helperText={errors.email && errors.email}
@@ -409,7 +393,7 @@ console.log('allUsers', allUsers)
               value={editPassword}
               onChange={(e) => setEditPassword(e.target.value)}
               required={
-                pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
               }
               error={!!errors.password} // Display an error message if the password is invalid
               helperText={errors.password && errors.password}
@@ -436,13 +420,17 @@ console.log('allUsers', allUsers)
                 }))
               }}
               required={
-                pageToDisplay === 'addUser' ||
-                pageToDisplay === 'addKid' ||
-                editPassword
+                !!(
+                  pageToDisplay === 'addUser' ||
+                  pageToDisplay === 'addKid' ||
+                  editPassword
+                )
               }
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword}
             />
+
+
 
             <Box
               sx={{
