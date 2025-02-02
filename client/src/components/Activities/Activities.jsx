@@ -93,6 +93,7 @@ const Activities = () => {
   return (
     <Container
       maxWidth="lg"
+
       style={{
         padding: '20px',
         backgroundColor: theme.palette.background.default, // Dark navy/teal background
