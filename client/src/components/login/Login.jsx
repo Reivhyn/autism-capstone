@@ -36,6 +36,8 @@ const Login = () => {
       setUserData(data);
       if (!data) {
         setError('Invalid username or password.');
+      } else {
+        setError('');
       }
     } catch (error) {
       console.error('Error during login:', error); // Logs the error in the console
@@ -95,7 +97,7 @@ const Login = () => {
             required
             fullWidth
             label="Password"
-            type="password"
+            // type="password"
             value={password}
             onKeyDown={(e) => handleKeyDown(e)}
             onChange={(e) => setPassword(e.target.value)}
