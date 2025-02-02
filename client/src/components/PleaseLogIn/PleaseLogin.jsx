@@ -14,8 +14,8 @@ const PleaseLogin = () => {
   //* RENDER
   return (
     <>
-      <Typography variant='h2' margin={2} marginTop={4}>Please Login or Register</Typography>
-
+      <Typography variant='h2' margin={2} marginTop={4} marginBottom={4}>Please Login or Register</Typography>
+      <Button onClick={() => setPageToDisplay('landing')} variant='outlined'>Back</Button>
     </>
   )
 }
