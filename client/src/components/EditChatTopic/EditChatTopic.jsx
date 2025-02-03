@@ -162,12 +162,12 @@ console.log('userData', userData)
                 />
 
                 <Typography variant="body1" color="text.secondary" gutterBottom>
-                Description Instruction : Give instructuions the the chat bot the more
-              specific the more precice it will follow the instructions ex: 'You
+                Description Instruction : Give instructions the the chat bot the more
+              specific the more precise it will follow the instructions ex: 'You
               are a cat. Your name is Neko' Or ' You are a teacher you teach
               about American history, all other subjects are forbidden. The chat
-              bot will automaticaly check the age of the child and present it in
-              an apprpriate manner for them.
+              bot will automatically  check the age of the child and present it in
+              an appropriate manner for them.
               </Typography>
 
               {/* Delete User Checkbox */}

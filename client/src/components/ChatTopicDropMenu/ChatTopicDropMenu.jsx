@@ -14,6 +14,7 @@ import { ptdContext } from '../zContextHooks/contextHooks'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   //* USESTATE
@@ -21,9 +22,9 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   const [userData, setUserData] = useContext(userDataContext)
   const [allowedTopics, setAllowedTopics] = useState('')
   const [displayList, setdisplayList] = useState('')
-  const [anchorEl, setAnchorEl] = React.useState('');
-  const open = Boolean(anchorEl);
-  
+  const [anchorEl, setAnchorEl] = React.useState('')
+  const open = Boolean(anchorEl)
+
   //* FUNCTIONS
   //get all topics then get allowed topics
   const getTopics = async () => {
@@ -36,27 +37,29 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
     })
     setAllowedTopics(arr)
   }
-  
+
   // handle open for menu
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
-  //handle close for menu 
+  //handle close for menu
   const handleClose = () => {
-    setAnchorEl(null);
-  };
-  
+    setAnchorEl(null)
+  }
+
   //render drop menu items
   const renderList = () => {
     setdisplayList(
       allowedTopics.map((topic) => {
         return (
           <MenuItem
-          className="chatTopicItem"
-          key={topic._id}
-          onClick={() => {setCurrentTopic(topic) 
-            handleClose()}}
+            className="chatTopicItem"
+            key={topic._id}
+            onClick={() => {
+              setCurrentTopic(topic)
+              handleClose()
+            }}
           >
             {topic.topicTitle}
           </MenuItem>
@@ -84,10 +87,11 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
   return (
     <div>
       <Button
-      variant='outlined'
+        variant="outlined"
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
+        startIcon={<MenuIcon />}
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
@@ -100,6 +104,16 @@ const ChatTopicDropMenu = ({ currentTopic, setCurrentTopic }) => {
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
+        }}
+        PaperProps={{
+          sx: {
+            maxHeight: '50vh',
+            overflowY: 'auto', // Ensure scrolling works
+            scrollbarWidth: 'none', // Hide scrollbar for Firefox
+            '&::-webkit-scrollbar': {
+              display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
+            },
+          },
         }}
       >
         {displayList ? displayList : 'No topics available.'}
