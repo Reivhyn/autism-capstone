@@ -77,7 +77,7 @@ const EditUser = () => {
 
   //useStates pertaining to games dual list
   const [gamesAccess, setGamesAccess] = useState('')
-  const [learingAccess, setLearningAccess] = useState('')
+  const [learningAccess, setLearningAccess] = useState('')
   const [allChatTopics, setAllChatTopics] = useState('')
   const [chatAccess, setChatAccess] = useState('')
 
@@ -238,8 +238,8 @@ const EditUser = () => {
 
   //update learning access when its updated on the dual list
   useEffect(() => {
-    setActivitiesAccess([...gamesAccess, ...learingAccess])
-  }, [gamesAccess, learingAccess])
+    setActivitiesAccess([...gamesAccess, ...learningAccess])
+  }, [gamesAccess, learningAccess])
 
   //change page back to portal after saves made
   useEffect(() => {
@@ -284,7 +284,7 @@ const EditUser = () => {
                   {[
                     { label: 'Date of Birth', value: new Date (editTarget.dob.trim().split('T')[0]).toLocaleDateString('en-US'), variant: 'body2' },
                     { label: 'Username', value: editTarget.userName, variant: 'body3' },
-                    { label: 'Email', value: editTarget.email, variant: 'body2' },
+                    { label: 'Email', value: editTarget.email, variant: 'body2' },//emails not set to return on a search in the db
                   ].map(({ label, value, variant }) => (
                     <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
                       <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
@@ -533,7 +533,7 @@ const EditUser = () => {
             <DualList
               dataToList={allActivities}
               listType="learning"
-              learingAccess={learingAccess}
+              learingAccess={learningAccess}
               setLearningAccess={setLearningAccess}
               sx={{
                 width: '100%', 

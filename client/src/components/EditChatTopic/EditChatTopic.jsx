@@ -56,8 +56,6 @@ const EditChatTopic = () => {
 
   //logic for pressing the save button
   const handleSave = () => {
-    console.log('editDeleteTopic', editDeleteTopic)
-
     //delete topic if selected
     if (editDeleteTopic === true) {
       deleteChatTopic(editTarget._id)
@@ -88,11 +86,10 @@ const EditChatTopic = () => {
   }, [editSaved])
 
   //* RENDER
-  //feedback saing changes were saved
+  //feedback saying changes were saved
   if (editSaved) {
     return <h1>Changes Saved</h1>
   }
-console.log('userData', userData)
   return (
     <>
     <ThemeProvider theme={theme}>
