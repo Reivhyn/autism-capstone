@@ -229,7 +229,6 @@ const EditUser = () => {
       fetchAllData()
   }, [pageToDisplay])
 
-  
   // check for enabbled or disabled status on page load
   useEffect(() => {
     if (pageToDisplay === 'editUser' || pageToDisplay === 'editKid')
@@ -279,26 +278,43 @@ const EditUser = () => {
           </Typography>
 
           <Box sx={{ marginBottom: 2 }}>
-              {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
-                <>
-                  {[
-                    { label: 'Date of Birth', value: new Date (editTarget.dob.trim().split('T')[0]).toLocaleDateString('en-US'), variant: 'body2' },
-                    { label: 'Username', value: editTarget.userName, variant: 'body3' },
-                    { label: 'Email', value: editTarget.email, variant: 'body2' },//emails not set to return on a search in the db
-                  ].map(({ label, value, variant }) => (
-                    <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
-                      <Typography component="span" variant={variant} sx={{ fontWeight: 'bold', display: 'inline' }}>
-                        {label}:
-                      </Typography>{' '}
-                      <Typography component="span" variant={variant} sx={{ marginLeft: 1, wordBreak: 'break-word' }}>
+            {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
+              <>
+                {[
+                  {
+                    label: 'Date of Birth',
+                    value: new Date(
+                      editTarget.dob.trim().split('T')[0]
+                    ).toLocaleDateString('en-US'),
+                    variant: 'body2',
+                  },
+                  {
+                    label: 'Username',
+                    value: editTarget.userName,
+                    variant: 'body3',
+                  },
+                  { label: 'Email', value: editTarget.email, variant: 'body2' }, //emails not set to return on a search in the db
+                ].map(({ label, value, variant }) => (
+                  <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+                    <Typography
+                      component="span"
+                      variant={variant}
+                      sx={{ fontWeight: 'bold', display: 'inline' }}
+                    >
+                      {label}:
+                    </Typography>{' '}
+                    <Typography
+                      component="span"
+                      variant={variant}
+                      sx={{ marginLeft: 1, wordBreak: 'break-word' }}
+                    >
                       <p>{value}</p>
-                      </Typography>
                     </Typography>
-                  ))}
-                </>
-              )}
-            </Box>
-
+                  </Typography>
+                ))}
+              </>
+            )}
+          </Box>
 
           <form>
             <TextField
@@ -314,7 +330,7 @@ const EditUser = () => {
               error={!!errors.firstName} // Display an error message if the first name is invalid
               helperText={errors.firstName && errors.firstName}
             />
-            
+
             <TextField
               label="Last Name"
               variant="outlined"
@@ -422,8 +438,6 @@ const EditUser = () => {
               helperText={errors.confirmPassword}
             />
 
-
-
             <Box
               sx={{
                 display: 'flex',
@@ -510,55 +524,52 @@ const EditUser = () => {
             width: '100%',
           }}
         >
-          {allActivities &&
-          (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+          {allActivities && pageToDisplay === 'editKid' ? (
             <DualList
               dataToList={allActivities}
               listType="games"
               gamesAccess={gamesAccess}
               setGamesAccess={setGamesAccess}
               sx={{
-                width: '100%', 
+                width: '100%',
                 maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
               }}
             />
-          ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+          ) : pageToDisplay === 'editKid' ? (
             'fetching data'
           ) : (
             ''
           )}
 
-          {allActivities &&
-          (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+          {allActivities && pageToDisplay === 'editKid' ? (
             <DualList
               dataToList={allActivities}
               listType="learning"
               learingAccess={learningAccess}
               setLearningAccess={setLearningAccess}
               sx={{
-                width: '100%', 
+                width: '100%',
                 maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
               }}
             />
-          ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+          ) : pageToDisplay === 'editKid' ? (
             'fetching data'
           ) : (
             ''
           )}
 
-          {allChatTopics &&
-          (pageToDisplay === 'editKid' || pageToDisplay === 'addKid') ? (
+          {allChatTopics && pageToDisplay === 'editKid' ? (
             <DualList
               dataToList={allChatTopics}
               listType="chatTopics"
               chatAccess={chatAccess}
               setChatAccess={setChatAccess}
               sx={{
-                width: '100%', 
+                width: '100%',
                 maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
               }}
             />
-          ) : pageToDisplay === 'edditKid' || pageToDisplay === 'addKid' ? (
+          ) : pageToDisplay === 'editKid' ? (
             'fetching data'
           ) : (
             ''
