@@ -590,7 +590,7 @@ const EditUser = () => {
             variant="outlined"
             color="primary"
             disabled={
-              (pageToDisplay === 'addUser' &&
+              ((pageToDisplay === 'addUser' || pageToDisplay === 'addKid') && 
                 (!editFirstName ||
                   !editLastName ||
                   !editDateOfBirth ||
