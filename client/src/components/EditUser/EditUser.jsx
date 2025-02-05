@@ -263,7 +263,6 @@ const EditUser = () => {
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
         <Box
           sx={{
-            minWidth: '30vw',
             borderRadius: 2,
             marginBottom: 3,
             padding: 2,
