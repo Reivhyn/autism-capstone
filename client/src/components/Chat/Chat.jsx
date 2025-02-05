@@ -244,10 +244,12 @@ const Chat = () => {
           <Box
             sx={{
               padding: '10px',
-              backgroundColor: theme.palette.primary.main,
+              backgroundColor: theme.palette.secondary.main,
               color: theme.palette.text.primary,
               borderRadius: '8px',
               marginBottom: '5px',
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
             }}
           >
             {geminiStream}
