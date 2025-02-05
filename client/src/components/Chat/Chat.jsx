@@ -145,10 +145,13 @@ const Chat = () => {
                 backgroundColor:
                   i % 2 === 0
                     ? theme.palette.background.paper
-                    : theme.palette.primary.main,
+                    : theme.palette.secondary.main,
                 color: theme.palette.text.primary,
                 borderRadius: '8px',
                 marginBottom: '5px',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                fontWeight: 'bold'
               }}
             >
               {log.parts[0].text}
@@ -250,6 +253,7 @@ const Chat = () => {
               marginBottom: '5px',
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-word',
+              fontWeight: 'bold',
             }}
           >
             {geminiStream}
