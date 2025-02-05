@@ -173,7 +173,9 @@ const PortalList = ({ itemsToList, listType }) => {
           },
         }}
       >
-        {displayList.length > 0 ? displayList : 'No items to display'}
+        <Box sx={{height: '60vh'}}>
+          {displayList.length > 0 ? displayList : 'No items to display'}
+        </Box>
       </Box>
       {listType !== 'reporting' && (
         <Button
