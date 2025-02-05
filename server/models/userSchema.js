@@ -14,7 +14,7 @@ const User = new mongoose.Schema(
       required: true,
       unique: true,
       match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      select: false,
+      // select: false, -Turn on if you do not want emails sent to client
     },
     password: { type: String, required: true, select: false },
 

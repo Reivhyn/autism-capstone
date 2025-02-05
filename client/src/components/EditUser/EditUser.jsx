@@ -255,20 +255,24 @@ const EditUser = () => {
     return <h1>Changes Saved</h1>
   }
 
+  if(pageToDisplay === 'editKid'){
   return (
     <>
       <ThemeProvider theme={theme}>
-        {/* Form Box */}
+        {/* current data flex */}
+        <Box sx={{display: 'flex', justifyContent: 'center'}}>
         <Box
           sx={{
-            maxWidth: 600,
-            margin: '0 auto',
-            padding: 3,
-            backgroundColor: 'background.paper',
+            minWidth: '30vw',
             borderRadius: 2,
-            boxShadow: 3,
+            marginBottom: 3,
+            padding: 2,
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
           }}
         >
+          {/* current data box */}
           <Typography variant="h5" color="text.primary" gutterBottom>
             {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
               ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
@@ -276,304 +280,345 @@ const EditUser = () => {
               ? `Add New User`
               : `Add New Child`}
           </Typography>
-
-          <Box sx={{ marginBottom: 2 }}>
-            {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
-              <>
-                {[
-                  {
-                    label: 'Date of Birth',
-                    value: new Date(
-                      editTarget.dob.trim().split('T')[0]
-                    ).toLocaleDateString('en-US'),
-                    variant: 'body2',
-                  },
-                  {
-                    label: 'Username',
-                    value: editTarget.userName,
-                    variant: 'body3',
-                  },
-                  { label: 'Email', value: editTarget.email, variant: 'body2' }, //emails not set to return on a search in the db
-                ].map(({ label, value, variant }) => (
-                  <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
-                    <Typography
-                      component="span"
-                      variant={variant}
-                      sx={{ fontWeight: 'bold', display: 'inline' }}
-                    >
-                      {label}:
-                    </Typography>{' '}
-                    <Typography
-                      component="span"
-                      variant={variant}
-                      sx={{ marginLeft: 1, wordBreak: 'break-word' }}
-                    >
-                      <p>{value}</p>
-                    </Typography>
+          {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
+            <>
+              {[
+                {
+                  label: 'Date of Birth',
+                  value: new Date(
+                    editTarget.dob.trim().split('T')[0]
+                  ).toLocaleDateString('en-US'),
+                  variant: 'body2',
+                },
+                {
+                  label: 'Username',
+                  value: editTarget.userName,
+                  variant: 'body3',
+                },
+                { label: 'Email', value: editTarget.email, variant: 'body2' }, //emails not set to return on a search in the db
+              ].map(({ label, value, variant }) => (
+                <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+                  <Typography
+                    component="span"
+                    variant={variant}
+                    sx={{ fontWeight: 'bold', display: 'inline' }}
+                  >
+                    {label} :
+                  </Typography> {value}
+                  <Typography
+                    component="span"
+                    variant={variant}
+                    sx={{ marginLeft: 1, wordBreak: 'break-word' }}
+                  >
                   </Typography>
-                ))}
-              </>
-            )}
-          </Box>
+                </Typography>
+              ))}
+            </>
+          )}
+        </Box>
+        </Box>
 
-          <form>
-            <TextField
-              label="First Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editFirstName}
-              onChange={(e) => setEditFirstname(e.target.value)}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.firstName} // Display an error message if the first name is invalid
-              helperText={errors.firstName && errors.firstName}
-            />
-
-            <TextField
-              label="Last Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editLastName}
-              onChange={(e) => setEditLastName(e.target.value)}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.lastName} // Display an error message if the last name is invalid
-              helperText={errors.lastName && errors.lastName}
-            />
-
-            <TextField
-              label="Date of Birth"
-              type="date"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editDateOfBirth}
-              onChange={(e) => setEditDateOfBirth(e.target.value)}
-              InputLabelProps={{
-                shrink: true, // Ensures label does not overlap the value
-              }}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
-              helperText={errors.dateOfBirth && errors.dateOfBirth}
-            />
-
-            <TextField
-              label="Username"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editUserName}
-              onChange={(e) => setEditUserName(e.target.value)}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.userName} // Display an error message if the username is invalid
-              helperText={errors.userName && errors.userName}
-            />
-
-            <TextField
-              label="Email"
-              type="email"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={editEmail}
-              onChange={(e) => setEditEmail(e.target.value)}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.email} // Display an error message if the email is invalid
-              helperText={errors.email && errors.email}
-            />
-
-            <TextField
-              label="Password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              type="password"
-              value={editPassword}
-              onChange={(e) => setEditPassword(e.target.value)}
-              required={
-                !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
-              }
-              error={!!errors.password} // Display an error message if the password is invalid
-              helperText={errors.password && errors.password}
-            />
-
-            {/* Display an error message if the passwords do not match */}
-            <TextField
-              label="Confirm Password"
-              variant="outlined"
-              fullWidth
-              type="password"
-              margin="normal"
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value)
-
-                // Validate password match as the user types
-                setErrors((prevErrors) => ({
-                  ...prevErrors,
-                  confirmPassword:
-                    e.target.value !== editPassword
-                      ? 'Passwords do not match.'
-                      : '',
-                }))
-              }}
-              required={
-                !!(
-                  pageToDisplay === 'addUser' ||
-                  pageToDisplay === 'addKid' ||
-                  editPassword
-                )
-              }
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
-            />
-
+        {/* Form and dual list flex wrap */}
+        <Box sx={{ display: 'flex', gap: '2vw' }}>
+          {/* Form Box */}
+          <Box
+            sx={{
+              maxWidth: 400,
+              margin: '0 auto',
+              padding: 3,
+              borderRadius: 2,
+              backgroundColor: theme.palette.background.paper,
+              color: theme.palette.text.primary,
+              boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
+            }}
+          >
+            {/* flex box for form */}
             <Box
               sx={{
                 display: 'flex',
+                gap: 2,
                 justifyContent: 'center',
-                marginTop: 2,
+                maxHeight: '1vh',
               }}
             >
-              {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
-                <>
+              {/* lef of form */}
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <TextField
+                  label="First Name"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editFirstName}
+                  onChange={(e) => setEditFirstname(e.target.value)}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.firstName} // Display an error message if the first name is invalid
+                  helperText={errors.firstName && errors.firstName}
+                />
+
+                <TextField
+                  label="Last Name"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editLastName}
+                  onChange={(e) => setEditLastName(e.target.value)}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.lastName} // Display an error message if the last name is invalid
+                  helperText={errors.lastName && errors.lastName}
+                />
+
+                <TextField
+                  label="Date of Birth"
+                  type="date"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editDateOfBirth}
+                  onChange={(e) => setEditDateOfBirth(e.target.value)}
+                  InputLabelProps={{
+                    shrink: true, // Ensures label does not overlap the value
+                  }}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
+                  helperText={errors.dateOfBirth && errors.dateOfBirth}
+                />
+
+                <TextField
+                  label="Username"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editUserName}
+                  onChange={(e) => setEditUserName(e.target.value)}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.userName} // Display an error message if the username is invalid
+                  helperText={errors.userName && errors.userName}
+                />
+              </Box>
+              {/* right of form */}
+              <Box>
+                <TextField
+                  label="Email"
+                  type="email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={editEmail}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.email} // Display an error message if the email is invalid
+                  helperText={errors.email && errors.email}
+                />
+
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  type="password"
+                  value={editPassword}
+                  onChange={(e) => setEditPassword(e.target.value)}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' || pageToDisplay === 'addKid'
+                    )
+                  }
+                  error={!!errors.password} // Display an error message if the password is invalid
+                  helperText={errors.password && errors.password}
+                />
+
+                {/* Display an error message if the passwords do not match */}
+                <TextField
+                  label="Confirm Password"
+                  variant="outlined"
+                  fullWidth
+                  type="password"
+                  margin="normal"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value)
+
+                    // Validate password match as the user types
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      confirmPassword:
+                        e.target.value !== editPassword
+                          ? 'Passwords do not match.'
+                          : '',
+                    }))
+                  }}
+                  required={
+                    !!(
+                      pageToDisplay === 'addUser' ||
+                      pageToDisplay === 'addKid' ||
+                      editPassword
+                    )
+                  }
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword}
+                />
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: 2,
+                  }}
+                >
+                  {pageToDisplay === 'editUser' ||
+                  pageToDisplay === 'editKid' ? (
+                    <>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!editDeleteUser}
+                            onChange={(e) =>
+                              setEditDeleteUser(e.target.checked)
+                            }
+                          />
+                        }
+                        label="Delete User"
+                      />
+                    </>
+                  ) : (
+                    ''
+                  )}
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={!!editDeleteUser}
-                        onChange={(e) => setEditDeleteUser(e.target.checked)}
+                        checked={!!editDisableLogin}
+                        onChange={(e) => setEditDisableLogin(e.target.checked)}
                       />
                     }
-                    label="Delete User"
+                    label="Disable Login"
                   />
-                </>
-              ) : (
-                ''
-              )}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={!!editDisableLogin}
-                    onChange={(e) => setEditDisableLogin(e.target.checked)}
-                  />
-                }
-                label="Disable Login"
-              />
+                </Box>
+              </Box>
             </Box>
-          </form>
-          {/* check boxes */}
-          {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
-            <>
-              {userData.userType === 'admin' ? (
-                <>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={userType === 'admin'}
-                        onChange={() => handleCheck('admin')}
-                      />
-                    }
-                    label="Admin"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={userType === 'parent'}
-                        onChange={() => handleCheck('parent')}
-                      />
-                    }
-                    label="Parent"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={userType === 'kid'}
-                        onChange={() => handleCheck('kid')}
-                      />
-                    }
-                    label="Kid"
-                  />
-                </>
-              ) : (
-                ''
-              )}
-            </>
-          ) : (
-            ''
-          )}
-        </Box>
-        {/* dual list box */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, horizontal on larger
-            justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens
-            alignItems: { xs: 'center', sm: 'flex-start' }, // Align properly when stacked
-            marginTop: 2,
-            gap: 2,
-            width: '100%',
-          }}
-        >
-          {allActivities && pageToDisplay === 'editKid' ? (
-            <DualList
-              dataToList={allActivities}
-              listType="games"
-              gamesAccess={gamesAccess}
-              setGamesAccess={setGamesAccess}
-              sx={{
-                width: '100%',
-                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
-              }}
-            />
-          ) : pageToDisplay === 'editKid' ? (
-            'fetching data'
-          ) : (
-            ''
-          )}
 
-          {allActivities && pageToDisplay === 'editKid' ? (
-            <DualList
-              dataToList={allActivities}
-              listType="learning"
-              learingAccess={learningAccess}
-              setLearningAccess={setLearningAccess}
-              sx={{
-                width: '100%',
-                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
-              }}
-            />
-          ) : pageToDisplay === 'editKid' ? (
-            'fetching data'
-          ) : (
-            ''
-          )}
+            {/* check boxes */}
+            {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
+              <>
+                {userData.userType === 'admin' ? (
+                  <>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={userType === 'admin'}
+                          onChange={() => handleCheck('admin')}
+                        />
+                      }
+                      label="Admin"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={userType === 'parent'}
+                          onChange={() => handleCheck('parent')}
+                        />
+                      }
+                      label="Parent"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={userType === 'kid'}
+                          onChange={() => handleCheck('kid')}
+                        />
+                      }
+                      label="Kid"
+                    />
+                  </>
+                ) : (
+                  ''
+                )}
+              </>
+            ) : (
+              ''
+            )}
+          </Box>
+          {/* dual list box */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, horizontal on larger
+              justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens
+              alignItems: { xs: 'center', sm: 'flex-start' }, // Align properly when stacked
+              gap: 2,
+              width: '100%',
+            }}
+          >
+            {allActivities && pageToDisplay === 'editKid' ? (
+              <DualList
+                dataToList={allActivities}
+                listType="games"
+                gamesAccess={gamesAccess}
+                setGamesAccess={setGamesAccess}
+                sx={{
+                  width: '100%',
+                  maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+                }}
+              />
+            ) : pageToDisplay === 'editKid' ? (
+              'fetching data'
+            ) : (
+              ''
+            )}
 
-          {allChatTopics && pageToDisplay === 'editKid' ? (
-            <DualList
-              dataToList={allChatTopics}
-              listType="chatTopics"
-              chatAccess={chatAccess}
-              setChatAccess={setChatAccess}
-              sx={{
-                width: '100%',
-                maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
-              }}
-            />
-          ) : pageToDisplay === 'editKid' ? (
-            'fetching data'
-          ) : (
-            ''
-          )}
+            {allActivities && pageToDisplay === 'editKid' ? (
+              <DualList
+                dataToList={allActivities}
+                listType="learning"
+                learingAccess={learningAccess}
+                setLearningAccess={setLearningAccess}
+                sx={{
+                  width: '100%',
+                  maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+                }}
+              />
+            ) : pageToDisplay === 'editKid' ? (
+              'fetching data'
+            ) : (
+              ''
+            )}
+
+            {allChatTopics && pageToDisplay === 'editKid' ? (
+              <DualList
+                dataToList={allChatTopics}
+                listType="chatTopics"
+                chatAccess={chatAccess}
+                setChatAccess={setChatAccess}
+                sx={{
+                  width: '100%',
+                  maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+                }}
+              />
+            ) : pageToDisplay === 'editKid' ? (
+              'fetching data'
+            ) : (
+              ''
+            )}
+          </Box>
         </Box>
 
         <Box
@@ -590,7 +635,7 @@ const EditUser = () => {
             variant="outlined"
             color="primary"
             disabled={
-              ((pageToDisplay === 'addUser' || pageToDisplay === 'addKid') && 
+              ((pageToDisplay === 'addUser' || pageToDisplay === 'addKid') &&
                 (!editFirstName ||
                   !editLastName ||
                   !editDateOfBirth ||
@@ -612,6 +657,367 @@ const EditUser = () => {
       </ThemeProvider>
     </>
   )
+}
+
+// OLD LOGIC FOR PAGE THIS WORKS WITH EVERYTHING BUT LOGIC IS GETTING MEsSY
+
+return (
+  <>
+    <ThemeProvider theme={theme}>
+      {/* Form Box */}
+      <Box
+        sx={{
+          maxWidth: 600,
+          margin: '0 auto',
+          padding: 3,
+          backgroundColor: 'background.paper',
+          borderRadius: 2,
+          boxShadow: 3,
+        }}
+      >
+        <Typography variant="h5" color="text.primary" gutterBottom>
+          {pageToDisplay === 'editUser' || pageToDisplay === 'editKid'
+            ? `Editing ${editTarget.firstName} ${editTarget.lastName}`
+            : userData.userType === 'admin'
+            ? `Add New User`
+            : `Add New Child`}
+        </Typography>
+
+        <Box sx={{ marginBottom: 2 }}>
+          {(pageToDisplay === 'editKid' || pageToDisplay === 'editUser') && (
+            <>
+              {[
+                {
+                  label: 'Date of Birth',
+                  value: new Date(
+                    editTarget.dob.trim().split('T')[0]
+                  ).toLocaleDateString('en-US'),
+                  variant: 'body2',
+                },
+                {
+                  label: 'Username',
+                  value: editTarget.userName,
+                  variant: 'body3',
+                },
+                { label: 'Email', value: editTarget.email, variant: 'body2' }, //emails not set to return on a search in the db
+              ].map(({ label, value, variant }) => (
+                <Typography key={label} variant={variant} sx={{ marginY: 1 }}>
+                  <Typography
+                    component="span"
+                    variant={variant}
+                    sx={{ fontWeight: 'bold', display: 'inline' }}
+                  >
+                    {label}:
+                  </Typography>{' '}
+                  <Typography
+                    component="span"
+                    variant={variant}
+                    sx={{ marginLeft: 1, wordBreak: 'break-word' }}
+                  >
+                    <p>{value}</p>
+                  </Typography>
+                </Typography>
+              ))}
+            </>
+          )}
+        </Box>
+
+        <form>
+          <TextField
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={editFirstName}
+            onChange={(e) => setEditFirstname(e.target.value)}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.firstName} // Display an error message if the first name is invalid
+            helperText={errors.firstName && errors.firstName}
+          />
+
+          <TextField
+            label="Last Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={editLastName}
+            onChange={(e) => setEditLastName(e.target.value)}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.lastName} // Display an error message if the last name is invalid
+            helperText={errors.lastName && errors.lastName}
+          />
+
+          <TextField
+            label="Date of Birth"
+            type="date"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={editDateOfBirth}
+            onChange={(e) => setEditDateOfBirth(e.target.value)}
+            InputLabelProps={{
+              shrink: true, // Ensures label does not overlap the value
+            }}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.dateOfBirth} // Display an error message if the date of birth is invalid
+            helperText={errors.dateOfBirth && errors.dateOfBirth}
+          />
+
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={editUserName}
+            onChange={(e) => setEditUserName(e.target.value)}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.userName} // Display an error message if the username is invalid
+            helperText={errors.userName && errors.userName}
+          />
+
+          <TextField
+            label="Email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={editEmail}
+            onChange={(e) => setEditEmail(e.target.value)}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.email} // Display an error message if the email is invalid
+            helperText={errors.email && errors.email}
+          />
+
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            type="password"
+            value={editPassword}
+            onChange={(e) => setEditPassword(e.target.value)}
+            required={
+              !!(pageToDisplay === 'addUser' || pageToDisplay === 'addKid')
+            }
+            error={!!errors.password} // Display an error message if the password is invalid
+            helperText={errors.password && errors.password}
+          />
+
+          {/* Display an error message if the passwords do not match */}
+          <TextField
+            label="Confirm Password"
+            variant="outlined"
+            fullWidth
+            type="password"
+            margin="normal"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value)
+
+              // Validate password match as the user types
+              setErrors((prevErrors) => ({
+                ...prevErrors,
+                confirmPassword:
+                  e.target.value !== editPassword
+                    ? 'Passwords do not match.'
+                    : '',
+              }))
+            }}
+            required={
+              !!(
+                pageToDisplay === 'addUser' ||
+                pageToDisplay === 'addKid' ||
+                editPassword
+              )
+            }
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword}
+          />
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 2,
+            }}
+          >
+            {pageToDisplay === 'editUser' || pageToDisplay === 'editKid' ? (
+              <>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={!!editDeleteUser}
+                      onChange={(e) => setEditDeleteUser(e.target.checked)}
+                    />
+                  }
+                  label="Delete User"
+                />
+              </>
+            ) : (
+              ''
+            )}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={!!editDisableLogin}
+                  onChange={(e) => setEditDisableLogin(e.target.checked)}
+                />
+              }
+              label="Disable Login"
+            />
+          </Box>
+        </form>
+        {/* check boxes */}
+        {pageToDisplay === 'addKid' || pageToDisplay === 'addUser' ? (
+          <>
+            {userData.userType === 'admin' ? (
+              <>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={userType === 'admin'}
+                      onChange={() => handleCheck('admin')}
+                    />
+                  }
+                  label="Admin"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={userType === 'parent'}
+                      onChange={() => handleCheck('parent')}
+                    />
+                  }
+                  label="Parent"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={userType === 'kid'}
+                      onChange={() => handleCheck('kid')}
+                    />
+                  }
+                  label="Kid"
+                />
+              </>
+            ) : (
+              ''
+            )}
+          </>
+        ) : (
+          ''
+        )}
+      </Box>
+      {/* dual list box */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, horizontal on larger
+          justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens
+          alignItems: { xs: 'center', sm: 'flex-start' }, // Align properly when stacked
+          marginTop: 2,
+          gap: 2,
+          width: '100%',
+        }}
+      >
+        {allActivities && pageToDisplay === 'editKid' ? (
+          <DualList
+            dataToList={allActivities}
+            listType="games"
+            gamesAccess={gamesAccess}
+            setGamesAccess={setGamesAccess}
+            sx={{
+              width: '100%',
+              maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+            }}
+          />
+        ) : pageToDisplay === 'editKid' ? (
+          'fetching data'
+        ) : (
+          ''
+        )}
+
+        {allActivities && pageToDisplay === 'editKid' ? (
+          <DualList
+            dataToList={allActivities}
+            listType="learning"
+            learingAccess={learningAccess}
+            setLearningAccess={setLearningAccess}
+            sx={{
+              width: '100%',
+              maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+            }}
+          />
+        ) : pageToDisplay === 'editKid' ? (
+          'fetching data'
+        ) : (
+          ''
+        )}
+
+        {allChatTopics && pageToDisplay === 'editKid' ? (
+          <DualList
+            dataToList={allChatTopics}
+            listType="chatTopics"
+            chatAccess={chatAccess}
+            setChatAccess={setChatAccess}
+            sx={{
+              width: '100%',
+              maxWidth: { xs: '100%', sm: '45%' }, // Limit width on larger screens
+            }}
+          />
+        ) : pageToDisplay === 'editKid' ? (
+          'fetching data'
+        ) : (
+          ''
+        )}
+      </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' }, // Stack buttons on mobile, horizontal on larger screens
+          justifyContent: 'center',
+          gap: 2,
+          marginTop: 2,
+          width: '100%',
+        }}
+      >
+        <Button
+          variant="outlined"
+          color="primary"
+          disabled={
+            ((pageToDisplay === 'addUser' || pageToDisplay === 'addKid') && 
+              (!editFirstName ||
+                !editLastName ||
+                !editDateOfBirth ||
+                !editPassword)) ||
+            confirmPassword !== editPassword
+          }
+          onClick={() => handleSave()}
+        >
+          Save
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => setPageToDisplay(userData.userType)}
+        >
+          Cancel
+        </Button>
+      </Box>
+    </ThemeProvider>
+  </>
+)
 }
 
 export default EditUser

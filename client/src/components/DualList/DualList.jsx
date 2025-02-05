@@ -266,6 +266,7 @@ const DualList = ({
       {/* only show dual list if editing or adding kid */}
       <div
         style={{
+          borderRadius: 4,
           backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
           boxShadow: `0px 4px 6px ${theme.palette.primary.main}`,
